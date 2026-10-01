@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_key_metrics_sections",
+  "info": {
+    "displayName": "Key Metrics Section"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "keyMetrics": {
+      "type": "component",
+      "component": "shared.key-metrics",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

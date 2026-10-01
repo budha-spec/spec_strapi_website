@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_shared_key_metrics",
+  "info": {
+    "displayName": "Key Metrics Item"
+  },
+  "options": {},
+  "attributes": {
+    "number": {
+      "type": "string",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}
