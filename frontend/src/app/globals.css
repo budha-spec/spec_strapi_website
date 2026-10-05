@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  /* ─── Font ─────────────────────────────────────────── */
+  --font-sans: 'Inter', sans-serif;
+
+  /* ─── Stroke / Border ───────────────────────────────── */
+  --color-stroke-main: #B9B9B9;
+  --color-stroke-dark: #393939;
+  --color-stroke-outline: #D8D8D8;
+
+  /* ─── Backgrounds ───────────────────────────────────── */
+  --color-bg-black: #000000;
+  --color-bg-dark: #393939;
+  --color-bg-light: #F9F9F9;
+  --color-bg-white: #FFFFFF;
+
+  /* ─── Hero glow accents ─────────────────────────────── */
+  --color-hero-glow-blue: #0A2A6E;
+  --color-hero-glow-green: #0A3D1F;
+
+  /* ─── Text ──────────────────────────────────────────── */
+  --color-text-primary: #000000;
+  --color-text-secondary: #5E5E5E;
+  --color-text-muted: #B9B9B9;
+  --color-text-inverse: #FFFFFF;
+
+  /* ─── Brand ─────────────────────────────────────────── */
+  --color-brand-blue: #3AADEE;
+  --color-brand-green: #6CC04A;
+  --color-brand-amber: #FFB800;
+
+  /* ─── Glassmorphism (hero search bar) ───────────────── */
+  --color-glass-bg: rgba(255, 255, 255, 0.06);
+  --color-glass-border: rgba(255, 255, 255, 0.12);
+
+  /* ─── Particles ─────────────────────────────────────── */
+  --color-particle-dot: #FFFFFF;
+
+  /* ─── Radius ────────────────────────────────────────── */
+  --radius-card: 1rem;       /* 16px — standard card */
+  --radius-card-lg: 1.25rem; /* 20px — search bar, large cards */
+  --radius-btn: 9999px;      /* pill buttons */
+}
+
+/* ─── Base styles ───────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-white);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+}
+
+/* ─── Focus ring ────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-brand-blue);
+  outline-offset: 2px;
+}
+
+/* ─── Selection ─────────────────────────────────────── */
+::selection {
+  background-color: var(--color-brand-blue);
+  color: var(--color-text-inverse);
+}
