@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cs_tags",
+  "info": {
+    "singularName": "cs-tag",
+    "pluralName": "cs-tags",
+    "displayName": "CS Tag"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "parent_tag": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::cs-tag.cs-tag"
+    },
+    "description": {
+      "type": "text"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

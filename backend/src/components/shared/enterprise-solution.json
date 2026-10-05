@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_enterprise_solutions",
+  "info": {
+    "displayName": "Enterprise Solution"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "subTitle": {
+      "type": "string",
+      "required": false
+    },
+    "enterpriseSolution": {
+      "type": "component",
+      "component": "shared.enterprise-solution-item",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

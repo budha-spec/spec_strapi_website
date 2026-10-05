@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_shared_home_blogs",
+  "info": {
+    "displayName": "Home Blogs"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subTitle": {
+      "type": "string",
+      "required": true
+    },
+    "blogs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::blog-post.blog-post"
+    },
+    "url": {
+      "type": "text",
+      "required": true
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_service_cards",
+  "info": {
+    "displayName": "Service Cards"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "ServiceCards": {
+      "type": "component",
+      "component": "shared.services-card",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_shared_case_studies",
+  "info": {
+    "displayName": "Home Case Studies"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subTitle": {
+      "type": "string",
+      "required": false
+    },
+    "case_studies": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::case-study.case-study"
+    },
+    "url": {
+      "type": "text",
+      "required": true
+    }
+  },
+  "config": {}
+}

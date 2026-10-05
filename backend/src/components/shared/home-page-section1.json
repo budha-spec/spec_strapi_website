@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_home_page_section1s",
+  "info": {
+    "displayName": "HomeSection1"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "capabilities": {
+      "type": "component",
+      "component": "shared.capabilities-item",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}
