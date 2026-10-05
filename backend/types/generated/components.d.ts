@@ -1,5 +1,45 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface SharedBlogs extends Struct.ComponentSchema {
+  collectionName: 'components_shared_blogs';
+  info: {
+    displayName: 'Blogs';
+  };
+  attributes: {
+    blog: Schema.Attribute.Relation<'oneToMany', 'api::blog-post.blog-post'>;
+    subTitle: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedCapabilitiesItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_capabilities_items';
+  info: {
+    displayName: 'Capabilities Item';
+  };
+  attributes: {
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+  };
+}
+
+export interface SharedCaseStudies extends Struct.ComponentSchema {
+  collectionName: 'components_shared_case_studies';
+  info: {
+    displayName: 'Home Case Studies';
+  };
+  attributes: {
+    case_studies: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::case-study.case-study'
+    >;
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.Text & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedEnterpriseSolution extends Struct.ComponentSchema {
   collectionName: 'components_shared_enterprise_solutions';
   info: {
@@ -31,6 +71,29 @@ export interface SharedEnterpriseSolutionItem extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedFaqItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_faq_items';
+  info: {
+    displayName: 'Faq Item';
+  };
+  attributes: {
+    answer: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    question: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedFaqs extends Struct.ComponentSchema {
+  collectionName: 'components_shared_faqs';
+  info: {
+    displayName: 'Faqs';
+  };
+  attributes: {
+    faq: Schema.Attribute.Component<'shared.faq-item', true>;
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedGallery extends Struct.ComponentSchema {
   collectionName: 'components_shared_galleries';
   info: {
@@ -42,6 +105,31 @@ export interface SharedGallery extends Struct.ComponentSchema {
       true
     >;
     title: Schema.Attribute.String;
+  };
+}
+
+export interface SharedHomeBlogs extends Struct.ComponentSchema {
+  collectionName: 'components_shared_home_blogs';
+  info: {
+    displayName: 'Home Blogs';
+  };
+  attributes: {
+    blogs: Schema.Attribute.Relation<'oneToMany', 'api::blog-post.blog-post'>;
+    subTitle: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.Text & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedHomePageSection1 extends Struct.ComponentSchema {
+  collectionName: 'components_shared_home_page_section1s';
+  info: {
+    displayName: 'HomeSection1';
+  };
+  attributes: {
+    capabilities: Schema.Attribute.Component<'shared.capabilities-item', true>;
+    description: Schema.Attribute.Text;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -144,15 +232,23 @@ export interface SharedTestimonialSection extends Struct.ComponentSchema {
     subTitle: Schema.Attribute.String;
     testimonials: Schema.Attribute.Component<'shared.testimonial-item', true>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.Text & Schema.Attribute.Required;
   };
 }
 
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'shared.blogs': SharedBlogs;
+      'shared.capabilities-item': SharedCapabilitiesItem;
+      'shared.case-studies': SharedCaseStudies;
       'shared.enterprise-solution': SharedEnterpriseSolution;
       'shared.enterprise-solution-item': SharedEnterpriseSolutionItem;
+      'shared.faq-item': SharedFaqItem;
+      'shared.faqs': SharedFaqs;
       'shared.gallery': SharedGallery;
+      'shared.home-blogs': SharedHomeBlogs;
+      'shared.home-page-section1': SharedHomePageSection1;
       'shared.key-metrics': SharedKeyMetrics;
       'shared.key-metrics-section': SharedKeyMetricsSection;
       'shared.rich-text': SharedRichText;

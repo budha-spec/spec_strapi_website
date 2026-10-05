@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_shared_capabilities_items",
+  "info": {
+    "displayName": "Capabilities Item"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    }
+  },
+  "config": {}
+}

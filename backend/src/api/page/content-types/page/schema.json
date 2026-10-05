@@ -4,7 +4,7 @@
   "info": {
     "singularName": "page",
     "pluralName": "pages",
-    "displayName": "page"
+    "displayName": "pages"
   },
   "options": {
     "draftAndPublish": true
@@ -48,7 +48,11 @@
         "shared.enterprise-solution",
         "shared.key-metrics",
         "shared.key-metrics-section",
-        "shared.testimonial-section"
+        "shared.testimonial-section",
+        "shared.blogs",
+        "shared.home-page-section1",
+        "shared.case-studies",
+        "shared.home-blogs"
       ]
     },
     "children": {

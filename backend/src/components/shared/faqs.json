@@ -1,7 +1,7 @@
 {
-  "collectionName": "components_shared_testimonial_sections",
+  "collectionName": "components_shared_faqs",
   "info": {
-    "displayName": "Testimonial Section"
+    "displayName": "Faqs"
   },
   "options": {},
   "attributes": {
@@ -12,14 +12,10 @@
     "subTitle": {
       "type": "string"
     },
-    "testimonials": {
+    "faq": {
       "type": "component",
-      "component": "shared.testimonial-item",
+      "component": "shared.faq-item",
       "repeatable": true
-    },
-    "url": {
-      "type": "text",
-      "required": true
     }
   },
   "config": {}
