@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "pages",
+  "collectionName": "services",
   "info": {
-    "singularName": "page",
-    "pluralName": "pages",
-    "displayName": "Pages"
+    "singularName": "service",
+    "pluralName": "services",
+    "displayName": "Services"
   },
   "options": {
     "draftAndPublish": true
@@ -58,13 +58,13 @@
     "children": {
       "type": "relation",
       "relation": "manyToMany",
-      "target": "api::page.page",
+      "target": "api::service.service",
       "inversedBy": "parent"
     },
     "parent": {
       "type": "relation",
       "relation": "manyToMany",
-      "target": "api::page.page",
+      "target": "api::service.service",
       "mappedBy": "children"
     }
   }

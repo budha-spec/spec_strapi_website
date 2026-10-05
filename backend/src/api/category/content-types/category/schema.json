@@ -24,9 +24,9 @@
     "description": {
       "type": "text"
     },
-    "blog_post": {
+    "blog_posts": {
       "type": "relation",
-      "relation": "manyToOne",
+      "relation": "manyToMany",
       "target": "api::blog-post.blog-post",
       "inversedBy": "category"
     }

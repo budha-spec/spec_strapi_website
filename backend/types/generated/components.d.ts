@@ -208,6 +208,17 @@ export interface SharedServicesCard extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedTableOfContentItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_table_of_content_items';
+  info: {
+    displayName: 'Table Of Content Item';
+  };
+  attributes: {
+    contentId: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedTestimonialItem extends Struct.ComponentSchema {
   collectionName: 'components_shared_testimonial_items';
   info: {
@@ -255,6 +266,7 @@ declare module '@strapi/strapi' {
       'shared.seo': SharedSeo;
       'shared.service-cards': SharedServiceCards;
       'shared.services-card': SharedServicesCard;
+      'shared.table-of-content-item': SharedTableOfContentItem;
       'shared.testimonial-item': SharedTestimonialItem;
       'shared.testimonial-section': SharedTestimonialSection;
     }
