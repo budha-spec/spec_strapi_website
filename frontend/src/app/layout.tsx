@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { Header, Footer } from '@/components/layout';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -21,7 +22,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased font-sans bg-bg-black">
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

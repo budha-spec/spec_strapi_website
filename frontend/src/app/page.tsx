@@ -1,20 +1,18 @@
 import { Suspense } from 'react';
+import { HeroSection, HeroSkeleton, ClientsStrip, ServicesSection, StatsSection, CaseStudies, Testimonials, BlogSection } from '@/features/home';
 
-/**
- * Home page — Server Component.
- * Sections will be added here as they are built (Phase 3 & 4).
- * Each section is wrapped in <Suspense> for independent loading states.
- */
 export default function HomePage() {
   return (
-    <main>
-      {/* Phase 3: HeroSection */}
-      {/* Phase 4: ClientsStrip, ServicesSection, StatsSection, etc. */}
-      <Suspense fallback={null}>
-        <p className="text-center py-20 text-text-secondary">
-          Foundation ready — sections coming in Phase 3 & 4.
-        </p>
+    <main className="w-full flex flex-col min-h-screen bg-bg-white">
+      <Suspense fallback={<HeroSkeleton />}>
+        <HeroSection data={undefined} />
       </Suspense>
+      <ClientsStrip />
+      <ServicesSection />
+      <StatsSection />
+      <CaseStudies />
+      <Testimonials />
+      <BlogSection />
     </main>
   );
 }

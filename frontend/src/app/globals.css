@@ -3,15 +3,19 @@
 @theme {
   /* ─── Font ─────────────────────────────────────────── */
   --font-sans: 'Inter', sans-serif;
+  --font-nunito: 'Nunito', sans-serif;
+  --font-poppins: 'Poppins', sans-serif;
 
   /* ─── Stroke / Border ───────────────────────────────── */
   --color-stroke-main: #B9B9B9;
   --color-stroke-dark: #393939;
   --color-stroke-outline: #D8D8D8;
+  --color-stroke-divider: #D9D9D9;
 
   /* ─── Backgrounds ───────────────────────────────────── */
   --color-bg-black: #000000;
-  --color-bg-dark: #393939;
+  --color-bg-dark: #090909;
+  --color-bg-dark-alt: #0E0E0D;
   --color-bg-light: #F9F9F9;
   --color-bg-white: #FFFFFF;
 
@@ -20,19 +24,22 @@
   --color-hero-glow-green: #0A3D1F;
 
   /* ─── Text ──────────────────────────────────────────── */
-  --color-text-primary: #000000;
+  --color-text-primary: #191818;
   --color-text-secondary: #5E5E5E;
-  --color-text-muted: #B9B9B9;
+  --color-text-muted: #6F8385;
+  --color-text-light: #B9B9B9;
   --color-text-inverse: #FFFFFF;
 
   /* ─── Brand ─────────────────────────────────────────── */
-  --color-brand-blue: #3AADEE;
-  --color-brand-green: #6CC04A;
-  --color-brand-amber: #FFB800;
+  --color-brand-blue: #0C3CED;
+  --color-brand-green: #56F72F;
+  --color-brand-cta-blue: #0050FE;
+  --color-brand-pink: #EA407E;
 
   /* ─── Glassmorphism (hero search bar) ───────────────── */
-  --color-glass-bg: rgba(255, 255, 255, 0.06);
-  --color-glass-border: rgba(255, 255, 255, 0.12);
+  --color-glass-bg: rgba(0, 0, 0, 0.4);
+  --color-glass-border: rgba(111, 131, 133, 1);
+  --color-glass-pill: rgba(255, 255, 255, 0.1);
 
   /* ─── Particles ─────────────────────────────────────── */
   --color-particle-dot: #FFFFFF;
@@ -75,4 +82,85 @@ body {
 ::selection {
   background-color: var(--color-brand-blue);
   color: var(--color-text-inverse);
+}
+
+/* ─── Glass morphism ────────────────────────────────────── */
+.glass {
+  background: var(--color-glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-glass-border);
+}
+
+/* ─── Gradient button ───────────────────────────────────── */
+.gradient-btn {
+  background: linear-gradient(-54deg, rgba(86, 247, 47, 1) 0%, rgba(12, 60, 237, 1) 100%);
+}
+
+.gradient-text {
+  background: linear-gradient(-54deg, rgba(86, 247, 47, 1) 0%, rgba(12, 60, 237, 1) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Hero glow overlays ────────────────────────────────── */
+.hero-glow-blue {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 45%;
+  height: 55%;
+  background: radial-gradient(ellipse at 0% 100%, #0A2A6E 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-glow-green {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 45%;
+  height: 55%;
+  background: radial-gradient(ellipse at 100% 100%, #0A3D1F 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ─── Marquee (clients strip) ───────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* ─── Scrollbar hiding ──────────────────────────────────── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ─── Mask for Globe ────────────────────────────────────── */
+.mask-globe {
+  mask-image: radial-gradient(circle at center, black 40%, transparent 70%);
+  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 70%);
+}
+
+/* ─── Section tag pill ──────────────────────────────────── */
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+.section-tag::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(-54deg, rgba(86, 247, 47, 1) 0%, rgba(12, 60, 237, 1) 100%);
 }
