@@ -51,6 +51,20 @@ export interface SharedContactUs extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedCta extends Struct.ComponentSchema {
+  collectionName: 'components_shared_ctas';
+  info: {
+    displayName: 'CTA';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    txt: Schema.Attribute.String;
+    url: Schema.Attribute.String;
+  };
+}
+
 export interface SharedEnterpriseSolution extends Struct.ComponentSchema {
   collectionName: 'components_shared_enterprise_solutions';
   info: {
@@ -88,7 +102,7 @@ export interface SharedFaqItem extends Struct.ComponentSchema {
     displayName: 'Faq Item';
   };
   attributes: {
-    answer: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    answer: Schema.Attribute.Text & Schema.Attribute.Required;
     question: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -144,6 +158,21 @@ export interface SharedHomePageSection1 extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedIndustries extends Struct.ComponentSchema {
+  collectionName: 'components_shared_industries';
+  info: {
+    displayName: 'Industries';
+  };
+  attributes: {
+    industries: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::industry.industry'
+    >;
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedKeyMetrics extends Struct.ComponentSchema {
   collectionName: 'components_shared_key_metrics';
   info: {
@@ -176,6 +205,7 @@ export interface SharedRichText extends Struct.ComponentSchema {
   attributes: {
     content: Schema.Attribute.Blocks;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String;
   };
 }
 
@@ -277,6 +307,7 @@ declare module '@strapi/strapi' {
       'shared.capabilities-item': SharedCapabilitiesItem;
       'shared.case-studies': SharedCaseStudies;
       'shared.contact-us': SharedContactUs;
+      'shared.cta': SharedCta;
       'shared.enterprise-solution': SharedEnterpriseSolution;
       'shared.enterprise-solution-item': SharedEnterpriseSolutionItem;
       'shared.faq-item': SharedFaqItem;
@@ -284,6 +315,7 @@ declare module '@strapi/strapi' {
       'shared.gallery': SharedGallery;
       'shared.home-blogs': SharedHomeBlogs;
       'shared.home-page-section1': SharedHomePageSection1;
+      'shared.industries': SharedIndustries;
       'shared.key-metrics': SharedKeyMetrics;
       'shared.key-metrics-section': SharedKeyMetricsSection;
       'shared.rich-text': SharedRichText;

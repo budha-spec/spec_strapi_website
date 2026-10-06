@@ -10,7 +10,7 @@
       "required": true
     },
     "answer": {
-      "type": "blocks",
+      "type": "text",
       "required": true
     }
   },

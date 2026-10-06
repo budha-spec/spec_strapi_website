@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_shared_industries",
+  "info": {
+    "displayName": "Industries"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subTitle": {
+      "type": "string",
+      "required": false
+    },
+    "industries": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::industry.industry"
+    }
+  },
+  "config": {}
+}

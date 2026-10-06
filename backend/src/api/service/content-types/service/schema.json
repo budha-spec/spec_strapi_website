@@ -43,18 +43,17 @@
       "type": "dynamiczone",
       "components": [
         "shared.rich-text",
-        "shared.service-cards",
         "shared.gallery",
         "shared.enterprise-solution",
         "shared.key-metrics",
         "shared.key-metrics-section",
-        "shared.testimonial-section",
-        "shared.blogs",
-        "shared.home-page-section1",
         "shared.case-studies",
-        "shared.home-blogs",
         "shared.services",
-        "shared.contact-us"
+        "shared.contact-us",
+        "shared.cta",
+        "shared.faqs",
+        "shared.industries",
+        "shared.home-blogs"
       ]
     },
     "children": {

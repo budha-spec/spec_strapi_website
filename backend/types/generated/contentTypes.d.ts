@@ -663,6 +663,49 @@ export interface ApiCsTagCsTag extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiIndustryIndustry extends Struct.CollectionTypeSchema {
+  collectionName: 'industries';
+  info: {
+    displayName: 'Industry';
+    pluralName: 'industries';
+    singularName: 'industry';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    content: Schema.Attribute.DynamicZone<
+      [
+        'shared.services',
+        'shared.rich-text',
+        'shared.industries',
+        'shared.cta',
+        'shared.case-studies',
+        'shared.blogs',
+      ]
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::industry.industry'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiPagePage extends Struct.CollectionTypeSchema {
   collectionName: 'pages';
   info: {
@@ -726,18 +769,17 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     content: Schema.Attribute.DynamicZone<
       [
         'shared.rich-text',
-        'shared.service-cards',
         'shared.gallery',
         'shared.enterprise-solution',
         'shared.key-metrics',
         'shared.key-metrics-section',
-        'shared.testimonial-section',
-        'shared.blogs',
-        'shared.home-page-section1',
         'shared.case-studies',
-        'shared.home-blogs',
         'shared.services',
         'shared.contact-us',
+        'shared.cta',
+        'shared.faqs',
+        'shared.industries',
+        'shared.home-blogs',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -1281,6 +1323,7 @@ declare module '@strapi/strapi' {
       'api::category.category': ApiCategoryCategory;
       'api::cs-industry.cs-industry': ApiCsIndustryCsIndustry;
       'api::cs-tag.cs-tag': ApiCsTagCsTag;
+      'api::industry.industry': ApiIndustryIndustry;
       'api::page.page': ApiPagePage;
       'api::service.service': ApiServiceService;
       'plugin::content-releases.release': PluginContentReleasesRelease;
