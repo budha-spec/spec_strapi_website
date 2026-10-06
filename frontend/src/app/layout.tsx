@@ -1,13 +1,20 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import { Inter } from 'next/font/google';
+import { Inter, Nunito } from 'next/font/google';
 import './globals.css';
 import { Header, Footer } from '@/components/layout';
+import { ParticlesProviderRoot } from '@/components/ui/ParticlesProviderRoot';
 
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-sans',
+  variable: '--font-inter',
+});
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-nunito',
 });
 
 export const metadata: Metadata = {
@@ -21,11 +28,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="antialiased font-sans bg-bg-black">
-        <Header />
-        {children}
-        <Footer />
+    <html lang="en" className={`${inter.variable} ${nunito.variable}`}>
+      <body className="antialiased font-sans bg-bg-white text-text-primary">
+        <ParticlesProviderRoot>
+          <Header />
+          {children}
+          <Footer />
+        </ParticlesProviderRoot>
       </body>
     </html>
   );

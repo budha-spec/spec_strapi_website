@@ -1,81 +1,60 @@
-import Image from 'next/image';
+import { PlaceholderImage } from '@/components/ui/PlaceholderImage';
+import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
+import { ExploreMore } from '@/components/ui/ExploreMore';
+import { CarouselControls } from '@/components/ui/CarouselControls';
 
-const CASE_STUDIES_TAGS = [
-  'SaaS Platform',
-  'AI Workflows',
-  'EHR Integration',
-  'Cloud Security',
-];
+const CASE_STUDY = {
+  industry: 'Healthcare',
+  description:
+    'Modernized a legacy claims processing system into an AI-powered SaaS platform, Reducing processing time by 40% while ensuring full HIPAA compliance and seamless EHR integration.',
+  tags: ['SaaS Platform', 'AI Workflows', 'EHR Integration', 'Cloud Security'],
+};
 
 export function CaseStudies() {
   return (
-    <section className="w-full bg-[#f6f6f6] py-16 md:py-24">
-      <div className="max-w-7xl mx-auto px-4">
-        {/* Section header */}
-        <div className="mb-10">
-          <span className="text-brand-blue text-sm font-semibold mb-4 block">• Client Success Stories</span>
-          <h2 className="text-3xl md:text-4xl font-medium text-text-primary">
-            Proven Software Platforms Delivering Tangible <span className="text-brand-green font-bold">Business Value</span>
-          </h2>
-        </div>
+    <section className="w-full bg-bg-light pt-[clamp(40px,3.44vw,66px)] pb-[clamp(40px,3.65vw,70px)]">
+      <div className="shell">
+        <SectionEyebrow>Client Success Stories</SectionEyebrow>
 
-        {/* Featured Case Study Card */}
-        <div className="bg-white rounded-3xl overflow-hidden flex flex-col md:flex-row shadow-sm border border-stroke-outline">
-          <div className="flex-1 p-8 md:p-12 flex flex-col justify-center">
-            <h3 className="text-2xl font-bold text-text-primary mb-4">Healthcare</h3>
-            <p className="text-xs text-text-secondary mb-12 max-w-sm leading-relaxed">
-              Modernized a legacy claims processing system into an AI-powered SaaS
-              platform, Reducing processing time by 40% while ensuring full HIPAA
-              compliance and seamless EHR integration.
+        <h2 className="mt-[clamp(6px,0.52vw,10px)] text-d40 font-medium leading-[1.2] text-text-heading">
+          Proven Software Platforms Delivering Tangible{' '}
+          <span className="gradient-text font-bold">Business Value</span>
+        </h2>
+
+        {/* Left copy panel ≈42% of the card, artwork fills the rest */}
+        <div className="mt-[clamp(24px,3.65vw,70px)] overflow-hidden rounded-[16px] bg-bg-white lg:grid lg:grid-cols-[720fr_980fr]">
+          <div className="flex flex-col p-[clamp(20px,2.08vw,40px)]">
+            <h3 className="text-d30 font-medium text-text-primary">
+              {CASE_STUDY.industry}
+            </h3>
+
+            <p className="mt-[clamp(12px,1.3vw,25px)] max-w-[625px] text-d18 leading-[1.45] text-text-secondary">
+              {CASE_STUDY.description}
             </p>
-            
-            {/* Divider */}
-            <div className="w-full h-px bg-stroke-outline mb-8" />
-            
-            {/* Tags */}
-            <div className="flex flex-wrap gap-2 mb-12">
-              {CASE_STUDIES_TAGS.map((tag) => (
-                <span key={tag} className="px-3 py-1.5 rounded-full text-[10px] text-text-secondary border border-stroke-outline">
-                  {tag}
-                </span>
-              ))}
-            </div>
-            
-            {/* Explore More link */}
-            <div className="flex items-center gap-2 cursor-pointer group">
-              <span className="text-xs font-bold text-text-primary">Explore More</span>
-              <div className="h-8 w-8 rounded-full bg-black flex items-center justify-center text-white group-hover:bg-brand-blue transition-colors">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14" />
-                  <path d="m12 5 7 7-7 7" />
-                </svg>
-              </div>
+
+            <div className="mt-auto pt-[clamp(28px,4.17vw,80px)]">
+              <ul className="flex flex-wrap gap-[clamp(6px,0.47vw,9px)]">
+                {CASE_STUDY.tags.map((tag) => (
+                  <li
+                    key={tag}
+                    className="flex h-[clamp(32px,2.19vw,42px)] items-center rounded-full border border-stroke-main px-[clamp(12px,0.89vw,17px)] text-d14 text-text-secondary"
+                  >
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+
+              <ExploreMore variant="filled" className="mt-[clamp(20px,2.5vw,48px)]" />
             </div>
           </div>
-          
-          <div className="flex-1 w-full bg-gray-200 min-h-[300px] md:min-h-0 relative flex items-center justify-center">
-             <span className="text-gray-400 font-medium">Dashboard Image Placeholder</span>
-          </div>
+
+          <PlaceholderImage
+            label="Case study visual"
+            className="min-h-[260px] w-full lg:min-h-[clamp(400px,34.3vw,659px)]"
+          />
         </div>
 
-        {/* Thumbnails Navigation */}
-        <div className="flex justify-end gap-3 mt-6">
-          <div className="px-6 py-2 bg-black text-white rounded-full text-xs font-semibold cursor-pointer hover:bg-gray-800 transition-colors flex items-center">
-            Explore All
-          </div>
-          <div className="h-10 w-16 bg-white border border-stroke-outline rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors">
-             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="rotate-180 text-text-primary">
-               <path d="M5 12h14" />
-               <path d="m12 5 7 7-7 7" />
-             </svg>
-          </div>
-          <div className="h-10 w-16 bg-white border border-stroke-outline rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors">
-             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-text-primary">
-               <path d="M5 12h14" />
-               <path d="m12 5 7 7-7 7" />
-             </svg>
-          </div>
-        </div>
+        <CarouselControls pill="dark" arrows="outline" className="mt-[clamp(16px,1.67vw,32px)]" />
       </div>
     </section>
   );

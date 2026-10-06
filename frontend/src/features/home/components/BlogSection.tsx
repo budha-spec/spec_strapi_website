@@ -1,9 +1,13 @@
-import Image from 'next/image';
+import { PlaceholderImage } from '@/components/ui/PlaceholderImage';
+import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
+import { ExploreMore } from '@/components/ui/ExploreMore';
+import { CarouselControls } from '@/components/ui/CarouselControls';
 
 const BLOG_POSTS = [
   {
     id: 1,
-    title: 'Enterprise Data Management: A Strategic Foundation for Data-Driven Business Growth',
+    title:
+      'Enterprise Data Management: A Strategic Foundation for Data-Driven Business Growth',
     category: 'App Development',
   },
   {
@@ -25,69 +29,45 @@ const BLOG_POSTS = [
 
 export function BlogSection() {
   return (
-    <section className="w-full bg-[#f6f6f6] py-16 md:py-24">
-      <div className="max-w-7xl mx-auto px-4">
-        {/* Section header */}
-        <div className="mb-12">
-          <span className="text-brand-green text-sm font-semibold mb-4 block">• Latest Insights</span>
-          <h2 className="text-3xl md:text-4xl font-medium text-text-primary">
-            Expert Perspectives on Technology & <span className="text-[#0050FE] font-bold">Growth</span>
-          </h2>
-        </div>
+    <section
+      id="insights"
+      className="w-full bg-bg-light pt-[clamp(40px,3.33vw,64px)] pb-[clamp(40px,3.65vw,70px)]"
+    >
+      <div className="shell">
+        <SectionEyebrow>Latest Insights</SectionEyebrow>
 
-        {/* Blog Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        <h2 className="mt-[clamp(6px,0.52vw,10px)] text-d40 font-medium leading-[1.2] text-text-heading">
+          Expert Perspectives on Technology &{' '}
+          <span className="gradient-text font-bold">Growth</span>
+        </h2>
+
+        <div className="mt-[clamp(24px,3.33vw,64px)] grid grid-cols-1 gap-[clamp(16px,1.67vw,32px)] sm:grid-cols-2 lg:grid-cols-4">
           {BLOG_POSTS.map((post) => (
-            <div key={post.id} className="flex flex-col group cursor-pointer bg-white rounded-2xl overflow-hidden shadow-sm border border-stroke-outline/50 p-2 pb-6">
-              {/* Image */}
-              <div className="w-full h-[160px] bg-gray-200 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-                 <span className="text-gray-400 text-xs font-medium">Image</span>
-              </div>
-              
-              <div className="px-2 flex flex-col flex-1">
-                {/* Category Tag */}
-                <div className="mb-3">
-                  <span className="text-[9px] font-bold text-white bg-brand-green px-2 py-1 rounded-full">
-                    {post.category}
-                  </span>
-                </div>
-                
-                {/* Title */}
-                <h4 className="text-xs font-bold text-text-primary leading-snug mb-6 group-hover:text-brand-blue transition-colors">
+            <article
+              key={post.id}
+              className="group flex flex-col overflow-hidden rounded-[16px] bg-bg-white transition-shadow hover:shadow-lg"
+            >
+              <PlaceholderImage
+                label="Article image"
+                className="h-[clamp(150px,10.57vw,203px)] w-full shrink-0"
+              />
+
+              <div className="flex flex-1 flex-col p-[clamp(12px,0.83vw,16px)]">
+                <span className="gradient-btn inline-flex h-[clamp(24px,1.67vw,32px)] w-fit items-center rounded-full px-[clamp(10px,0.78vw,15px)] text-d12 text-white">
+                  {post.category}
+                </span>
+
+                <h4 className="mt-[clamp(10px,0.94vw,18px)] text-d18 font-medium leading-[1.4] text-text-primary transition-colors group-hover:text-brand-cta-blue">
                   {post.title}
                 </h4>
-                
-                {/* Explore More link */}
-                <div className="flex items-center gap-2 mt-auto">
-                  <span className="text-[10px] font-bold text-text-primary">Explore More</span>
-                  <div className="h-5 w-5 rounded-full border border-stroke-main flex items-center justify-center group-hover:border-black transition-colors">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M5 12h14" />
-                      <path d="m12 5 7 7-7 7" />
-                    </svg>
-                  </div>
-                </div>
+
+                <ExploreMore className="mt-auto pt-[clamp(14px,1.09vw,21px)]" />
               </div>
-            </div>
+            </article>
           ))}
         </div>
 
-        {/* Navigation Dots/Buttons */}
-        <div className="flex justify-end gap-3">
-          <div className="px-6 py-2 bg-black text-white rounded-full text-xs font-semibold cursor-pointer flex items-center">Explore All</div>
-          <div className="h-10 w-16 bg-white border border-stroke-outline rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-50">
-             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="rotate-180">
-               <path d="M5 12h14" />
-               <path d="m12 5 7 7-7 7" />
-             </svg>
-          </div>
-          <div className="h-10 w-16 bg-white border border-stroke-outline rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-50">
-             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-               <path d="M5 12h14" />
-               <path d="m12 5 7 7-7 7" />
-             </svg>
-          </div>
-        </div>
+        <CarouselControls pill="dark" arrows="outline" className="mt-[clamp(16px,1.98vw,38px)]" />
       </div>
     </section>
   );

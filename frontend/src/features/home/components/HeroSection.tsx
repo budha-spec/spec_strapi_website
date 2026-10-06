@@ -1,82 +1,128 @@
-import Image from 'next/image';
+import ParticlesCanvas from '@/components/ui/ParticlesCanvas';
+import DotSphere from '@/components/ui/DotSphere';
+
+const QUICK_PROMPTS = [
+  'Modernize Legacy Software',
+  'Build a Business Application',
+  'AI to Our Product',
+];
 
 interface HeroSectionProps {
-  data?: any;
+  data?: {
+    title?: string;
+    description?: string;
+    capabilities?: string;
+  };
 }
 
 export function HeroSection({ data }: HeroSectionProps) {
-  return (
-    <section className="relative w-full min-h-screen flex items-center justify-center bg-bg-black overflow-hidden pt-24">
-      {/* Background glow effects */}
-      <div className="hero-glow-blue opacity-50" />
-      <div className="hero-glow-green opacity-50" />
+  const title = data?.title ?? 'Building Next-gen AI-ready Software';
+  const description =
+    data?.description ??
+    'Building custom software and intelligent platforms since 1987 to help global \nenterprises modernize and scale faster.';
 
-      {/* Globe/particles placeholder */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full border border-white/5 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent pointer-events-none" />
+  return (
+    <section
+      id="hero"
+      className="relative w-full overflow-hidden bg-bg-black h-[clamp(660px,52.08vw,1000px)]"
+    >
+      {/* Drifting dot field across the whole hero */}
+      <ParticlesCanvas
+        id="hero-particles"
+        className="absolute inset-0 z-0"
+        density={120}
+        opacity={0.45}
+      />
+
+      {/* Rotating sphere of dots, upper centre */}
+      <div className="pointer-events-none absolute left-1/2 top-[5%] z-0 aspect-square w-[min(740px,72vw)] -translate-x-1/2 mask-sphere">
+        <DotSphere />
+      </div>
+
+      {/* Soft glow sitting behind the translucent search card */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-[58%] z-0 aspect-[1380/958] w-[min(1380px,92vw)] -translate-x-1/2"
+        style={{
+          background:
+            'radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.20) 0%, rgba(150,195,255,0.09) 28%, transparent 60%)',
+        }}
+      />
+
+      {/* Corner glows */}
+      <div aria-hidden className="hero-glow-blue z-0" />
+      <div aria-hidden className="hero-glow-green z-0" />
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center px-4 pt-10 pb-20">
-        
-        {/* Capabilities Pill */}
-        <div className="flex items-center gap-3 bg-black/40 border border-white/10 rounded-full p-1 pr-4 mb-8 backdrop-blur-sm">
-          <span className="bg-brand-blue text-white text-xs font-bold px-3 py-1.5 rounded-full">
+      <div className="shell relative z-10 flex h-full flex-col items-center text-center pt-[clamp(110px,14.48vw,278px)]">
+        {/* Capabilities badge */}
+        <div className="inline-flex items-center gap-[clamp(8px,0.68vw,13px)] rounded-full bg-black/70 p-[clamp(5px,0.47vw,9px)] pr-[clamp(12px,1.2vw,23px)] backdrop-blur-sm">
+          <span className="gradient-btn inline-flex h-[clamp(24px,1.67vw,32px)] items-center justify-center rounded-full px-[clamp(10px,0.78vw,15px)] text-d14 font-medium text-white">
             Capabilities
           </span>
-          <span className="text-white text-xs font-medium">Digital Transformation</span>
+          <span className="text-d16 font-medium text-white">
+            Digital Transformation
+          </span>
         </div>
 
         {/* Headline */}
-        <h1 className="text-[40px] md:text-[60px] lg:text-[72px] font-medium text-white leading-[1.1] tracking-normal text-center mb-6 font-sans max-w-4xl">
-          Building Next-gen AI-ready Software
+        <h1 className="mt-[clamp(16px,2.45vw,47px)] max-w-[1400px] text-d80 font-normal leading-[1.21] text-white">
+          {title}
         </h1>
 
-        {/* Subheadline */}
-        <p className="text-sm md:text-base text-text-light max-w-2xl text-center mb-16 whitespace-pre-line">
-          Building custom software and intelligent platforms since 1987 to help global
-          enterprises modernize and scale faster.
+        {/* Sub-headline */}
+        <p className="mt-[clamp(10px,0.9vw,14px)] whitespace-pre-line text-d18 font-normal leading-[1.36] text-text-footer">
+          {description}
         </p>
 
-        {/* Search Bar / Chat Input Panel */}
-        <div className="w-full max-w-[700px] glass rounded-2xl p-4 flex flex-col gap-6 mx-auto border border-white/20 bg-black/40 shadow-2xl">
-          {/* Input field */}
-          <div className="flex items-center justify-between w-full">
-             <input 
-               type="text" 
-               placeholder="Ask SPEC to anything.." 
-               className="w-full bg-transparent outline-none text-white text-sm placeholder-white/50"
-             />
-          </div>
+        {/* Prompt / search card */}
+        <div className="glass mt-[clamp(26px,4.27vw,82px)] flex w-[min(835px,100%)] flex-col rounded-[16px] p-[clamp(13px,1.09vw,21px)] text-left shadow-2xl">
+          <label htmlFor="hero-prompt" className="sr-only">
+            Ask SPEC anything
+          </label>
+          <input
+            id="hero-prompt"
+            type="text"
+            placeholder="Ask SPEC to anything..."
+            className="w-full bg-transparent font-nunito text-d18 leading-[clamp(20px,1.25vw,24px)] text-white outline-none placeholder:text-white/85"
+          />
 
-          {/* Footer with quick links + send button */}
-          <div className="flex items-center justify-between gap-4 mt-4 border-t border-white/10 pt-4">
-            <div className="flex flex-wrap items-center gap-2">
-              {['Modernize Legacy Software', 'Build a Business Application', 'AI to Our Product'].map((label) => (
-                <span
-                  key={label}
-                  className="text-[10px] md:text-xs font-medium px-3 py-1.5 rounded-full bg-white/10 text-white/80 cursor-pointer hover:bg-white/20 transition-colors whitespace-nowrap"
+          <div className="mt-0.5 flex items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-[clamp(6px,0.63vw,12px)]">
+              {QUICK_PROMPTS.map((prompt) => (
+                <button
+                  key={prompt}
+                  type="button"
+                  className="inline-flex h-[clamp(26px,1.67vw,32px)] items-center rounded-full bg-glass-pill px-[clamp(10px,0.78vw,15px)] font-nunito text-d12 font-semibold whitespace-nowrap text-white transition-colors hover:bg-white/20"
                 >
-                  {label}
-                </span>
+                  {prompt}
+                </button>
               ))}
             </div>
-            {/* Send button — gradient */}
-            <button className="h-8 w-8 rounded-full gradient-btn flex items-center justify-center text-white shrink-0 hover:brightness-110 transition-all">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12h14" />
+
+            <button
+              type="submit"
+              aria-label="Submit prompt"
+              className="gradient-btn flex size-[clamp(30px,1.88vw,36px)] shrink-0 items-center justify-center rounded-full text-white transition-[filter] hover:brightness-110"
+            >
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden
+              >
+                <path d="M5 12h13" />
                 <path d="m12 5 7 7-7 7" />
               </svg>
             </button>
           </div>
         </div>
       </div>
-    </section>
-  );
-}
-
-export function HeroSkeleton() {
-  return (
-    <section className="relative w-full min-h-screen flex items-center justify-center bg-bg-black overflow-hidden pt-24">
-      <div className="h-20 w-3/4 bg-white/10 rounded-lg animate-pulse" />
     </section>
   );
 }

@@ -1,96 +1,69 @@
 'use client';
 
-import { useMemo } from 'react';
-import Particles, { ParticlesProvider } from '@tsparticles/react';
-import type { Engine } from '@tsparticles/engine';
-import { loadSlim } from '@tsparticles/slim';
+import { useEffect, useMemo, useState } from 'react';
+import { Particles } from '@tsparticles/react';
+import type { ISourceOptions } from '@tsparticles/engine';
 
 interface ParticlesCanvasProps {
   id?: string;
   className?: string;
-  variant?: 'globe' | 'dots';
+  /** Dot count. The hero uses a denser field than the inner sections. */
+  density?: number;
+  opacity?: number;
 }
 
+/**
+ * The faint drifting dot field layered over the dark sections. Relies on
+ * `ParticlesProviderRoot` having loaded the engine.
+ */
 export default function ParticlesCanvas({
   id = 'tsparticles',
   className,
-  variant = 'globe',
+  density = 90,
+  opacity = 0.35,
 }: ParticlesCanvasProps) {
-  const init = async (engine: Engine) => {
-    await loadSlim(engine);
-  };
+  // Canvas output differs between server and client, so only render once mounted.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
-  const options = useMemo(() => {
-    if (variant === 'globe') {
-      return {
-        background: { color: { value: 'transparent' } },
-        fpsLimit: 60,
-        interactivity: {
-          events: {
-            onHover: { enable: true, mode: 'repulse' },
-          },
-          modes: {
-            repulse: { distance: 100, duration: 0.4 },
-          },
-        },
-        particles: {
-          color: { value: '#ffffff' },
-          links: { enable: false },
-          move: {
-            direction: 'none' as const,
-            enable: true,
-            outModes: { default: 'bounce' as const },
-            random: true,
-            speed: 0.5,
-            straight: false,
-          },
-          number: { density: { enable: true }, value: 200 },
-          opacity: {
-            value: { min: 0.1, max: 0.8 },
-            animation: { enable: true, speed: 1, sync: false },
-          },
-          shape: { type: 'circle' },
-          size: { value: { min: 0.5, max: 1.5 } },
-        },
-        detectRetina: true,
-      };
-    }
-
-    // Default 'dots' variant for other sections
-    return {
+  const options = useMemo<ISourceOptions>(
+    () => ({
+      fullScreen: { enable: false },
       background: { color: { value: 'transparent' } },
       fpsLimit: 60,
+      detectRetina: true,
       interactivity: {
         events: {
           onHover: { enable: true, mode: 'bubble' },
         },
         modes: {
-          bubble: { distance: 200, size: 2, duration: 2, opacity: 0.8 },
+          bubble: { distance: 160, size: 2.5, duration: 2, opacity: 0.9 },
         },
       },
       particles: {
-        color: { value: '#ffffff' },
+        color: { value: '#FFFFFF' },
         links: { enable: false },
         move: {
-          direction: 'none' as const,
+          direction: 'none',
           enable: true,
-          outModes: { default: 'out' as const },
+          outModes: { default: 'out' },
           random: true,
-          speed: 0.2,
+          speed: 0.18,
           straight: false,
         },
-        number: { density: { enable: true }, value: 60 },
-        opacity: { value: 0.15 },
+        number: { density: { enable: true }, value: density },
+        opacity: {
+          value: { min: opacity * 0.25, max: opacity },
+          animation: { enable: true, speed: 0.5, sync: false },
+        },
         shape: { type: 'circle' },
-        size: { value: 1 },
+        size: { value: { min: 0.4, max: 1.2 } },
       },
-      detectRetina: true,
-    };
-  }, [variant]);
-
-  return (
-    <ParticlesProvider init={init}>
-      <Particles id={id} className={className} options={options} />
-    </ParticlesProvider>
+    }),
+    [density, opacity]
   );
+
+  if (!mounted) return <div className={className} aria-hidden />;
+
+  return <Particles id={id} className={className} options={options} />;
 }

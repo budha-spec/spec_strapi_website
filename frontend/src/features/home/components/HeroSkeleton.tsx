@@ -1,24 +1,14 @@
-import { SectionWrapper } from '@/components/ui/SectionWrapper';
-
 export function HeroSkeleton() {
   return (
-    <SectionWrapper
-      className="min-h-screen flex items-center justify-center bg-bg-black pt-32 pb-20"
-      containerClassName="flex flex-col items-center justify-center text-center w-full"
-    >
-      <div className="w-full max-w-4xl mx-auto flex flex-col items-center animate-pulse">
-        {/* Tag Pill Skeleton */}
-        <div className="h-8 w-48 bg-stroke-dark rounded-full mb-8" />
-
-        {/* Headline Skeleton */}
-        <div className="h-16 md:h-24 lg:h-32 w-full max-w-3xl bg-stroke-dark rounded-2xl mb-6" />
-
-        {/* Subheadline Skeleton */}
-        <div className="h-6 w-3/4 max-w-2xl bg-stroke-dark rounded-full mb-12" />
-
-        {/* Search Bar Skeleton */}
-        <div className="w-full max-w-3xl h-32 bg-stroke-dark rounded-2xl" />
+    <section className="relative w-full overflow-hidden bg-bg-black h-[clamp(660px,52.08vw,1000px)]">
+      <div className="shell flex h-full flex-col items-center pt-[clamp(110px,14.48vw,278px)]">
+        <div className="flex w-full max-w-[1400px] animate-pulse flex-col items-center">
+          <div className="h-[clamp(24px,2.6vw,50px)] w-[min(346px,80%)] rounded-full bg-white/10" />
+          <div className="mt-[clamp(16px,2.45vw,47px)] h-[clamp(40px,5vw,97px)] w-full rounded-2xl bg-white/10" />
+          <div className="mt-[clamp(10px,0.9vw,14px)] h-[clamp(32px,2.3vw,45px)] w-[min(660px,90%)] rounded-xl bg-white/10" />
+          <div className="mt-[clamp(26px,4.27vw,82px)] h-[clamp(84px,5.31vw,102px)] w-[min(835px,100%)] rounded-[16px] bg-white/10" />
+        </div>
       </div>
-    </SectionWrapper>
+    </section>
   );
 }
