@@ -40,6 +40,17 @@ export interface SharedCaseStudies extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedContactUs extends Struct.ComponentSchema {
+  collectionName: 'components_shared_contact_uses';
+  info: {
+    displayName: 'Contact Us';
+  };
+  attributes: {
+    txt: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedEnterpriseSolution extends Struct.ComponentSchema {
   collectionName: 'components_shared_enterprise_solutions';
   info: {
@@ -193,6 +204,18 @@ export interface SharedServiceCards extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedServices extends Struct.ComponentSchema {
+  collectionName: 'components_shared_services';
+  info: {
+    displayName: 'Services';
+  };
+  attributes: {
+    services: Schema.Attribute.Relation<'oneToMany', 'api::service.service'>;
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedServicesCard extends Struct.ComponentSchema {
   collectionName: 'components_shared_services_cards';
   info: {
@@ -204,6 +227,17 @@ export interface SharedServicesCard extends Struct.ComponentSchema {
     number: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedTableOfContentItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_table_of_content_items';
+  info: {
+    displayName: 'Table Of Content Item';
+  };
+  attributes: {
+    contentId: Schema.Attribute.String & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -242,6 +276,7 @@ declare module '@strapi/strapi' {
       'shared.blogs': SharedBlogs;
       'shared.capabilities-item': SharedCapabilitiesItem;
       'shared.case-studies': SharedCaseStudies;
+      'shared.contact-us': SharedContactUs;
       'shared.enterprise-solution': SharedEnterpriseSolution;
       'shared.enterprise-solution-item': SharedEnterpriseSolutionItem;
       'shared.faq-item': SharedFaqItem;
@@ -254,7 +289,9 @@ declare module '@strapi/strapi' {
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;
       'shared.service-cards': SharedServiceCards;
+      'shared.services': SharedServices;
       'shared.services-card': SharedServicesCard;
+      'shared.table-of-content-item': SharedTableOfContentItem;
       'shared.testimonial-item': SharedTestimonialItem;
       'shared.testimonial-section': SharedTestimonialSection;
     }

@@ -480,7 +480,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiBlogPostBlogPost extends Struct.CollectionTypeSchema {
   collectionName: 'blog_posts';
   info: {
-    displayName: 'Blog Post';
+    displayName: 'Blog';
     pluralName: 'blog-posts';
     singularName: 'blog-post';
   };
@@ -488,12 +488,13 @@ export interface ApiBlogPostBlogPost extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    category: Schema.Attribute.Relation<'oneToMany', 'api::category.category'>;
+    category: Schema.Attribute.Relation<'manyToMany', 'api::category.category'>;
     content: Schema.Attribute.Blocks;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     excerpt: Schema.Attribute.Text;
+    faq: Schema.Attribute.Component<'shared.faqs', true>;
     featuredImage: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
     > &
@@ -506,6 +507,10 @@ export interface ApiBlogPostBlogPost extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    tableOfContent: Schema.Attribute.Component<
+      'shared.table-of-content-item',
+      true
+    >;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -562,8 +567,8 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    blog_post: Schema.Attribute.Relation<
-      'manyToOne',
+    blog_posts: Schema.Attribute.Relation<
+      'manyToMany',
       'api::blog-post.blog-post'
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -661,7 +666,7 @@ export interface ApiCsTagCsTag extends Struct.CollectionTypeSchema {
 export interface ApiPagePage extends Struct.CollectionTypeSchema {
   collectionName: 'pages';
   info: {
-    displayName: 'pages';
+    displayName: 'Pages';
     pluralName: 'pages';
     singularName: 'page';
   };
@@ -694,6 +699,59 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::page.page'> &
       Schema.Attribute.Private;
     parent: Schema.Attribute.Relation<'manyToMany', 'api::page.page'>;
+    publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiServiceService extends Struct.CollectionTypeSchema {
+  collectionName: 'services';
+  info: {
+    displayName: 'Services';
+    pluralName: 'services';
+    singularName: 'service';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    children: Schema.Attribute.Relation<'manyToMany', 'api::service.service'>;
+    content: Schema.Attribute.DynamicZone<
+      [
+        'shared.rich-text',
+        'shared.service-cards',
+        'shared.gallery',
+        'shared.enterprise-solution',
+        'shared.key-metrics',
+        'shared.key-metrics-section',
+        'shared.testimonial-section',
+        'shared.blogs',
+        'shared.home-page-section1',
+        'shared.case-studies',
+        'shared.home-blogs',
+        'shared.services',
+        'shared.contact-us',
+      ]
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::service.service'
+    > &
+      Schema.Attribute.Private;
+    parent: Schema.Attribute.Relation<'manyToMany', 'api::service.service'>;
     publishedAt: Schema.Attribute.DateTime;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
@@ -1224,6 +1282,7 @@ declare module '@strapi/strapi' {
       'api::cs-industry.cs-industry': ApiCsIndustryCsIndustry;
       'api::cs-tag.cs-tag': ApiCsTagCsTag;
       'api::page.page': ApiPagePage;
+      'api::service.service': ApiServiceService;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
