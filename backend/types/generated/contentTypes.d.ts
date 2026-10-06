@@ -736,6 +736,8 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
         'shared.home-page-section1',
         'shared.case-studies',
         'shared.home-blogs',
+        'shared.services',
+        'shared.contact-us',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;

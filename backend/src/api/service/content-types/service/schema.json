@@ -52,7 +52,9 @@
         "shared.blogs",
         "shared.home-page-section1",
         "shared.case-studies",
-        "shared.home-blogs"
+        "shared.home-blogs",
+        "shared.services",
+        "shared.contact-us"
       ]
     },
     "children": {
