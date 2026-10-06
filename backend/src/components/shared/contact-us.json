@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_contact_uses",
+  "info": {
+    "displayName": "Contact Us"
+  },
+  "options": {},
+  "attributes": {
+    "txt": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "config": {}
+}

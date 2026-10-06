@@ -4,7 +4,7 @@
   "info": {
     "singularName": "blog-post",
     "pluralName": "blog-posts",
-    "displayName": "Blog Post"
+    "displayName": "Blog"
   },
   "options": {
     "draftAndPublish": true
@@ -39,9 +39,19 @@
     },
     "category": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToMany",
       "target": "api::category.category",
-      "mappedBy": "blog_post"
+      "mappedBy": "blog_posts"
+    },
+    "faq": {
+      "type": "component",
+      "component": "shared.faqs",
+      "repeatable": true
+    },
+    "tableOfContent": {
+      "type": "component",
+      "component": "shared.table-of-content-item",
+      "repeatable": true
     }
   }
 }
