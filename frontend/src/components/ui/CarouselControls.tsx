@@ -3,21 +3,22 @@
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
+/** Long thin arrow used inside the 68×40 Figma pills. */
 const Arrow = ({ flip }: { flip?: boolean }) => (
   <svg
-    width="17"
-    height="17"
-    viewBox="0 0 24 24"
+    width="22"
+    height="16"
+    viewBox="0 0 22 16"
     fill="none"
     stroke="currentColor"
-    strokeWidth="2"
+    strokeWidth="1.5"
     strokeLinecap="round"
     strokeLinejoin="round"
     className={flip ? 'rotate-180' : undefined}
     aria-hidden
   >
-    <path d="M5 12h13" />
-    <path d="m12 5 7 7-7 7" />
+    <path d="M1 8h20" />
+    <path d="M14.5 2.5 20.5 8 14.5 13.5" />
   </svg>
 );
 

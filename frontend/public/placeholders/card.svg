@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="360" viewBox="0 0 800 360" fill="none" role="img" aria-label="Image placeholder">
+  <rect width="800" height="360" fill="#E6E6E6"/>
+  <g stroke="#CFCFCF" stroke-width="16">
+    <path d="M-40 40L40 -40M-40 120L120 -40M-40 200L200 -40M-40 280L280 -40M-40 360L360 -40M40 400L440 -40M120 400L520 -40M200 400L600 -40M280 400L680 -40M360 400L760 -40M440 400L840 -40M520 400L840 80M600 400L840 160M680 400L840 240"/>
+  </g>
+  <rect x="352" y="132" width="96" height="72" rx="8" stroke="#9A9A9A" stroke-width="3"/>
+  <circle cx="382" cy="156" r="8" stroke="#9A9A9A" stroke-width="3"/>
+  <path d="M360 188L388 164L420 188" stroke="#9A9A9A" stroke-width="3" stroke-linejoin="round"/>
+  <text x="400" y="232" text-anchor="middle" fill="#8A8A8A" font-family="Inter, Arial, sans-serif" font-size="14" letter-spacing="1.5">IMAGE</text>
+</svg>

@@ -1,76 +1,58 @@
-import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { CountUp } from '@/components/ui/CountUp';
+import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
+import { cmsText } from '@/lib/media';
+import type { HomeMetricsBlock } from '../types/home.types';
 
-/**
- * Each value carries its own gradient angle — Figma rotates the ramp slightly
- * per number so the colour lands differently across each one.
- */
-const STATS = [
-  {
-    id: 1,
-    value: '4X',
-    angle: '-82.71deg',
-    title: 'Faster insights with\ncustom AI',
-    description: 'Turn complex clinical data into actionable\nintelligence faster.',
-  },
-  {
-    id: 2,
-    value: '60%',
-    angle: '-75.99deg',
-    title: 'Higher adoption of business\nintelligence',
-    description:
-      'Automate repetitive workflows and connect\nshipment data, documentation and operations.',
-  },
-  {
-    id: 3,
-    value: '25%',
-    angle: '-77.60deg',
-    title: 'Lower application costs\nthrough modernization',
-    description: 'Lower application costs through\nmodernization',
-  },
-  {
-    id: 4,
-    value: '50%',
-    angle: '-76.08deg',
-    title: 'Less manual work across\nfreight operations',
-    description:
-      'Automate repetitive workflows and connect\nshipment data, documentation and operations.',
-  },
-];
+/** Presentation-only angles so each figure lands on a different part of the ramp. */
+const ANGLES = ['-82.71deg', '-75.99deg', '-77.60deg', '-76.08deg'];
 
-export function StatsSection() {
+interface StatsSectionProps {
+  data: HomeMetricsBlock;
+}
+
+export function StatsSection({ data }: StatsSectionProps) {
+  const metrics = data.keyMetrics ?? [];
+
   return (
     <section className="relative w-full overflow-hidden bg-bg-darker pt-[clamp(48px,6.25vw,120px)] pb-[clamp(48px,6.15vw,118px)]">
       <div className="shell">
-        <SectionEyebrow gradient="impact">Proven Impact</SectionEyebrow>
+        {data.title && (
+          <SectionEyebrow
+            gradient="impact"
+            className="text-[clamp(1.125rem,2.031vw,1.625rem)]"
+          >
+            {cmsText(data.title)}
+          </SectionEyebrow>
+        )}
 
-        <h2 className="mt-[clamp(8px,0.73vw,14px)] max-w-[788px] text-d40 font-medium leading-[1.2] text-white">
-          Delivering Measurable Business Outcomes and Technical Excellence for
-          Industry Leaders
-        </h2>
+        {data.description && (
+          <h2 className="mt-[clamp(8px,0.73vw,14px)] max-w-[788px] text-[clamp(1.75rem,3.125vw,2.5rem)] font-medium leading-[1.2] text-white">
+            {cmsText(data.description)}
+          </h2>
+        )}
 
-        <div className="mt-[clamp(40px,6.77vw,130px)] grid grid-cols-1 gap-x-[clamp(16px,1.46vw,28px)] gap-y-[clamp(32px,2.6vw,50px)] sm:grid-cols-2 lg:grid-cols-4">
-          {STATS.map((stat, i) => (
-            <div key={stat.id} className="flex flex-col">
+        <div className="mt-[clamp(40px,6.77vw,130px)] grid grid-cols-1 gap-x-[clamp(16px,1.46vw,28px)] gap-y-[clamp(32px,2.6vw,50px)] sm:grid-cols-2 lg:grid-cols-4 lg:gap-y-[clamp(10px,0.94vw,18px)]">
+          {metrics.map((stat, i) => (
+            <div
+              key={stat.id}
+              className="grid content-start gap-y-[clamp(10px,0.94vw,18px)] lg:row-span-4 lg:grid-rows-subgrid lg:gap-y-0"
+            >
               <CountUp
-                value={stat.value}
+                value={cmsText(stat.number)}
                 delayMs={i * 160}
-                className="gradient-text-impact w-fit whitespace-nowrap text-d60 font-semibold leading-[1.2]"
-                style={{ ['--grad-angle' as string]: stat.angle }}
+                className="gradient-text-impact mb-[clamp(4px,0.67vw,13px)] w-fit self-end whitespace-nowrap text-[clamp(2rem,4.688vw,3.75rem)] font-semibold leading-[1.2]"
+                style={{ ['--grad-angle' as string]: ANGLES[i % ANGLES.length] }}
               />
 
-              {/* Title, rule and description sit on a uniform 18px rhythm */}
-              <div className="mt-[clamp(14px,1.61vw,31px)] flex flex-col gap-[clamp(10px,0.94vw,18px)]">
-                <h4 className="whitespace-pre-line text-d26 font-light leading-[1.2] text-white">
-                  {stat.title}
-                </h4>
+              <h4 className="self-start whitespace-pre-line text-[clamp(1.125rem,2.031vw,1.625rem)] font-light leading-[1.2] text-white">
+                {cmsText(stat.name).replace(/ {2,}/g, '\n').trim()}
+              </h4>
 
-                <div aria-hidden className="h-px w-full bg-[#3D3D3C]" />
+              <div aria-hidden className="h-px w-full self-center bg-[#3D3D3C]" />
 
-                <p className="whitespace-pre-line text-d18 font-normal leading-[1.4] text-text-light">
-                  {stat.description}
-                </p>
-              </div>
+              <p className="self-start whitespace-pre-line text-[clamp(0.875rem,1.406vw,1.125rem)] font-normal leading-[1.4] text-text-light">
+                {cmsText(stat.description)}
+              </p>
             </div>
           ))}
         </div>

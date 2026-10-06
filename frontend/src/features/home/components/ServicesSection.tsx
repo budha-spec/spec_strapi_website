@@ -1,109 +1,92 @@
-import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
+import Link from 'next/link';
+import { AccentHeading } from '@/components/ui/AccentHeading';
+import { CmsImage } from '@/components/ui/CmsImage';
 import { ExploreMore } from '@/components/ui/ExploreMore';
+import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
+import { cmsText, hrefPath } from '@/lib/media';
+import type { HomeSolutionsBlock } from '../types/home.types';
 
-const SERVICES = [
-  {
-    id: 1,
-    title: 'Services',
-    image: '/services/service01.png',
-    tags: [
-      'Software Engineering',
-      'App Development',
-      'Digital Transformation',
-      'Data Engineering',
-      'AI Capabilities',
-    ],
-  },
-  {
-    id: 2,
-    title: 'Industries',
-    image: '/services/service02.png',
-    tags: [
-      'Logistics & Freight',
-      'Healthcare',
-      'Manufacturing',
-      'Energy & Utilities',
-      'Retail',
-    ],
-  },
-  {
-    id: 3,
-    title: 'Live BI Visualization',
-    image: '/services/service03.png',
-    tags: [
-      'CEO Dashboard',
-      'CMO Dashboard',
-      'CFO Dashboard',
-      'CRM & Lead Analysis',
-      'Sales Analytics Reports',
-    ],
-  },
-  {
-    id: 4,
-    title: 'Whitepaper',
-    image: '/services/service04.png',
-    tags: [
-      'Agentic AI in Enterprise Workflows',
-      'Monolith to Cloud-Native Playbook',
-      'Building Resilient Microservices',
-    ],
-  },
-];
+interface ServicesSectionProps {
+  data: HomeSolutionsBlock;
+}
 
-export function ServicesSection() {
+export function ServicesSection({ data }: ServicesSectionProps) {
+  const items = data.enterpriseSolution ?? [];
+
   return (
     <section
       id="services"
       className="w-full bg-bg-light pt-[clamp(30px,3.0vw,58px)] pb-[clamp(40px,3.65vw,70px)]"
     >
       <div className="shell">
-        <SectionEyebrow>Core Capabilities</SectionEyebrow>
+        {data.title && <SectionEyebrow>{cmsText(data.title)}</SectionEyebrow>}
 
-        <h2 className="mt-[clamp(6px,0.52vw,10px)] max-w-[1200px] text-d40 font-medium leading-[1.2] text-text-heading">
-          Engineering Scalable Solutions for Enterprise{' '}
-          <span
-            className="gradient-text font-semibold"
-            style={{ ['--grad-angle' as string]: '-78.66deg' }}
-          >
-            Growth
-          </span>
-        </h2>
+        {data.subTitle && (
+          <h2 className="mt-[clamp(6px,0.52vw,10px)] max-w-[1200px] text-d40 font-medium leading-[1.2] text-text-heading">
+            <AccentHeading
+              text={cmsText(data.subTitle)}
+              accentClassName="gradient-text font-semibold"
+            />
+          </h2>
+        )}
 
         <div className="mt-[clamp(24px,3.65vw,70px)] grid grid-cols-1 gap-[clamp(16px,1.67vw,32px)] sm:grid-cols-2 lg:grid-cols-4">
-          {SERVICES.map((service) => (
-            <article
-              key={service.id}
-              className="group flex h-[clamp(380px,25.52vw,490px)] flex-col overflow-hidden rounded-[16px] bg-bg-white transition-shadow hover:shadow-lg"
-            >
-              <div className="flex flex-1 flex-col p-[clamp(16px,1.3vw,25px)]">
-                <h3 className="gradient-text w-fit text-d22 font-bold">
-                  {service.title}
-                </h3>
+          {items.map((service) => {
+            const pages = (service.pages ?? []).filter((page) => page.title);
 
-                <ul className="mt-[clamp(14px,1.25vw,24px)] flex flex-wrap gap-[clamp(8px,0.63vw,12px)]">
-                  {service.tags.map((tag) => (
-                    <li
-                      key={tag}
-                      className="flex h-[clamp(30px,1.98vw,38px)] items-center rounded-full border border-stroke-main px-[clamp(10px,0.73vw,14px)] text-d14 text-text-primary"
-                    >
-                      {tag}
-                    </li>
-                  ))}
-                </ul>
+            return (
+              <article
+                key={service.id}
+                className="capability-card group flex h-full flex-col overflow-hidden rounded-[16px] bg-bg-white"
+              >
+                <div className="flex flex-1 flex-col p-[clamp(16px,1.3vw,25px)]">
+                  <h3 className="gradient-text w-fit text-d22 font-bold">
+                    {cmsText(service.title)}
+                  </h3>
 
-                <ExploreMore className="mt-auto pt-6" />
-              </div>
+                  <div className="capability-swap mt-[clamp(12px,1vw,18px)]">
+                    {service.description && (
+                      <p className="capability-desc text-d16 leading-[1.45] text-text-secondary">
+                        {cmsText(service.description)}
+                      </p>
+                    )}
 
-              <div className="h-[clamp(130px,9.43vw,181px)] w-full shrink-0 overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={service.image}
-                  alt=""
-                  className="size-full object-cover"
-                />
-              </div>
-            </article>
-          ))}
+                    {pages.length > 0 && (
+                      <ul className="capability-tags flex flex-wrap content-start gap-[clamp(8px,0.63vw,12px)]">
+                        {pages.map((page) => (
+                          <li key={page.id}>
+                            <Link
+                              href={hrefPath(page.slug)}
+                              tabIndex={-1}
+                              className="capability-tag flex h-[clamp(30px,1.98vw,38px)] items-center rounded-full border border-stroke-main px-[clamp(10px,0.73vw,14px)] text-d14 text-text-primary"
+                            >
+                              {cmsText(page.title)}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+
+                  <ExploreMore
+                    href={hrefPath(service.url)}
+                    label={cmsText(service.txt) || undefined}
+                    size="lg"
+                    className="mt-auto pt-6"
+                  />
+                </div>
+
+                <div className="h-[clamp(130px,9.43vw,181px)] w-full shrink-0 overflow-hidden">
+                  <CmsImage
+                    media={service.image}
+                    fallback="card"
+                    alt=""
+                    className="capability-image size-full object-cover"
+                  />
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

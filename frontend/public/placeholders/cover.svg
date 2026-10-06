@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" fill="none" role="img" aria-label="Cover image placeholder">
+  <rect width="1200" height="800" fill="#E6E6E6"/>
+  <g stroke="#CFCFCF" stroke-width="20">
+    <path d="M-60 80L80 -60M-60 240L240 -60M-60 400L400 -60M-60 560L560 -60M-60 720L720 -60M-60 880L880 -60M100 860L1060 -60M260 860L1160 0M420 860L1260 20M580 860L1260 180M740 860L1260 340M900 860L1260 500"/>
+  </g>
+  <rect x="540" y="340" width="120" height="90" rx="10" stroke="#9A9A9A" stroke-width="3"/>
+  <circle cx="578" cy="370" r="10" stroke="#9A9A9A" stroke-width="3"/>
+  <path d="M552 410L586 380L628 410" stroke="#9A9A9A" stroke-width="3" stroke-linejoin="round"/>
+  <text x="600" y="468" text-anchor="middle" fill="#8A8A8A" font-family="Inter, Arial, sans-serif" font-size="16" letter-spacing="1.8">IMAGE</text>
+</svg>

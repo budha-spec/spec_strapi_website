@@ -1,57 +1,26 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
-import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
+import { AccentHeading } from '@/components/ui/AccentHeading';
 import { CarouselControls } from '@/components/ui/CarouselControls';
+import { CmsImage } from '@/components/ui/CmsImage';
+import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
+import { cmsText } from '@/lib/media';
+import type { HomeTestimonialsBlock } from '../types/home.types';
 
-/**
- * Static portraits from `.tmp/Group 1597883515*.png` until Strapi media
- * is wired. Swap `image` for the API URL later — names and roles stay.
- */
-const TESTIMONIALS = [
-  {
-    id: 1,
-    name: 'Marwa Abdelfattah',
-    role: 'Founder, CoAuthor INC',
-    image: '/spotlight/marwa.png',
-    quote:
-      'It was good experience. Very grateful. Professional and patient developers. Accessible and can reach out at any anytime.',
-  },
-  {
-    id: 2,
-    name: 'Fredrik Wittboldt',
-    role: 'CEO, Dynamic Documents',
-    image: '/spotlight/fredrik.png',
-    quote:
-      'Very well managed & good delivery. They deliver insights, ideas and suggestions so we can deliver a better project. Happy with the delivery.',
-  },
-  {
-    id: 3,
-    name: 'Kriti Anand',
-    role: 'CoFounder, CAREERKUL',
-    image: '/spotlight/kriti.png',
-    quote:
-      'SPEC helped us adapt to the changing needs and create a comprehensive portal that could do AI Psychometric Analysis and track incoming data. I thank SPEC INDIA and hope the support continues in the future too.',
-  },
-  {
-    id: 4,
-    name: 'Johan Scott',
-    role: 'CTO, Redeal STHLM',
-    image: '/spotlight/johan.png',
-    quote:
-      'SPEC provided competent and a dedicated team, we are very happy with team work, competence and quick support. Would highly recommend them.',
-  },
-];
+interface TestimonialsProps {
+  data: HomeTestimonialsBlock;
+}
 
-export function Testimonials() {
-  const count = TESTIMONIALS.length;
+export function Testimonials({ data }: TestimonialsProps) {
+  const people = data.testimonials ?? [];
+  const count = people.length;
   const [index, setIndex] = useState(0);
   const [animate, setAnimate] = useState(true);
   const [step, setStep] = useState(0);
   const viewportRef = useRef<HTMLDivElement>(null);
 
-  const slides = [...TESTIMONIALS, ...TESTIMONIALS];
+  const slides = count > 0 ? [...people, ...people] : [];
 
   useEffect(() => {
     const viewport = viewportRef.current;
@@ -68,10 +37,11 @@ export function Testimonials() {
     const observer = new ResizeObserver(measure);
     observer.observe(viewport);
     return () => observer.disconnect();
-  }, []);
+  }, [count]);
 
   const go = useCallback(
     (dir: -1 | 1) => {
+      if (count === 0) return;
       const reduce =
         typeof window !== 'undefined' &&
         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -110,97 +80,118 @@ export function Testimonials() {
   return (
     <section className="relative w-full overflow-hidden bg-bg-darker pt-[clamp(48px,6.25vw,120px)] pb-[clamp(48px,6.25vw,120px)]">
       <div className="shell">
-        <SectionEyebrow
-          gradient="impact"
-          angle="-54.53deg"
-          className="text-d22"
-        >
-          Client Spotlight
-        </SectionEyebrow>
+        {data.title && (
+          <SectionEyebrow gradient="impact" angle="-54.53deg" className="text-d22">
+            {cmsText(data.title)}
+          </SectionEyebrow>
+        )}
 
-        <h2 className="mt-[clamp(8px,0.78vw,15px)] flex flex-wrap items-baseline gap-x-[13px] text-d40 font-medium leading-[1.2] text-white">
-          <span>What Enterprise Leaders Say About</span>
-          <span
-            className="gradient-text-impact font-semibold"
-            style={{ ['--grad-angle' as string]: '-57.76deg' }}
-          >
-            Partnering Us
-          </span>
-        </h2>
+        {data.subTitle && (
+          <h2 className="mt-[clamp(8px,0.78vw,15px)] text-d40 font-medium leading-[1.2] text-white">
+            <AccentHeading
+              text={cmsText(data.subTitle)}
+              accentClassName="gradient-text-impact font-semibold"
+            />
+          </h2>
+        )}
 
-        <div ref={viewportRef} className="mt-[clamp(24px,3.33vw,64px)] overflow-hidden">
-          <div
-            onTransitionEnd={handleTransitionEnd}
-            style={{
-              transform: `translate3d(${-index * step}px, 0, 0)`,
-              transition: animate ? 'transform 500ms cubic-bezier(0.22, 1, 0.36, 1)' : 'none',
-              willChange: 'transform',
-            }}
-          >
-            <div className="spotlight-track">
-            {slides.map((person, i) => (
-              <figure
-                key={`${person.id}-${i}`}
-                aria-hidden={i >= count || undefined}
-                className="spotlight-card relative flex h-[clamp(400px,27.08vw,520px)] flex-col justify-end overflow-hidden rounded-[14px]"
-                style={{
-                  backgroundImage:
-                    'linear-gradient(-80.31deg, #56F72F 73.097%, #0C3CED 134.19%)',
-                }}
-              >
-                <Image
-                  src={person.image}
-                  alt={i < count ? person.name : ''}
-                  fill
-                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover object-top"
-                />
+        {count > 0 && (
+          <div ref={viewportRef} className="mt-[clamp(24px,3.33vw,64px)] overflow-hidden">
+            <div
+              onTransitionEnd={handleTransitionEnd}
+              style={{
+                transform: `translate3d(${-index * step}px, 0, 0)`,
+                transition: animate ? 'transform 500ms cubic-bezier(0.22, 1, 0.36, 1)' : 'none',
+                willChange: 'transform',
+              }}
+            >
+              <div className="spotlight-track">
+                {slides.map((person, i) => {
+                  const quote = cmsText(person.description);
+                  const play = (
+                    <>
+                      <span className="spotlight-play-icon flex size-[38px] shrink-0 items-center justify-center rounded-full">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                          <polygon points="6 3 21 12 6 21" />
+                        </svg>
+                      </span>
+                      <span className="flex-1 pr-1 text-d18 font-light">Play</span>
+                    </>
+                  );
 
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-b from-transparent to-black"
-                />
+                  return (
+                    <figure
+                      key={`${person.id}-${i}`}
+                      aria-hidden={i >= count || undefined}
+                      className="spotlight-card relative flex h-[clamp(400px,27.08vw,520px)] flex-col justify-end overflow-hidden rounded-[14px]"
+                      style={{
+                        backgroundImage:
+                          'linear-gradient(-80.31deg, #56F72F 73.097%, #0C3CED 134.19%)',
+                      }}
+                    >
+                      <CmsImage
+                        media={person.image}
+                        fallback="portrait"
+                        alt={i < count ? person.name : ''}
+                        className="absolute inset-0 size-full object-cover object-top"
+                      />
 
-                <figcaption className="relative z-10 flex flex-col items-center px-[clamp(16px,1.25vw,24px)] pb-[clamp(18px,1.56vw,30px)]">
-                  <button
-                    type="button"
-                    tabIndex={i >= count ? -1 : undefined}
-                    className="spotlight-play flex h-11 w-[120px] items-center rounded-full p-[3px]"
-                  >
-                    <span className="spotlight-play-icon flex size-[38px] shrink-0 items-center justify-center rounded-full">
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                        <polygon points="6 3 21 12 6 21" />
-                      </svg>
-                    </span>
-                    <span className="flex-1 pr-1 text-d18 font-light">Play</span>
-                  </button>
+                      <div
+                        aria-hidden
+                        className="pointer-events-none absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-b from-transparent to-black"
+                      />
 
-                  <div className="relative mt-[clamp(10px,1.3vw,25px)] grid w-full min-h-[5.5rem]">
-                    <div className="spotlight-identity col-start-1 row-start-1 text-center">
-                      <h4 className="text-d24 font-medium leading-[1.3] text-white">
-                        {person.name}
-                      </h4>
-                      <p className="mt-[clamp(2px,0.42vw,8px)] text-d16 leading-[1.3] text-white">
-                        {person.role}
-                      </p>
-                    </div>
-                    <p className="spotlight-quote col-start-1 row-start-1 px-1 text-center text-d16 leading-[1.4] text-white">
-                      {person.quote}
-                    </p>
-                  </div>
-                </figcaption>
-              </figure>
-            ))}
+                      <figcaption className="relative z-10 flex flex-col items-center px-[clamp(16px,1.25vw,24px)] pb-[clamp(18px,1.56vw,30px)]">
+                        {person.videoUrl ? (
+                          <a
+                            href={person.videoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            tabIndex={i >= count ? -1 : undefined}
+                            className="spotlight-play flex h-11 w-[120px] items-center rounded-full p-[3px]"
+                          >
+                            {play}
+                          </a>
+                        ) : (
+                          <span className="spotlight-play flex h-11 w-[120px] items-center rounded-full p-[3px]">
+                            {play}
+                          </span>
+                        )}
+
+                        <div className="relative mt-[clamp(10px,1.3vw,25px)] grid w-full min-h-[5.5rem]">
+                          <div className="spotlight-identity col-start-1 row-start-1 text-center">
+                            <h4 className="text-d24 font-medium leading-[1.3] text-white">
+                              {cmsText(person.name)}
+                            </h4>
+                            {person.designation && (
+                              <p className="mt-[clamp(2px,0.42vw,8px)] text-d16 leading-[1.3] text-white">
+                                {cmsText(person.designation)}
+                              </p>
+                            )}
+                          </div>
+                          {quote && (
+                            <p className="spotlight-quote col-start-1 row-start-1 px-1 text-center text-d16 leading-[1.4] text-white">
+                              {quote}
+                            </p>
+                          )}
+                        </div>
+                      </figcaption>
+                    </figure>
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
-        <CarouselControls
-          pill="gradient"
-          className="mt-[clamp(16px,1.56vw,30px)]"
-          onPrev={() => go(-1)}
-          onNext={() => go(1)}
-        />
+        {count > 1 && (
+          <CarouselControls
+            pill="gradient"
+            className="mt-[clamp(16px,1.56vw,30px)]"
+            onPrev={() => go(-1)}
+            onNext={() => go(1)}
+          />
+        )}
       </div>
     </section>
   );

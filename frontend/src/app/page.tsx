@@ -1,27 +1,12 @@
-import { Suspense } from 'react';
-import {
-  HeroSection,
-  HeroSkeleton,
-  ClientsStrip,
-  ServicesSection,
-  StatsSection,
-  CaseStudies,
-  Testimonials,
-  BlogSection,
-} from '@/features/home';
+import { fetchHomePage, HomeBlocks } from '@/features/home';
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { data } = await fetchHomePage();
+  const page = data[0];
+
   return (
     <main className="flex w-full flex-col bg-bg-white">
-      <Suspense fallback={<HeroSkeleton />}>
-        <HeroSection />
-      </Suspense>
-      <ClientsStrip />
-      <ServicesSection />
-      <StatsSection />
-      <CaseStudies />
-      <Testimonials />
-      <BlogSection />
+      <HomeBlocks blocks={page?.content ?? []} />
     </main>
   );
 }

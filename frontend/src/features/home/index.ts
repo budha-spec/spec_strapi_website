@@ -9,3 +9,4 @@ export * from './components/StatsSection';
 export * from './components/CaseStudies';
 export * from './components/Testimonials';
 export * from './components/BlogSection';
+export * from './components/HomeBlocks';
