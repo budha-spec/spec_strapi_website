@@ -102,13 +102,26 @@
     margin-inline: auto;
   }
 
-  /* ─── Brand gradient (green → blue, -54deg) ─────────── */
+  /* ───────────────────────────────────────────────────────
+     Brand gradient. Figma uses the same green→blue ramp at a
+     different angle per element, so the angle is overridable
+     via `--grad-angle` (e.g. style={{'--grad-angle':'-68.41deg'}}).
+     ─────────────────────────────────────────────────────── */
   .gradient-btn {
-    background-image: linear-gradient(-54deg, #56F72F 0%, #0C3CED 100%);
+    background-image: linear-gradient(
+      var(--grad-angle, -54deg),
+      #56f72f 10.862%,
+      #0c3ced 97.041%
+    );
   }
 
+  /* Headings and eyebrows on the light sections (green → blue) */
   .gradient-text {
-    background-image: linear-gradient(-54deg, #56F72F 0%, #0C3CED 100%);
+    background-image: linear-gradient(
+      var(--grad-angle, -85.51deg),
+      #25be00 0.209%,
+      #0c3ced 100%
+    );
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -117,7 +130,28 @@
 
   /* Reversed sweep — green leading into blue, used by "Partnering Us" */
   .gradient-text-alt {
-    background-image: linear-gradient(-54deg, #0C3CED 0%, #56F72F 100%);
+    background-image: linear-gradient(
+      var(--grad-angle, -54deg),
+      #0c3ced 10.862%,
+      #56f72f 97.041%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /*
+   * The "Proven Impact" section has its own three-stop ramp that runs through
+   * cyan, so it reads brighter against the near-black background.
+   */
+  .gradient-text-impact {
+    background-image: linear-gradient(
+      var(--grad-angle, -82.71deg),
+      #0044ff 1.7555%,
+      #00d4ff 35.296%,
+      #32ff00 97.05%
+    );
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -132,38 +166,315 @@
     border: 1px solid var(--color-glass-border);
   }
 
-  /* ─── Hero radial glows ─────────────────────────────── */
-  .hero-glow-blue,
-  .hero-glow-green {
-    position: absolute;
-    bottom: 0;
-    width: 55%;
-    height: 60%;
-    pointer-events: none;
-  }
-  .hero-glow-blue {
-    left: 0;
-    background: radial-gradient(ellipse at 10% 100%, #0A2A6E 0%, transparent 65%);
-  }
-  .hero-glow-green {
-    right: 0;
-    background: radial-gradient(ellipse at 90% 100%, #0A3D1F 0%, transparent 65%);
-  }
-
   /* ─── Section eyebrow label ("• Core Capabilities") ─── */
   .section-tag {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: var(--text-d16);
+    gap: clamp(4px, 0.31vw, 6px);
+    font-size: var(--text-d26);
     font-weight: 500;
+    line-height: 1.21;
   }
+
+  /*
+   * Prev/Next pills sit white by default. On hover they pick up the same
+   * green→blue fill as Contact Us so the control reads as one family.
+   */
+  .carousel-arrow {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid var(--color-stroke-main);
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      background-image 0.2s ease,
+      filter 0.2s ease;
+  }
+  .carousel-arrow:hover {
+    color: #ffffff;
+    border-color: transparent;
+    background-image: linear-gradient(
+      var(--grad-angle, -54deg),
+      #56f72f 10.862%,
+      #0c3ced 97.041%
+    );
+  }
+
+  /*
+   * Explore All on the dark spotlight bar is the brand gradient at rest,
+   * then flips to the same white pill as Next / Previous on hover.
+   */
+  .explore-all-gradient {
+    background-image: linear-gradient(
+      var(--grad-angle, -66.1deg),
+      #56f72f 10.862%,
+      #0c3ced 97.041%
+    );
+    color: #ffffff;
+    border: 1px solid transparent;
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      background-image 0.2s ease;
+  }
+  .explore-all-gradient:hover {
+    background-image: none;
+    background-color: #ffffff;
+    color: #000000;
+    border-color: var(--color-stroke-main);
+  }
+
+  /* Light sections: gradient at rest, near-black pill on hover. */
+  .explore-all-on-light {
+    background-image: linear-gradient(
+      var(--grad-angle, -66.1deg),
+      #56f72f 10.862%,
+      #0c3ced 97.041%
+    );
+    color: #ffffff;
+    border: 1px solid transparent;
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      background-image 0.2s ease;
+  }
+  .explore-all-on-light:hover {
+    background-image: none;
+    background-color: #090909;
+    color: #ffffff;
+    border-color: transparent;
+  }
+
+  /* Dark Explore All on light sections — hover picks up the brand gradient. */
+  .explore-all-dark {
+    background-color: #090909;
+    color: #ffffff;
+    border: 1px solid transparent;
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      background-image 0.2s ease;
+  }
+  .explore-all-dark:hover {
+    background-color: transparent;
+    background-image: linear-gradient(
+      var(--grad-angle, -66.1deg),
+      #56f72f 10.862%,
+      #0c3ced 97.041%
+    );
+    color: #ffffff;
+    border-color: transparent;
+  }
+
+  /*
+   * Explore More — black label + outline/filled arrow at rest.
+   * Hover (or parent .group hover) turns the label and circle into the
+   * brand gradient, matching the Figma interaction.
+   */
+  .explore-more-label {
+    background-image: none;
+    color: #000000;
+    transition: color 0.25s ease;
+  }
+  .explore-more-arrow {
+    border: 1px solid var(--color-stroke-main);
+    background-color: transparent;
+    background-image: none;
+    color: #000000;
+    transition:
+      color 0.25s ease,
+      border-color 0.25s ease,
+      background-color 0.25s ease,
+      background-image 0.25s ease;
+  }
+  .explore-more-arrow--filled {
+    border-color: transparent;
+    background-color: #090909;
+    color: #ffffff;
+  }
+  .explore-more:hover .explore-more-label,
+  .group:hover .explore-more .explore-more-label {
+    background-image: linear-gradient(
+      var(--grad-angle, -54deg),
+      #25be00 0.209%,
+      #0c3ced 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .explore-more:hover .explore-more-arrow,
+  .group:hover .explore-more .explore-more-arrow {
+    border-color: transparent;
+    background-color: transparent;
+    background-image: linear-gradient(
+      var(--grad-angle, -54deg),
+      #56f72f 10.862%,
+      #0c3ced 97.041%
+    );
+    color: #ffffff;
+    -webkit-text-fill-color: currentColor;
+  }
+
+  .blog-card .blog-card-image {
+    transition: transform 0.55s ease;
+  }
+  .blog-card:hover .blog-card-image {
+    transform: scale(1.08);
+  }
+
+  .client-logo {
+    filter: grayscale(1);
+    opacity: 0.85;
+    transition: filter 0.35s ease, opacity 0.35s ease;
+  }
+  .marquee-viewport:hover .client-logo,
+  .client-logo:hover {
+    filter: grayscale(0);
+    opacity: 1;
+  }
+
+  .contact-link {
+    color: #000000;
+    transition: color 0.25s ease;
+  }
+  .contact-link:hover {
+    background-image: linear-gradient(
+      var(--grad-angle, -54deg),
+      #56f72f 10.862%,
+      #0c3ced 97.041%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .contact-link:hover svg {
+    color: #0c3ced;
+    fill: #0c3ced;
+    -webkit-text-fill-color: #0c3ced;
+  }
+
+  .social-btn img {
+    transition: filter 0.2s ease;
+  }
+  .social-btn[data-network='linkedin']:hover {
+    background-color: #0a66c2;
+    border-color: #0a66c2;
+  }
+  .social-btn[data-network='linkedin']:hover img {
+    filter: brightness(0) invert(1);
+  }
+
+  .behance-pill:hover {
+    border-color: transparent;
+    color: #ffffff;
+    background-image: linear-gradient(
+      var(--grad-angle, -54deg),
+      #56f72f 10.862%,
+      #0c3ced 97.041%
+    );
+  }
+  .behance-pill:hover .behance-pill-icon {
+    background-color: rgb(255 255 255 / 0.2);
+  }
+
+  /* Client Spotlight track — card width follows 1 / 2 / 4-up layouts. */
+  .spotlight-track {
+    --spotlight-n: 1;
+    --spotlight-gap: clamp(16px, 1.46vw, 28px);
+    --spotlight-card: calc(
+      (100% - (var(--spotlight-n) - 1) * var(--spotlight-gap)) / var(--spotlight-n)
+    );
+    display: flex;
+    gap: var(--spotlight-gap);
+  }
+  .spotlight-track > * {
+    flex: 0 0 var(--spotlight-card);
+  }
+  @media (min-width: 640px) {
+    .spotlight-track { --spotlight-n: 2; }
+  }
+  @media (min-width: 1024px) {
+    .spotlight-track { --spotlight-n: 4; }
+  }
+
+  /* Client Spotlight card — grayscale + quote on hover, Play goes gradient. */
+  .spotlight-card img {
+    transition: filter 500ms ease;
+  }
+  .spotlight-card:hover img {
+    filter: grayscale(1);
+  }
+  .spotlight-card .spotlight-play {
+    background-color: #ffffff;
+    color: #020101;
+    transition:
+      color 0.35s ease,
+      background-color 0.35s ease,
+      background-image 0.35s ease;
+  }
+  .spotlight-card:hover .spotlight-play {
+    background-color: transparent;
+    background-image: linear-gradient(
+      var(--grad-angle, -54deg),
+      #56f72f 10.862%,
+      #0c3ced 97.041%
+    );
+    color: #ffffff;
+  }
+  .spotlight-card .spotlight-play-icon {
+    background-color: #000000;
+    color: #ffffff;
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
+  .spotlight-card:hover .spotlight-play-icon {
+    background-color: rgb(255 255 255 / 0.22);
+    color: #ffffff;
+  }
+  .spotlight-card .spotlight-identity {
+    opacity: 1;
+    transition: opacity 350ms ease;
+  }
+  .spotlight-card .spotlight-quote {
+    opacity: 0;
+    transition: opacity 350ms ease;
+  }
+  .spotlight-card:hover .spotlight-identity {
+    opacity: 0;
+  }
+  .spotlight-card:hover .spotlight-quote {
+    opacity: 1;
+  }
+
+  .blog-track {
+    --blog-n: 1;
+    --blog-gap: clamp(16px, 1.67vw, 32px);
+    display: flex;
+    gap: var(--blog-gap);
+  }
+  .blog-track > * {
+    flex: 0 0 calc((100% - (var(--blog-n) - 1) * var(--blog-gap)) / var(--blog-n));
+  }
+  @media (min-width: 640px) {
+    .blog-track { --blog-n: 2; }
+  }
+  @media (min-width: 1024px) {
+    .blog-track { --blog-n: 4; }
+  }
+  /* 6px gradient dot — the same green→blue ramp in every section */
   .section-tag::before {
     content: '';
-    width: 0.5em;
-    height: 0.5em;
+    flex: none;
+    width: clamp(4px, 0.31vw, 6px);
+    height: clamp(4px, 0.31vw, 6px);
     border-radius: 9999px;
-    background-image: linear-gradient(-54deg, #56F72F 0%, #0C3CED 100%);
+    background-image: linear-gradient(-85.51deg, #25be00 0.209%, #0c3ced 100%);
   }
 
   /* ─── Clients marquee ───────────────────────────────── */
@@ -187,13 +498,10 @@
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-  /* Fades the dot sphere at its limb and dissolves the lower half into the page */
+  /* Softens the dot sphere at its limb only — the design keeps the
+     lower rim visible behind the prompt card. */
   .mask-sphere {
-    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 56%, transparent 75%),
-      linear-gradient(to bottom, #000 32%, rgba(0, 0, 0, 0.3) 60%, transparent 86%);
-    mask-image: radial-gradient(circle at 50% 50%, #000 56%, transparent 75%),
-      linear-gradient(to bottom, #000 32%, rgba(0, 0, 0, 0.3) 60%, transparent 86%);
-    -webkit-mask-composite: source-in;
-    mask-composite: intersect;
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 62%, transparent 78%);
+    mask-image: radial-gradient(circle at 50% 50%, #000 62%, transparent 78%);
   }
 }

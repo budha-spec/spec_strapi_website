@@ -1,4 +1,3 @@
-import { PlaceholderImage } from '@/components/ui/PlaceholderImage';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { ExploreMore } from '@/components/ui/ExploreMore';
 
@@ -6,26 +5,48 @@ const SERVICES = [
   {
     id: 1,
     title: 'Services',
-    description:
-      'Drive sustainable growth with future-ready software engineering tailored precisely to your operational and enterprise goals.',
+    image: '/services/service01.png',
+    tags: [
+      'Software Engineering',
+      'App Development',
+      'Digital Transformation',
+      'Data Engineering',
+      'AI Capabilities',
+    ],
   },
   {
     id: 2,
     title: 'Industries',
-    description:
-      "Solve domain-specific operational challenges with deeply tailored technology solutions built for your industry's unique regulatory and market needs.",
+    image: '/services/service02.png',
+    tags: [
+      'Logistics & Freight',
+      'Healthcare',
+      'Manufacturing',
+      'Energy & Utilities',
+      'Retail',
+    ],
   },
   {
     id: 3,
     title: 'Live BI Visualization',
-    description:
-      'Turn complex operational data into actionable intelligence with real-time analytics, custom dashboards, and automated enterprise reporting.',
+    image: '/services/service03.png',
+    tags: [
+      'CEO Dashboard',
+      'CMO Dashboard',
+      'CFO Dashboard',
+      'CRM & Lead Analysis',
+      'Sales Analytics Reports',
+    ],
   },
   {
     id: 4,
     title: 'Whitepaper',
-    description:
-      'Gain a competitive edge with architectural blueprints, technical research, and executive frameworks designed for modern enterprise transformation.',
+    image: '/services/service04.png',
+    tags: [
+      'Agentic AI in Enterprise Workflows',
+      'Monolith to Cloud-Native Playbook',
+      'Building Resilient Microservices',
+    ],
   },
 ];
 
@@ -40,7 +61,12 @@ export function ServicesSection() {
 
         <h2 className="mt-[clamp(6px,0.52vw,10px)] max-w-[1200px] text-d40 font-medium leading-[1.2] text-text-heading">
           Engineering Scalable Solutions for Enterprise{' '}
-          <span className="gradient-text font-bold">Growth</span>
+          <span
+            className="gradient-text font-semibold"
+            style={{ ['--grad-angle' as string]: '-78.66deg' }}
+          >
+            Growth
+          </span>
         </h2>
 
         <div className="mt-[clamp(24px,3.65vw,70px)] grid grid-cols-1 gap-[clamp(16px,1.67vw,32px)] sm:grid-cols-2 lg:grid-cols-4">
@@ -54,19 +80,28 @@ export function ServicesSection() {
                   {service.title}
                 </h3>
 
-                <p className="mt-[clamp(10px,1.15vw,22px)] text-d18 leading-[1.4] text-text-secondary">
-                  {service.description}
-                </p>
+                <ul className="mt-[clamp(14px,1.25vw,24px)] flex flex-wrap gap-[clamp(8px,0.63vw,12px)]">
+                  {service.tags.map((tag) => (
+                    <li
+                      key={tag}
+                      className="flex h-[clamp(30px,1.98vw,38px)] items-center rounded-full border border-stroke-main px-[clamp(10px,0.73vw,14px)] text-d14 text-text-primary"
+                    >
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
 
                 <ExploreMore className="mt-auto pt-6" />
               </div>
 
-              {/* Artwork strip across the bottom of the card */}
-              <PlaceholderImage
-                tone="dark"
-                label="Card visual"
-                className="h-[clamp(130px,9.43vw,181px)] w-full shrink-0"
-              />
+              <div className="h-[clamp(130px,9.43vw,181px)] w-full shrink-0 overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={service.image}
+                  alt=""
+                  className="size-full object-cover"
+                />
+              </div>
             </article>
           ))}
         </div>

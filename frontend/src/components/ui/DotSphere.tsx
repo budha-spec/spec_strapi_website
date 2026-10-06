@@ -22,13 +22,33 @@ export default function DotSphere({ className, count = 2800 }: DotSphereProps) {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Even point distribution over the unit sphere (Fibonacci lattice).
+    // Deterministic PRNG so the cloud is identical on every mount.
+    let seed = 1337;
+    const rand = () => {
+      seed = (seed * 1664525 + 1013904223) % 4294967296;
+      return seed / 4294967296;
+    };
+
+    /*
+     * Points start from a Fibonacci lattice for even coverage, then get
+     * jittered in angle and radius. Without the jitter the lattice reads as
+     * visible spiral rows rather than the organic cloud in the design.
+     */
     const golden = Math.PI * (3 - Math.sqrt(5));
     const points = Array.from({ length: count }, (_, i) => {
-      const y = 1 - (i / (count - 1)) * 2;
-      const radius = Math.sqrt(Math.max(0, 1 - y * y));
-      const theta = golden * i;
-      return { x: Math.cos(theta) * radius, y, z: Math.sin(theta) * radius };
+      const y = 1 - (i / (count - 1)) * 2 + (rand() - 0.5) * 0.035;
+      const clampedY = Math.max(-1, Math.min(1, y));
+      const radius = Math.sqrt(Math.max(0, 1 - clampedY * clampedY));
+      const theta = golden * i + (rand() - 0.5) * 0.55;
+      // Scatter a few dots just off the shell so the limb looks soft.
+      const shell = 1 + (rand() - 0.5) * 0.06;
+      return {
+        x: Math.cos(theta) * radius * shell,
+        y: clampedY * shell,
+        z: Math.sin(theta) * radius * shell,
+        // Per-dot brightness variation adds sparkle like the reference.
+        gain: 0.55 + rand() * 0.75,
+      };
     });
 
     const TILT = -0.42; // lifts the top of the sphere toward the viewer
@@ -72,8 +92,8 @@ export default function DotSphere({ className, count = 2800 }: DotSphereProps) {
 
         // Depth drives both size and opacity to suggest volume.
         const depth = (z + 1) / 2;
-        const alpha = 0.12 + depth * 0.78;
-        const dotRadius = (0.35 + depth * 0.95) * Math.max(dpr, 1) * 0.75;
+        const alpha = Math.min(1, (0.1 + depth * 0.72) * p.gain);
+        const dotRadius = (0.3 + depth * 0.9) * Math.max(dpr, 1) * 0.78;
 
         ctx.globalAlpha = alpha;
         ctx.fillStyle = '#FFFFFF';

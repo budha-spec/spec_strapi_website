@@ -17,38 +17,45 @@ export function Header() {
 
   return (
     <header className="absolute inset-x-0 top-0 z-50">
-      <div className="h-[86px] border-b border-white/10 bg-black/20 backdrop-blur-[2px]">
+      <div className="h-[86px] border-b border-[#242424] bg-[#0d0d0d]/70 backdrop-blur-[2px]">
         <div className="shell flex h-full items-center justify-between gap-6">
-          <Link href="/" className="shrink-0" aria-label="SPEC India — home">
-            <Image
-              src="/logo.png"
-              alt="SPEC India"
-              width={260}
-              height={42}
-              priority
-              className="h-[clamp(26px,1.77vw,34px)] w-auto"
-            />
-          </Link>
+          {/*
+            The nav sits close to the logo rather than centred — in the design
+            it starts at x=489 on a 1920 canvas, 180px after the logo.
+          */}
+          <div className="flex items-center gap-[clamp(20px,9.38vw,180px)]">
+            <Link href="/" className="shrink-0" aria-label="SPEC India — home">
+              <Image
+                src="/logo.png"
+                alt="SPEC India"
+                width={260}
+                height={42}
+                priority
+                className="h-[clamp(26px,1.78vw,34px)] w-auto"
+              />
+            </Link>
 
-          <nav className="hidden items-center gap-9 lg:flex" aria-label="Main">
-            {NAV_LINKS.map((link, i) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className={cn(
-                  'text-d18 text-white transition-colors hover:text-brand-green',
-                  i === 0 ? 'font-bold' : 'font-normal'
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+            <nav className="hidden items-center gap-9 lg:flex" aria-label="Main">
+              {NAV_LINKS.map((link, i) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className={cn(
+                    'text-d18 whitespace-nowrap text-white transition-colors hover:text-brand-green',
+                    i === 0 ? 'font-semibold' : 'font-normal'
+                  )}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
 
           <div className="flex items-center gap-3">
             <Link
               href="#contact"
-              className="gradient-btn hidden h-[clamp(36px,2.19vw,42px)] items-center justify-center rounded-full px-[clamp(16px,1.25vw,24px)] text-d16 font-normal whitespace-nowrap text-white transition-[filter] hover:brightness-110 sm:inline-flex"
+              className="gradient-btn hidden h-[clamp(36px,2.19vw,42px)] items-center justify-center rounded-full px-[clamp(14px,1.04vw,20px)] text-d16 leading-[1.4] font-normal whitespace-nowrap text-white transition-[filter] hover:brightness-110 sm:inline-flex"
+              style={{ ['--grad-angle' as string]: '-68.41deg' }}
             >
               Contact Us
             </Link>

@@ -36,11 +36,11 @@ export function ExploreMore({
   return (
     <Link
       href={href}
-      className={cn('group inline-flex items-center gap-2', className)}
+      className={cn('explore-more inline-flex items-center gap-2', className)}
     >
       <span
         className={cn(
-          'text-d16 text-text-primary',
+          'explore-more-label text-d16',
           variant === 'filled' ? 'font-medium' : 'font-light'
         )}
       >
@@ -48,10 +48,10 @@ export function ExploreMore({
       </span>
       <span
         className={cn(
-          'flex items-center justify-center rounded-full transition-colors',
+          'explore-more-arrow flex items-center justify-center rounded-full',
           variant === 'filled'
-            ? 'size-[clamp(26px,1.82vw,35px)] bg-bg-dark text-white group-hover:bg-brand-cta-blue'
-            : 'size-[clamp(20px,1.35vw,26px)] border border-stroke-main text-text-primary group-hover:border-text-primary'
+            ? 'explore-more-arrow--filled size-[clamp(26px,1.82vw,35px)]'
+            : 'size-[clamp(20px,1.35vw,26px)]'
         )}
       >
         <ArrowRight size={variant === 'filled' ? 13 : 11} />

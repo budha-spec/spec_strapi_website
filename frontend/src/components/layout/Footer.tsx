@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { PlaceholderImage } from '@/components/ui/PlaceholderImage';
 
 const PHONES = [
   { phone: '+91-79-26404031', email: 'lead@spec-india.com' },
@@ -8,53 +7,57 @@ const PHONES = [
 
 const OFFICES = [
   {
-    country: 'INDIA',
-    accent: 'text-brand-cta-blue',
+    country: 'India',
     lines: ['SPEC House, Parth Complex,', 'Near Swastik Cross Roads,', 'Navarangpura, Ahmedabad'],
     bold: true,
   },
   {
     country: 'USA',
-    accent: 'text-brand-green',
     lines: ['350 Grove Street,', 'Bridgewater, NJ 08807,', 'United States.'],
     bold: false,
   },
 ];
 
 const SOCIALS = [
-  {
-    name: 'LinkedIn',
-    path: 'M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05A4.2 4.2 0 0 1 17.6 8.7c3.2 0 4.4 2 4.4 5.4V21h-4v-6c0-1.5-.5-2.5-1.9-2.5-1.2 0-1.9.8-2.2 1.6-.1.3-.1.7-.1 1V21h-4V9Z',
-  },
-  {
-    name: 'Instagram',
-    path: 'M12 2.2c-2.7 0-3 0-4.1.1-1 0-1.8.2-2.4.5a4.9 4.9 0 0 0-1.8 1.1 4.9 4.9 0 0 0-1.1 1.8c-.3.6-.4 1.3-.5 2.4C2 9.2 2 9.5 2 12s0 2.8.1 3.9c0 1 .2 1.8.5 2.4a4.9 4.9 0 0 0 1.1 1.8 4.9 4.9 0 0 0 1.8 1.1c.6.3 1.3.4 2.4.5 1.1.1 1.4.1 4.1.1s3 0 4.1-.1c1 0 1.8-.2 2.4-.5a5.2 5.2 0 0 0 2.9-2.9c.3-.6.4-1.3.5-2.4.1-1.1.1-1.4.1-4.1s0-3-.1-4.1c0-1-.2-1.8-.5-2.4a4.9 4.9 0 0 0-1.1-1.8 4.9 4.9 0 0 0-1.8-1.1c-.6-.3-1.3-.4-2.4-.5C15 2.2 14.7 2.2 12 2.2Zm0 1.8c2.7 0 2.9 0 4 .1.8 0 1.3.2 1.6.3.4.2.7.4 1 .7.3.3.5.6.7 1 .1.3.3.8.3 1.6.1 1.1.1 1.3.1 4s0 2.9-.1 4c0 .8-.2 1.3-.3 1.6-.2.4-.4.7-.7 1-.3.3-.6.5-1 .7-.3.1-.8.3-1.6.3-1.1.1-1.3.1-4 .1s-2.9 0-4-.1c-.8 0-1.3-.2-1.6-.3-.4-.2-.7-.4-1-.7-.3-.3-.5-.6-.7-1-.1-.3-.3-.8-.3-1.6-.1-1.1-.1-1.3-.1-4s0-2.9.1-4c0-.8.2-1.3.3-1.6.2-.4.4-.7.7-1 .3-.3.6-.5 1-.7.3-.1.8-.3 1.6-.3 1.1-.1 1.3-.1 4-.1Zm0 3.1a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8Zm0 8a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4Zm6.3-8.2a1.2 1.2 0 1 1-2.3 0 1.2 1.2 0 0 1 2.3 0Z',
-  },
-  {
-    name: 'Pinterest',
-    path: 'M12 2a10 10 0 0 0-3.6 19.3c-.1-.7-.2-1.8 0-2.6l1.3-5.5s-.3-.7-.3-1.7c0-1.6.9-2.8 2-2.8 1 0 1.4.7 1.4 1.6 0 1-.6 2.5-1 3.9-.3 1.1.6 2 1.7 2 2 0 3.5-2.1 3.5-5.2 0-2.7-1.9-4.6-4.7-4.6-3.2 0-5 2.4-5 4.8 0 1 .4 2 .8 2.6l-.3 1.3c-.1.3-.3.4-.6.2-1.1-.5-1.8-2.2-1.8-3.5 0-2.9 2.1-5.5 6-5.5 3.2 0 5.6 2.3 5.6 5.3 0 3.2-2 5.7-4.8 5.7-.9 0-1.8-.5-2.1-1.1l-.6 2.2c-.2.8-.8 1.9-1.2 2.5A10 10 0 1 0 12 2Z',
-  },
-  {
-    name: 'Facebook',
-    path: 'M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.2-1.5 1.5-1.5h1.7V3.6c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.2v2.2H7.5V13h2.8v8h3.2Z',
-  },
-  {
-    name: 'X',
-    path: 'M17.5 3h3.3l-7.2 8.3L21.6 21h-5.3l-4.2-5.4L7.3 21H4l7.5-8.6L3.6 3H9l3.9 5.1L17.5 3Zm-1.2 16h1.8L7.6 4.8H5.7l10.6 14.2Z',
-  },
+  { name: 'LinkedIn', src: '/social/linkedin.png', network: 'linkedin' },
+  { name: 'Instagram', src: '/social/instagram.png', network: 'instagram' },
+  { name: 'Pinterest', src: '/social/pinterest.png', network: 'pinterest' },
+  { name: 'Facebook', src: '/social/facebook.png', network: 'facebook' },
+  { name: 'X', src: '/social/twitter.png', network: 'twitter' },
+];
+
+const PORTFOLIOS = [
+  { name: 'Behance', src: '/social/behance.png', variant: 'behance' },
+  { name: 'Dribbble', src: '/social/dribbble.png', variant: 'dribbble' },
+];
+
+const MEDALS = [
+  '/reviews/medal01.png',
+  '/reviews/medal02.png',
+  '/reviews/medal03.png',
+  '/reviews/medal04.png',
+  '/reviews/medal05.png',
+  '/reviews/medal06.png',
+  '/reviews/medal07.png',
 ];
 
 const RATINGS = [
-  { site: 'Clutch', score: '4.6' },
-  { site: 'GoodFirms', score: '4.8' },
-  { site: 'AmbitionBox', score: '4.6' },
-  { site: 'Google', score: '4.5' },
-  { site: 'Glassdoor', score: '4.2' },
+  { site: 'Clutch', score: '4.6', logo: '/reviews/clutch.png', width: 68, height: 20 },
+  { site: 'GoodFirms', score: '4.8', logo: '/reviews/goodfirm.png', width: 112, height: 17 },
+  { site: 'AmbitionBox', score: '4.6', logo: '/reviews/ambitionbox.png', width: 120, height: 24 },
+  { site: 'Google', score: '4.5', logo: '/reviews/google.png', width: 70, height: 24 },
+  { site: 'Glassdoor', score: '4.2', logo: '/reviews/glassdoor.png', width: 76, height: 24 },
 ];
 
-const FOOTER_COLUMNS = [
+const FOOTER_COLUMNS: {
+  heading: string;
+  width: string;
+  nowrap?: boolean;
+  links: string[];
+}[] = [
   {
     heading: 'Services',
+    width: 'lg:w-[280px]',
     links: [
       'Custom Software Development',
       'Enterprise software Development',
@@ -67,6 +70,8 @@ const FOOTER_COLUMNS = [
   },
   {
     heading: 'Hire Developers',
+    width: 'lg:w-[233px]',
+    nowrap: true,
     links: [
       'Hire Mobile App Developers',
       'Hire BI Developers',
@@ -79,6 +84,7 @@ const FOOTER_COLUMNS = [
   },
   {
     heading: 'Industries',
+    width: 'lg:w-[195px]',
     links: [
       'Healthcare',
       'Fitness',
@@ -91,6 +97,7 @@ const FOOTER_COLUMNS = [
   },
   {
     heading: 'Solutions',
+    width: 'lg:w-[248px]',
     links: [
       'Custom ERP',
       'Learning Management',
@@ -103,12 +110,13 @@ const FOOTER_COLUMNS = [
   },
   {
     heading: 'Resource',
+    width: 'lg:w-[140px]',
     links: [
       'Overview',
       'Blog',
       'Newsletter',
       'Sitemap',
-      'Live BI Examples',
+      'Live Bi Examples',
       'Career',
       'Contact Us',
     ],
@@ -148,14 +156,14 @@ export function Footer() {
                 <div key={item.phone} className="flex flex-col gap-[clamp(6px,0.83vw,16px)]">
                   <a
                     href={`tel:${item.phone.replace(/[^+\d]/g, '')}`}
-                    className="flex items-center gap-2 text-d16 text-text-primary hover:text-brand-cta-blue"
+                    className="contact-link flex items-center gap-2 text-d16"
                   >
                     <PhoneIcon />
                     {item.phone}
                   </a>
                   <a
                     href={`mailto:${item.email}`}
-                    className="flex items-center gap-2 text-d16 text-text-primary hover:text-brand-cta-blue"
+                    className="contact-link flex items-center gap-2 text-d16"
                   >
                     <MailIcon />
                     {item.email}
@@ -167,7 +175,12 @@ export function Footer() {
             <div className="mt-[clamp(20px,2.4vw,46px)] grid gap-[clamp(16px,1.5vw,28px)] sm:grid-cols-2">
               {OFFICES.map((office) => (
                 <div key={office.country}>
-                  <p className={`text-d18 font-bold ${office.accent}`}>{office.country}</p>
+                  <p
+                    className="gradient-text w-fit text-d26 font-semibold"
+                    style={{ ['--grad-angle' as string]: '-17.74deg' }}
+                  >
+                    {office.country}
+                  </p>
                   <address
                     className={`mt-[clamp(6px,0.52vw,10px)] text-d18 leading-[1.25] text-text-secondary not-italic ${
                       office.bold ? 'font-bold' : 'font-normal'
@@ -192,11 +205,11 @@ export function Footer() {
                       <Link
                         href="#"
                         aria-label={social.name}
-                        className="flex size-[clamp(30px,1.93vw,37px)] items-center justify-center rounded-[8px] border border-stroke-grey text-text-primary transition-colors hover:border-brand-cta-blue hover:text-brand-cta-blue"
+                        data-network={social.network}
+                        className="social-btn flex size-[clamp(30px,1.93vw,37px)] items-center justify-center rounded-[8px] border border-stroke-grey transition-colors hover:border-text-primary"
                       >
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                          <path d={social.path} />
-                        </svg>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={social.src} alt="" width={18} height={18} className="size-[18px] object-contain" />
                       </Link>
                     </li>
                   ))}
@@ -204,21 +217,21 @@ export function Footer() {
               </div>
 
               <div className="flex items-center gap-[clamp(8px,0.78vw,15px)]">
-                {[
-                  { name: 'Behance', bg: 'bg-brand-cta-blue', glyph: 'Bē' },
-                  { name: 'Dribbble', bg: 'bg-brand-pink', glyph: 'Dr' },
-                ].map((item) => (
+                {PORTFOLIOS.map((item) => (
                   <Link
                     key={item.name}
                     href="#"
-                    className="flex h-[clamp(38px,2.4vw,46px)] items-center gap-2 rounded-full border border-stroke-grey p-[clamp(4px,0.26vw,5px)] pr-[clamp(10px,0.83vw,16px)] transition-colors hover:border-text-primary"
+                    className={`${item.variant === 'behance' ? 'behance-pill' : ''} flex h-[clamp(38px,2.4vw,46px)] items-center gap-2 rounded-full border border-stroke-grey p-[clamp(4px,0.26vw,5px)] pr-[clamp(10px,0.83vw,16px)] text-text-primary transition-colors hover:border-text-primary`}
                   >
                     <span
-                      className={`flex aspect-square h-full items-center justify-center rounded-full text-[11px] font-bold text-white ${item.bg}`}
+                      className={`behance-pill-icon flex aspect-square h-full items-center justify-center rounded-full ${
+                        item.variant === 'dribbble' ? 'bg-brand-pink' : 'bg-brand-cta-blue'
+                      }`}
                     >
-                      {item.glyph}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={item.src} alt="" width={18} height={18} className="size-[18px] object-contain" />
                     </span>
-                    <span className="text-d16 text-text-primary">{item.name}</span>
+                    <span className="text-d16">{item.name}</span>
                   </Link>
                 ))}
               </div>
@@ -315,31 +328,36 @@ export function Footer() {
 
         {/* Certifications + review scores. Overlaps the dark footer below. */}
         <div className="shell relative z-20 mt-[clamp(16px,1.67vw,32px)] -mb-[clamp(24px,3.8vw,73px)]">
-          <div className="flex flex-col items-center gap-[clamp(20px,1.67vw,32px)] rounded-[20px] border border-stroke-outline/70 bg-bg-white px-[clamp(16px,1.56vw,30px)] py-[clamp(20px,1.3vw,25px)] xl:flex-row">
-            <ul className="flex flex-1 flex-wrap items-center justify-center gap-[clamp(12px,1.25vw,24px)]">
-              {Array.from({ length: 7 }).map((_, i) => (
-                <li key={i}>
-                  <PlaceholderImage
-                    label=""
-                    showLabel={false}
-                    className="size-[clamp(48px,3.65vw,70px)] rounded-full"
+          <div className="flex flex-col items-center gap-[clamp(16px,1.67vw,32px)] overflow-hidden rounded-[20px] border border-stroke-outline/70 bg-bg-white py-[clamp(16px,1.3vw,25px)] pl-[clamp(16px,1.56vw,30px)] pr-[clamp(8px,0.73vw,14px)] xl:flex-row xl:items-center">
+            <ul className="flex flex-1 flex-wrap items-center justify-center gap-[clamp(10px,1.15vw,22px)] xl:justify-start">
+              {MEDALS.map((src) => (
+                <li key={src}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={src}
+                    alt=""
+                    width={100}
+                    height={100}
+                    className="size-[clamp(56px,5.2vw,100px)] rounded-full object-contain"
                   />
                 </li>
               ))}
             </ul>
 
-            <div aria-hidden className="hidden h-[clamp(50px,3.65vw,70px)] w-px bg-stroke-outline xl:block" />
-
-            <ul className="flex flex-1 flex-wrap items-center justify-center gap-[clamp(16px,1.98vw,38px)] rounded-[16px] bg-bg-light px-[clamp(12px,1.25vw,24px)] py-[clamp(12px,0.83vw,16px)]">
+            <ul className="flex w-full flex-wrap items-center justify-center gap-[clamp(16px,1.83vw,35px)] rounded-[20px] bg-bg-light px-[clamp(16px,1.56vw,30px)] py-[clamp(14px,1.04vw,20px)] xl:w-auto xl:min-w-[clamp(520px,44vw,844px)] xl:rounded-l-[20px] xl:rounded-r-[88px]">
               {RATINGS.map((rating) => (
-                <li key={rating.site} className="flex flex-col items-center gap-1.5">
-                  <span className="text-d14 font-medium whitespace-nowrap text-text-primary">
-                    {rating.site}
-                  </span>
-                  <span className="flex items-center gap-1 text-d16 font-medium text-text-primary">
-                    <span className="text-[#FFB800]" aria-hidden>
-                      ★★★★★
-                    </span>
+                <li key={rating.site} className="flex flex-col items-center gap-[clamp(8px,0.83vw,16px)]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={rating.logo}
+                    alt={rating.site}
+                    width={rating.width}
+                    height={rating.height}
+                    className="h-[clamp(16px,1.25vw,24px)] w-auto object-contain"
+                  />
+                  <span className="flex items-center gap-[7px] text-d16 font-medium text-text-primary">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/reviews/star.png" alt="" width={24} height={24} className="size-[clamp(16px,1.22vw,23px)]" />
                     {rating.score}
                   </span>
                 </li>
@@ -350,18 +368,26 @@ export function Footer() {
       </section>
 
       {/* ─── Dark footer ─────────────────────────────────────── */}
-      <section className="relative z-0 w-full bg-bg-black pt-[clamp(60px,8.07vw,155px)] pb-[clamp(20px,1.88vw,36px)]">
+      <section className="relative z-0 w-full bg-bg-black pt-[clamp(80px,8.07vw,155px)]">
         <div className="shell">
-          <div className="grid grid-cols-2 gap-x-[clamp(16px,1.67vw,32px)] gap-y-[clamp(28px,2.6vw,50px)] md:grid-cols-3 lg:grid-cols-5">
+          <div className="grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-3 lg:flex lg:flex-nowrap lg:gap-x-24">
             {FOOTER_COLUMNS.map((column) => (
-              <nav key={column.heading} aria-label={column.heading}>
-                <h4 className="text-d22 font-medium text-white">{column.heading}</h4>
-                <ul className="mt-[clamp(14px,1.2vw,23px)] flex flex-col gap-[clamp(10px,1.2vw,23px)]">
+              <nav
+                key={column.heading}
+                aria-label={column.heading}
+                className={`flex shrink-0 flex-col gap-[clamp(16px,1.56vw,30px)] ${column.width}`}
+              >
+                <h4 className="text-d22 font-medium leading-[normal] text-white">
+                  {column.heading}
+                </h4>
+                <ul className="flex flex-col gap-5">
                   {column.links.map((link) => (
                     <li key={link}>
                       <Link
                         href="#"
-                        className="text-d18 text-text-footer transition-colors hover:text-white"
+                        className={`text-d18 leading-[normal] text-[#BBB] transition-colors hover:text-white ${
+                          column.nowrap ? 'whitespace-nowrap' : ''
+                        }`}
                       >
                         {link}
                       </Link>
@@ -371,22 +397,34 @@ export function Footer() {
               </nav>
             ))}
           </div>
+        </div>
 
-          <div className="mt-[clamp(32px,3.65vw,70px)] flex flex-col items-center gap-4 border-t border-white/10 pt-[clamp(16px,1.56vw,30px)] md:flex-row md:justify-between">
-            <div className="flex items-center gap-[clamp(12px,1.25vw,24px)]">
-              <span className="gradient-btn flex h-[clamp(16px,1.04vw,20px)] w-[clamp(60px,3.65vw,70px)] items-center justify-center rounded-[3px] text-[8px] font-bold tracking-wide text-white">
-                DMCA
-              </span>
-              <p className="text-d18 text-white">
+        <div className="mt-[clamp(40px,3.96vw,76px)] border-t border-white/10">
+          <div className="shell flex flex-col items-center gap-4 py-[clamp(16px,1.15vw,22px)] md:flex-row md:justify-between">
+            <div className="flex items-center gap-[30px]">
+              <img
+                src="/footer/dmca.png"
+                alt="DMCA Protected"
+                width={121}
+                height={24}
+                className="h-6 w-[121px]"
+              />
+              <p className="text-d18 leading-[normal] text-white">
                 &copy; 2024 SPEC INDIA. All Rights Reserved.
               </p>
             </div>
 
-            <div className="flex items-center gap-[clamp(16px,1.09vw,21px)]">
-              <Link href="#" className="text-d18 text-white hover:text-brand-green">
+            <div className="flex items-center gap-10">
+              <Link
+                href="#"
+                className="text-d18 leading-[normal] text-white hover:text-brand-green"
+              >
                 Privacy Policy
               </Link>
-              <Link href="#" className="text-d18 text-white hover:text-brand-green">
+              <Link
+                href="#"
+                className="text-d18 leading-[normal] text-white hover:text-brand-green"
+              >
                 Terms of use
               </Link>
             </div>

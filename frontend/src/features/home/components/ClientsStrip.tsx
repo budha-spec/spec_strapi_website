@@ -1,10 +1,7 @@
 const CLIENT_LOGOS = [
-  'PEPSICO',
-  "Kellogg's",
-  'Schneider Electric',
-  'HITACHI',
-  'ADNOC',
-  'UHN',
+  { name: 'Schneider Electric', src: '/clients/schneider.png', width: 137, height: 41 },
+  { name: 'Adani', src: '/clients/adani.png', width: 100, height: 35 },
+  { name: 'ADNOC', src: '/clients/adnoc.png', width: 115, height: 51 },
 ];
 
 export function ClientsStrip() {
@@ -17,13 +14,11 @@ export function ClientsStrip() {
           next-generation enterprises.
         </h2>
 
-        {/* Divider matching the thin rule in the design */}
         <div
           aria-hidden
           className="hidden h-[clamp(70px,6.56vw,126px)] w-px shrink-0 bg-stroke-main lg:block"
         />
 
-        {/* Logos scroll gently; the track is duplicated so the loop is seamless */}
         <div className="marquee-viewport relative flex-1 overflow-hidden lg:pl-[clamp(20px,2.6vw,50px)]">
           <div className="marquee-track items-center">
             {[0, 1].map((copy) => (
@@ -32,22 +27,25 @@ export function ClientsStrip() {
                 className="flex shrink-0 items-center"
                 aria-hidden={copy === 1}
               >
-                {CLIENT_LOGOS.map((name) => (
+                {CLIENT_LOGOS.map((logo) => (
                   <li
-                    key={name}
-                    className="flex items-center justify-center px-[clamp(22px,2.6vw,50px)]"
+                    key={`${copy}-${logo.name}`}
+                    className="flex items-center justify-center px-[clamp(28px,3.1vw,60px)]"
                   >
-                    {/* Placeholder wordmark until the real logo lands in Strapi */}
-                    <span className="text-d22 font-bold whitespace-nowrap text-[#9A9A9A] grayscale transition-all duration-300 hover:text-text-primary hover:grayscale-0">
-                      {name}
-                    </span>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={logo.src}
+                      alt={copy === 0 ? logo.name : ''}
+                      width={logo.width}
+                      height={logo.height}
+                      className="client-logo h-auto w-auto max-h-[clamp(28px,2.66vw,51px)]"
+                    />
                   </li>
                 ))}
               </ul>
             ))}
           </div>
 
-          {/* Soft edges so logos fade rather than clip */}
           <div
             aria-hidden
             className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-bg-light to-transparent"
