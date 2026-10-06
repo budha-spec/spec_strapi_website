@@ -24,6 +24,11 @@ interface ExploreMoreProps {
   className?: string;
   /** `filled` draws the solid dark circle used on the case-study card. */
   variant?: 'outline' | 'filled';
+  /**
+   * `lg` is the service-card circle. Figma draws that icon larger than the
+   * outline used on blog cards.
+   */
+  size?: 'md' | 'lg';
 }
 
 /** "Explore More" caption followed by a circled arrow. */
@@ -32,11 +37,18 @@ export function ExploreMore({
   label = 'Explore More',
   className,
   variant = 'outline',
+  size = 'md',
 }: ExploreMoreProps) {
+  const large = size === 'lg' && variant === 'outline';
+
   return (
     <Link
       href={href}
-      className={cn('explore-more inline-flex items-center gap-2', className)}
+      className={cn(
+        'explore-more inline-flex items-center',
+        large ? 'gap-3' : 'gap-2',
+        className
+      )}
     >
       <span
         className={cn(
@@ -51,10 +63,12 @@ export function ExploreMore({
           'explore-more-arrow flex items-center justify-center rounded-full',
           variant === 'filled'
             ? 'explore-more-arrow--filled size-[clamp(26px,1.82vw,35px)]'
-            : 'size-[clamp(20px,1.35vw,26px)]'
+            : large
+              ? 'size-[clamp(28px,2.8125vw,36px)]'
+              : 'size-[clamp(20px,1.35vw,26px)]'
         )}
       >
-        <ArrowRight size={variant === 'filled' ? 13 : 11} />
+        <ArrowRight size={variant === 'filled' ? 13 : large ? 18 : 11} />
       </span>
     </Link>
   );

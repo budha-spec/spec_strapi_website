@@ -1,31 +1,25 @@
+/**
+ * Home page dynamic zone. Each `on` clause matches one block and populates
+ * its nested components, media, and relations in one wildcard.
+ */
+const HOME_POPULATE = [
+  'populate[content][on][shared.home-page-section1][populate][capabilities][populate]=*',
+  'populate[content][on][shared.enterprise-solution][populate][enterpriseSolution][populate]=*',
+  'populate[content][on][shared.gallery][populate][images][populate]=*',
+  'populate[content][on][shared.key-metrics-section][populate][keyMetrics][populate]=*',
+  'populate[content][on][shared.case-studies][populate][case_studies][populate]=*',
+  'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
+  'populate[content][on][shared.home-blogs][populate][blogs][populate]=*',
+].join('&');
+
 /** All Strapi API endpoint paths. Import from here — never hardcode in components. */
-
 export const ENDPOINTS = {
-  /** Global: nav links, footer links, logo, social */
-  GLOBAL: '/global?populate=deep',
-
-  /** Home page: hero, stats, CTA text */
-  HOME_PAGE: '/home-page?populate=deep',
-
-  /** Services section */
-  SERVICES: '/services?populate=*&sort=order:asc',
-
-  /** Case studies carousel */
-  CASE_STUDIES: '/case-studies?populate=*&sort=order:asc',
-
-  /** Testimonials */
-  TESTIMONIALS: '/testimonials?populate=*',
-
-  /** Blog / Insights — 4 latest posts */
-  BLOGS: '/blogs?populate=*&pagination[limit]=4&sort=publishedAt:desc',
-
-  /** Clients logo strip */
-  CLIENTS: '/clients?populate=*&sort=order:asc',
+  /** Landing page: slug `home`, with nested media and relations. */
+  HOME_PAGE: `/pages?filters[slug][$eq]=home&${HOME_POPULATE}`,
 } as const;
 
 /** ISR revalidation intervals in seconds */
 export const REVALIDATE = {
-  CONTENT: 60,       // services, testimonials, blogs, case studies
-  LAYOUT: 3600,      // nav, footer, clients — rarely changes
-  STATIC: false,     // never revalidate (truly static)
+  CONTENT: 60,
+  LAYOUT: 3600,
 } as const;

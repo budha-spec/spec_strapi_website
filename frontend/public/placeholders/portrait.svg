@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800" fill="none" role="img" aria-label="Portrait placeholder">
+  <rect width="600" height="800" fill="#D5D5D5"/>
+  <g stroke="#C4C4C4" stroke-width="16">
+    <path d="M-40 60L60 -40M-40 180L180 -40M-40 300L300 -40M-40 420L420 -40M-40 540L540 -40M-40 660L640 20M-40 780L640 140M80 840L640 280M200 840L640 400M320 840L640 520"/>
+  </g>
+  <circle cx="300" cy="300" r="54" stroke="#8E8E8E" stroke-width="3"/>
+  <path d="M196 470c18-62 52-92 104-92s86 30 104 92" stroke="#8E8E8E" stroke-width="3" stroke-linecap="round"/>
+  <text x="300" y="530" text-anchor="middle" fill="#7A7A7A" font-family="Inter, Arial, sans-serif" font-size="16" letter-spacing="1.8">PORTRAIT</text>
+</svg>
