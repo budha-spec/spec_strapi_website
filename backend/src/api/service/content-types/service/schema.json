@@ -34,6 +34,15 @@
         "audios"
       ]
     },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "blog_category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::category.category"
+    },
     "seo": {
       "type": "component",
       "component": "shared.seo",
@@ -53,7 +62,7 @@
         "shared.cta",
         "shared.faqs",
         "shared.industries",
-        "shared.home-blogs"
+        "shared.testimonial-section"
       ]
     },
     "children": {
