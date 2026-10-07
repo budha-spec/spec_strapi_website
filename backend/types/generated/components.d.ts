@@ -119,6 +119,17 @@ export interface SharedFaqs extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedFooter extends Struct.ComponentSchema {
+  collectionName: 'components_shared_footers';
+  info: {
+    displayName: 'Footer';
+  };
+  attributes: {
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedGallery extends Struct.ComponentSchema {
   collectionName: 'components_shared_galleries';
   info: {
@@ -312,6 +323,7 @@ declare module '@strapi/strapi' {
       'shared.enterprise-solution-item': SharedEnterpriseSolutionItem;
       'shared.faq-item': SharedFaqItem;
       'shared.faqs': SharedFaqs;
+      'shared.footer': SharedFooter;
       'shared.gallery': SharedGallery;
       'shared.home-blogs': SharedHomeBlogs;
       'shared.home-page-section1': SharedHomePageSection1;
