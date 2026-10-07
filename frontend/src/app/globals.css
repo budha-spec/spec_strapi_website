@@ -186,8 +186,8 @@
     overflow: hidden;
     background-color: #ffffff;
     color: #000000;
-    border: 0;
-    transition: color 0.35s ease;
+    border: 1px solid var(--color-stroke-outline);
+    transition: color 0.35s ease, border-color 0.35s ease;
   }
   .carousel-arrow::before {
     content: '';
@@ -205,6 +205,8 @@
   }
   .carousel-arrow:hover {
     color: #ffffff;
+    /* The gradient fill takes over the edge, so the grey ring steps aside. */
+    border-color: transparent;
   }
   .carousel-arrow:hover::before {
     opacity: 1;
@@ -618,7 +620,7 @@
   /* Softens the dot sphere at its limb only — the design keeps the
      lower rim visible behind the prompt card. */
   .mask-sphere {
-    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 62%, transparent 78%);
-    mask-image: radial-gradient(circle at 50% 50%, #000 62%, transparent 78%);
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 70%, transparent 92%);
+    mask-image: radial-gradient(circle at 50% 50%, #000 70%, transparent 92%);
   }
 }
