@@ -52,7 +52,7 @@ export function CarouselControls({
               : 'explore-all-dark'
         )}
         style={
-          pill !== 'dark'
+          pill === 'gradient-light'
             ? { ['--grad-angle' as string]: '-66.1deg' }
             : undefined
         }
@@ -65,17 +65,22 @@ export function CarouselControls({
           type="button"
           aria-label="Previous"
           onClick={onPrev}
-          className="carousel-arrow flex h-[clamp(34px,2.13vw,40.8px)] w-[clamp(52px,3.54vw,68px)] items-center justify-center rounded-full"
+          className="carousel-arrow carousel-arrow-prev flex h-[clamp(34px,2.13vw,40.8px)] w-[clamp(52px,3.54vw,68px)] items-center justify-center rounded-full"
         >
-          <Arrow flip />
+          {/* Wrapper carries the hover slide so flip rotate on the SVG is never overridden. */}
+          <span className="carousel-arrow-icon inline-flex">
+            <Arrow flip />
+          </span>
         </button>
         <button
           type="button"
           aria-label="Next"
           onClick={onNext}
-          className="carousel-arrow flex h-[clamp(34px,2.13vw,40.8px)] w-[clamp(52px,3.54vw,68px)] items-center justify-center rounded-full"
+          className="carousel-arrow carousel-arrow-next flex h-[clamp(34px,2.13vw,40.8px)] w-[clamp(52px,3.54vw,68px)] items-center justify-center rounded-full"
         >
-          <Arrow />
+          <span className="carousel-arrow-icon inline-flex">
+            <Arrow />
+          </span>
         </button>
       </div>
     </div>

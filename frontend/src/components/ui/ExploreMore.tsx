@@ -25,8 +25,8 @@ interface ExploreMoreProps {
   /** `filled` draws the solid dark circle used on the case-study card. */
   variant?: 'outline' | 'filled';
   /**
-   * `lg` is the service-card circle. Figma draws that icon larger than the
-   * outline used on blog cards.
+   * `lg` matches the larger Figma circle on service + case-study cards.
+   * Blog cards keep the default `md` outline size.
    */
   size?: 'md' | 'lg';
 }
@@ -39,7 +39,9 @@ export function ExploreMore({
   variant = 'outline',
   size = 'md',
 }: ExploreMoreProps) {
-  const large = size === 'lg' && variant === 'outline';
+  const large = size === 'lg';
+  const filled = variant === 'filled';
+  const arrowSize = filled ? (large ? 16 : 13) : large ? 18 : 11;
 
   return (
     <Link
@@ -53,7 +55,7 @@ export function ExploreMore({
       <span
         className={cn(
           'explore-more-label text-d16',
-          variant === 'filled' ? 'font-medium' : 'font-light'
+          filled ? 'font-semibold' : 'font-light'
         )}
       >
         {label}
@@ -61,14 +63,19 @@ export function ExploreMore({
       <span
         className={cn(
           'explore-more-arrow flex items-center justify-center rounded-full',
-          variant === 'filled'
-            ? 'explore-more-arrow--filled size-[clamp(26px,1.82vw,35px)]'
+          filled
+            ? cn(
+                'explore-more-arrow--filled',
+                large
+                  ? 'size-[clamp(34px,2.6vw,50px)]'
+                  : 'size-[clamp(26px,1.82vw,35px)]'
+              )
             : large
               ? 'size-[clamp(28px,2.8125vw,36px)]'
               : 'size-[clamp(20px,1.35vw,26px)]'
         )}
       >
-        <ArrowRight size={variant === 'filled' ? 13 : large ? 18 : 11} />
+        <ArrowRight size={arrowSize} />
       </span>
     </Link>
   );
