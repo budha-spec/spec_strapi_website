@@ -115,7 +115,9 @@ export function Testimonials({ data }: TestimonialsProps) {
                           <polygon points="6 3 21 12 6 21" />
                         </svg>
                       </span>
-                      <span className="flex-1 pr-1 text-d18 font-light">Play</span>
+                      <span className="flex-1 text-center text-d18 font-light leading-none">
+                        Play
+                      </span>
                     </>
                   );
 
@@ -158,7 +160,7 @@ export function Testimonials({ data }: TestimonialsProps) {
                           </span>
                         )}
 
-                        <div className="relative mt-[clamp(10px,1.3vw,25px)] grid w-full min-h-[5.5rem]">
+                        <div className="relative mt-[clamp(10px,1.3vw,25px)] grid h-[5.5rem] w-full items-start">
                           <div className="spotlight-identity col-start-1 row-start-1 text-center">
                             <h4 className="text-d24 font-medium leading-[1.3] text-white">
                               {cmsText(person.name)}

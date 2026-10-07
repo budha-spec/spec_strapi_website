@@ -67,21 +67,24 @@ export function CaseStudies({ data }: CaseStudiesProps) {
 
                       <div className="mt-auto pt-[clamp(28px,4.17vw,80px)]">
                         {tags.length > 0 && (
-                          <ul className="flex flex-wrap gap-[clamp(6px,0.47vw,9px)]">
-                            {tags.map((tag) => (
-                              <li
-                                key={tag.id}
-                                className="flex h-[clamp(32px,2.19vw,42px)] items-center rounded-full border border-stroke-main px-[clamp(12px,0.89vw,17px)] text-d14 text-text-secondary"
-                              >
-                                {cmsText(tag.title)}
-                              </li>
-                            ))}
-                          </ul>
+                          <div className="border-t border-stroke-main pt-[clamp(16px,1.67vw,32px)]">
+                            <ul className="flex flex-wrap gap-[clamp(6px,0.47vw,9px)]">
+                              {tags.map((tag) => (
+                                <li
+                                  key={tag.id}
+                                  className="flex h-[clamp(32px,2.19vw,42px)] items-center rounded-full border border-stroke-main px-[clamp(12px,0.89vw,17px)] text-d14 text-text-secondary"
+                                >
+                                  {cmsText(tag.title)}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
                         )}
 
                         <ExploreMore
                           href={joinPath(data.url ?? '/case-study', study.slug)}
                           variant="filled"
+                          size="lg"
                           className="mt-[clamp(20px,2.5vw,48px)]"
                         />
                       </div>
