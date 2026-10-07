@@ -28,6 +28,9 @@ export function BlogSection({ title, subTitle, posts }: BlogSectionProps) {
   const [index, setIndex] = useState(0);
   const [animate, setAnimate] = useState(true);
   const [step, setStep] = useState(0);
+  // Cards visible at the current breakpoint — 1, 2, or 4. Drives whether the
+  // prev/next controls are worth showing at all.
+  const [perView, setPerView] = useState(4);
   const viewportRef = useRef<HTMLDivElement>(null);
 
   const slides = count > 0 ? [...posts, ...posts] : [];
@@ -41,6 +44,7 @@ export function BlogSection({ title, subTitle, posts }: BlogSectionProps) {
       if (!track) return;
       const n = Number.parseFloat(getComputedStyle(track).getPropertyValue('--blog-n')) || 4;
       const gap = Number.parseFloat(getComputedStyle(track).gap) || 32;
+      setPerView(n);
       setStep((viewport.clientWidth + gap) / n);
     };
 
@@ -160,14 +164,18 @@ export function BlogSection({ title, subTitle, posts }: BlogSectionProps) {
           </div>
         )}
 
-        {count > 1 && (
-          <CarouselControls
-            pill="gradient-light"
-            className="mt-[clamp(16px,1.98vw,38px)]"
-            onPrev={() => go(-1)}
-            onNext={() => go(1)}
-          />
-        )}
+        {/*
+          Explore All is always offered. The arrows only earn their place once
+          there are more posts than fit on screen — at 4 or fewer on desktop
+          there is nothing to scroll to.
+        */}
+        <CarouselControls
+          pill="gradient-light"
+          className="mt-[clamp(16px,1.98vw,38px)]"
+          showArrows={count > perView}
+          onPrev={() => go(-1)}
+          onNext={() => go(1)}
+        />
       </div>
     </section>
   );
