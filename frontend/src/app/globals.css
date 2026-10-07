@@ -618,7 +618,7 @@
   /* Softens the dot sphere at its limb only — the design keeps the
      lower rim visible behind the prompt card. */
   .mask-sphere {
-    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 62%, transparent 78%);
-    mask-image: radial-gradient(circle at 50% 50%, #000 62%, transparent 78%);
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 70%, transparent 92%);
+    mask-image: radial-gradient(circle at 50% 50%, #000 70%, transparent 92%);
   }
 }

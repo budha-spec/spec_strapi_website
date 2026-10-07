@@ -11,6 +11,8 @@ export interface HomeHeroBlock {
   title: string;
   description?: string | null;
   capabilities?: HomeCapability[] | null;
+  /** Prefill chips under the hero prompt field. Falls back to defaults. */
+  suggestions?: HomeCapability[] | null;
 }
 
 export interface HomeGalleryBlock {
