@@ -765,6 +765,10 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    blog_category: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::category.category'
+    >;
     children: Schema.Attribute.Relation<'manyToMany', 'api::service.service'>;
     content: Schema.Attribute.DynamicZone<
       [

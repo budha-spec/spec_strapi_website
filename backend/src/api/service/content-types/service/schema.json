@@ -38,6 +38,11 @@
       "type": "string",
       "required": true
     },
+    "blog_category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::category.category"
+    },
     "seo": {
       "type": "component",
       "component": "shared.seo",
