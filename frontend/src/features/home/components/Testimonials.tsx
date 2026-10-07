@@ -118,9 +118,10 @@ export function Testimonials({ data }: TestimonialsProps) {
                   const embedUrl = toEmbedUrl(person.videoUrl);
                   const play = (
                     <>
-                      <span className="spotlight-play-icon flex size-[38px] shrink-0 items-center justify-center rounded-full">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                          <polygon points="6 3 21 12 6 21" />
+                      <span className="spotlight-play-icon flex size-[42px] shrink-0 items-center justify-center rounded-full">
+                        {/* 24x24 icon frame holding Figma's 12x13 triangle. */}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                          <polygon points="6 5.5 18 12 6 18.5" />
                         </svg>
                       </span>
                       <span className="flex-1 text-center text-d18 font-light leading-none">
@@ -165,12 +166,12 @@ export function Testimonials({ data }: TestimonialsProps) {
                             tabIndex={i >= count ? -1 : undefined}
                             /* Tailwind v4 preflight leaves buttons with the
                                default cursor, unlike the link this replaced. */
-                            className="spotlight-play flex h-11 w-[120px] cursor-pointer items-center rounded-full p-[3px]"
+                            className="spotlight-play flex h-12 w-[133px] cursor-pointer items-center rounded-full p-[3px]"
                           >
                             {play}
                           </button>
                         ) : (
-                          <span className="spotlight-play flex h-11 w-[120px] items-center rounded-full p-[3px]">
+                          <span className="spotlight-play flex h-12 w-[133px] items-center rounded-full p-[3px]">
                             {play}
                           </span>
                         )}
