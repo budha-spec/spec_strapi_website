@@ -39,6 +39,45 @@ export function cmsText(value?: string | null): string {
   return (value ?? '').replace(/\u00a0/g, ' ');
 }
 
+const NAMED_ENTITIES: Record<string, string> = {
+  amp: '&',
+  lt: '<',
+  gt: '>',
+  quot: '"',
+  apos: "'",
+  nbsp: ' ',
+  hellip: '\u2026',
+  rsquo: '\u2019',
+  lsquo: '\u2018',
+  rdquo: '\u201d',
+  ldquo: '\u201c',
+  ndash: '\u2013',
+  mdash: '\u2014',
+};
+
+/**
+ * Decodes the HTML entities WordPress leaves in `title`, `excerpt`, and
+ * category names \u2014 `&#8217;`, `&amp;`, `&hellip;` and friends.
+ *
+ * Everything is handled in one pass so `&amp;lt;` decodes to the literal
+ * `&lt;` rather than being unescaped twice.
+ */
+export function decodeEntities(value?: string | null): string {
+  if (!value) return '';
+  return value.replace(
+    /&(#x[0-9a-f]+|#\d+|[a-z]+);/gi,
+    (match, entity: string) => {
+      if (entity.startsWith('#x') || entity.startsWith('#X')) {
+        return String.fromCodePoint(Number.parseInt(entity.slice(2), 16));
+      }
+      if (entity.startsWith('#')) {
+        return String.fromCodePoint(Number.parseInt(entity.slice(1), 10));
+      }
+      return NAMED_ENTITIES[entity.toLowerCase()] ?? match;
+    }
+  );
+}
+
 /** Accepts `/services`, `about/testimonials`, and absolute URLs. */
 export function hrefPath(url?: string | null): string {
   if (!url) return '#';

@@ -29,6 +29,8 @@ interface CarouselControlsProps {
   className?: string;
   onPrev?: () => void;
   onNext?: () => void;
+  /** Hide the arrows when everything already fits — Explore All stays. */
+  showArrows?: boolean;
 }
 
 /** "Explore All" pill plus previous / next arrow buttons, right aligned. */
@@ -38,6 +40,7 @@ export function CarouselControls({
   className,
   onPrev,
   onNext,
+  showArrows = true,
 }: CarouselControlsProps) {
   return (
     <div className={cn('flex items-center justify-end gap-[clamp(16px,1.56vw,30px)]', className)}>
@@ -60,29 +63,31 @@ export function CarouselControls({
         Explore All
       </Link>
 
-      <div className="flex items-center gap-[13px]">
-        <button
-          type="button"
-          aria-label="Previous"
-          onClick={onPrev}
-          className="carousel-arrow carousel-arrow-prev flex h-[clamp(34px,2.13vw,40.8px)] w-[clamp(52px,3.54vw,68px)] items-center justify-center rounded-full"
-        >
-          {/* Wrapper carries the hover slide so flip rotate on the SVG is never overridden. */}
-          <span className="carousel-arrow-icon inline-flex">
-            <Arrow flip />
-          </span>
-        </button>
-        <button
-          type="button"
-          aria-label="Next"
-          onClick={onNext}
-          className="carousel-arrow carousel-arrow-next flex h-[clamp(34px,2.13vw,40.8px)] w-[clamp(52px,3.54vw,68px)] items-center justify-center rounded-full"
-        >
-          <span className="carousel-arrow-icon inline-flex">
-            <Arrow />
-          </span>
-        </button>
-      </div>
+      {showArrows && (
+        <div className="flex items-center gap-[13px]">
+          <button
+            type="button"
+            aria-label="Previous"
+            onClick={onPrev}
+            className="carousel-arrow carousel-arrow-prev flex h-[clamp(34px,2.13vw,40.8px)] w-[clamp(52px,3.54vw,68px)] items-center justify-center rounded-full"
+          >
+            {/* Wrapper carries the hover slide so flip rotate on the SVG is never overridden. */}
+            <span className="carousel-arrow-icon inline-flex">
+              <Arrow flip />
+            </span>
+          </button>
+          <button
+            type="button"
+            aria-label="Next"
+            onClick={onNext}
+            className="carousel-arrow carousel-arrow-next flex h-[clamp(34px,2.13vw,40.8px)] w-[clamp(52px,3.54vw,68px)] items-center justify-center rounded-full"
+          >
+            <span className="carousel-arrow-icon inline-flex">
+              <Arrow />
+            </span>
+          </button>
+        </div>
+      )}
     </div>
   );
 }

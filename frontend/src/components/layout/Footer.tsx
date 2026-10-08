@@ -143,7 +143,8 @@ export function Footer() {
     <footer id="contact" className="w-full">
       {/* ─── CTA: contact details + enquiry form ─────────────── */}
       <section className="relative z-10 w-full bg-bg-light pt-[clamp(40px,3.65vw,70px)]">
-        <div className="shell grid gap-[clamp(16px,1.46vw,28px)] lg:grid-cols-[979fr_688fr]">
+        {/* Figma: 980 + 32 + 688 = the 1700 shell. */}
+        <div className="shell grid gap-[clamp(16px,1.67vw,32px)] lg:grid-cols-[980fr_688fr]">
           {/* Let's talk */}
           <div className="flex flex-col rounded-[16px] border border-stroke-outline/70 bg-bg-white p-[clamp(20px,1.88vw,36px)]">
             <p className="text-d24 font-medium text-text-primary">Let&rsquo;s Talk to</p>
@@ -206,7 +207,7 @@ export function Footer() {
                         href="#"
                         aria-label={social.name}
                         data-network={social.network}
-                        className="social-btn flex size-[clamp(30px,1.93vw,37px)] items-center justify-center rounded-[8px] border border-stroke-grey transition-colors hover:border-text-primary"
+                        className="social-btn flex size-[clamp(30px,1.93vw,37px)] items-center justify-center rounded-[8px] border border-stroke-grey transition-colors"
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={social.src} alt="" width={18} height={18} className="size-[18px] object-contain" />
@@ -221,7 +222,7 @@ export function Footer() {
                   <Link
                     key={item.name}
                     href="#"
-                    className={`${item.variant === 'behance' ? 'behance-pill' : ''} flex h-[clamp(38px,2.4vw,46px)] items-center gap-2 rounded-full border border-stroke-grey p-[clamp(4px,0.26vw,5px)] pr-[clamp(10px,0.83vw,16px)] text-text-primary transition-colors hover:border-text-primary`}
+                    className="behance-pill flex h-[clamp(38px,2.4vw,46px)] items-center gap-2 rounded-full border border-stroke-grey p-[clamp(4px,0.26vw,5px)] pr-[clamp(10px,0.83vw,16px)] text-text-primary transition-colors"
                   >
                     <span
                       className={`behance-pill-icon flex aspect-square h-full items-center justify-center rounded-full ${
@@ -297,39 +298,46 @@ export function Footer() {
                 </span>
               </label>
 
-              <div>
-                <p className="text-d12 font-medium text-text-secondary">
-                  Verify that you are human*
-                </p>
-                <div className="mt-[clamp(8px,0.63vw,12px)] flex w-full max-w-[300px] items-center gap-3 rounded-[10px] border border-stroke-outline p-[clamp(10px,0.73vw,14px)]">
-                  <input
-                    type="checkbox"
-                    aria-label="I am human"
-                    className="size-4 shrink-0 rounded border-stroke-main accent-brand-cta-blue"
-                  />
-                  <span className="text-d14 text-text-primary">I am human</span>
-                  <span className="ml-auto text-right text-[9px] leading-tight text-text-muted">
-                    hCaptcha
-                    <br />
-                    Privacy &middot; Terms
-                  </span>
+              {/*
+                Captcha and submit share a row so the card keeps Figma's 615px
+                height — the design leaves only 37px below the captcha, which is
+                padding, not space for a button.
+              */}
+              <div className="flex flex-wrap items-end justify-between gap-[clamp(12px,1.04vw,20px)]">
+                <div>
+                  <p className="text-d12 font-medium text-text-secondary">
+                    Verify that you are human*
+                  </p>
+                  <div className="mt-[clamp(8px,0.63vw,12px)] flex w-full max-w-[300px] items-center gap-3 rounded-[10px] border border-stroke-outline p-[clamp(10px,0.73vw,14px)]">
+                    <input
+                      type="checkbox"
+                      aria-label="I am human"
+                      className="size-4 shrink-0 rounded border-stroke-main accent-brand-cta-blue"
+                    />
+                    <span className="text-d14 text-text-primary">I am human</span>
+                    <span className="ml-auto text-right text-[9px] leading-tight text-text-muted">
+                      hCaptcha
+                      <br />
+                      Privacy &middot; Terms
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              <button
-                type="submit"
-                className="gradient-btn mt-[clamp(4px,0.42vw,8px)] inline-flex h-[clamp(40px,2.4vw,46px)] w-fit items-center justify-center rounded-full px-[clamp(24px,1.98vw,38px)] text-d16 text-white transition-[filter] hover:brightness-110"
-              >
-                Submit Enquiry
-              </button>
+                <button
+                  type="submit"
+                  className="gradient-btn inline-flex h-[clamp(40px,2.4vw,46px)] w-fit shrink-0 items-center justify-center rounded-full px-[clamp(24px,1.98vw,38px)] text-d16 text-white transition-[filter] hover:brightness-110"
+                >
+                  Submit
+                </button>
+              </div>
             </form>
           </div>
         </div>
 
         {/* Certifications + review scores. Overlaps the dark footer below. */}
         <div className="shell relative z-20 mt-[clamp(16px,1.67vw,32px)] -mb-[clamp(24px,3.8vw,73px)]">
-          <div className="flex flex-col items-center gap-[clamp(16px,1.67vw,32px)] overflow-hidden rounded-[20px] border border-stroke-outline/70 bg-bg-white py-[clamp(16px,1.3vw,25px)] pl-[clamp(16px,1.56vw,30px)] pr-[clamp(8px,0.73vw,14px)] xl:flex-row xl:items-center">
-            <ul className="flex flex-1 flex-wrap items-center justify-center gap-[clamp(10px,1.15vw,22px)] xl:justify-start">
+          <div className="flex flex-col items-center gap-[clamp(16px,1.67vw,32px)] overflow-hidden rounded-[20px] border border-stroke-outline/70 bg-bg-white py-[clamp(16px,1.67vw,32px)] pl-[clamp(16px,1.77vw,34px)] pr-[clamp(8px,0.73vw,14px)] xl:flex-row xl:items-center xl:gap-[clamp(24px,4.58vw,88px)] xl:pr-0">
+            <ul className="flex flex-1 flex-wrap items-center justify-center gap-[clamp(10px,1.15vw,22px)] xl:justify-start xl:gap-[clamp(4px,0.26vw,5px)]">
               {MEDALS.map((src) => (
                 <li key={src}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -344,16 +352,19 @@ export function Footer() {
               ))}
             </ul>
 
-            <ul className="flex w-full flex-wrap items-center justify-center gap-[clamp(16px,1.83vw,35px)] rounded-[20px] bg-bg-light px-[clamp(16px,1.56vw,30px)] py-[clamp(14px,1.04vw,20px)] xl:w-auto xl:min-w-[clamp(520px,44vw,844px)] xl:rounded-l-[20px] xl:rounded-r-[88px]">
+            <ul className="flex w-full flex-wrap items-center justify-center gap-[clamp(16px,1.83vw,35px)] rounded-[20px] bg-bg-light px-[clamp(16px,1.56vw,30px)] py-[clamp(14px,1.61vw,31px)] xl:w-auto xl:pl-[clamp(16px,2.18vw,42px)] xl:pr-[clamp(8px,0.57vw,11px)] xl:min-w-[clamp(520px,44vw,844px)] xl:rounded-l-[88px] xl:rounded-r-none">
               {RATINGS.map((rating) => (
-                <li key={rating.site} className="flex flex-col items-center gap-[clamp(8px,0.83vw,16px)]">
+                <li
+                  key={rating.site}
+                  className="flex w-[clamp(74px,6.78vw,130px)] flex-col items-center gap-[clamp(10px,0.95vw,18px)]"
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={rating.logo}
                     alt={rating.site}
                     width={rating.width}
                     height={rating.height}
-                    className="h-[clamp(16px,1.25vw,24px)] w-auto object-contain"
+                    className="max-h-[clamp(16px,1.25vw,24px)] w-auto object-contain"
                   />
                   <span className="flex items-center gap-[7px] text-d16 font-medium text-text-primary">
                     {/* eslint-disable-next-line @next/next/no-img-element */}

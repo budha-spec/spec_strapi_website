@@ -3,6 +3,14 @@ import DotSphere from '@/components/ui/DotSphere';
 import { CapabilityTicker } from '@/components/ui/CapabilityTicker';
 import { cmsText } from '@/lib/media';
 import type { HomeHeroBlock } from '../types/home.types';
+import { HeroPrompt } from './HeroPrompt';
+
+/** Shown until the CMS block supplies its own prompt suggestions. */
+const DEFAULT_SUGGESTIONS = [
+  'Modernize Legacy Software',
+  'Build a Business Application',
+  'AI to Our Product',
+];
 
 interface HeroSectionProps {
   data: HomeHeroBlock;
@@ -14,6 +22,12 @@ export function HeroSection({ data }: HeroSectionProps) {
   const capabilities = (data.capabilities ?? [])
     .map((item) => cmsText(item.title))
     .filter(Boolean);
+  const cmsSuggestions = (data.suggestions ?? [])
+    .map((item) => cmsText(item.title))
+    .filter(Boolean);
+  const suggestions = cmsSuggestions.length
+    ? cmsSuggestions
+    : DEFAULT_SUGGESTIONS;
 
   return (
     <section
@@ -48,20 +62,22 @@ export function HeroSection({ data }: HeroSectionProps) {
 
       {/* Rotating sphere of dots, centred just above the midpoint */}
       <div className="pointer-events-none absolute left-1/2 top-[11.6%] z-0 aspect-square w-[min(700px,68vw)] -translate-x-1/2 mask-sphere">
-        <DotSphere count={4200} />
+        <DotSphere count={6500} />
       </div>
 
       {/*
-        Bright crescent that reads through the translucent prompt card. In Figma
-        this is the sphere's dense lower cap blended with plus-lighter; a soft
-        highlight reproduces it without depending on blend-mode support.
+        Soft crescent that reads through the translucent prompt card. In Figma
+        this is the sphere's dense lower cap blended with plus-lighter; a diffuse
+        highlight reproduces it without depending on blend-mode support. It is
+        kept faint on purpose — at full strength it washes out the prompt card
+        that sits in front of it.
       */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-[56%] z-0 h-[30%] w-[min(760px,58vw)] -translate-x-1/2"
+        className="pointer-events-none absolute left-1/2 top-[56%] z-0 h-[26%] w-[min(620px,46vw)] -translate-x-1/2 blur-[40px]"
         style={{
           background:
-            'radial-gradient(ellipse at 50% 76%, rgba(255,255,255,0.62) 0%, rgba(214,236,255,0.30) 34%, rgba(170,210,255,0.10) 58%, transparent 78%)',
+            'radial-gradient(ellipse at 50% 76%, rgba(255,255,255,0.26) 0%, rgba(214,236,255,0.13) 36%, rgba(170,210,255,0.05) 60%, transparent 78%)',
         }}
       />
 
@@ -92,43 +108,7 @@ export function HeroSection({ data }: HeroSectionProps) {
           {description}
         </p>
 
-        {/* Prompt card */}
-        <div className="mt-[clamp(26px,4.27vw,82px)] flex h-[clamp(150px,10.42vw,200px)] w-[min(835px,100%)] flex-col justify-between rounded-[16px] border border-glass-border bg-[rgba(0,0,0,0.4)] p-[clamp(13px,1.04vw,20px)] text-left backdrop-blur-[20px]">
-          <label htmlFor="hero-prompt" className="sr-only">
-            Ask SPEC anything
-          </label>
-          <input
-            id="hero-prompt"
-            type="text"
-            placeholder="Ask SPEC to anything..."
-            className="w-full bg-transparent font-nunito text-d18 text-white outline-none placeholder:text-white/85"
-          />
-
-          <div className="flex items-center justify-end gap-3">
-            <button
-              type="submit"
-              aria-label="Submit prompt"
-              className="gradient-btn flex size-[clamp(30px,1.88vw,36px)] shrink-0 items-center justify-center rounded-full text-white transition-[filter] hover:brightness-110"
-              style={{ ['--grad-angle' as string]: '-82.43deg' }}
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden
-                className="size-[55%]"
-              >
-                <path d="M5 12h13" />
-                <path d="m12 5 7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-        </div>
+        <HeroPrompt suggestions={suggestions} />
       </div>
     </section>
   );
