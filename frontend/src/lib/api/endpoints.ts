@@ -9,13 +9,25 @@ const HOME_POPULATE = [
   'populate[content][on][shared.key-metrics-section][populate][keyMetrics][populate]=*',
   'populate[content][on][shared.case-studies][populate][case_studies][populate]=*',
   'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
-  'populate[content][on][shared.home-blogs][populate][blogs][populate]=*',
+].join('&');
+
+/**
+ * Service landing page dynamic zone: client logos, the capability tabs
+ * (each tab is a linked Service with its child services), and testimonials.
+ */
+const SERVICE_POPULATE = [
+  'populate[content][on][shared.gallery][populate][images][populate]=*',
+  'populate[content][on][shared.services][populate][services][populate]=*',
+  'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
 ].join('&');
 
 /** All Strapi API endpoint paths. Import from here — never hardcode in components. */
 export const ENDPOINTS = {
   /** Landing page: slug `home`, with nested media and relations. */
   HOME_PAGE: `/pages?filters[slug][$eq]=home&${HOME_POPULATE}`,
+  /** One service landing page, matched by slug. */
+  SERVICE_BY_SLUG: (slug: string) =>
+    `/services?filters[slug]=${encodeURIComponent(slug)}&${SERVICE_POPULATE}`,
 } as const;
 
 /** Most posts the Insights carousel will show, however many the API returns. */

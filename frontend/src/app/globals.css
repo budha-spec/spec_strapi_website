@@ -436,6 +436,47 @@
     }
   }
 
+  /*
+   * Pill that fills with the brand gradient on hover — capability tabs and
+   * their sub-category chips. The gradient sits on ::before so it can fade.
+   * Pair it with `hover:text-white` (and `hover:border-transparent` when
+   * bordered): a utility colour on the element would outrank a rule here.
+   */
+  .gradient-hover {
+    position: relative;
+    isolation: isolate;
+    transition:
+      color 0.3s ease,
+      border-color 0.3s ease;
+  }
+  .gradient-hover::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background-image: linear-gradient(
+      var(--grad-angle, -68.41deg),
+      #56f72f 10.862%,
+      #0c3ced 97.041%
+    );
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+  }
+  .gradient-hover:hover::before,
+  .gradient-hover:focus-visible::before {
+    opacity: 1;
+  }
+
+  /* Service page capability tabs — the incoming panel fades up. */
+  .capability-panel {
+    animation: capability-panel-in 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .capability-panel { animation: none; }
+  }
+
   .client-logo {
     filter: grayscale(1);
     opacity: 0.85;
@@ -651,4 +692,9 @@
     -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 70%, transparent 92%);
     mask-image: radial-gradient(circle at 50% 50%, #000 70%, transparent 92%);
   }
+}
+
+@keyframes capability-panel-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
 }

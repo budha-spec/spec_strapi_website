@@ -33,7 +33,16 @@ interface CarouselControlsProps {
   showArrows?: boolean;
 }
 
-/** "Explore All" pill plus previous / next arrow buttons, right aligned. */
+/**
+ * "Explore All" pill plus previous / next arrow buttons, right aligned.
+ *
+ * Shared style hooks (same on every carousel):
+ *   .carousel-controls  wrapper
+ *   .explore-all        the pill — plus one of .explore-all-gradient,
+ *                       .explore-all-on-light, .explore-all-dark
+ *   .carousel-arrows    the prev/next pair
+ *   .carousel-arrow     each arrow — plus .carousel-arrow-prev / -next
+ */
 export function CarouselControls({
   href = '#',
   pill = 'dark',
@@ -43,11 +52,16 @@ export function CarouselControls({
   showArrows = true,
 }: CarouselControlsProps) {
   return (
-    <div className={cn('flex items-center justify-end gap-[clamp(16px,1.56vw,30px)]', className)}>
+    <div
+      className={cn(
+        'carousel-controls flex items-center justify-end gap-[clamp(16px,1.56vw,30px)]',
+        className
+      )}
+    >
       <Link
         href={href}
         className={cn(
-          'inline-flex h-[clamp(34px,2.19vw,42px)] min-w-[clamp(110px,7.29vw,140px)] items-center justify-center rounded-full px-[clamp(18px,1.56vw,30px)] text-d16',
+          'explore-all inline-flex h-[clamp(34px,2.19vw,42px)] min-w-[clamp(110px,7.29vw,140px)] items-center justify-center rounded-full px-[clamp(18px,1.56vw,30px)] text-d16',
           pill === 'gradient-light'
             ? 'explore-all-on-light'
             : pill === 'gradient'
@@ -64,7 +78,7 @@ export function CarouselControls({
       </Link>
 
       {showArrows && (
-        <div className="flex items-center gap-[13px]">
+        <div className="carousel-arrows flex items-center gap-[13px]">
           <button
             type="button"
             aria-label="Previous"

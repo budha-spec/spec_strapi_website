@@ -1,4 +1,9 @@
 import type { CmsMedia } from '@/lib/media';
+import type {
+  GalleryBlock,
+  SolutionsBlock,
+  TestimonialsBlock,
+} from '@/types/sections.types';
 
 export interface HomeCapability {
   id: number;
@@ -13,37 +18,6 @@ export interface HomeHeroBlock {
   capabilities?: HomeCapability[] | null;
   /** Prefill chips under the hero prompt field. Falls back to defaults. */
   suggestions?: HomeCapability[] | null;
-}
-
-export interface HomeGalleryBlock {
-  __component: 'shared.gallery';
-  id: number;
-  title?: string | null;
-  images?: CmsMedia[] | null;
-}
-
-export interface HomeRelatedPage {
-  id: number;
-  title?: string | null;
-  slug?: string | null;
-}
-
-export interface HomeSolutionItem {
-  id: number;
-  title: string;
-  description?: string | null;
-  txt?: string | null;
-  url?: string | null;
-  image?: CmsMedia | null;
-  pages?: HomeRelatedPage[] | null;
-}
-
-export interface HomeSolutionsBlock {
-  __component: 'shared.enterprise-solution';
-  id: number;
-  title?: string | null;
-  subTitle?: string | null;
-  enterpriseSolution?: HomeSolutionItem[] | null;
 }
 
 export interface HomeMetric {
@@ -85,24 +59,6 @@ export interface HomeCaseStudiesBlock {
   case_studies?: HomeCaseStudy[] | null;
 }
 
-export interface HomeTestimonial {
-  id: number;
-  name: string;
-  designation?: string | null;
-  description?: string | null;
-  videoUrl?: string | null;
-  image?: CmsMedia | null;
-}
-
-export interface HomeTestimonialsBlock {
-  __component: 'shared.testimonial-section';
-  id: number;
-  title: string;
-  subTitle?: string | null;
-  url?: string | null;
-  testimonials?: HomeTestimonial[] | null;
-}
-
 export interface HomeBlogCategory {
   id: number;
   name?: string | null;
@@ -129,11 +85,11 @@ export interface HomeBlogsBlock {
 
 export type HomeBlock =
   | HomeHeroBlock
-  | HomeGalleryBlock
-  | HomeSolutionsBlock
+  | GalleryBlock
+  | SolutionsBlock
   | HomeMetricsBlock
   | HomeCaseStudiesBlock
-  | HomeTestimonialsBlock
+  | TestimonialsBlock
   | HomeBlogsBlock;
 
 export interface HomePageEntry {

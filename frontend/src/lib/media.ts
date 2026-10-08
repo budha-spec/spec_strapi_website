@@ -34,9 +34,12 @@ export function mediaAlt(
   return media?.alternativeText || fallback;
 }
 
-/** Strapi sometimes stores non-breaking spaces in rich labels. */
+/**
+ * Strapi sometimes stores non-breaking spaces in rich labels, at times as
+ * `\u00c2\u00a0` \u2014 a UTF-8 nbsp that was decoded as Latin-1 on its way in.
+ */
 export function cmsText(value?: string | null): string {
-  return (value ?? '').replace(/\u00a0/g, ' ');
+  return (value ?? '').replace(/\u00c2?\u00a0/g, ' ');
 }
 
 const NAMED_ENTITIES: Record<string, string> = {
