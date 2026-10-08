@@ -15,7 +15,7 @@ interface ServicePageProps {
 /** Shared by metadata and the page so Strapi is hit once per request. */
 const getService = cache(fetchServiceBySlug);
 
-const CRUMBS = [{ label: 'What we do', href: '/#services' }];
+const CRUMBS = [{ label: 'What we do', href: '/services' }];
 
 export async function generateMetadata({
   params,
@@ -41,6 +41,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
         title={service.title}
         description={service.description}
         crumbs={CRUMBS}
+        currentCrumb="Service"
       />
       <ServiceBlocks blocks={service.content ?? []} />
     </main>

@@ -9,7 +9,6 @@ const HOME_POPULATE = [
   'populate[content][on][shared.key-metrics-section][populate][keyMetrics][populate]=*',
   'populate[content][on][shared.case-studies][populate][case_studies][populate]=*',
   'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
-  'populate[content][on][shared.home-blogs][populate][blogs][populate]=*',
 ].join('&');
 
 /**

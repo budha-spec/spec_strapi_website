@@ -6,7 +6,12 @@
 const STRAPI_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL ?? 'http://localhost:1337';
 
-const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN;
+/** Ignore .env.example placeholders so they don't get sent as Bearer tokens. */
+const STRAPI_TOKEN = (() => {
+  const raw = process.env.STRAPI_API_TOKEN?.trim();
+  if (!raw || raw === 'your_strapi_api_token_here') return undefined;
+  return raw;
+})();
 
 /**
  * Fetch data from the Strapi REST API.
