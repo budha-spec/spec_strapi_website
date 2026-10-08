@@ -1,9 +1,9 @@
 import { CmsImage } from '@/components/ui/CmsImage';
 import { cmsText } from '@/lib/media';
-import type { HomeGalleryBlock } from '../types/home.types';
+import type { GalleryBlock } from '@/types/sections.types';
 
 interface ClientsStripProps {
-  data: HomeGalleryBlock;
+  data: GalleryBlock;
 }
 
 export function ClientsStrip({ data }: ClientsStripProps) {

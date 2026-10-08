@@ -1,11 +1,10 @@
+import { ClientsStrip, Testimonials } from '@/components/sections';
 import type { HomeBlock } from '../types/home.types';
 import { BlogSection, type BlogCardData } from './BlogSection';
 import { CaseStudies } from './CaseStudies';
-import { ClientsStrip } from './ClientsStrip';
 import { HeroSection } from './HeroSection';
 import { ServicesSection } from './ServicesSection';
 import { StatsSection } from './StatsSection';
-import { Testimonials } from './Testimonials';
 
 interface HomeBlocksProps {
   blocks: Array<HomeBlock | { __component: string; id: number }>;

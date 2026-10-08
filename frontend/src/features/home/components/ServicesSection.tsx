@@ -4,10 +4,10 @@ import { CmsImage } from '@/components/ui/CmsImage';
 import { ExploreMore } from '@/components/ui/ExploreMore';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { cmsText, hrefPath } from '@/lib/media';
-import type { HomeSolutionsBlock } from '../types/home.types';
+import type { SolutionsBlock } from '@/types/sections.types';
 
 interface ServicesSectionProps {
-  data: HomeSolutionsBlock;
+  data: SolutionsBlock;
 }
 
 export function ServicesSection({ data }: ServicesSectionProps) {

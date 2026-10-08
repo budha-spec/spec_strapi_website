@@ -8,10 +8,10 @@ import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { VideoModal } from '@/components/ui/VideoModal';
 import { cmsText } from '@/lib/media';
 import { toEmbedUrl } from '@/lib/video';
-import type { HomeTestimonialsBlock } from '../types/home.types';
+import type { TestimonialsBlock } from '@/types/sections.types';
 
 interface TestimonialsProps {
-  data: HomeTestimonialsBlock;
+  data: TestimonialsBlock;
 }
 
 export function Testimonials({ data }: TestimonialsProps) {
