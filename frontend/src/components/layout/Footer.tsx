@@ -21,13 +21,11 @@ const RATINGS = [
 
 const FOOTER_COLUMNS: {
   heading: string;
-  width: string;
   nowrap?: boolean;
   links: string[];
 }[] = [
   {
     heading: 'Services',
-    width: 'lg:w-[280px]',
     links: [
       'Custom Software Development',
       'Enterprise software Development',
@@ -40,7 +38,6 @@ const FOOTER_COLUMNS: {
   },
   {
     heading: 'Hire Developers',
-    width: 'lg:w-[233px]',
     nowrap: true,
     links: [
       'Hire Mobile App Developers',
@@ -54,7 +51,6 @@ const FOOTER_COLUMNS: {
   },
   {
     heading: 'Industries',
-    width: 'lg:w-[195px]',
     links: [
       'Healthcare',
       'Fitness',
@@ -67,7 +63,6 @@ const FOOTER_COLUMNS: {
   },
   {
     heading: 'Solutions',
-    width: 'lg:w-[248px]',
     links: [
       'Custom ERP',
       'Learning Management',
@@ -80,7 +75,6 @@ const FOOTER_COLUMNS: {
   },
   {
     heading: 'Resource',
-    width: 'lg:w-[140px]',
     links: [
       'Overview',
       'Blog',
@@ -147,12 +141,17 @@ export function Footer() {
       {/* ─── Dark footer ─────────────────────────────────────── */}
       <section className="relative z-0 w-full bg-bg-black pt-[clamp(80px,8.07vw,155px)]">
         <div className="shell">
-          <div className="grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-3 lg:flex lg:flex-nowrap lg:gap-x-24">
+          {/*
+            Figma columns are 280/233/195/248/140 with 96px gaps (1480px).
+            Proportional tracks keep that rhythm without overflowing the
+            shell on laptops, where 1480px no longer fits.
+          */}
+          <div className="grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-3 lg:max-w-[1480px] lg:grid-cols-[280fr_233fr_195fr_248fr_140fr] lg:gap-x-[clamp(24px,5vw,96px)]">
             {FOOTER_COLUMNS.map((column) => (
               <nav
                 key={column.heading}
                 aria-label={column.heading}
-                className={`flex shrink-0 flex-col gap-[clamp(16px,1.56vw,30px)] ${column.width}`}
+                className="flex min-w-0 flex-col gap-[clamp(16px,1.56vw,30px)]"
               >
                 <h4 className="text-d22 font-medium leading-[normal] text-white">
                   {column.heading}
@@ -163,7 +162,7 @@ export function Footer() {
                       <Link
                         href="#"
                         className={`text-d18 leading-[normal] text-[#BBB] transition-colors hover:text-white ${
-                          column.nowrap ? 'whitespace-nowrap' : ''
+                          column.nowrap ? '2xl:whitespace-nowrap' : ''
                         }`}
                       >
                         {link}

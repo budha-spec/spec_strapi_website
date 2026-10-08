@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 const NAV_LINKS = [
-  { label: 'What we do', href: '#services' },
+  { label: 'What we do', href: '/services' },
   { label: 'Who we are', href: '#about' },
   { label: 'Industries', href: '#industries' },
   { label: 'Insights', href: '#insights' },
