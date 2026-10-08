@@ -4,8 +4,10 @@ import { cmsText, hrefPath } from '@/lib/media';
 interface ServiceHeroProps {
   title: string;
   description?: string | null;
-  /** Breadcrumb trail ahead of the current page; the last crumb is the page itself. */
+  /** Breadcrumb trail ahead of the current page. */
   crumbs: { label: string; href: string }[];
+  /** Last breadcrumb, for the current page. Defaults to `title`. */
+  currentCrumb?: string;
   ctaLabel?: string | null;
   ctaHref?: string | null;
 }
@@ -14,6 +16,7 @@ export function ServiceHero({
   title,
   description,
   crumbs,
+  currentCrumb,
   ctaLabel,
   ctaHref,
 }: ServiceHeroProps) {
@@ -34,7 +37,7 @@ export function ServiceHero({
               </li>
             ))}
             <li aria-current="page" className="truncate font-medium text-white">
-              {cmsText(title)}
+              {currentCrumb ?? cmsText(title)}
             </li>
           </ol>
         </nav>

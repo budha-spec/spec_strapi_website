@@ -41,6 +41,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
         title={service.title}
         description={service.description}
         crumbs={CRUMBS}
+        currentCrumb="Service"
       />
       <ServiceBlocks blocks={service.content ?? []} />
     </main>
