@@ -47,6 +47,17 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::cs-tag.cs-tag"
+    },
+    "services": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service.service"
+    },
+    "content": {
+      "type": "dynamiczone",
+      "components": [
+        "shared.testimonial-section"
+      ]
     }
   }
 }

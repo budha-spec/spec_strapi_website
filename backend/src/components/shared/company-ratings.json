@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_shared_company_ratings",
+  "info": {
+    "displayName": "Company Ratings"
+  },
+  "options": {},
+  "attributes": {
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "ratingImg": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "rating": {
+      "type": "decimal",
+      "required": true
+    }
+  },
+  "config": {}
+}

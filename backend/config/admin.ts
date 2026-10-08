@@ -11,6 +11,9 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Admin => 
   apiToken: {
     salt: env('API_TOKEN_SALT'),
   },
+  ai: {
+    enabled: false,
+  },
   transfer: {
     token: {
       salt: env('TRANSFER_TOKEN_SALT'),
