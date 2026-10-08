@@ -23,7 +23,15 @@ interface BlogSectionProps {
   posts: BlogCardData[];
 }
 
-export function BlogSection({ title, subTitle, posts }: BlogSectionProps) {
+/**
+ * Insights carousel. Posts come from the WordPress feed (`fetchLatestBlogs`);
+ * the heading has a default so the section needs no CMS block.
+ */
+export function BlogSection({
+  title = 'Insights',
+  subTitle = 'Explore Our Latest Tech Insights',
+  posts,
+}: BlogSectionProps) {
   const count = posts.length;
   const [index, setIndex] = useState(0);
   const [animate, setAnimate] = useState(true);
@@ -91,6 +99,9 @@ export function BlogSection({ title, subTitle, posts }: BlogSectionProps) {
       setIndex(0);
     }
   };
+
+  // Nothing to show when the WordPress feed is down or empty.
+  if (count === 0) return null;
 
   return (
     <section

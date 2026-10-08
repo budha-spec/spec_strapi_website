@@ -1,4 +1,9 @@
-import { fetchHomePage, fetchLatestBlogs, HomeBlocks } from '@/features/home';
+import {
+  BlogSection,
+  fetchHomePage,
+  fetchLatestBlogs,
+  HomeBlocks,
+} from '@/features/home';
 
 export default async function HomePage() {
   const [{ data }, blogs] = await Promise.all([
@@ -9,7 +14,8 @@ export default async function HomePage() {
 
   return (
     <main className="flex w-full flex-col bg-bg-white">
-      <HomeBlocks blocks={page?.content ?? []} blogs={blogs} />
+      <HomeBlocks blocks={page?.content ?? []} />
+      <BlogSection posts={blogs} />
     </main>
   );
 }
