@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_shared_office_addresses",
+  "info": {
+    "displayName": "Office Addresses"
+  },
+  "options": {},
+  "attributes": {
+    "phone": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "country": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "address": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

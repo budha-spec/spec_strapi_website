@@ -40,6 +40,22 @@ export interface SharedCaseStudies extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedCompanyRatings extends Struct.ComponentSchema {
+  collectionName: 'components_shared_company_ratings';
+  info: {
+    displayName: 'Company Ratings';
+  };
+  attributes: {
+    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
+    rating: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    ratingImg: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    > &
+      Schema.Attribute.Required;
+  };
+}
+
 export interface SharedContactUs extends Struct.ComponentSchema {
   collectionName: 'components_shared_contact_uses';
   info: {
@@ -114,17 +130,6 @@ export interface SharedFaqs extends Struct.ComponentSchema {
   };
   attributes: {
     faq: Schema.Attribute.Component<'shared.faq-item', true>;
-    subTitle: Schema.Attribute.String;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
-  };
-}
-
-export interface SharedFooter extends Struct.ComponentSchema {
-  collectionName: 'components_shared_footers';
-  info: {
-    displayName: 'Footer';
-  };
-  attributes: {
     subTitle: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
@@ -208,6 +213,36 @@ export interface SharedKeyMetricsSection extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedOfficeAddresses extends Struct.ComponentSchema {
+  collectionName: 'components_shared_office_addresses';
+  info: {
+    displayName: 'Office Addresses';
+  };
+  attributes: {
+    address: Schema.Attribute.Text;
+    country: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    email: Schema.Attribute.Email & Schema.Attribute.Required;
+    phone: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedPortfolio extends Struct.ComponentSchema {
+  collectionName: 'components_shared_portfolios';
+  info: {
+    displayName: 'Portfolio';
+  };
+  attributes: {
+    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedRichText extends Struct.ComponentSchema {
   collectionName: 'components_shared_rich_texts';
   info: {
@@ -272,6 +307,18 @@ export interface SharedServicesCard extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedSocial extends Struct.ComponentSchema {
+  collectionName: 'components_shared_socials';
+  info: {
+    displayName: 'Social';
+  };
+  attributes: {
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedTableOfContentItem extends Struct.ComponentSchema {
   collectionName: 'components_shared_table_of_content_items';
   info: {
@@ -317,24 +364,27 @@ declare module '@strapi/strapi' {
       'shared.blogs': SharedBlogs;
       'shared.capabilities-item': SharedCapabilitiesItem;
       'shared.case-studies': SharedCaseStudies;
+      'shared.company-ratings': SharedCompanyRatings;
       'shared.contact-us': SharedContactUs;
       'shared.cta': SharedCta;
       'shared.enterprise-solution': SharedEnterpriseSolution;
       'shared.enterprise-solution-item': SharedEnterpriseSolutionItem;
       'shared.faq-item': SharedFaqItem;
       'shared.faqs': SharedFaqs;
-      'shared.footer': SharedFooter;
       'shared.gallery': SharedGallery;
       'shared.home-blogs': SharedHomeBlogs;
       'shared.home-page-section1': SharedHomePageSection1;
       'shared.industries': SharedIndustries;
       'shared.key-metrics': SharedKeyMetrics;
       'shared.key-metrics-section': SharedKeyMetricsSection;
+      'shared.office-addresses': SharedOfficeAddresses;
+      'shared.portfolio': SharedPortfolio;
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;
       'shared.service-cards': SharedServiceCards;
       'shared.services': SharedServices;
       'shared.services-card': SharedServicesCard;
+      'shared.social': SharedSocial;
       'shared.table-of-content-item': SharedTableOfContentItem;
       'shared.testimonial-item': SharedTestimonialItem;
       'shared.testimonial-section': SharedTestimonialSection;
