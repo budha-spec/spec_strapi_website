@@ -470,12 +470,40 @@
   .social-btn img {
     transition: filter 0.2s ease;
   }
+  /*
+   * Each network fills with its own brand colour on hover and flips the icon
+   * to white. Figma has no hover state for these, so the colours are each
+   * platform's official brand value, following the LinkedIn rule already here.
+   */
+  .social-btn:hover img {
+    filter: brightness(0) invert(1);
+  }
   .social-btn[data-network='linkedin']:hover {
     background-color: #0a66c2;
     border-color: #0a66c2;
   }
-  .social-btn[data-network='linkedin']:hover img {
-    filter: brightness(0) invert(1);
+  .social-btn[data-network='facebook']:hover {
+    background-color: #1877f2;
+    border-color: #1877f2;
+  }
+  .social-btn[data-network='pinterest']:hover {
+    background-color: #e60023;
+    border-color: #e60023;
+  }
+  .social-btn[data-network='twitter']:hover {
+    background-color: #000000;
+    border-color: #000000;
+  }
+  /* Instagram's mark is a gradient rather than a flat colour. */
+  .social-btn[data-network='instagram']:hover {
+    border-color: #dd2a7b;
+    background-image: linear-gradient(
+      45deg,
+      #f58529 0%,
+      #dd2a7b 45%,
+      #8134af 72%,
+      #515bd4 100%
+    );
   }
 
   .behance-pill:hover {

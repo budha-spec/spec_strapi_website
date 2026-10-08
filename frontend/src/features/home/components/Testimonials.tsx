@@ -5,7 +5,9 @@ import { AccentHeading } from '@/components/ui/AccentHeading';
 import { CarouselControls } from '@/components/ui/CarouselControls';
 import { CmsImage } from '@/components/ui/CmsImage';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
+import { VideoModal } from '@/components/ui/VideoModal';
 import { cmsText } from '@/lib/media';
+import { toEmbedUrl } from '@/lib/video';
 import type { HomeTestimonialsBlock } from '../types/home.types';
 
 interface TestimonialsProps {
@@ -18,6 +20,11 @@ export function Testimonials({ data }: TestimonialsProps) {
   const [index, setIndex] = useState(0);
   const [animate, setAnimate] = useState(true);
   const [step, setStep] = useState(0);
+  /** Player currently open in the lightbox, or null when it is closed. */
+  const [activeVideo, setActiveVideo] = useState<{
+    src: string;
+    title: string;
+  } | null>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
 
   const slides = count > 0 ? [...people, ...people] : [];
@@ -108,11 +115,13 @@ export function Testimonials({ data }: TestimonialsProps) {
               <div className="spotlight-track">
                 {slides.map((person, i) => {
                   const quote = cmsText(person.description);
+                  const embedUrl = toEmbedUrl(person.videoUrl);
                   const play = (
                     <>
-                      <span className="spotlight-play-icon flex size-[38px] shrink-0 items-center justify-center rounded-full">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                          <polygon points="6 3 21 12 6 21" />
+                      <span className="spotlight-play-icon flex size-[42px] shrink-0 items-center justify-center rounded-full">
+                        {/* 24x24 icon frame holding Figma's 12x13 triangle. */}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                          <polygon points="6 5.5 18 12 6 18.5" />
                         </svg>
                       </span>
                       <span className="flex-1 text-center text-d18 font-light leading-none">
@@ -144,18 +153,25 @@ export function Testimonials({ data }: TestimonialsProps) {
                       />
 
                       <figcaption className="relative z-10 flex flex-col items-center px-[clamp(16px,1.25vw,24px)] pb-[clamp(18px,1.56vw,30px)]">
-                        {person.videoUrl ? (
-                          <a
-                            href={person.videoUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        {embedUrl ? (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setActiveVideo({
+                                src: embedUrl,
+                                title: cmsText(person.name),
+                              })
+                            }
+                            aria-label={`Play video: ${cmsText(person.name)}`}
                             tabIndex={i >= count ? -1 : undefined}
-                            className="spotlight-play flex h-11 w-[120px] items-center rounded-full p-[3px]"
+                            /* Tailwind v4 preflight leaves buttons with the
+                               default cursor, unlike the link this replaced. */
+                            className="spotlight-play flex h-12 w-[133px] cursor-pointer items-center rounded-full p-[3px]"
                           >
                             {play}
-                          </a>
+                          </button>
                         ) : (
-                          <span className="spotlight-play flex h-11 w-[120px] items-center rounded-full p-[3px]">
+                          <span className="spotlight-play flex h-12 w-[133px] items-center rounded-full p-[3px]">
                             {play}
                           </span>
                         )}
@@ -195,6 +211,14 @@ export function Testimonials({ data }: TestimonialsProps) {
           />
         )}
       </div>
+
+      {activeVideo && (
+        <VideoModal
+          src={activeVideo.src}
+          title={activeVideo.title}
+          onClose={() => setActiveVideo(null)}
+        />
+      )}
     </section>
   );
 }
