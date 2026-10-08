@@ -31,7 +31,15 @@ interface ExploreMoreProps {
   size?: 'md' | 'lg';
 }
 
-/** "Explore More" caption followed by a circled arrow. */
+/**
+ * "Explore More" caption followed by a circled arrow.
+ *
+ * Shared style hooks (same on every card):
+ *   .explore-more        the link — plus .explore-more--outline / --filled
+ *                        and .explore-more--md / --lg
+ *   .explore-more-label  the caption
+ *   .explore-more-arrow  the circle (+ .explore-more-arrow--filled)
+ */
 export function ExploreMore({
   href = '#',
   label = 'Explore More',
@@ -48,6 +56,8 @@ export function ExploreMore({
       href={href}
       className={cn(
         'explore-more inline-flex items-center',
+        filled ? 'explore-more--filled' : 'explore-more--outline',
+        large ? 'explore-more--lg' : 'explore-more--md',
         large ? 'gap-3' : 'gap-2',
         className
       )}
