@@ -27,9 +27,24 @@ const SOCIALS = [
   { name: 'X', src: '/social/twitter.png', network: 'twitter' },
 ];
 
+/**
+ * `src` is the white mark on the coloured circle at rest; `hoverSrc` is the
+ * coloured mark shown on the white circle while the pill is hovered. All four
+ * files share an 18×18 canvas, so the swap never shifts the layout.
+ */
 const PORTFOLIOS = [
-  { name: 'Behance', src: '/social/behance.png', variant: 'behance' },
-  { name: 'Dribbble', src: '/social/dribbble.png', variant: 'dribbble' },
+  {
+    name: 'Behance',
+    src: '/social/behance.png',
+    hoverSrc: '/social/behance-hover.png',
+    variant: 'behance',
+  },
+  {
+    name: 'Dribbble',
+    src: '/social/dribbble.png',
+    hoverSrc: '/social/dribbble-hover.png',
+    variant: 'dribbble',
+  },
 ];
 
 const PhoneIcon = () => (
@@ -142,17 +157,33 @@ export function LetsTalk({ className }: LetsTalkProps) {
               <Link
                 key={item.name}
                 href="#"
-                className="behance-pill flex h-[clamp(38px,2.4vw,46px)] items-center gap-2 rounded-full border border-stroke-grey p-[clamp(4px,0.26vw,5px)] pr-[clamp(10px,0.83vw,16px)] text-text-primary transition-colors"
+                className="behance-pill group flex h-[clamp(38px,2.4vw,46px)] items-center gap-2 rounded-full border border-stroke-grey p-[clamp(4px,0.26vw,5px)] pr-[clamp(10px,0.83vw,16px)] text-text-primary transition-colors"
               >
                 <span
-                  className={`behance-pill-icon flex aspect-square h-full items-center justify-center rounded-full ${
+                  className={`behance-pill-icon relative flex aspect-square h-full items-center justify-center rounded-full transition-colors duration-300 group-hover:bg-bg-white group-focus-visible:bg-bg-white ${
                     item.variant === 'dribbble' ? 'bg-brand-pink' : 'bg-brand-cta-blue'
                   }`}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={item.src} alt="" width={18} height={18} className="size-[18px] object-contain" />
+                  <img
+                    src={item.src}
+                    alt=""
+                    width={18}
+                    height={18}
+                    className="size-[18px] object-contain transition-opacity duration-300 group-hover:opacity-0 group-focus-visible:opacity-0"
+                  />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={item.hoverSrc}
+                    alt=""
+                    width={18}
+                    height={18}
+                    className="absolute size-[18px] object-contain opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
+                  />
                 </span>
-                <span className="text-d16">{item.name}</span>
+                <span className="text-d16 transition-colors duration-300 group-hover:text-white group-focus-visible:text-white">
+                  {item.name}
+                </span>
               </Link>
             ))}
           </div>

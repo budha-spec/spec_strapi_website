@@ -205,7 +205,6 @@ export function Testimonials({ data }: TestimonialsProps) {
         {count > 1 && (
           <CarouselControls
             pill="gradient"
-            className="mt-[clamp(16px,1.56vw,30px)]"
             onPrev={() => go(-1)}
             onNext={() => go(1)}
           />

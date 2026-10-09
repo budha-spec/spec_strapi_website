@@ -182,7 +182,6 @@ export function BlogSection({
         */}
         <CarouselControls
           pill="gradient-light"
-          className="mt-[clamp(16px,1.98vw,38px)]"
           showArrows={count > perView}
           onPrev={() => go(-1)}
           onNext={() => go(1)}

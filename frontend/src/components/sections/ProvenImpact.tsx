@@ -1,16 +1,17 @@
 import { CountUp } from '@/components/ui/CountUp';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { cmsText } from '@/lib/media';
-import type { HomeMetricsBlock } from '../types/home.types';
+import type { MetricsBlock } from '@/types/sections.types';
 
 /** Presentation-only angles so each figure lands on a different part of the ramp. */
 const ANGLES = ['-82.71deg', '-75.99deg', '-77.60deg', '-76.08deg'];
 
-interface StatsSectionProps {
-  data: HomeMetricsBlock;
+interface ProvenImpactProps {
+  data: MetricsBlock;
 }
 
-export function StatsSection({ data }: StatsSectionProps) {
+/** "Proven Impact" — dark band of animated key metrics. */
+export function ProvenImpact({ data }: ProvenImpactProps) {
   const metrics = data.keyMetrics ?? [];
 
   return (

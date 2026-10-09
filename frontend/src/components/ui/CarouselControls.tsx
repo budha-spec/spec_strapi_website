@@ -54,7 +54,9 @@ export function CarouselControls({
   return (
     <div
       className={cn(
-        'carousel-controls flex items-center justify-end gap-[clamp(16px,1.56vw,30px)]',
+        // Figma (all carousels): 30px below the cards, and the group's right
+        // edge sits 144px inside the 1700 shell (x 1666 of 1810) on desktop.
+        'carousel-controls mt-[clamp(16px,1.56vw,30px)] flex items-center justify-end gap-[clamp(16px,1.56vw,30px)] lg:pr-[clamp(0px,7.5vw,144px)]',
         className
       )}
     >
