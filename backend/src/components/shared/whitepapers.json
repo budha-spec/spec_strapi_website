@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_whitepapers",
+  "info": {
+    "displayName": "Whitepaper Section"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subTitle": {
+      "type": "string"
+    },
+    "whitepapers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::whitepaper.whitepaper"
+    }
+  },
+  "config": {}
+}

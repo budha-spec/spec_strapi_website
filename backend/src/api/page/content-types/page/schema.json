@@ -34,6 +34,10 @@
         "audios"
       ]
     },
+    "url": {
+      "type": "string",
+      "required": true
+    },
     "seo": {
       "type": "component",
       "component": "shared.seo",
@@ -52,7 +56,11 @@
         "shared.blogs",
         "shared.home-page-section1",
         "shared.case-studies",
-        "shared.home-blogs"
+        "shared.home-blogs",
+        "shared.industry-gallery",
+        "shared.contact-us",
+        "shared.live-bi-visualization",
+        "shared.whitepapers"
       ]
     },
     "children": {
