@@ -1,27 +1,20 @@
-import { cache } from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { PageHero } from '@/components/sections';
 import {
   fetchServiceBySlug,
+  findContactBlock,
   ServiceBlocks,
-  ServiceHero,
 } from '@/features/service';
 import { cmsText } from '@/lib/media';
 
-interface ServicePageProps {
-  params: Promise<{ slug: string }>;
-}
-
-/** Shared by metadata and the page so Strapi is hit once per request. */
-const getService = cache(fetchServiceBySlug);
+/** The landing page is the Services entry whose slug is `services`. */
+const LANDING_SLUG = 'services';
 
 const CRUMBS = [{ label: 'What we do', href: '/services' }];
 
-export async function generateMetadata({
-  params,
-}: ServicePageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const service = await getService(slug);
+export async function generateMetadata(): Promise<Metadata> {
+  const service = await fetchServiceBySlug(LANDING_SLUG);
   if (!service) notFound();
 
   return {
@@ -30,20 +23,24 @@ export async function generateMetadata({
   };
 }
 
-export default async function ServicePage({ params }: ServicePageProps) {
-  const { slug } = await params;
-  const service = await getService(slug);
+export default async function ServicesLandingPage() {
+  const service = await fetchServiceBySlug(LANDING_SLUG);
   if (!service) notFound();
+
+  const blocks = service.content ?? [];
+  const contact = findContactBlock(blocks);
 
   return (
     <main className="flex w-full flex-col bg-bg-white">
-      <ServiceHero
+      <PageHero
         title={service.title}
         description={service.description}
         crumbs={CRUMBS}
         currentCrumb="Service"
+        ctaLabel={contact?.txt}
+        ctaHref={contact?.url}
       />
-      <ServiceBlocks blocks={service.content ?? []} />
+      <ServiceBlocks blocks={blocks} capabilities="tabs" />
     </main>
   );
 }

@@ -56,3 +56,70 @@ export interface TestimonialsBlock {
   url?: string | null;
   testimonials?: Testimonial[] | null;
 }
+
+export interface Metric {
+  id: number;
+  number: string;
+  name: string;
+  description?: string | null;
+}
+
+/** `shared.key-metrics-section` — the "Proven Impact" stats band. */
+export interface MetricsBlock {
+  __component: 'shared.key-metrics-section';
+  id: number;
+  title: string;
+  description?: string | null;
+  keyMetrics?: Metric[] | null;
+}
+
+export interface LabeledItem {
+  id: number;
+  title?: string | null;
+}
+
+export interface CaseStudy {
+  id: number;
+  title: string;
+  slug: string;
+  description?: string | null;
+  featuredImage?: CmsMedia | null;
+  industries?: LabeledItem[] | null;
+  tags?: LabeledItem[] | null;
+}
+
+/** `shared.case-studies` — the "Client Success Stories" carousel. */
+export interface CaseStudiesBlock {
+  __component: 'shared.case-studies';
+  id: number;
+  title: string;
+  subTitle?: string | null;
+  url?: string | null;
+  case_studies?: CaseStudy[] | null;
+}
+
+export interface FaqItem {
+  id: number;
+  question: string;
+  answer?: string | null;
+}
+
+/** `shared.faqs` — the "Frequently Asked Questions" accordion. */
+export interface FaqsBlock {
+  __component: 'shared.faqs';
+  id: number;
+  title?: string | null;
+  subTitle?: string | null;
+  faq?: FaqItem[] | null;
+}
+
+/** `shared.cta` — the gradient call-to-action banner. */
+export interface CtaBlock {
+  __component: 'shared.cta';
+  id: number;
+  title: string;
+  description?: string | null;
+  txt?: string | null;
+  url?: string | null;
+  image?: CmsMedia | null;
+}

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { cmsText, hrefPath } from '@/lib/media';
 
-interface ServiceHeroProps {
+interface PageHeroProps {
   title: string;
   description?: string | null;
   /** Breadcrumb trail ahead of the current page. */
@@ -12,21 +12,25 @@ interface ServiceHeroProps {
   ctaHref?: string | null;
 }
 
-export function ServiceHero({
+/**
+ * Inner-page hero: breadcrumb pill, title, intro copy and one call to action
+ * on the dark band under the header. Used by every page below the home page.
+ */
+export function PageHero({
   title,
   description,
   crumbs,
   currentCrumb,
   ctaLabel,
   ctaHref,
-}: ServiceHeroProps) {
+}: PageHeroProps) {
   return (
     <section className="w-full bg-bg-dark pt-[clamp(110px,7.6vw,146px)] pb-[clamp(40px,3.96vw,76px)]">
       <div className="shell">
         <nav aria-label="Breadcrumb">
           <ol className="inline-flex h-[clamp(32px,1.98vw,38px)] max-w-full items-center gap-2 overflow-hidden rounded-full bg-white/10 px-[clamp(14px,1.04vw,20px)] text-d14 leading-[1.3]">
             {crumbs.map((crumb) => (
-              <li key={crumb.href} className="flex shrink-0 items-center gap-2">
+              <li key={crumb.label} className="flex shrink-0 items-center gap-2">
                 <Link
                   href={crumb.href}
                   className="text-text-light transition-colors hover:text-white"

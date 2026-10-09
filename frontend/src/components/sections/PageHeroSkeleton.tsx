@@ -1,4 +1,5 @@
-export function ServiceHeroSkeleton() {
+/** Loading state for `PageHero` — same footprint, so nothing jumps. */
+export function PageHeroSkeleton() {
   return (
     <section className="w-full bg-bg-dark pt-[clamp(110px,7.6vw,146px)] pb-[clamp(40px,3.96vw,76px)]">
       <div className="shell flex animate-pulse flex-col">

@@ -1,6 +1,8 @@
 import type { CmsMedia } from '@/lib/media';
 import type {
+  CaseStudiesBlock,
   GalleryBlock,
+  MetricsBlock,
   SolutionsBlock,
   TestimonialsBlock,
 } from '@/types/sections.types';
@@ -18,45 +20,6 @@ export interface HomeHeroBlock {
   capabilities?: HomeCapability[] | null;
   /** Prefill chips under the hero prompt field. Falls back to defaults. */
   suggestions?: HomeCapability[] | null;
-}
-
-export interface HomeMetric {
-  id: number;
-  number: string;
-  name: string;
-  description?: string | null;
-}
-
-export interface HomeMetricsBlock {
-  __component: 'shared.key-metrics-section';
-  id: number;
-  title: string;
-  description?: string | null;
-  keyMetrics?: HomeMetric[] | null;
-}
-
-export interface HomeLabeledItem {
-  id: number;
-  title?: string | null;
-}
-
-export interface HomeCaseStudy {
-  id: number;
-  title: string;
-  slug: string;
-  description?: string | null;
-  featuredImage?: CmsMedia | null;
-  industries?: HomeLabeledItem[] | null;
-  tags?: HomeLabeledItem[] | null;
-}
-
-export interface HomeCaseStudiesBlock {
-  __component: 'shared.case-studies';
-  id: number;
-  title: string;
-  subTitle?: string | null;
-  url?: string | null;
-  case_studies?: HomeCaseStudy[] | null;
 }
 
 export interface HomeBlogCategory {
@@ -87,8 +50,8 @@ export type HomeBlock =
   | HomeHeroBlock
   | GalleryBlock
   | SolutionsBlock
-  | HomeMetricsBlock
-  | HomeCaseStudiesBlock
+  | MetricsBlock
+  | CaseStudiesBlock
   | TestimonialsBlock
   | HomeBlogsBlock;
 

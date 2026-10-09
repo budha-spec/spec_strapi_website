@@ -6,7 +6,7 @@
 
 | Layer | Technology |
 |---|---|
-| Frontend Framework | Next.js 15 (App Router) + React 19 + TypeScript |
+| Frontend Framework | Next.js 16 (App Router) + React 19 + TypeScript |
 | CMS / Backend | Strapi v5 — REST API |
 | Styling | Tailwind CSS v4 (utility-first, mobile-first) |
 | Animations | tsParticles (hero globe + dot bg) + Framer Motion (scroll reveals) |
@@ -19,68 +19,71 @@
 
 ```
 frontend/src/
-├── app/                         ← Next.js App Router
-│   ├── layout.tsx               ← Root layout: loads Header, Footer, fonts, global CSS
-│   ├── globals.css              ← Tailwind v4 @theme tokens + base styles
-│   ├── not-found.tsx
-│   └── page.tsx                 ← Home page (Server Component, parallel data fetching)
+├── app/                              ← Next.js App Router (routes only — no UI logic)
+│   ├── layout.tsx                    ← Header + Footer + fonts on every page
+│   ├── globals.css                   ← @theme tokens + shared component classes
+│   ├── page.tsx                      ← /                 Home (Strapi page `home` + WordPress posts)
+│   └── services/
+│       ├── page.tsx                  ← /services         Services landing (Service entry `slug=services`)
+│       ├── loading.tsx
+│       └── [slug]/
+│           ├── page.tsx              ← /services/:slug   Service detail (matched on Strapi `url`)
+│           └── loading.tsx
 │
-├── features/                    ← FEATURE-BASED MODULES
-│   └── home/
-│       ├── components/          ← Section components (Server or Client as needed)
-│       │   ├── HeroSection.tsx
-│       │   ├── ClientsStrip.tsx       ← Marquee + hover-pause + logo color highlight
-│       │   ├── ServicesSection.tsx
-│       │   ├── StatsSection.tsx       ← Animated counters
-│       │   ├── CaseStudiesSection.tsx ← Framer Motion carousel
-│       │   ├── TestimonialsSection.tsx
-│       │   └── BlogSection.tsx
-│       ├── api/
-│       │   └── home.api.ts      ← All home-page data fetching functions
-│       ├── types/
-│       │   └── home.types.ts    ← TypeScript interfaces for all home sections
-│       └── index.ts             ← Barrel export
-│
-├── components/                  ← SHARED / GLOBAL COMPONENTS
-│   ├── layout/
-│   │   ├── Header.tsx           ← Used on ALL pages via app/layout.tsx
-│   │   ├── Footer.tsx           ← Footer + CTA contact form (shown on all pages)
+├── components/
+│   ├── layout/                       ← Header, Footer (Footer renders LetsTalk)
+│   ├── sections/                     ← SECTIONS SHARED BY 2+ PAGES (Figma names)
+│   │   ├── PageHero.tsx              ← inner-page hero (breadcrumb, title, CTA)
+│   │   ├── PageHeroSkeleton.tsx
+│   │   ├── ClientsStrip.tsx          ← "Trusted by" logo marquee
+│   │   ├── ProvenImpact.tsx          ← "Proven Impact" stats
+│   │   ├── CaseStudies.tsx           ← "Client Success Stories"
+│   │   ├── Testimonials.tsx          ← "Client Spotlight"
+│   │   ├── FaqSection.tsx            ← "Frequently Asked Questions"
+│   │   ├── CtaBanner.tsx             ← gradient CTA banner
+│   │   ├── LetsTalk.tsx              ← contact card + enquiry form
 │   │   └── index.ts
-│   └── ui/                      ← Design system primitives
-│       ├── Button.tsx
-│       ├── Badge.tsx
-│       ├── Card.tsx
-│       ├── SectionWrapper.tsx   ← Standard section padding/max-width wrapper
-│       ├── AnimatedCounter.tsx
-│       ├── ParticlesCanvas.tsx  ← tsParticles wrapper (dynamic import, ssr:false)
-│       └── index.ts
+│   └── ui/                           ← primitives: ExploreMore, CarouselControls,
+│                                       CmsImage, RichText, SectionEyebrow, …
+│
+├── features/                         ← PAGE-SPECIFIC code
+│   ├── home/
+│   │   ├── components/               ← HeroSection, ServicesSection, BlogSection, HomeBlocks
+│   │   ├── api/                      ← home.api.ts (Strapi), blogs.api.ts (WordPress)
+│   │   └── types/
+│   └── service/
+│       ├── components/               ← CapabilityTabs (landing), CapabilityGrid +
+│       │                               ServiceIntro (detail), ServiceBlocks (renderer)
+│       ├── api/service.api.ts        ← fetchServiceBySlug / fetchServiceByUrl
+│       └── types/service.types.ts
 │
 ├── lib/
-│   ├── api/
-│   │   ├── strapi.ts            ← Base fetcher: strapiGet<T>()
-│   │   └── endpoints.ts         ← All API endpoint path constants
-│   └── utils.ts                 ← cn(), formatDate(), getStrapiMedia()
-│
-├── hooks/
-│   ├── useCounter.ts            ← Animated number counter for stats
-│   └── useInView.ts             ← Intersection observer hook
+│   ├── api/strapi.ts, wordpress.ts   ← the only places that call fetch()
+│   ├── api/endpoints.ts              ← every endpoint + populate query
+│   ├── media.ts                      ← cmsText, hrefPath, media URLs
+│   └── utils.ts                      ← cn()
 │
 └── types/
-    ├── strapi.ts                ← Generic StrapiResponse<T>, StrapiMedia
-    └── common.ts                ← Shared enums, utility types
+    ├── strapi.ts                     ← response wrappers
+    └── sections.types.ts             ← Strapi `shared.*` blocks used by shared sections
+
+frontend/scripts/check-layout.mjs     ← `npm run check:layout -- <path>` responsive check
 ```
+
+### Dynamic zones → components
+Each page fetches one Strapi entry and maps its `content` dynamic zone, in
+Strapi's order, through a block renderer (`HomeBlocks`, `ServiceBlocks`). A
+block the renderer does not know is skipped, so editors cannot break a page.
+Adding a section to a page = add the block to the renderer + its `populate`
+line in `endpoints.ts`.
 
 ---
 
 ## CTA + Footer Strategy
 
-> **CTA contact form lives INSIDE the Footer component.**
-> Every page automatically gets the CTA + footer because Footer is in `app/layout.tsx`.
-> No separate CTASection component needed.
-
-```
-Footer.tsx = [CTA Banner / Contact Form] + [Footer Links + Social + Copyright]
-```
+> The Footer (in `app/layout.tsx`) renders `LetsTalk` — the contact card and
+> enquiry form — followed by the certifications strip and the link columns.
+> Every page gets it automatically; pages never render `LetsTalk` themselves.
 
 ---
 

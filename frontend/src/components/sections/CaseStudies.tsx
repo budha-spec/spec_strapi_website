@@ -7,12 +7,13 @@ import { CmsImage } from '@/components/ui/CmsImage';
 import { ExploreMore } from '@/components/ui/ExploreMore';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { cmsText, joinPath } from '@/lib/media';
-import type { HomeCaseStudiesBlock } from '../types/home.types';
+import type { CaseStudiesBlock } from '@/types/sections.types';
 
 interface CaseStudiesProps {
-  data: HomeCaseStudiesBlock;
+  data: CaseStudiesBlock;
 }
 
+/** "Client Success Stories" — one study per slide: copy left, image right. */
 export function CaseStudies({ data }: CaseStudiesProps) {
   const studies = data.case_studies ?? [];
   const [index, setIndex] = useState(0);
@@ -108,7 +109,6 @@ export function CaseStudies({ data }: CaseStudiesProps) {
         {count > 1 && (
           <CarouselControls
             pill="dark"
-            className="mt-[clamp(16px,1.67vw,32px)]"
             onPrev={() => go(-1)}
             onNext={() => go(1)}
           />

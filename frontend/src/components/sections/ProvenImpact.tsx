@@ -1,16 +1,19 @@
 import { CountUp } from '@/components/ui/CountUp';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { cmsText } from '@/lib/media';
-import type { HomeMetricsBlock } from '../types/home.types';
+import type { MetricsBlock } from '@/types/sections.types';
 
 /** Presentation-only angles so each figure lands on a different part of the ramp. */
+// Line breaks typed in the CMS (and double spaces) are tuned for the 1920
+// layout, so they only apply from `xl` up; narrower columns wrap naturally.
 const ANGLES = ['-82.71deg', '-75.99deg', '-77.60deg', '-76.08deg'];
 
-interface StatsSectionProps {
-  data: HomeMetricsBlock;
+interface ProvenImpactProps {
+  data: MetricsBlock;
 }
 
-export function StatsSection({ data }: StatsSectionProps) {
+/** "Proven Impact" — dark band of animated key metrics. */
+export function ProvenImpact({ data }: ProvenImpactProps) {
   const metrics = data.keyMetrics ?? [];
 
   return (
@@ -44,13 +47,13 @@ export function StatsSection({ data }: StatsSectionProps) {
                 style={{ ['--grad-angle' as string]: ANGLES[i % ANGLES.length] }}
               />
 
-              <h4 className="self-start whitespace-pre-line text-[clamp(1.125rem,2.031vw,1.625rem)] font-light leading-[1.2] text-white">
+              <h4 className="self-start xl:whitespace-pre-line text-[clamp(1.125rem,2.031vw,1.625rem)] font-light leading-[1.2] text-white">
                 {cmsText(stat.name).replace(/ {2,}/g, '\n').trim()}
               </h4>
 
               <div aria-hidden className="h-px w-full self-center bg-[#3D3D3C]" />
 
-              <p className="self-start whitespace-pre-line text-[clamp(0.875rem,1.406vw,1.125rem)] font-normal leading-[1.4] text-text-light">
+              <p className="self-start xl:whitespace-pre-line text-[clamp(0.875rem,1.406vw,1.125rem)] font-normal leading-[1.4] text-text-light">
                 {cmsText(stat.description)}
               </p>
             </div>

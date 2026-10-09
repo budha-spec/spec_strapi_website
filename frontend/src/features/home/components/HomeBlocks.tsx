@@ -1,9 +1,12 @@
-import { ClientsStrip, Testimonials } from '@/components/sections';
+import {
+  CaseStudies,
+  ClientsStrip,
+  ProvenImpact,
+  Testimonials,
+} from '@/components/sections';
 import type { HomeBlock } from '../types/home.types';
-import { CaseStudies } from './CaseStudies';
 import { HeroSection } from './HeroSection';
 import { ServicesSection } from './ServicesSection';
-import { StatsSection } from './StatsSection';
 
 interface HomeBlocksProps {
   blocks: Array<HomeBlock | { __component: string; id: number }>;
@@ -36,7 +39,7 @@ export function HomeBlocks({ blocks }: HomeBlocksProps) {
           return <ServicesSection key={key} data={block} />;
         }
         if (isBlock(block, 'shared.key-metrics-section')) {
-          return <StatsSection key={key} data={block} />;
+          return <ProvenImpact key={key} data={block} />;
         }
         if (isBlock(block, 'shared.case-studies')) {
           return <CaseStudies key={key} data={block} />;
