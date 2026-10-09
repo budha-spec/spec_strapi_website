@@ -56,7 +56,8 @@ The existing SPEC India website is already indexed by search engines and all URL
 - Data: React Server Components + `Promise.all()` parallel fetches + ISR
 
 ### Folder Rules
-- Page-specific sections → `src/features/[page]/components/` (e.g. `home`, `service`)
+- Page-specific sections → `src/features/[page]/components/` (e.g. `home`)
+- A feature that serves several page types gets **one sub-folder per page type**, with shared api/types/renderer at its root — e.g. `features/service/{landing,detail,sub-service}/components/`
 - **Sections used on 2+ pages → `src/components/sections/`** (see catalogue below)
 - Shared layout (Header, Footer) → `src/components/layout/`
 - Reusable UI primitives (buttons, images, headings) → `src/components/ui/`
@@ -98,7 +99,7 @@ The existing SPEC India website is already indexed by search engines and all URL
 ## ✅ Page Build Checklist — MANDATORY for every page or section
 
 **Before building**
-1. Get the route from the user (see Route Rules). Service pages map to Strapi's `url` field, not `slug` — e.g. `/services/x` ⇢ `filters[url][$eq]=services/x`.
+1. Get the route from the user (see Route Rules). Service pages map to Strapi's `url` field, not `slug` — e.g. `/services/x` ⇢ `filters[url][$eq]=services/x`. Detail and sub-service pages share `/services/:slug`; `serviceTemplate()` picks the layout from the entry's `parent` (child of the landing ⇒ detail, deeper ⇒ sub-service).
 2. Fetch the real Strapi response first and type it from what comes back (`curl` the endpoint). Do not guess field names.
 3. Check `src/components/sections/` for an existing section before writing a new one. Compare against the Figma section label.
 4. Read the hover/interaction reference (Figma prototype, video, or screenshots) — rest **and** hover states are part of the spec.
@@ -128,7 +129,8 @@ Names follow the Figma section labels so designers and developers mean the same 
 | `CaseStudies` | "Client Success Stories" carousel | `shared.case-studies` |
 | `Testimonials` | "Client Spotlight" video cards | `shared.testimonial-section` |
 | `FaqSection` | "Frequently Asked Questions" accordion | `shared.faqs` |
-| `CtaBanner` | Gradient call-to-action banner | `shared.cta` |
+| `CtaBanner` | "Hire Dedicated Development Team" banner | `shared.cta` |
+| `BlogSection` | "Latest Insights" carousel (WordPress, optional category) | — (`fetchLatestBlogs(category?)` in `src/lib/api/blogs.api.ts`) |
 | `LetsTalk` | "Let's Talk to OUR EXPERT!" + enquiry form | — (rendered by Footer) |
 
 ---
@@ -138,6 +140,8 @@ Names follow the Figma section labels so designers and developers mean the same 
 - `populate[seo]=*` is rejected (`Invalid key ogImage`) — request SEO text fields only: `populate[seo][fields][0]=metaTitle`.
 - Strapi text can contain mojibake (`Â`, `â€™`, `�`). `cmsText()` strips the stray `Â` before a non-breaking space; anything else must be fixed in the CMS, not in code.
 - Third-party feeds (WordPress Insights) must fail soft: return `[]` and hide the section, never crash the page.
+- WordPress filters blogs by **its own category slug** (`?category=ai`), which is Strapi's `blog_category.slug` — not the page URL slug. Populate `blog_category` with `fields` only (populating `blog_posts` is rejected).
+- A relation Strapi drops silently (e.g. `industries`) is often a missing Public `find` permission — check `/api/<type>` for a 403.
 
 ---
 
@@ -147,6 +151,7 @@ Names follow the Figma section labels so designers and developers mean the same 
 - Hover must never hide required content — on touch it only appears after a tap.
 - Gradient text (`.gradient-text`) uses `-webkit-text-fill-color: transparent`; to switch it to a solid colour on hover, set `-webkit-text-fill-color`, not `color`.
 - `globals.css` ends with an **unlayered** "custom css" block (designer-owned Explore More / Explore All / carousel styles). Unlayered CSS beats every `@layer` rule *and* Tailwind utilities, whatever the specificity. To override it for one component (e.g. the dark `.capability-grid-card` hover), add an unlayered rule **after** that block — a rule inside `@layer components` can never win.
+- Tailwind v4 `scale-*` / `rotate-*` / `translate-*` set the separate CSS `scale` / `rotate` / `translate` properties, not `transform`. Animate them with `transition-transform` (covers all four) or list them explicitly (`transition-[scale,filter]`) — `transition-[transform,…]` makes the zoom jump.
 - Fade gradients with an opacity layer (`::before` or an absolutely positioned span) — `background-image` does not transition.
 
 ---

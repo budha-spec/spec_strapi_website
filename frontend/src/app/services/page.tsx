@@ -4,12 +4,10 @@ import { PageHero } from '@/components/sections';
 import {
   fetchServiceBySlug,
   findContactBlock,
+  LANDING_SLUG,
   ServiceBlocks,
 } from '@/features/service';
 import { cmsText } from '@/lib/media';
-
-/** The landing page is the Services entry whose slug is `services`. */
-const LANDING_SLUG = 'services';
 
 const CRUMBS = [{ label: 'What we do', href: '/services' }];
 
@@ -40,7 +38,7 @@ export default async function ServicesLandingPage() {
         ctaLabel={contact?.txt}
         ctaHref={contact?.url}
       />
-      <ServiceBlocks blocks={blocks} capabilities="tabs" />
+      <ServiceBlocks blocks={blocks} template="landing" />
     </main>
   );
 }

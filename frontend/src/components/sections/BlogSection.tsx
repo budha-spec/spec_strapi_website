@@ -24,12 +24,13 @@ interface BlogSectionProps {
 }
 
 /**
- * Insights carousel. Posts come from the WordPress feed (`fetchLatestBlogs`);
- * the heading has a default so the section needs no CMS block.
+ * "Latest Insights" carousel. Posts come from the WordPress feed
+ * (`fetchLatestBlogs`, optionally filtered by category); the heading defaults
+ * to the Figma copy so the section needs no CMS block.
  */
 export function BlogSection({
-  title = 'Insights',
-  subTitle = 'Explore Our Latest Tech Insights',
+  title = 'Latest Insights',
+  subTitle = 'Expert Perspectives on Technology & Growth',
   posts,
 }: BlogSectionProps) {
   const count = posts.length;

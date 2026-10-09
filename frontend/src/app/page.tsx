@@ -1,9 +1,6 @@
-import {
-  BlogSection,
-  fetchHomePage,
-  fetchLatestBlogs,
-  HomeBlocks,
-} from '@/features/home';
+import { BlogSection } from '@/components/sections';
+import { fetchHomePage, HomeBlocks } from '@/features/home';
+import { fetchLatestBlogs } from '@/lib/api/blogs.api';
 
 export default async function HomePage() {
   const [{ data }, blogs] = await Promise.all([

@@ -15,7 +15,7 @@ import { ExploreMore } from '@/components/ui/ExploreMore';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { cmsText, hrefPath } from '@/lib/media';
 import { cn } from '@/lib/utils';
-import type { ServicesBlock } from '../types/service.types';
+import type { ServicesBlock } from '../../types/service.types';
 
 interface CapabilityTabsProps {
   data: ServicesBlock;

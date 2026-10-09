@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { RichText } from '@/components/ui/RichText';
 import { cmsText, hrefPath } from '@/lib/media';
 import { cn } from '@/lib/utils';
-import type { RichTextBlock } from '../types/service.types';
+import type { RichTextBlock } from '../../types/service.types';
 
 interface ServiceIntroProps {
   data: RichTextBlock;

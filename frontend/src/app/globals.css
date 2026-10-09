@@ -500,6 +500,27 @@
     color: #ffffff;
     -webkit-text-fill-color: #ffffff;
   }
+  /*
+   * Sub-service "Services We Are Offering" cards — static; hovering anywhere
+   * on the card fades the title into the brand gradient (same ramp as the
+   * Let's Talk links). The gradient always sits behind the text and the
+   * solid fill fades out, because background-image itself can't animate.
+   */
+  .offering-card-title {
+    background-image: linear-gradient(
+      var(--grad-angle, -85.51deg),
+      #25be00 0.209%,
+      #0c3ced 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: currentColor;
+    transition: -webkit-text-fill-color 0.35s ease;
+  }
+  .offering-card:hover .offering-card-title {
+    -webkit-text-fill-color: transparent;
+  }
+
   /* Service page capability tabs — the incoming panel fades up. */
   .capability-panel {
     animation: capability-panel-in 320ms cubic-bezier(0.22, 1, 0.36, 1);
