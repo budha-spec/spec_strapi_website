@@ -3,7 +3,7 @@ import { CmsImage } from '@/components/ui/CmsImage';
 import { ExploreMore } from '@/components/ui/ExploreMore';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { cmsText, hrefPath } from '@/lib/media';
-import type { ServicesBlock } from '../types/service.types';
+import type { ServicesBlock } from '../../types/service.types';
 
 interface CapabilityGridProps {
   data: ServicesBlock;

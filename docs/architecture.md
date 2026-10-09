@@ -27,7 +27,8 @@ frontend/src/
 │       ├── page.tsx                  ← /services         Services landing (Service entry `slug=services`)
 │       ├── loading.tsx
 │       └── [slug]/
-│           ├── page.tsx              ← /services/:slug   Service detail (matched on Strapi `url`)
+│           ├── page.tsx              ← /services/:slug   Service detail OR sub-service (matched
+│           │                           on Strapi `url`; layout from serviceTemplate())
 │           └── loading.tsx
 │
 ├── components/
@@ -40,7 +41,8 @@ frontend/src/
 │   │   ├── CaseStudies.tsx           ← "Client Success Stories"
 │   │   ├── Testimonials.tsx          ← "Client Spotlight"
 │   │   ├── FaqSection.tsx            ← "Frequently Asked Questions"
-│   │   ├── CtaBanner.tsx             ← gradient CTA banner
+│   │   ├── CtaBanner.tsx             ← "Hire Dedicated Team" banner
+│   │   ├── BlogSection.tsx           ← "Latest Insights" (WordPress)
 │   │   ├── LetsTalk.tsx              ← contact card + enquiry form
 │   │   └── index.ts
 │   └── ui/                           ← primitives: ExploreMore, CarouselControls,
@@ -48,24 +50,29 @@ frontend/src/
 │
 ├── features/                         ← PAGE-SPECIFIC code
 │   ├── home/
-│   │   ├── components/               ← HeroSection, ServicesSection, BlogSection, HomeBlocks
-│   │   ├── api/                      ← home.api.ts (Strapi), blogs.api.ts (WordPress)
+│   │   ├── components/               ← HeroSection, ServicesSection, HomeBlocks
+│   │   ├── api/home.api.ts
 │   │   └── types/
-│   └── service/
-│       ├── components/               ← CapabilityTabs (landing), CapabilityGrid +
-│       │                               ServiceIntro (detail), ServiceBlocks (renderer)
-│       ├── api/service.api.ts        ← fetchServiceBySlug / fetchServiceByUrl
-│       └── types/service.types.ts
+│   └── service/                      ← all three service page types
+│       ├── api/service.api.ts        ← fetchServiceBySlug / fetchServiceByUrl, serviceTemplate()
+│       ├── types/service.types.ts
+│       ├── components/ServiceBlocks.tsx  ← one block renderer, `template` prop
+│       ├── landing/components/       ← /services          CapabilityTabs
+│       ├── detail/components/        ← /services/ai-ml-development       CapabilityGrid, ServiceIntro
+│       └── sub-service/components/   ← /services/artificial-intelligence-development
+│                                       OfferingGrid, UseCaseGrid (+ Insights by blog category)
 │
 ├── lib/
 │   ├── api/strapi.ts, wordpress.ts   ← the only places that call fetch()
+│   ├── api/blogs.api.ts              ← fetchLatestBlogs(category?) — WordPress Insights
 │   ├── api/endpoints.ts              ← every endpoint + populate query
 │   ├── media.ts                      ← cmsText, hrefPath, media URLs
 │   └── utils.ts                      ← cn()
 │
 └── types/
     ├── strapi.ts                     ← response wrappers
-    └── sections.types.ts             ← Strapi `shared.*` blocks used by shared sections
+    ├── sections.types.ts             ← Strapi `shared.*` blocks used by shared sections
+    └── blog.types.ts                 ← WordPress blog feed
 
 frontend/scripts/check-layout.mjs     ← `npm run check:layout -- <path>` responsive check
 ```

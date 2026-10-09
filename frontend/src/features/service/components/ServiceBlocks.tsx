@@ -6,17 +6,23 @@ import {
   ProvenImpact,
   Testimonials,
 } from '@/components/sections';
-import type { ContactBlock, ServiceBlock } from '../types/service.types';
-import { CapabilityGrid } from './CapabilityGrid';
-import { CapabilityTabs } from './CapabilityTabs';
-import { ServiceIntro } from './ServiceIntro';
+import { CapabilityGrid } from '../detail/components/CapabilityGrid';
+import { ServiceIntro } from '../detail/components/ServiceIntro';
+import { CapabilityTabs } from '../landing/components/CapabilityTabs';
+import { OfferingGrid } from '../sub-service/components/OfferingGrid';
+import { UseCaseGrid } from '../sub-service/components/UseCaseGrid';
+import type {
+  ContactBlock,
+  ServiceBlock,
+  ServiceTemplate,
+} from '../types/service.types';
 
 type AnyBlock = ServiceBlock | { __component: string; id: number };
 
 interface ServiceBlocksProps {
   blocks: AnyBlock[];
-  /** `tabs` on the services landing page, `grid` on a service detail page. */
-  capabilities: 'tabs' | 'grid';
+  /** Which page is rendering — decides how `shared.services` is drawn. */
+  template: ServiceTemplate;
 }
 
 function isBlock<T extends ServiceBlock['__component']>(
@@ -33,11 +39,21 @@ export function findContactBlock(blocks: AnyBlock[]): ContactBlock | undefined {
   );
 }
 
+/** How each template draws a `shared.services` block. */
+const SERVICES_BY_TEMPLATE = {
+  landing: CapabilityTabs,
+  detail: CapabilityGrid,
+  'sub-service': OfferingGrid,
+} as const;
+
 /**
- * Renders a service's dynamic zone in the order Strapi returns it.
- * `shared.contact-us` feeds the hero instead, so it is skipped here.
+ * Renders a service's dynamic zone in the order Strapi returns it — shared by
+ * the landing, detail and sub-service pages. `shared.contact-us` feeds the
+ * hero instead, so it is skipped here.
  */
-export function ServiceBlocks({ blocks, capabilities }: ServiceBlocksProps) {
+export function ServiceBlocks({ blocks, template }: ServiceBlocksProps) {
+  const Services = SERVICES_BY_TEMPLATE[template];
+
   return (
     <>
       {blocks.map((block) => {
@@ -50,11 +66,10 @@ export function ServiceBlocks({ blocks, capabilities }: ServiceBlocksProps) {
           return <ServiceIntro key={key} data={block} />;
         }
         if (isBlock(block, 'shared.services')) {
-          return capabilities === 'tabs' ? (
-            <CapabilityTabs key={key} data={block} />
-          ) : (
-            <CapabilityGrid key={key} data={block} />
-          );
+          return <Services key={key} data={block} />;
+        }
+        if (isBlock(block, 'shared.industries')) {
+          return <UseCaseGrid key={key} data={block} />;
         }
         if (isBlock(block, 'shared.cta')) {
           return <CtaBanner key={key} data={block} />;

@@ -1,12 +1,14 @@
 import { cache } from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { PageHero } from '@/components/sections';
+import { BlogSection, PageHero } from '@/components/sections';
 import {
   fetchServiceByUrl,
   findContactBlock,
   ServiceBlocks,
+  serviceTemplate,
 } from '@/features/service';
+import { fetchLatestBlogs } from '@/lib/api/blogs.api';
 import { cmsText } from '@/lib/media';
 
 interface ServiceDetailPageProps {
@@ -14,6 +16,9 @@ interface ServiceDetailPageProps {
 }
 
 /**
+ * Serves both service detail pages (AI/ML) and sub-service pages
+ * (AI Development) — see `serviceTemplate`.
+ *
  * Strapi stores each service's public path in `url`, so `/services/x` is
  * looked up as `services/x`. Cached so metadata and page share one request.
  */
@@ -51,6 +56,15 @@ export default async function ServiceDetailPage({
 
   const blocks = service.content ?? [];
   const contact = findContactBlock(blocks);
+  // AI/ML is a detail page; AI Development (its child) is a sub-service.
+  const template = serviceTemplate(service);
+  // Sub-services end with Insights from their own WordPress category. Strapi's
+  // `blog_category.slug` is that category; the URL slug is only a fallback
+  // (it rarely matches one, and then the section simply hides).
+  const posts =
+    template === 'sub-service'
+      ? await fetchLatestBlogs(service.blog_category?.slug || slug)
+      : [];
 
   return (
     <main className="flex w-full flex-col bg-bg-white">
@@ -61,7 +75,8 @@ export default async function ServiceDetailPage({
         ctaLabel={contact?.txt}
         ctaHref={contact?.url}
       />
-      <ServiceBlocks blocks={blocks} capabilities="grid" />
+      <ServiceBlocks blocks={blocks} template={template} />
+      {template === 'sub-service' && <BlogSection posts={posts} />}
     </main>
   );
 }

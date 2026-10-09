@@ -6,7 +6,22 @@
 import { strapiGet } from '@/lib/api/strapi';
 import { ENDPOINTS, REVALIDATE } from '@/lib/api/endpoints';
 import type { StrapiListResponse } from '@/types/strapi';
-import type { ServiceEntry } from '../types/service.types';
+import type { ServiceEntry, ServiceTemplate } from '../types/service.types';
+
+/** Slug of the Services entry that is the `/services` landing page. */
+export const LANDING_SLUG = 'services';
+
+/**
+ * Detail vs sub-service. Both live at `/services/:slug`, so the template
+ * comes from the hierarchy: a direct child of the landing is a detail page
+ * (AI/ML); anything deeper is a sub-service (AI Development).
+ */
+export function serviceTemplate(entry: ServiceEntry): ServiceTemplate {
+  if (entry.slug === LANDING_SLUG) return 'landing';
+  return entry.parent?.some((parent) => parent.slug === LANDING_SLUG)
+    ? 'detail'
+    : 'sub-service';
+}
 
 async function firstService(path: string): Promise<ServiceEntry | null> {
   const { data } = await strapiGet<StrapiListResponse<ServiceEntry>>(path, {

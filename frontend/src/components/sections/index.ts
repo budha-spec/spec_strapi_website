@@ -10,4 +10,5 @@ export * from './CaseStudies';
 export * from './Testimonials';
 export * from './FaqSection';
 export * from './CtaBanner';
+export * from './BlogSection';
 export * from './LetsTalk';
