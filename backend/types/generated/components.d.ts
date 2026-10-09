@@ -145,6 +145,7 @@ export interface SharedGallery extends Struct.ComponentSchema {
       'images' | 'files' | 'videos' | 'audios',
       true
     >;
+    subTitle: Schema.Attribute.String;
     title: Schema.Attribute.String;
   };
 }
@@ -189,6 +190,30 @@ export interface SharedIndustries extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedIndustryGallery extends Struct.ComponentSchema {
+  collectionName: 'components_shared_industry_galleries';
+  info: {
+    displayName: 'Industry Gallery';
+  };
+  attributes: {
+    gallery: Schema.Attribute.Component<'shared.industry-gallery-item', true>;
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedIndustryGalleryItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_industry_gallery_items';
+  info: {
+    displayName: 'Industry Gallery Item';
+  };
+  attributes: {
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
+  };
+}
+
 export interface SharedKeyMetrics extends Struct.ComponentSchema {
   collectionName: 'components_shared_key_metrics';
   info: {
@@ -210,6 +235,21 @@ export interface SharedKeyMetricsSection extends Struct.ComponentSchema {
     description: Schema.Attribute.Text;
     keyMetrics: Schema.Attribute.Component<'shared.key-metrics', true>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedLiveBiVisualization extends Struct.ComponentSchema {
+  collectionName: 'components_shared_live_bi_visualizations';
+  info: {
+    displayName: 'Live BI Visualization';
+  };
+  attributes: {
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    visualizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::visualization.visualization'
+    >;
   };
 }
 
@@ -341,7 +381,7 @@ export interface SharedTestimonialItem extends Struct.ComponentSchema {
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
       Schema.Attribute.Required;
     name: Schema.Attribute.String & Schema.Attribute.Required;
-    videoUrl: Schema.Attribute.Text & Schema.Attribute.Required;
+    videoUrl: Schema.Attribute.Text;
   };
 }
 
@@ -355,6 +395,21 @@ export interface SharedTestimonialSection extends Struct.ComponentSchema {
     testimonials: Schema.Attribute.Component<'shared.testimonial-item', true>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     url: Schema.Attribute.Text & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedWhitepapers extends Struct.ComponentSchema {
+  collectionName: 'components_shared_whitepapers';
+  info: {
+    displayName: 'Whitepaper Section';
+  };
+  attributes: {
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    whitepapers: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::whitepaper.whitepaper'
+    >;
   };
 }
 
@@ -375,8 +430,11 @@ declare module '@strapi/strapi' {
       'shared.home-blogs': SharedHomeBlogs;
       'shared.home-page-section1': SharedHomePageSection1;
       'shared.industries': SharedIndustries;
+      'shared.industry-gallery': SharedIndustryGallery;
+      'shared.industry-gallery-item': SharedIndustryGalleryItem;
       'shared.key-metrics': SharedKeyMetrics;
       'shared.key-metrics-section': SharedKeyMetricsSection;
+      'shared.live-bi-visualization': SharedLiveBiVisualization;
       'shared.office-addresses': SharedOfficeAddresses;
       'shared.portfolio': SharedPortfolio;
       'shared.rich-text': SharedRichText;
@@ -388,6 +446,7 @@ declare module '@strapi/strapi' {
       'shared.table-of-content-item': SharedTableOfContentItem;
       'shared.testimonial-item': SharedTestimonialItem;
       'shared.testimonial-section': SharedTestimonialSection;
+      'shared.whitepapers': SharedWhitepapers;
     }
   }
 }

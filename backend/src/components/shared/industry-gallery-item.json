@@ -1,18 +1,10 @@
 {
-  "collectionName": "components_shared_testimonial_items",
+  "collectionName": "components_shared_industry_gallery_items",
   "info": {
-    "displayName": "Testimonial Item"
+    "displayName": "Industry Gallery Item"
   },
   "options": {},
   "attributes": {
-    "name": {
-      "type": "string",
-      "required": true
-    },
-    "designation": {
-      "type": "string",
-      "required": true
-    },
     "image": {
       "type": "media",
       "multiple": false,
@@ -27,10 +19,6 @@
     "description": {
       "type": "text",
       "required": true
-    },
-    "videoUrl": {
-      "type": "text",
-      "required": false
     }
   },
   "config": {}

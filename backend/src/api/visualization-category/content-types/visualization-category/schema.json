@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "visualization_categories",
+  "info": {
+    "singularName": "visualization-category",
+    "pluralName": "visualization-categories",
+    "displayName": "Visualization Category"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "visualizations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::visualization.visualization"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "visualizations",
+  "info": {
+    "singularName": "visualization",
+    "pluralName": "visualizations",
+    "displayName": "Visualization"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "featuredImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "url": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "category": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::visualization-category.visualization-category"
+    }
+  }
+}

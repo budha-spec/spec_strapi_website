@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_live_bi_visualizations",
+  "info": {
+    "displayName": "Live BI Visualization"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subTitle": {
+      "type": "string"
+    },
+    "visualizations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::visualization.visualization"
+    }
+  },
+  "config": {}
+}

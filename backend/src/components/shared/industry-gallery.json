@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_industry_galleries",
+  "info": {
+    "displayName": "Industry Gallery"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subTitle": {
+      "type": "string"
+    },
+    "gallery": {
+      "type": "component",
+      "component": "shared.industry-gallery-item",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}
