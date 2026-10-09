@@ -186,10 +186,11 @@
     overflow: hidden;
     background-color: #ffffff;
     color: #000000;
-    border: 1px solid var(--color-stroke-outline);
+   
     transition: color 0.35s ease, border-color 0.35s ease;
+    
   }
-  .carousel-arrow::before {
+  /* .carousel-arrow::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -198,7 +199,7 @@
     opacity: 0;
     z-index: -1;
     transition: opacity 0.35s ease;
-  }
+  } */
   .carousel-arrow-icon {
     display: inline-flex;
     transition: transform 0.35s ease;
@@ -207,6 +208,8 @@
     color: #ffffff;
     /* The gradient fill takes over the edge, so the grey ring steps aside. */
     border-color: transparent;
+    background: linear-gradient(272.76deg, #25BE00 -1.59%, #0C3CED 97.08%);
+
   }
   .carousel-arrow:hover::before {
     opacity: 1;
@@ -229,20 +232,20 @@
     background-color: #ffffff;
     color: #ffffff;
     border: 0;
-    transition: color 0.35s ease;
+    transition: color 0.35s ease;background-image: linear-gradient(90deg, #0c3ced 0%, #56f72f 100%);
   }
-  .explore-all-gradient::before {
+  /* .explore-all-gradient::before {
     content: '';
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background-image: linear-gradient(90deg, #0c3ced 0%, #56f72f 100%);
+    
     opacity: 1;
     z-index: -1;
     transition: opacity 0.35s ease;
-  }
+  } */
   .explore-all-gradient:hover {
-    color: #000000;
+    color: #000000;  background: #fff;
   }
   .explore-all-gradient:hover::before {
     opacity: 0;
@@ -413,6 +416,9 @@
       background-image 0.25s ease,
       transform 0.35s ease;
   }
+  
+
+
   .capability-card:hover .explore-more .explore-more-arrow {
     border-color: #25be00;
     background-color: transparent;
@@ -434,38 +440,6 @@
     .capability-card:hover .explore-more .explore-more-arrow {
       transform: none;
     }
-  }
-
-  /*
-   * Pill that fills with the brand gradient on hover — capability tabs and
-   * their sub-category chips. The gradient sits on ::before so it can fade.
-   * Pair it with `hover:text-white` (and `hover:border-transparent` when
-   * bordered): a utility colour on the element would outrank a rule here.
-   */
-  .gradient-hover {
-    position: relative;
-    isolation: isolate;
-    transition:
-      color 0.3s ease,
-      border-color 0.3s ease;
-  }
-  .gradient-hover::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    background-image: linear-gradient(
-      var(--grad-angle, -68.41deg),
-      #56f72f 10.862%,
-      #0c3ced 97.041%
-    );
-    opacity: 0;
-    z-index: -1;
-    transition: opacity 0.3s ease;
-  }
-  .gradient-hover:hover::before,
-  .gradient-hover:focus-visible::before {
-    opacity: 1;
   }
 
   /* Service page capability tabs — the incoming panel fades up. */
@@ -492,11 +466,9 @@
     transition: color 0.25s ease;
   }
   .contact-link:hover {
-    background-image: linear-gradient(
-      var(--grad-angle, -54deg),
-      #56f72f 10.862%,
-      #0c3ced 97.041%
-    );
+   background: linear-gradient(
+268deg, #25be00 55.96% 1.96%, #0c3ced 97.05%); 
+
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -555,7 +527,14 @@
       #56f72f 10.862%,
       #0c3ced 97.041%
     );
+    border: none !important; 
   }
+
+  .behance-pill:hover span {
+    color: #fff;
+}
+
+
   .behance-pill:hover .behance-pill-icon {
     background-color: rgb(255 255 255 / 0.2);
   }
@@ -698,3 +677,108 @@
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: none; }
 }
+
+
+/* custom css */
+
+ .explore-more-arrow {
+    width: 45px;
+    height: 29px;
+     border: 1px solid transparent;
+    border-radius: 20px;
+ background:
+        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(252.16deg, #B9B9B9 5.3%, #B9B9B9 89.32%) border-box;
+   
+}
+.capability-card:hover .explore-more--outline .explore-more-arrow, .explore-more:hover{
+ background:
+        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(252.16deg, #0C3DEB 5.3%, #20A42F 89.32%) border-box;
+}
+
+.explore-more-arrow--filled {
+    width: 58px;
+    height: 34px;
+     position: relative;
+}
+.explore-all {
+    border: none;
+}
+
+.explore-more--outline span.explore-more-arrow {
+    width: 44px;
+}
+
+
+.explore-more-arrow {
+    width: 45px;
+    height: 29px;
+     border: 1px solid transparent;
+    border-radius: 20px;
+ background:
+        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(252.16deg, #B9B9B9 5.3%, #B9B9B9 89.32%) border-box;
+   
+}
+ 
+ .capability-card:hover .explore-more-arrow {
+ background:
+        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(252.16deg, #0C3DEB 5.3%, #20A42F 89.32%) border-box; color: #fff
+}
+
+.capability-card:hover .explore-more-arrow svg{ color: #25BE00 }
+
+
+
+
+.blog-card:hover .explore-more-arrow {
+ background:
+        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(252.16deg, #0C3DEB 5.3%, #20A42F 89.32%) border-box; color: #fff
+}
+
+.blog-card:hover .explore-more-arrow svg{ color: #25BE00 }
+
+
+
+ .explore-more-arrow {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background-color: #ffffff;
+    color: #000000;
+    transition: color 0.35s ease; transition: all 300ms ease ;
+  }
+
+  .explore-more-arrow svg {
+    display: inline-flex; transition: all 300ms ease ;
+  }
+
+
+
+
+  
+  .carousel-arrow:hover::before {
+    opacity: 1; transition: all 300ms ease ;
+  }
+   .explore-more--filled:hover  svg  {
+    transform: translateX(5px); filter: grayscale(1),brightness(1000); transition: all 300ms ease ;
+  }
+ 
+
+   .explore-more--filled:hover .explore-more-arrow {
+    background: linear-gradient(272.76deg, #25BE00 -1.59%, #0C3CED 97.08%); color: #fff; transition: all 300ms ease ;
+  }
+
+ /* .explore-more--filled:hover .explore-more-arrow svg {
+    background: linear-gradient(272.76deg, #25BE00 -1.59%, #0C3CED 97.08%); color: #fff; transition: all 300ms ease ;
+  } */
+
+    .capability-card:hover .explore-more.explore-more--outline .explore-more-arrow{
+            transform: translate(0);
+    }
+
+
+
