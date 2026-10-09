@@ -24,12 +24,13 @@ interface BlogSectionProps {
 }
 
 /**
- * Insights carousel. Posts come from the WordPress feed (`fetchLatestBlogs`);
- * the heading has a default so the section needs no CMS block.
+ * "Latest Insights" carousel. Posts come from the WordPress feed
+ * (`fetchLatestBlogs`, optionally filtered by category); the heading defaults
+ * to the Figma copy so the section needs no CMS block.
  */
 export function BlogSection({
-  title = 'Insights',
-  subTitle = 'Explore Our Latest Tech Insights',
+  title = 'Latest Insights',
+  subTitle = 'Expert Perspectives on Technology & Growth',
   posts,
 }: BlogSectionProps) {
   const count = posts.length;
@@ -136,7 +137,8 @@ export function BlogSection({
                       key={`${post.id}-${i}`}
                       className="blog-card group flex flex-col overflow-hidden rounded-[16px] bg-bg-white"
                     >
-                      <div className="h-[clamp(150px,10.57vw,203px)] w-full shrink-0 overflow-hidden">
+                      {/* Figma 404×203 — a ratio, not a height, so narrow cards never crop the text baked into post images. */}
+                      <div className="aspect-[404/203] w-full shrink-0 overflow-hidden">
                         <CmsImage
                           media={post.image}
                           fallback="card"
@@ -182,7 +184,6 @@ export function BlogSection({
         */}
         <CarouselControls
           pill="gradient-light"
-          className="mt-[clamp(16px,1.98vw,38px)]"
           showArrows={count > perView}
           onPrev={() => go(-1)}
           onNext={() => go(1)}

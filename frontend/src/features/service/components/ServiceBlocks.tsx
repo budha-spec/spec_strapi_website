@@ -1,9 +1,28 @@
-import { ClientsStrip, Testimonials } from '@/components/sections';
-import type { ServiceBlock } from '../types/service.types';
-import { CapabilityTabs } from './CapabilityTabs';
+import {
+  CaseStudies,
+  ClientsStrip,
+  CtaBanner,
+  FaqSection,
+  ProvenImpact,
+  Testimonials,
+} from '@/components/sections';
+import { CapabilityGrid } from '../detail/components/CapabilityGrid';
+import { ServiceIntro } from '../detail/components/ServiceIntro';
+import { CapabilityTabs } from '../landing/components/CapabilityTabs';
+import { OfferingGrid } from '../sub-service/components/OfferingGrid';
+import { UseCaseGrid } from '../sub-service/components/UseCaseGrid';
+import type {
+  ContactBlock,
+  ServiceBlock,
+  ServiceTemplate,
+} from '../types/service.types';
+
+type AnyBlock = ServiceBlock | { __component: string; id: number };
 
 interface ServiceBlocksProps {
-  blocks: Array<ServiceBlock | { __component: string; id: number }>;
+  blocks: AnyBlock[];
+  /** Which page is rendering — decides how `shared.services` is drawn. */
+  template: ServiceTemplate;
 }
 
 function isBlock<T extends ServiceBlock['__component']>(
@@ -13,8 +32,28 @@ function isBlock<T extends ServiceBlock['__component']>(
   return block.__component === name;
 }
 
-/** Renders a service's dynamic zone in the order Strapi returns it. */
-export function ServiceBlocks({ blocks }: ServiceBlocksProps) {
+/** The `shared.contact-us` block, which drives the hero button. */
+export function findContactBlock(blocks: AnyBlock[]): ContactBlock | undefined {
+  return blocks.find((block): block is ContactBlock =>
+    isBlock(block, 'shared.contact-us')
+  );
+}
+
+/** How each template draws a `shared.services` block. */
+const SERVICES_BY_TEMPLATE = {
+  landing: CapabilityTabs,
+  detail: CapabilityGrid,
+  'sub-service': OfferingGrid,
+} as const;
+
+/**
+ * Renders a service's dynamic zone in the order Strapi returns it — shared by
+ * the landing, detail and sub-service pages. `shared.contact-us` feeds the
+ * hero instead, so it is skipped here.
+ */
+export function ServiceBlocks({ blocks, template }: ServiceBlocksProps) {
+  const Services = SERVICES_BY_TEMPLATE[template];
+
   return (
     <>
       {blocks.map((block) => {
@@ -23,11 +62,29 @@ export function ServiceBlocks({ blocks }: ServiceBlocksProps) {
         if (isBlock(block, 'shared.gallery')) {
           return <ClientsStrip key={key} data={block} />;
         }
+        if (isBlock(block, 'shared.rich-text')) {
+          return <ServiceIntro key={key} data={block} />;
+        }
         if (isBlock(block, 'shared.services')) {
-          return <CapabilityTabs key={key} data={block} />;
+          return <Services key={key} data={block} />;
+        }
+        if (isBlock(block, 'shared.industries')) {
+          return <UseCaseGrid key={key} data={block} />;
+        }
+        if (isBlock(block, 'shared.cta')) {
+          return <CtaBanner key={key} data={block} />;
+        }
+        if (isBlock(block, 'shared.key-metrics-section')) {
+          return <ProvenImpact key={key} data={block} />;
+        }
+        if (isBlock(block, 'shared.case-studies')) {
+          return <CaseStudies key={key} data={block} />;
         }
         if (isBlock(block, 'shared.testimonial-section')) {
           return <Testimonials key={key} data={block} />;
+        }
+        if (isBlock(block, 'shared.faqs')) {
+          return <FaqSection key={key} data={block} />;
         }
 
         return null;

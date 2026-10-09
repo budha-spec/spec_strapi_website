@@ -1,13 +1,13 @@
 /**
- * Insights carousel data.
+ * Insights carousel data — shared by every page that shows `BlogSection`.
  * Posts come from the live WordPress feed on spec-india.com, not from Strapi.
  */
 
 import { wordpressGet } from '@/lib/api/wordpress';
 import { BLOG_LIMIT, REVALIDATE, WP_ENDPOINTS } from '@/lib/api/endpoints';
 import { decodeEntities } from '@/lib/media';
-import type { BlogCardData } from '../components/BlogSection';
-import type { WpBlogsResponse } from '../types/blog.types';
+import type { BlogCardData } from '@/components/sections/BlogSection';
+import type { WpBlogsResponse } from '@/types/blog.types';
 
 /** Maps one WordPress post onto the card shape the carousel renders. */
 function toCard(post: WpBlogsResponse['blogs'][number]): BlogCardData {
@@ -28,15 +28,19 @@ function toCard(post: WpBlogsResponse['blogs'][number]): BlogCardData {
 }
 
 /**
- * Latest posts for the landing page, newest first.
+ * Latest posts, newest first — optionally only one WordPress category
+ * (its slug, e.g. `ai`; a service passes its Strapi `blog_category.slug`).
  *
  * WordPress is a third-party origin, so a failure here degrades to an empty
- * carousel instead of taking the whole landing page down.
+ * carousel instead of taking the whole page down. `BlogSection` hides itself
+ * when the list is empty, which also covers a category with no posts.
  */
-export async function fetchLatestBlogs(): Promise<BlogCardData[]> {
+export async function fetchLatestBlogs(
+  category?: string | null
+): Promise<BlogCardData[]> {
   try {
     const data = await wordpressGet<WpBlogsResponse>(
-      WP_ENDPOINTS.LATEST_BLOGS,
+      WP_ENDPOINTS.LATEST_BLOGS(category),
       { next: { revalidate: REVALIDATE.CONTENT } }
     );
 
