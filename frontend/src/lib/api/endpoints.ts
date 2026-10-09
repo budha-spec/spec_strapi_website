@@ -54,6 +54,8 @@ export const ENDPOINTS = {
   /** One service landing page, matched by slug. */
   SERVICE_BY_SLUG: (slug: string) =>
     `/services?filters[slug]=${encodeURIComponent(slug)}&${SERVICE_POPULATE}`,
+  /** Footer single type: Let's Talk card, socials, portfolio, awards, ratings. */
+  FOOTER: '/footer?populate=*',
   /** One service detail page, matched by its public path, e.g. `services/ai-ml-development`. */
   SERVICE_BY_URL: (url: string) =>
     `/services?filters[url][$eq]=${encodeURIComponent(url)}&${SERVICE_DETAIL_POPULATE}`,

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import { Inter, Nunito } from 'next/font/google';
+import { Inter, Nunito, Poppins } from 'next/font/google';
 import './globals.css';
 import { Header, Footer } from '@/components/layout';
 import { ParticlesProviderRoot } from '@/components/ui/ParticlesProviderRoot';
@@ -9,6 +9,14 @@ const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
+});
+
+/** Display face for footer headings ("Let's Talk to", "OUR EXPERT!"). */
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['500', '700'],
+  display: 'swap',
+  variable: '--font-poppins',
 });
 
 const nunito = Nunito({
@@ -28,7 +36,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${nunito.variable}`}>
+    <html lang="en" className={`${inter.variable} ${nunito.variable} ${poppins.variable}`}>
       <body className="antialiased font-sans bg-bg-white text-text-primary">
         <ParticlesProviderRoot>
           <Header />

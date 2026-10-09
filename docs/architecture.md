@@ -43,7 +43,7 @@ frontend/src/
 │   │   ├── FaqSection.tsx            ← "Frequently Asked Questions"
 │   │   ├── CtaBanner.tsx             ← "Hire Dedicated Team" banner
 │   │   ├── BlogSection.tsx           ← "Latest Insights" (WordPress)
-│   │   ├── LetsTalk.tsx              ← contact card + enquiry form
+│   │   ├── LetsTalk.tsx              ← contact card + enquiry form (Strapi `footer`)
 │   │   └── index.ts
 │   └── ui/                           ← primitives: ExploreMore, CarouselControls,
 │                                       CmsImage, RichText, SectionEyebrow, …
@@ -65,6 +65,7 @@ frontend/src/
 ├── lib/
 │   ├── api/strapi.ts, wordpress.ts   ← the only places that call fetch()
 │   ├── api/blogs.api.ts              ← fetchLatestBlogs(category?) — WordPress Insights
+│   ├── api/footer.api.ts             ← fetchFooter() — Strapi `footer` single type
 │   ├── api/endpoints.ts              ← every endpoint + populate query
 │   ├── media.ts                      ← cmsText, hrefPath, media URLs
 │   └── utils.ts                      ← cn()

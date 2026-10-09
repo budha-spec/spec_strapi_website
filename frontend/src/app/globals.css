@@ -12,6 +12,8 @@
   /* ─── Fonts ────────────────────────────────────────── */
   --font-sans: var(--font-inter), 'Inter', sans-serif;
   --font-nunito: var(--font-nunito), 'Nunito', sans-serif;
+  /* `font-display` — Poppins, used by Figma for the Let's Talk / form headings. */
+  --font-display: var(--font-poppins), 'Poppins', sans-serif;
 
   /* ─── Stroke / Border ───────────────────────────────── */
   --color-stroke-main: #B9B9B9;
