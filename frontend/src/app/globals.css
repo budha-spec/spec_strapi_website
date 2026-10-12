@@ -912,6 +912,13 @@ img.cta-banner-image {
 }
 
 .cta-banner:hover img.cta-banner-image{ opacity: 1;}
+.sp-case-study-filters .case-study-filter:hover {
+    background: #5E5E5E ; color: #fff
+}
+
+button.case-study-filter[aria-pressed="true"] {
+      background: #5E5E5E ;
+}
 
 @media(max-width: 767px){
 .sp-header > div{ height: 60px !important}
