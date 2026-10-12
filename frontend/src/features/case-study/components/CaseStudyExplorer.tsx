@@ -53,8 +53,8 @@ function FilterRow({ label, options, value, onChange }: FilterRowProps) {
                 className={cn(
                   'case-study-filter inline-flex h-[clamp(32px,1.98vw,38px)] min-w-[clamp(52px,3.02vw,58px)] cursor-pointer items-center justify-center whitespace-nowrap rounded-full px-[clamp(14px,1.04vw,20px)] text-[clamp(0.8125rem,0.78vw,0.9375rem)] leading-none transition-colors',
                   active
-                    ? 'gradient-btn text-white'
-                    : 'gradient-hover bg-bg-chip text-text-secondary hover:text-white focus-visible:text-white'
+                    ? 'text-white'
+                    : 'bg-bg-chip text-text-secondary  focus-visible:text-white'
                 )}
                 style={active ? { ['--grad-angle' as string]: '-68.41deg' } : undefined}
               >
