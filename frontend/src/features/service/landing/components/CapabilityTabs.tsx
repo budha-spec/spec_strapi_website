@@ -100,7 +100,7 @@ export function CapabilityTabs({ data }: CapabilityTabsProps) {
 
   return (
     <section
-      className="w-full bg-bg-light pt-[clamp(32px,4.53vw,87px)] pb-[clamp(48px,6.7vw,128px)]"
+      className="sp-section sp-service-capability-tabs w-full bg-bg-light pt-[clamp(32px,4.53vw,87px)] pb-[clamp(48px,6.7vw,128px)]"
     >
       <div className="shell">
         {data.title && <SectionEyebrow>{cmsText(data.title)}</SectionEyebrow>}

@@ -18,7 +18,7 @@ export function OfferingGrid({ data }: OfferingGridProps) {
   if (items.length === 0) return null;
 
   return (
-    <section className="w-full bg-bg-light pt-[clamp(40px,3.65vw,70px)] pb-[clamp(48px,5.21vw,100px)]">
+    <section className="sp-section sp-service-offerings w-full bg-bg-light pt-[clamp(40px,3.65vw,70px)] pb-[clamp(48px,5.21vw,100px)]">
       <div className="shell">
         {data.title && <SectionEyebrow>{cmsText(data.title)}</SectionEyebrow>}
 

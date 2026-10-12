@@ -20,7 +20,7 @@ export function CapabilityGrid({ data }: CapabilityGridProps) {
   if (items.length === 0) return null;
 
   return (
-    <section className="w-full bg-bg-light pt-[clamp(32px,3.65vw,70px)] pb-[clamp(48px,4.69vw,90px)]">
+    <section className="sp-section sp-service-capability-grid w-full bg-bg-light pt-[clamp(32px,3.65vw,70px)] pb-[clamp(48px,4.69vw,90px)]">
       <div className="shell">
         {data.title && <SectionEyebrow>{cmsText(data.title)}</SectionEyebrow>}
 
