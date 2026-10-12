@@ -26,6 +26,36 @@ Combine them to be precise:
 > the end of `frontend/src/app/globals.css`**. A rule inside `@layer components`
 > loses to the Tailwind classes already on the element; an unlayered rule wins.
 
+## Headings (inside every section)
+
+Most sections open with the same pair: a small gradient label and a large
+title. These classes are on every one of them, so heading fixes (for example
+mobile font sizes) are written once.
+
+| Class | Element | Example |
+|---|---|---|
+| `sp-eyebrow` | Small gradient label above a title | "• Core Capabilities", "• Proven Impact" |
+| `sp-title` | Main `h2` title of a section | "Engineering Scalable Solutions for Enterprise Growth" |
+| `sp-page-title` | The page's `h1` in the hero | "Building Next-gen AI-ready Software", "AI/ML" |
+
+```css
+/* All section titles on phones */
+@media (max-width: 767px) {
+  .sp-title { font-size: 26px; line-height: 1.25; }
+  .sp-eyebrow { font-size: 16px; }
+}
+
+/* Only the dark-section titles (Proven Impact, Client Spotlight, FAQ…) */
+.sp-proven-impact .sp-title,
+.sp-testimonials .sp-title,
+.sp-faq .sp-title { … }
+```
+
+Some sections have no eyebrow by design (heroes, "Trusted by", the service
+intro, the CTA banner, FAQ, Let's Talk); their title still has `sp-title`.
+The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
+`.sp-title`, so `.sp-title span` reaches it.
+
 ## Pages
 
 | Class | Page |
@@ -95,5 +125,7 @@ These were added earlier and work the same way.
 ## Rules for new work
 
 Every new section gets `sp-section` plus its own `sp-<name>` on its outer
-element, and every new page's `<main>` gets `sp-page sp-page-<name>`. This
+element; its main `h2` gets `sp-title` and its label uses `SectionEyebrow`
+(which carries `sp-eyebrow`). A page hero `h1` gets `sp-page-title`, and every
+new page's `<main>` gets `sp-page sp-page-<name>`. This
 list is updated in the same change.
