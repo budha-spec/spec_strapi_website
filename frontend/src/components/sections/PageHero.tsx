@@ -46,7 +46,7 @@ export function PageHero({
           </ol>
         </nav>
 
-        <h1 className="mt-[clamp(20px,2.08vw,40px)] text-d40 font-medium leading-[1.3] text-white">
+        <h1 className="sp-page-title mt-[clamp(20px,2.08vw,40px)] text-d40 font-medium leading-[1.3] text-white">
           {cmsText(title)}
         </h1>
 

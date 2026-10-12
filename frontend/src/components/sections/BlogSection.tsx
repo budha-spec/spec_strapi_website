@@ -113,7 +113,7 @@ export function BlogSection({
         {title && <SectionEyebrow>{cmsText(title)}</SectionEyebrow>}
 
         {subTitle && (
-          <h2 className="mt-[clamp(6px,0.52vw,10px)] text-d40 font-medium leading-[1.2] text-text-heading">
+          <h2 className="sp-title mt-[clamp(6px,0.52vw,10px)] text-d40 font-medium leading-[1.2] text-text-heading">
             <AccentHeading text={cmsText(subTitle)} accentClassName="gradient-text font-bold" />
           </h2>
         )}

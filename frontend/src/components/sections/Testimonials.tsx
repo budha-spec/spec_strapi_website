@@ -94,7 +94,7 @@ export function Testimonials({ data }: TestimonialsProps) {
         )}
 
         {data.subTitle && (
-          <h2 className="mt-[clamp(8px,0.78vw,15px)] text-d40 font-medium leading-[1.2] text-white">
+          <h2 className="sp-title mt-[clamp(8px,0.78vw,15px)] text-d40 font-medium leading-[1.2] text-white">
             <AccentHeading
               text={cmsText(data.subTitle)}
               accentClassName="gradient-text-impact font-semibold"

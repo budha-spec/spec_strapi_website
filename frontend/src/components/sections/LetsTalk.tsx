@@ -142,7 +142,7 @@ export function LetsTalk({ data, className }: LetsTalkProps) {
         <div className="flex flex-col rounded-[16px] border border-stroke-outline/70 bg-bg-white px-[clamp(20px,2.14vw,41px)] pt-[clamp(24px,2.55vw,49px)] pb-[clamp(24px,2.6vw,50px)]">
           {data.title && <p className={CARD_HEADING}>{cmsText(data.title)}</p>}
           {data.subTitle && (
-            <h2 className="mt-[clamp(8px,0.83vw,16px)] font-display text-d60 font-bold leading-[1.3] text-text-heading">
+            <h2 className="sp-title mt-[clamp(8px,0.83vw,16px)] font-display text-d60 font-bold leading-[1.3] text-text-heading">
               {cmsText(data.subTitle)}
             </h2>
           )}

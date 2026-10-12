@@ -55,7 +55,7 @@ export function CtaBanner({ data }: CtaBannerProps) {
               className="absolute inset-0 -z-10 bg-bg-black opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-within:opacity-100"
             />
 
-            <h2 className="max-w-[720px] text-d30 font-medium leading-[1.3] text-white">
+            <h2 className="sp-title max-w-[720px] text-d30 font-medium leading-[1.3] text-white">
               {cmsText(data.title)}
             </h2>
 
