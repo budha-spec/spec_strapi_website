@@ -897,3 +897,22 @@
   border-color: rgba(255, 255, 255, 0.85);
   color: #ffffff;
 }
+
+
+section.sp-footer-contact {
+    background: transparent;
+}
+
+.sp-proven-impact h4 {
+    margin-bottom: 10px;
+}
+
+img.cta-banner-image {
+    opacity: 0.3;
+}
+
+.cta-banner:hover img.cta-banner-image{ opacity: 1;}
+
+@media(max-width: 767px){
+.sp-header > div{ height: 60px !important}
+}
