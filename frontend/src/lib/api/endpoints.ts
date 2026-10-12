@@ -47,6 +47,24 @@ const SERVICE_DETAIL_POPULATE = [
   'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
 ].join('&');
 
+/**
+ * Case-study listing: every study with what a card and the filters need —
+ * image, tags, industries, services — plus the "Client Spotlight" block from
+ * its `content`, which supplies the listing's heading and testimonials.
+ */
+const CASE_STUDY_LIST_QUERY = [
+  'populate[featuredImage]=true',
+  'populate[tags][fields][0]=title',
+  'populate[tags][fields][1]=slug',
+  'populate[industries][fields][0]=title',
+  'populate[industries][fields][1]=slug',
+  'populate[services][fields][0]=title',
+  'populate[services][fields][1]=slug',
+  'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
+  'sort[0]=publishedAt:desc',
+  'pagination[pageSize]=100',
+].join('&');
+
 /** All Strapi API endpoint paths. Import from here — never hardcode in components. */
 export const ENDPOINTS = {
   /** Landing page: slug `home`, with nested media and relations. */
@@ -54,6 +72,11 @@ export const ENDPOINTS = {
   /** One service landing page, matched by slug. */
   SERVICE_BY_SLUG: (slug: string) =>
     `/services?filters[slug]=${encodeURIComponent(slug)}&${SERVICE_POPULATE}`,
+  /** All published case studies for the `/case-study` listing. */
+  CASE_STUDIES: `/case-studies?${CASE_STUDY_LIST_QUERY}`,
+  /** Case-study industries — the listing's "Industries" filter chips. */
+  CASE_STUDY_INDUSTRIES:
+    '/cs-industries?fields[0]=title&fields[1]=slug&pagination[pageSize]=100',
   /** Footer single type: Let's Talk card, socials, portfolio, awards, ratings. */
   FOOTER: '/footer?populate=*',
   /** One service detail page, matched by its public path, e.g. `services/ai-ml-development`. */

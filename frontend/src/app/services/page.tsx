@@ -29,7 +29,7 @@ export default async function ServicesLandingPage() {
   const contact = findContactBlock(blocks);
 
   return (
-    <main className="flex w-full flex-col bg-bg-white">
+    <main className="sp-page sp-page-services flex w-full flex-col bg-bg-white">
       <PageHero
         title={service.title}
         description={service.description}

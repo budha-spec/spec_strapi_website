@@ -1,6 +1,6 @@
 export function HeroSkeleton() {
   return (
-    <section className="relative w-full overflow-hidden bg-bg-black h-[clamp(660px,52.08vw,1000px)]">
+    <section className="sp-section sp-home-hero-skeleton relative w-full overflow-hidden bg-bg-black h-[clamp(660px,52.08vw,1000px)]">
       <div className="shell flex h-full flex-col items-center pt-[clamp(110px,14.48vw,278px)]">
         <div className="flex w-full max-w-[1400px] animate-pulse flex-col items-center">
           <div className="h-[clamp(24px,2.6vw,50px)] w-[min(346px,80%)] rounded-full bg-white/10" />

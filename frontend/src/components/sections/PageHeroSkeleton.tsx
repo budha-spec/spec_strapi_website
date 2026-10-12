@@ -1,7 +1,7 @@
 /** Loading state for `PageHero` — same footprint, so nothing jumps. */
 export function PageHeroSkeleton() {
   return (
-    <section className="w-full bg-bg-dark pt-[clamp(110px,7.6vw,146px)] pb-[clamp(40px,3.96vw,76px)]">
+    <section className="sp-section sp-page-hero-skeleton w-full bg-bg-dark pt-[clamp(110px,7.6vw,146px)] pb-[clamp(40px,3.96vw,76px)]">
       <div className="shell flex animate-pulse flex-col">
         <div className="h-[clamp(32px,1.98vw,38px)] w-[184px] rounded-full bg-white/10" />
         <div className="mt-[clamp(20px,2.08vw,40px)] h-[clamp(36px,2.7vw,52px)] w-[min(850px,100%)] rounded-xl bg-white/10" />

@@ -82,14 +82,14 @@ export async function Footer() {
   const ratings = (data?.companyRating ?? []).filter((item) => item.logo?.url);
 
   return (
-    <footer id="contact" className="w-full">
+    <footer id="contact" className="sp-footer w-full">
       {/* ─── CTA: contact details + enquiry form ─────────────── */}
-      <section className="relative z-10 w-full bg-bg-light pt-[clamp(40px,3.65vw,70px)]">
+      <section className="sp-footer-contact relative z-10 w-full bg-bg-light pt-[clamp(40px,3.65vw,70px)]">
         <LetsTalk data={data} />
 
         {/* Certifications + review scores. Overlaps the dark footer below. */}
         {(certificates.length > 0 || ratings.length > 0) && (
-          <div className="shell relative z-20 mt-[clamp(16px,1.67vw,32px)] -mb-[clamp(24px,3.8vw,73px)]">
+          <div className="sp-footer-awards shell relative z-20 mt-[clamp(16px,1.67vw,32px)] -mb-[clamp(24px,3.8vw,73px)]">
             <div className="flex flex-col items-center gap-[clamp(16px,1.67vw,32px)] overflow-hidden rounded-[20px] border border-stroke-outline/70 bg-bg-white py-[clamp(16px,1.67vw,32px)] pl-[clamp(16px,1.77vw,34px)] pr-[clamp(8px,0.73vw,14px)] xl:flex-row xl:items-center xl:gap-[clamp(24px,4.58vw,88px)] xl:pr-0">
               <ul className="flex flex-1 flex-wrap items-center justify-center gap-[clamp(10px,1.15vw,22px)] xl:justify-start xl:gap-[clamp(4px,0.26vw,5px)]">
                 {certificates.map((media, index) => (
@@ -146,7 +146,7 @@ export async function Footer() {
       </section>
 
       {/* ─── Dark footer ─────────────────────────────────────── */}
-      <section className="relative z-0 w-full bg-bg-black pt-[clamp(80px,8.07vw,155px)]">
+      <section className="sp-footer-links relative z-0 w-full bg-bg-black pt-[clamp(80px,8.07vw,155px)]">
         <div className="shell">
           {/*
             Figma columns are 280/233/195/248/140 with 96px gaps (1480px).

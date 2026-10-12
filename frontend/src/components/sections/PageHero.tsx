@@ -25,7 +25,7 @@ export function PageHero({
   ctaHref,
 }: PageHeroProps) {
   return (
-    <section className="w-full bg-bg-dark pt-[clamp(110px,7.6vw,146px)] pb-[clamp(40px,3.96vw,76px)]">
+    <section className="sp-section sp-page-hero w-full bg-bg-dark pt-[clamp(110px,7.6vw,146px)] pb-[clamp(40px,3.96vw,76px)]">
       <div className="shell">
         <nav aria-label="Breadcrumb">
           <ol className="inline-flex h-[clamp(32px,1.98vw,38px)] max-w-full items-center gap-2 overflow-hidden rounded-full bg-white/10 px-[clamp(14px,1.04vw,20px)] text-d14 leading-[1.3]">

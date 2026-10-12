@@ -17,7 +17,7 @@ export function ProvenImpact({ data }: ProvenImpactProps) {
   const metrics = data.keyMetrics ?? [];
 
   return (
-    <section className="relative w-full overflow-hidden bg-bg-darker pt-[clamp(48px,6.25vw,120px)] pb-[clamp(48px,6.15vw,118px)]">
+    <section className="sp-section sp-proven-impact relative w-full overflow-hidden bg-bg-darker pt-[clamp(48px,6.25vw,120px)] pb-[clamp(48px,6.15vw,118px)]">
       <div className="shell">
         {data.title && (
           <SectionEyebrow
