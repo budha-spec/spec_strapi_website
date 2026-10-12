@@ -23,7 +23,7 @@ export function SectionEyebrow({
   angle,
 }: SectionEyebrowProps) {
   return (
-    <span className={cn('section-tag', className)}>
+    <span className={cn('sp-eyebrow section-tag', className)}>
       <span
         className={
           gradient === 'impact' ? 'gradient-text-impact' : 'gradient-text'

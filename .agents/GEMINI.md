@@ -109,7 +109,7 @@ The existing SPEC India website is already indexed by search engines and all URL
 6. Long or unknown-length rows (tab bars, chips, logo strips) must wrap or scroll inside their own container — never widen the page.
 7. Every hover effect also works on keyboard focus (`group-focus-within:` / `:focus-visible`) and respects `prefers-reduced-motion` for long animations.
 8. Give repeated controls a stable class hook (`.explore-more`, `.explore-all`, `.carousel-arrow`, …) so design can restyle them in one place.
-9. **Every section's outer element gets `sp-section sp-<name>`; every page's `<main>` gets `sp-page sp-page-<name>`.** Add the new class to `docs/css-section-hooks.md` (the list the design developer uses) in the same change.
+9. **Every section's outer element gets `sp-section sp-<name>`; its main `h2` gets `sp-title`; its small label uses `SectionEyebrow` (carries `sp-eyebrow`); a hero `h1` gets `sp-page-title`; every page's `<main>` gets `sp-page sp-page-<name>`.** Add the new class to `docs/css-section-hooks.md` (the list the design developer uses) in the same change.
 
 **Before calling it done**
 10. `npm run type-check` passes.

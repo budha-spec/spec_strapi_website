@@ -46,7 +46,7 @@ export function ServiceIntro({ data }: ServiceIntroProps) {
       <div className="shell grid gap-[clamp(16px,2vw,32px)] lg:grid-cols-[minmax(0,560fr)_minmax(0,820fr)] lg:gap-x-[clamp(40px,5.73vw,110px)]">
         {data.title && (
           <h2
-            className="gradient-text w-fit text-d40 font-semibold leading-[1.2]"
+            className="sp-title gradient-text w-fit text-d40 font-semibold leading-[1.2]"
             style={{ ['--grad-angle' as string]: '-60deg' }}
           >
             {cmsText(data.title)}

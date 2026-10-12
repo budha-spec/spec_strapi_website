@@ -99,7 +99,7 @@ export function HeroSection({ data }: HeroSectionProps) {
         )}
 
         {/* Headline */}
-        <h1 className="mt-[clamp(16px,2.45vw,47px)] text-d80 font-medium leading-[1.21] text-white">
+        <h1 className="sp-page-title mt-[clamp(16px,2.45vw,47px)] text-d80 font-medium leading-[1.21] text-white">
           {title}
         </h1>
 
