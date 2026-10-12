@@ -23,6 +23,8 @@ frontend/src/
 │   ├── layout.tsx                    ← Header + Footer + fonts on every page
 │   ├── globals.css                   ← @theme tokens + shared component classes
 │   ├── page.tsx                      ← /                 Home (Strapi page `home` + WordPress posts)
+│   ├── case-study/
+│   │   └── page.tsx              ← /case-study       Case-study listing (filters + carousel)
 │   └── services/
 │       ├── page.tsx                  ← /services         Services landing (Service entry `slug=services`)
 │       ├── loading.tsx
@@ -53,6 +55,10 @@ frontend/src/
 │   │   ├── components/               ← HeroSection, ServicesSection, HomeBlocks
 │   │   ├── api/home.api.ts
 │   │   └── types/
+│   ├── case-study/                   ← /case-study listing
+│   │   ├── api/case-study.api.ts     ← fetchCaseStudies, fetchCaseStudyIndustries, fetchSpotlightTestimonials
+│   │   ├── types/case-study.types.ts
+│   │   └── components/               ← CaseStudyExplorer (filters + peek carousel), CaseStudyCard
 │   └── service/                      ← all three service page types
 │       ├── api/service.api.ts        ← fetchServiceBySlug / fetchServiceByUrl, serviceTemplate()
 │       ├── types/service.types.ts
@@ -86,6 +92,8 @@ Adding a section to a page = add the block to the renderer + its `populate`
 line in `endpoints.ts`.
 
 ---
+
+> Section CSS hooks (`sp-*` classes) for the design developer: see `docs/css-section-hooks.md`.
 
 ## CTA + Footer Strategy
 

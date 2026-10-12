@@ -28,6 +28,7 @@
   --color-bg-darker: #0E0E0D;
   --color-bg-light: #F9F9F9;
   --color-bg-white: #FFFFFF;
+  --color-bg-chip: #F4F4F4;   /* filter chips (case-study listing) */
 
   /* ─── Hero glow accents ─────────────────────────────── */
   --color-hero-glow-blue: #0A2A6E;
@@ -521,6 +522,26 @@
   }
   .offering-card:hover .offering-card-title {
     -webkit-text-fill-color: transparent;
+  }
+
+  /*
+   * Case-study listing carousel (Figma 185:4458): one 1268px card in the
+   * 1700 shell (74.6%) with the next peeking; wider cards on smaller screens
+   * so the peek stays a hint, not half a card.
+   */
+  .case-study-track {
+    --cs-card: 88%;
+    --cs-gap: clamp(16px, 1.46vw, 28px);
+    gap: var(--cs-gap);
+  }
+  .case-study-track > li {
+    flex: 0 0 var(--cs-card);
+  }
+  @media (min-width: 768px) {
+    .case-study-track { --cs-card: 82%; }
+  }
+  @media (min-width: 1024px) {
+    .case-study-track { --cs-card: 74.6%; }
   }
 
   /* Service page capability tabs — the incoming panel fades up. */

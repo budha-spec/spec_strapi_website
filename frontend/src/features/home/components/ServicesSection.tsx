@@ -15,7 +15,7 @@ export function ServicesSection({ data }: ServicesSectionProps) {
 
   return (
     <section
-      className="w-full bg-bg-light pt-[clamp(30px,3.0vw,58px)] pb-[clamp(40px,3.65vw,70px)]"
+      className="sp-section sp-home-services w-full bg-bg-light pt-[clamp(30px,3.0vw,58px)] pb-[clamp(40px,3.65vw,70px)]"
     >
       <div className="shell">
         {data.title && <SectionEyebrow>{cmsText(data.title)}</SectionEyebrow>}

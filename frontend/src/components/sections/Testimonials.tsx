@@ -6,7 +6,7 @@ import { CarouselControls } from '@/components/ui/CarouselControls';
 import { CmsImage } from '@/components/ui/CmsImage';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { VideoModal } from '@/components/ui/VideoModal';
-import { cmsText } from '@/lib/media';
+import { cmsText, hrefPath } from '@/lib/media';
 import { toEmbedUrl } from '@/lib/video';
 import type { TestimonialsBlock } from '@/types/sections.types';
 
@@ -85,7 +85,7 @@ export function Testimonials({ data }: TestimonialsProps) {
   };
 
   return (
-    <section className="relative w-full overflow-hidden bg-bg-darker pt-[clamp(48px,6.25vw,120px)] pb-[clamp(48px,6.25vw,120px)]">
+    <section className="sp-section sp-testimonials relative w-full overflow-hidden bg-bg-darker pt-[clamp(48px,6.25vw,120px)] pb-[clamp(48px,6.25vw,120px)]">
       <div className="shell">
         {data.title && (
           <SectionEyebrow gradient="impact" angle="-54.53deg" className="text-d22">
@@ -205,6 +205,7 @@ export function Testimonials({ data }: TestimonialsProps) {
         {count > 1 && (
           <CarouselControls
             pill="gradient"
+            href={hrefPath(data.url)}
             onPrev={() => go(-1)}
             onNext={() => go(1)}
           />

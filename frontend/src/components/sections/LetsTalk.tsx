@@ -133,7 +133,7 @@ export function LetsTalk({ data, className }: LetsTalkProps) {
   return (
     <div
       className={cn(
-        'shell grid gap-[clamp(16px,1.67vw,32px)] lg:grid-cols-[980fr_688fr]',
+        'sp-section sp-lets-talk shell grid gap-[clamp(16px,1.67vw,32px)] lg:grid-cols-[980fr_688fr]',
         className,
       )}
     >

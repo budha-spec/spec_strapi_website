@@ -67,7 +67,7 @@ export default async function ServiceDetailPage({
       : [];
 
   return (
-    <main className="flex w-full flex-col bg-bg-white">
+    <main className={`sp-page sp-page-service-${template} flex w-full flex-col bg-bg-white`}>
       <PageHero
         title={service.title}
         description={service.description}

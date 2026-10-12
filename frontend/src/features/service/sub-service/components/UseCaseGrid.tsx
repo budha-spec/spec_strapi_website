@@ -19,7 +19,7 @@ export function UseCaseGrid({ data }: UseCaseGridProps) {
   if (items.length === 0) return null;
 
   return (
-    <section className="w-full bg-bg-darker pt-[clamp(48px,6.25vw,120px)] pb-[clamp(48px,6.25vw,120px)]">
+    <section className="sp-section sp-service-use-cases w-full bg-bg-darker pt-[clamp(48px,6.25vw,120px)] pb-[clamp(48px,6.25vw,120px)]">
       <div className="shell">
         {data.title && (
           <SectionEyebrow gradient="impact">{cmsText(data.title)}</SectionEyebrow>

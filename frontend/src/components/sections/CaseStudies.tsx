@@ -28,7 +28,7 @@ export function CaseStudies({ data }: CaseStudiesProps) {
   );
 
   return (
-    <section className="w-full bg-bg-light pt-[clamp(40px,3.44vw,66px)] pb-[clamp(40px,3.65vw,70px)]">
+    <section className="sp-section sp-case-studies w-full bg-bg-light pt-[clamp(40px,3.44vw,66px)] pb-[clamp(40px,3.65vw,70px)]">
       <div className="shell">
         {data.title && <SectionEyebrow>{cmsText(data.title)}</SectionEyebrow>}
 

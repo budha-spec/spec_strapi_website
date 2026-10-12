@@ -107,7 +107,7 @@ export function BlogSection({
   return (
     <section
       id="insights"
-      className="w-full bg-bg-light pt-[clamp(40px,3.33vw,64px)] pb-[clamp(40px,3.65vw,70px)]"
+      className="sp-section sp-blog w-full bg-bg-light pt-[clamp(40px,3.33vw,64px)] pb-[clamp(40px,3.65vw,70px)]"
     >
       <div className="shell">
         {title && <SectionEyebrow>{cmsText(title)}</SectionEyebrow>}

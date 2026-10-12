@@ -32,7 +32,7 @@ export function HeroSection({ data }: HeroSectionProps) {
   return (
     <section
       id="hero"
-      className="relative w-full overflow-hidden bg-bg-black h-[clamp(660px,52.08vw,1000px)]"
+      className="sp-section sp-home-hero relative w-full overflow-hidden bg-bg-black h-[clamp(660px,52.08vw,1000px)]"
     >
       {/* Drifting dot field across the whole hero */}
       <ParticlesCanvas

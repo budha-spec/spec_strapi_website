@@ -31,6 +31,11 @@ interface CarouselControlsProps {
   onNext?: () => void;
   /** Hide the arrows when everything already fits — Explore All stays. */
   showArrows?: boolean;
+  /**
+   * Optional progress bar left of Explore All (Figma case-study listing:
+   * 821×5 grey track, gradient thumb one slide wide). Hidden on phones.
+   */
+  progress?: { index: number; count: number };
 }
 
 /**
@@ -42,6 +47,7 @@ interface CarouselControlsProps {
  *                       .explore-all-on-light, .explore-all-dark
  *   .carousel-arrows    the prev/next pair
  *   .carousel-arrow     each arrow — plus .carousel-arrow-prev / -next
+ *   .carousel-progress  optional progress track (+ .carousel-progress-thumb)
  */
 export function CarouselControls({
   href = '#',
@@ -50,7 +56,10 @@ export function CarouselControls({
   onPrev,
   onNext,
   showArrows = true,
+  progress,
 }: CarouselControlsProps) {
+  const slides = Math.max(progress?.count ?? 0, 1);
+
   return (
     <div
       className={cn(
@@ -60,6 +69,26 @@ export function CarouselControls({
         className
       )}
     >
+      {progress && progress.count > 1 && (
+        <div
+          role="progressbar"
+          aria-label="Carousel position"
+          aria-valuemin={1}
+          aria-valuemax={slides}
+          aria-valuenow={progress.index + 1}
+          className="carousel-progress relative hidden h-[5px] w-[clamp(140px,42.76vw,821px)] shrink overflow-hidden rounded-full bg-stroke-main sm:block"
+        >
+          <span
+            className="carousel-progress-thumb gradient-btn absolute inset-y-0 rounded-full transition-[left] duration-500 ease-out motion-reduce:transition-none"
+            style={{
+              ['--grad-angle' as string]: '-7.82deg',
+              width: `${100 / slides}%`,
+              left: `${(progress.index * 100) / slides}%`,
+            }}
+          />
+        </div>
+      )}
+
       <Link
         href={href}
         className={cn(
