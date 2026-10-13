@@ -153,17 +153,17 @@ export async function Footer() {
             Proportional tracks keep that rhythm without overflowing the
             shell on laptops, where 1480px no longer fits.
           */}
-          <div className="grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-3 lg:max-w-[1480px] lg:grid-cols-[280fr_233fr_195fr_248fr_140fr] lg:gap-x-[clamp(24px,5vw,96px)]">
+          <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-12 md:grid-cols-3 lg:max-w-[1480px] lg:grid-cols-[280fr_233fr_195fr_248fr_140fr] lg:gap-x-[clamp(24px,5vw,96px)]">
             {FOOTER_COLUMNS.map((column) => (
               <nav
                 key={column.heading}
                 aria-label={column.heading}
-                className="flex min-w-0 flex-col gap-[clamp(16px,1.56vw,30px)]"
+                className="flex min-w-0 flex-col gap-4 sm:gap-[clamp(16px,1.56vw,30px)]"
               >
                 <h4 className="text-d22 font-medium leading-[normal] text-white">
                   {column.heading}
                 </h4>
-                <ul className="flex flex-col gap-5">
+                <ul className="flex flex-col gap-3.5 sm:gap-5">
                   {column.links.map((link) => (
                     <li key={link}>
                       <Link
@@ -183,8 +183,8 @@ export async function Footer() {
         </div>
 
         <div className="mt-[clamp(40px,3.96vw,76px)] border-t border-white/10">
-          <div className="shell flex flex-col items-center gap-4 py-[clamp(16px,1.15vw,22px)] md:flex-row md:justify-between">
-            <div className="flex items-center gap-[30px]">
+          <div className="shell flex flex-col items-center gap-4 py-6 text-center md:flex-row md:justify-between md:py-[clamp(16px,1.15vw,22px)] md:text-left">
+            <div className="flex flex-col items-center gap-3 md:flex-row md:gap-[30px]">
               <img
                 src="/footer/dmca.png"
                 alt="DMCA Protected"
@@ -197,7 +197,7 @@ export async function Footer() {
               </p>
             </div>
 
-            <div className="flex items-center gap-10">
+            <div className="flex items-center justify-center gap-8 md:gap-10">
               <Link
                 href="#"
                 className="text-d18 leading-[normal] text-white hover:text-brand-green"
