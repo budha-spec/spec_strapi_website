@@ -661,24 +661,27 @@
     .spotlight-track { --spotlight-n: 4; }
   }
 
-  /* Client Spotlight card — grayscale + quote on hover, Play goes gradient. */
+  /*
+   * Client Spotlight card. Hover (or keyboard focus inside) turns the photo
+   * grayscale, fills Play with the gradient, deepens the bottom shade, and
+   * swaps the name for the quote. Name and quote are grid rows animated
+   * between 1fr and 0fr, so Play rises by exactly the quote's height.
+   */
   .spotlight-card img {
     transition: filter 500ms ease;
   }
-  .spotlight-card:hover img {
+  .spotlight-card:is(:hover, :focus-within) img {
     filter: grayscale(1);
   }
   .spotlight-card .spotlight-play {
     background-color: #ffffff;
     color: #020101;
-    transform: translateY(0);
     transition:
       color 0.35s ease,
       background-color 0.35s ease,
-      background-image 0.35s ease,
-      transform 0.35s ease;
+      background-image 0.35s ease;
   }
-  .spotlight-card:hover .spotlight-play {
+  .spotlight-card:is(:hover, :focus-within) .spotlight-play {
     background-color: transparent;
     background-image: linear-gradient(
       var(--grad-angle, -54deg),
@@ -686,39 +689,53 @@
       #0c3ced 97.041%
     );
     color: #ffffff;
-    /* Lift with the quote reveal so the pill clears the longer copy. */
-    transform: translateY(clamp(-18px, -1.25vw, -12px));
   }
   .spotlight-card .spotlight-play-icon {
     background-color: #000000;
     color: #ffffff;
     transition: background-color 0.35s ease, color 0.35s ease;
   }
-  .spotlight-card:hover .spotlight-play-icon {
+  .spotlight-card:is(:hover, :focus-within) .spotlight-play-icon {
     background-color: rgb(255 255 255 / 0.22);
     color: #ffffff;
   }
-  .spotlight-card .spotlight-identity {
+  .spotlight-card .spotlight-shade {
+    opacity: 0;
+    transition: opacity 450ms ease;
+  }
+  .spotlight-card.has-quote:is(:hover, :focus-within) .spotlight-shade {
     opacity: 1;
-    transform: translateY(0);
+  }
+  .spotlight-card .spotlight-identity,
+  .spotlight-card .spotlight-quote {
+    display: grid;
     transition:
-      opacity 350ms ease,
-      transform 350ms ease;
+      grid-template-rows 450ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 350ms ease;
+  }
+  .spotlight-card .spotlight-identity {
+    grid-template-rows: 1fr;
+    opacity: 1;
   }
   .spotlight-card .spotlight-quote {
+    grid-template-rows: 0fr;
     opacity: 0;
-    transform: translateY(10px);
-    transition:
-      opacity 350ms ease,
-      transform 350ms ease;
   }
-  .spotlight-card:hover .spotlight-identity {
+  .spotlight-card.has-quote:is(:hover, :focus-within) .spotlight-identity {
+    grid-template-rows: 0fr;
     opacity: 0;
-    transform: translateY(-8px);
   }
-  .spotlight-card:hover .spotlight-quote {
+  .spotlight-card.has-quote:is(:hover, :focus-within) .spotlight-quote {
+    grid-template-rows: 1fr;
     opacity: 1;
-    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .spotlight-card img,
+    .spotlight-card .spotlight-shade,
+    .spotlight-card .spotlight-identity,
+    .spotlight-card .spotlight-quote {
+      transition: none;
+    }
   }
 
   .blog-track {

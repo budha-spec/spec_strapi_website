@@ -7,6 +7,7 @@ import { CmsImage } from '@/components/ui/CmsImage';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { VideoModal } from '@/components/ui/VideoModal';
 import { cmsText, hrefPath } from '@/lib/media';
+import { cn } from '@/lib/utils';
 import { toEmbedUrl } from '@/lib/video';
 import type { Testimonial, TestimonialsBlock } from '@/types/sections.types';
 
@@ -18,9 +19,15 @@ interface TestimonialsProps {
    * without a video.
    */
   layout?: 'carousel' | 'grid';
+  /** Trailing title words on the gradient (testimonials listing: 2). */
+  accentWords?: number;
 }
 
-export function Testimonials({ data, layout = 'carousel' }: TestimonialsProps) {
+export function Testimonials({
+  data,
+  layout = 'carousel',
+  accentWords,
+}: TestimonialsProps) {
   const grid = layout === 'grid';
   const people = data.testimonials ?? [];
   const count = people.length;
@@ -113,7 +120,10 @@ export function Testimonials({ data, layout = 'carousel' }: TestimonialsProps) {
       <figure
         key={`${person.id}-${i}`}
         aria-hidden={i >= count || undefined}
-        className="spotlight-card relative flex h-[clamp(400px,27.08vw,520px)] flex-col justify-end overflow-hidden rounded-[14px]"
+        className={cn(
+          'spotlight-card relative flex h-[clamp(400px,27.08vw,520px)] flex-col justify-end overflow-hidden rounded-[14px]',
+          quote && 'has-quote'
+        )}
         style={{
           backgroundImage:
             'linear-gradient(-80.31deg, #56F72F 73.097%, #0C3CED 134.19%)',
@@ -129,6 +139,11 @@ export function Testimonials({ data, layout = 'carousel' }: TestimonialsProps) {
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-b from-transparent to-black"
+        />
+        {/* Deeper shade faded in on hover so the longer quote stays legible. */}
+        <div
+          aria-hidden
+          className="spotlight-shade pointer-events-none absolute inset-x-0 bottom-0 h-[75%] bg-gradient-to-b from-transparent via-black/60 to-black"
         />
 
         <figcaption className="relative z-10 flex flex-col items-center px-[clamp(16px,1.25vw,24px)] pb-[clamp(18px,1.56vw,30px)]">
@@ -155,23 +170,34 @@ export function Testimonials({ data, layout = 'carousel' }: TestimonialsProps) {
             </span>
           )}
 
-          <div className="relative mt-[clamp(10px,1.3vw,25px)] grid h-[5.5rem] w-full items-start">
-            <div className="spotlight-identity col-start-1 row-start-1 text-center">
-              <h4 className="text-d24 font-medium leading-[1.3] text-white">
-                {cmsText(person.name)}
-              </h4>
-              {person.designation && (
-                <p className="mt-[clamp(2px,0.42vw,8px)] text-d16 leading-[1.3] text-white">
-                  {cmsText(person.designation)}
-                </p>
-              )}
+          {/*
+            Name and quote each sit in a collapsible grid row: on hover the
+            name collapses and the quote opens, so the Play pill rides up
+            with however long the quote is (see `.spotlight-*` in globals.css).
+          */}
+          <div className="spotlight-identity w-full">
+            <div className="min-h-0 overflow-hidden">
+              <div className="pt-[clamp(10px,1.3vw,25px)] text-center">
+                <h4 className="text-d24 font-medium leading-[1.3] text-white">
+                  {cmsText(person.name)}
+                </h4>
+                {person.designation && (
+                  <p className="mt-[clamp(2px,0.42vw,8px)] text-d16 leading-[1.3] text-white">
+                    {cmsText(person.designation)}
+                  </p>
+                )}
+              </div>
             </div>
-            {quote && (
-              <p className="spotlight-quote col-start-1 row-start-1 px-1 text-center text-d16 leading-[1.4] text-white">
-                {quote}
-              </p>
-            )}
           </div>
+          {quote && (
+            <div className="spotlight-quote w-full">
+              <div className="min-h-0 overflow-hidden">
+                <p className="pt-[clamp(10px,1.04vw,20px)] text-left text-d16 leading-[1.45] text-white">
+                  {quote}
+                </p>
+              </div>
+            </div>
+          )}
         </figcaption>
       </figure>
     );
@@ -190,6 +216,7 @@ export function Testimonials({ data, layout = 'carousel' }: TestimonialsProps) {
           <h2 className="sp-title mt-[clamp(8px,0.78vw,15px)] text-d40 font-medium leading-[1.2] text-white">
             <AccentHeading
               text={cmsText(data.subTitle)}
+              accentWords={accentWords}
               accentClassName="gradient-text-impact font-semibold"
             />
           </h2>
