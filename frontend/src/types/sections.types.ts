@@ -123,3 +123,11 @@ export interface CtaBlock {
   url?: string | null;
   image?: CmsMedia | null;
 }
+
+/** `shared.contact-us` — feeds the page hero's button; not rendered on its own. */
+export interface ContactBlock {
+  __component: 'shared.contact-us';
+  id: number;
+  txt?: string | null;
+  url?: string | null;
+}
