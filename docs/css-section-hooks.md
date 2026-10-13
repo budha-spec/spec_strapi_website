@@ -66,6 +66,8 @@ The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
 | `sp-page-service-sub-service` | `/services/…` sub-service page, e.g. AI Development |
 | `sp-page-case-study` | `/case-study` Case-study listing |
 | `sp-page-live-bi` | `/live-bi-visualization` Live BI listing |
+| `sp-page-testimonials` | `/about/testimonials` Testimonials listing |
+| `sp-page-whitepaper` | `/whitepaper` Whitepaper listing |
 
 ## Layout (every page)
 
@@ -112,6 +114,12 @@ The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
 | `sp-live-bi-tabs` | "All Visualization" / "Power BI" / … tab bar | Live BI |
 | `sp-live-bi-grid` | Dashboard card grid | Live BI |
 | `sp-live-bi-empty` | "No dashboards in this category" message | Live BI |
+| `sp-testimonial-feature` | Light "Client Spotlight" carousel (wide quote cards) | Testimonials |
+| `sp-testimonials-grid` | Card grid inside `sp-testimonials` when it uses `layout="grid"` | Testimonials |
+| `sp-industry-gallery` | "Client & Industry" logo tiles | Testimonials |
+| `sp-whitepaper-listing` | Heading + whitepaper cards band | Whitepaper |
+| `sp-whitepaper-grid` | Two-column whitepaper card grid | Whitepaper |
+| `sp-whitepaper-empty` | "New whitepapers are on their way" message | Whitepaper |
 
 ## Repeated controls (inside sections)
 
@@ -128,6 +136,9 @@ These were added earlier and work the same way.
 | `gradient-hover` | Pills that fill with the gradient on hover |
 | `live-bi-tab` | One Live BI category tab (`aria-pressed="true"` when selected) |
 | `visualization-card`, `visualization-card-media` | Live BI dashboard card and its image tile |
+| `testimonial-feature-card` | One wide card in the featured testimonial carousel |
+| `industry-logo` | One logo tile in the "Client & Industry" gallery |
+| `whitepaper-card`, `whitepaper-card-media` | One whitepaper card and its cover image |
 
 ## Rules for new work
 

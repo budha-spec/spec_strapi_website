@@ -31,6 +31,8 @@ interface CarouselControlsProps {
   onNext?: () => void;
   /** Hide the arrows when everything already fits — Explore All stays. */
   showArrows?: boolean;
+  /** Hide the Explore All pill when the carousel is already the full list. */
+  showExploreAll?: boolean;
   /**
    * Optional progress bar left of Explore All (Figma case-study listing:
    * 821×5 grey track, gradient thumb one slide wide). Hidden on phones.
@@ -56,6 +58,7 @@ export function CarouselControls({
   onPrev,
   onNext,
   showArrows = true,
+  showExploreAll = true,
   progress,
 }: CarouselControlsProps) {
   const slides = Math.max(progress?.count ?? 0, 1);
@@ -89,24 +92,26 @@ export function CarouselControls({
         </div>
       )}
 
-      <Link
-        href={href}
-        className={cn(
-          'explore-all inline-flex h-[clamp(34px,2.19vw,42px)] min-w-[clamp(110px,7.29vw,140px)] items-center justify-center rounded-full px-[clamp(18px,1.56vw,30px)] text-d16',
-          pill === 'gradient-light'
-            ? 'explore-all-on-light'
-            : pill === 'gradient'
-              ? 'explore-all-gradient'
-              : 'explore-all-dark'
-        )}
-        style={
-          pill === 'gradient-light'
-            ? { ['--grad-angle' as string]: '-66.1deg' }
-            : undefined
-        }
-      >
-        Explore All
-      </Link>
+      {showExploreAll && (
+        <Link
+          href={href}
+          className={cn(
+            'explore-all inline-flex h-[clamp(34px,2.19vw,42px)] min-w-[clamp(110px,7.29vw,140px)] items-center justify-center rounded-full px-[clamp(18px,1.56vw,30px)] text-d16',
+            pill === 'gradient-light'
+              ? 'explore-all-on-light'
+              : pill === 'gradient'
+                ? 'explore-all-gradient'
+                : 'explore-all-dark'
+          )}
+          style={
+            pill === 'gradient-light'
+              ? { ['--grad-angle' as string]: '-66.1deg' }
+              : undefined
+          }
+        >
+          Explore All
+        </Link>
+      )}
 
       {showArrows && (
         <div className="carousel-arrows flex items-center gap-[13px]">
