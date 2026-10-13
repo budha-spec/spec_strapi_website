@@ -20,7 +20,6 @@ const PlayIcon = () => (
 
 interface CardProps {
   person: Testimonial;
-  inert: boolean;
   onPlay: (src: string, title: string) => void;
 }
 
@@ -29,14 +28,13 @@ interface CardProps {
  * client's name on the right; stacked on phones. The portrait panel reuses
  * the `.spotlight-card` hover (grayscale photo, gradient Play).
  */
-function FeaturedCard({ person, inert, onPlay }: CardProps) {
+function FeaturedCard({ person, onPlay }: CardProps) {
   const name = cmsText(person.name);
   const quote = cmsText(person.description);
   const embedUrl = toEmbedUrl(person.videoUrl);
 
   return (
     <figure
-      inert={inert}
       className="testimonial-feature-card grid h-full gap-[clamp(16px,1.56vw,30px)] rounded-[14px] bg-bg-white p-[clamp(12px,1.04vw,20px)] md:grid-cols-[minmax(0,383fr)_minmax(0,845fr)]"
     >
       <div
@@ -104,6 +102,7 @@ export function FeaturedTestimonials({ data }: { data: TestimonialsBlock }) {
           <h2 className="sp-title mt-[clamp(6px,0.52vw,10px)] max-w-[1200px] text-d40 font-medium leading-[1.2] text-text-heading">
             <AccentHeading
               text={cmsText(data.subTitle)}
+              accentWords={2}
               accentClassName="gradient-text font-semibold"
             />
           </h2>
@@ -132,9 +131,9 @@ export function FeaturedTestimonials({ data }: { data: TestimonialsBlock }) {
                 aria-label={`${i + 1} of ${count}`}
                 className="shrink-0 basis-(--tf-card)"
               >
+                {/* Not inert: the peeking card hovers and plays too (prototype). */}
                 <FeaturedCard
                   person={person}
-                  inert={i !== index}
                   onPlay={(src, title) => setVideo({ src, title })}
                 />
               </li>

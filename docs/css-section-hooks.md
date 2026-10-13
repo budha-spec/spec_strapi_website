@@ -137,7 +137,8 @@ These were added earlier and work the same way.
 | `live-bi-tab` | One Live BI category tab (`aria-pressed="true"` when selected) |
 | `visualization-card`, `visualization-card-media` | Live BI dashboard card and its image tile |
 | `testimonial-feature-card` | One wide card in the featured testimonial carousel |
-| `industry-logo` | One logo tile in the "Client & Industry" gallery |
+| `industry-logo` (+ `industry-logo-img`, `industry-logo-description`) | One "Client & Industry" logo tile; on hover the logo moves top-left and the description fades in |
+| `spotlight-card` (+ `has-quote`, `spotlight-shade`, `spotlight-identity`, `spotlight-quote`, `spotlight-play`) | Client Spotlight card; on hover the name collapses and the quote opens (CSS in `globals.css`) |
 | `whitepaper-card`, `whitepaper-card-media` | One whitepaper card and its cover image |
 
 ## Rules for new work
