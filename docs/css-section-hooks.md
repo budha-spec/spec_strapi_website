@@ -65,6 +65,7 @@ The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
 | `sp-page-service-detail` | `/services/…` service page, e.g. AI/ML |
 | `sp-page-service-sub-service` | `/services/…` sub-service page, e.g. AI Development |
 | `sp-page-case-study` | `/case-study` Case-study listing |
+| `sp-page-live-bi` | `/live-bi-visualization` Live BI listing |
 
 ## Layout (every page)
 
@@ -107,6 +108,10 @@ The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
 | `sp-case-study-filters` | "Services" / "Industries" filter boxes | Case study |
 | `sp-case-study-carousel` | Case-study cards + progress bar + controls | Case study |
 | `sp-case-study-empty` | "No case studies match" message | Case study |
+| `sp-live-bi-listing` | Heading + category tabs + dashboard grid | Live BI |
+| `sp-live-bi-tabs` | "All Visualization" / "Power BI" / … tab bar | Live BI |
+| `sp-live-bi-grid` | Dashboard card grid | Live BI |
+| `sp-live-bi-empty` | "No dashboards in this category" message | Live BI |
 
 ## Repeated controls (inside sections)
 
@@ -121,6 +126,8 @@ These were added earlier and work the same way.
 | `carousel-arrows`, `carousel-arrow` (+ `-prev` / `-next`) | Arrow buttons |
 | `carousel-progress`, `carousel-progress-thumb` | Case-study progress bar |
 | `gradient-hover` | Pills that fill with the gradient on hover |
+| `live-bi-tab` | One Live BI category tab (`aria-pressed="true"` when selected) |
+| `visualization-card`, `visualization-card-media` | Live BI dashboard card and its image tile |
 
 ## Rules for new work
 

@@ -65,6 +65,15 @@ const CASE_STUDY_LIST_QUERY = [
   'pagination[pageSize]=100',
 ].join('&');
 
+/**
+ * Live BI listing page: the hero CTA and the "Client Spotlight" block, whose
+ * `visualizations` (with image + categories) are the cards, in editor order.
+ */
+const LIVE_BI_POPULATE = [
+  'populate[content][on][shared.live-bi-visualization][populate][visualizations][populate]=*',
+  'populate[content][on][shared.contact-us][populate]=*',
+].join('&');
+
 /** All Strapi API endpoint paths. Import from here — never hardcode in components. */
 export const ENDPOINTS = {
   /** Landing page: slug `home`, with nested media and relations. */
@@ -77,6 +86,11 @@ export const ENDPOINTS = {
   /** Case-study industries — the listing's "Industries" filter chips. */
   CASE_STUDY_INDUSTRIES:
     '/cs-industries?fields[0]=title&fields[1]=slug&pagination[pageSize]=100',
+  /** `/live-bi-visualization` listing page (Strapi page slug `live-bi-visualization`). */
+  LIVE_BI_PAGE: `/pages?filters[slug][$eq]=live-bi-visualization&${LIVE_BI_POPULATE}`,
+  /** Visualization categories — the listing's tabs ("All Visualization", "Power BI", …). */
+  VISUALIZATION_CATEGORIES:
+    '/visualization-categories?fields[0]=title&fields[1]=slug&pagination[pageSize]=100',
   /** Footer single type: Let's Talk card, socials, portfolio, awards, ratings. */
   FOOTER: '/footer?populate=*',
   /** One service detail page, matched by its public path, e.g. `services/ai-ml-development`. */
