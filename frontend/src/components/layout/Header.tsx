@@ -16,7 +16,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="absolute inset-x-0 top-0 z-50">
+    <header className="sp-header absolute inset-x-0 top-0 z-50">
       <div className="h-[86px] border-b border-[#242424] bg-[#0d0d0d]/70 backdrop-blur-[2px]">
         <div className="shell flex h-full items-center justify-between gap-6">
           {/*

@@ -2,12 +2,15 @@ import type { RichTextNode } from '@/components/ui/RichText';
 import type { CmsMedia } from '@/lib/media';
 import type {
   CaseStudiesBlock,
+  ContactBlock,
   CtaBlock,
   FaqsBlock,
   GalleryBlock,
   MetricsBlock,
   TestimonialsBlock,
 } from '@/types/sections.types';
+
+export type { ContactBlock };
 
 /** A child service shown as a chip link under its capability tab. */
 export interface ServiceLink {
@@ -66,14 +69,6 @@ export interface IndustriesBlock {
   title?: string | null;
   subTitle?: string | null;
   industries?: IndustryCard[] | null;
-}
-
-/** `shared.contact-us` — feeds the hero button; not rendered on its own. */
-export interface ContactBlock {
-  __component: 'shared.contact-us';
-  id: number;
-  txt?: string | null;
-  url?: string | null;
 }
 
 export type ServiceBlock =

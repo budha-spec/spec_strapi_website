@@ -22,10 +22,10 @@ export function FaqSection({ data }: FaqSectionProps) {
   if (items.length === 0) return null;
 
   return (
-    <section className="faq-section w-full bg-bg-darker pt-[clamp(48px,6.25vw,120px)] pb-[clamp(48px,6.25vw,120px)]">
+    <section className="sp-section sp-faq faq-section w-full bg-bg-darker pt-[clamp(48px,6.25vw,120px)] pb-[clamp(48px,6.25vw,120px)]">
       <div className="shell">
         {data.title && (
-          <h2 className="text-d40 font-medium leading-[1.2] text-white">
+          <h2 className="sp-title text-d40 font-medium leading-[1.2] text-white">
             <AccentHeading
               text={cmsText(data.title)}
               accentClassName="gradient-text-impact font-semibold"

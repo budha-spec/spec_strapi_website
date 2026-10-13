@@ -15,13 +15,13 @@ export function ServicesSection({ data }: ServicesSectionProps) {
 
   return (
     <section
-      className="w-full bg-bg-light pt-[clamp(30px,3.0vw,58px)] pb-[clamp(40px,3.65vw,70px)]"
+      className="sp-section sp-home-services w-full bg-bg-light pt-[clamp(30px,3.0vw,58px)] pb-[clamp(40px,3.65vw,70px)]"
     >
       <div className="shell">
         {data.title && <SectionEyebrow>{cmsText(data.title)}</SectionEyebrow>}
 
         {data.subTitle && (
-          <h2 className="mt-[clamp(6px,0.52vw,10px)] max-w-[1200px] text-d40 font-medium leading-[1.2] text-text-heading">
+          <h2 className="sp-title mt-[clamp(6px,0.52vw,10px)] max-w-[1200px] text-d40 font-medium leading-[1.2] text-text-heading">
             <AccentHeading
               text={cmsText(data.subTitle)}
               accentClassName="gradient-text font-semibold"

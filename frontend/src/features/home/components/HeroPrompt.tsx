@@ -43,12 +43,12 @@ export function HeroPrompt({ suggestions }: HeroPromptProps) {
           ))}
         </div>
 
-        <button
-          type="submit"
-          aria-label="Submit prompt"
-          className="gradient-btn flex size-[clamp(30px,1.88vw,36px)] shrink-0 items-center justify-center rounded-full text-white transition-[filter] hover:brightness-110"
-          style={{ ['--grad-angle' as string]: '-82.43deg' }}
-        >
+       <button
+  type="submit"
+  aria-label="Submit prompt"
+  className="gradient-btn flex size-[clamp(30px,1.88vw,36px)] shrink-0 cursor-pointer items-center justify-center rounded-full text-white transition-[filter] hover:brightness-110"
+  style={{ ['--grad-angle' as string]: '-82.43deg' }}
+>
           <svg
             width="20"
             height="20"

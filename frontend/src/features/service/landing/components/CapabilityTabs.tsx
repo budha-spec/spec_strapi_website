@@ -100,13 +100,13 @@ export function CapabilityTabs({ data }: CapabilityTabsProps) {
 
   return (
     <section
-      className="w-full bg-bg-light pt-[clamp(32px,4.53vw,87px)] pb-[clamp(48px,6.7vw,128px)]"
+      className="sp-section sp-service-capability-tabs w-full bg-bg-light pt-[clamp(32px,4.53vw,87px)] pb-[clamp(48px,6.7vw,128px)]"
     >
       <div className="shell">
         {data.title && <SectionEyebrow>{cmsText(data.title)}</SectionEyebrow>}
 
         {data.subTitle && (
-          <h2 className="mt-[clamp(6px,0.52vw,10px)] max-w-[1200px] text-d40 font-medium leading-[1.2] text-text-heading">
+          <h2 className="sp-title mt-[clamp(6px,0.52vw,10px)] max-w-[1200px] text-d40 font-medium leading-[1.2] text-text-heading">
             <AccentHeading
               text={cmsText(data.subTitle)}
               accentClassName="gradient-text font-semibold"

@@ -10,7 +10,7 @@ export default async function HomePage() {
   const page = data[0];
 
   return (
-    <main className="flex w-full flex-col bg-bg-white">
+    <main className="sp-page sp-page-home flex w-full flex-col bg-bg-white">
       <HomeBlocks blocks={page?.content ?? []} />
       <BlogSection posts={blogs} />
     </main>

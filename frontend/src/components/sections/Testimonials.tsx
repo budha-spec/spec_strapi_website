@@ -6,15 +6,29 @@ import { CarouselControls } from '@/components/ui/CarouselControls';
 import { CmsImage } from '@/components/ui/CmsImage';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { VideoModal } from '@/components/ui/VideoModal';
-import { cmsText } from '@/lib/media';
+import { cmsText, hrefPath } from '@/lib/media';
+import { cn } from '@/lib/utils';
 import { toEmbedUrl } from '@/lib/video';
-import type { TestimonialsBlock } from '@/types/sections.types';
+import type { Testimonial, TestimonialsBlock } from '@/types/sections.types';
 
 interface TestimonialsProps {
   data: TestimonialsBlock;
+  /**
+   * `carousel` (default) slides 1 / 2 / 4 cards at a time. `grid` shows every
+   * card at once (testimonials listing) and drops the Play pill on cards
+   * without a video.
+   */
+  layout?: 'carousel' | 'grid';
+  /** Trailing title words on the gradient (testimonials listing: 2). */
+  accentWords?: number;
 }
 
-export function Testimonials({ data }: TestimonialsProps) {
+export function Testimonials({
+  data,
+  layout = 'carousel',
+  accentWords,
+}: TestimonialsProps) {
+  const grid = layout === 'grid';
   const people = data.testimonials ?? [];
   const count = people.length;
   const [index, setIndex] = useState(0);
@@ -27,7 +41,8 @@ export function Testimonials({ data }: TestimonialsProps) {
   } | null>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
 
-  const slides = count > 0 ? [...people, ...people] : [];
+  // The carousel loops over a doubled list; the grid shows each card once.
+  const slides = count > 0 ? (grid ? people : [...people, ...people]) : [];
 
   useEffect(() => {
     const viewport = viewportRef.current;
@@ -44,7 +59,7 @@ export function Testimonials({ data }: TestimonialsProps) {
     const observer = new ResizeObserver(measure);
     observer.observe(viewport);
     return () => observer.disconnect();
-  }, [count]);
+  }, [count, grid]);
 
   const go = useCallback(
     (dir: -1 | 1) => {
@@ -84,8 +99,112 @@ export function Testimonials({ data }: TestimonialsProps) {
     }
   };
 
+  const renderCard = (person: Testimonial, i: number) => {
+    const quote = cmsText(person.description);
+    const embedUrl = toEmbedUrl(person.videoUrl);
+    const play = (
+      <>
+        <span className="spotlight-play-icon flex size-[42px] shrink-0 items-center justify-center rounded-full">
+          {/* 24x24 icon frame holding Figma's 12x13 triangle. */}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+            <polygon points="6 5.5 18 12 6 18.5" />
+          </svg>
+        </span>
+        <span className="flex-1 text-center text-d18 font-light leading-none">
+          Play
+        </span>
+      </>
+    );
+
+    return (
+      <figure
+        key={`${person.id}-${i}`}
+        aria-hidden={i >= count || undefined}
+        className={cn(
+          'spotlight-card relative flex h-[clamp(400px,27.08vw,520px)] flex-col justify-end overflow-hidden rounded-[14px]',
+          quote && 'has-quote'
+        )}
+        style={{
+          backgroundImage:
+            'linear-gradient(-80.31deg, #56F72F 73.097%, #0C3CED 134.19%)',
+        }}
+      >
+        <CmsImage
+          media={person.image}
+          fallback="portrait"
+          alt={i < count ? person.name : ''}
+          className="absolute inset-0 size-full object-cover object-top"
+        />
+
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-b from-transparent to-black"
+        />
+        {/* Deeper shade faded in on hover so the longer quote stays legible. */}
+        <div
+          aria-hidden
+          className="spotlight-shade pointer-events-none absolute inset-x-0 bottom-0 h-[75%] bg-gradient-to-b from-transparent via-black/60 to-black"
+        />
+
+        <figcaption className="relative z-10 flex flex-col items-center px-[clamp(16px,1.25vw,24px)] pb-[clamp(18px,1.56vw,30px)]">
+          {embedUrl ? (
+            <button
+              type="button"
+              onClick={() =>
+                setActiveVideo({
+                  src: embedUrl,
+                  title: cmsText(person.name),
+                })
+              }
+              aria-label={`Play video: ${cmsText(person.name)}`}
+              tabIndex={i >= count ? -1 : undefined}
+              /* Tailwind v4 preflight leaves buttons with the
+                 default cursor, unlike the link this replaced. */
+              className="spotlight-play flex h-12 w-[133px] cursor-pointer items-center rounded-full p-[3px]"
+            >
+              {play}
+            </button>
+          ) : grid ? null : (
+            <span className="spotlight-play flex h-12 w-[133px] items-center rounded-full p-[3px]">
+              {play}
+            </span>
+          )}
+
+          {/*
+            Name and quote each sit in a collapsible grid row: on hover the
+            name collapses and the quote opens, so the Play pill rides up
+            with however long the quote is (see `.spotlight-*` in globals.css).
+          */}
+          <div className="spotlight-identity w-full">
+            <div className="min-h-0 overflow-hidden">
+              <div className="pt-[clamp(10px,1.3vw,25px)] text-center">
+                <h4 className="text-d24 font-medium leading-[1.3] text-white">
+                  {cmsText(person.name)}
+                </h4>
+                {person.designation && (
+                  <p className="mt-[clamp(2px,0.42vw,8px)] text-d16 leading-[1.3] text-white">
+                    {cmsText(person.designation)}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+          {quote && (
+            <div className="spotlight-quote w-full">
+              <div className="min-h-0 overflow-hidden">
+                <p className="pt-[clamp(10px,1.04vw,20px)] text-left text-d16 leading-[1.45] text-white">
+                  {quote}
+                </p>
+              </div>
+            </div>
+          )}
+        </figcaption>
+      </figure>
+    );
+  };
+
   return (
-    <section className="relative w-full overflow-hidden bg-bg-darker pt-[clamp(48px,6.25vw,120px)] pb-[clamp(48px,6.25vw,120px)]">
+    <section className="sp-section sp-testimonials relative w-full overflow-hidden bg-bg-darker pt-[clamp(48px,6.25vw,120px)] pb-[clamp(48px,6.25vw,120px)]">
       <div className="shell">
         {data.title && (
           <SectionEyebrow gradient="impact" angle="-54.53deg" className="text-d22">
@@ -94,15 +213,24 @@ export function Testimonials({ data }: TestimonialsProps) {
         )}
 
         {data.subTitle && (
-          <h2 className="mt-[clamp(8px,0.78vw,15px)] text-d40 font-medium leading-[1.2] text-white">
+          <h2 className="sp-title mt-[clamp(8px,0.78vw,15px)] text-d40 font-medium leading-[1.2] text-white">
             <AccentHeading
               text={cmsText(data.subTitle)}
+              accentWords={accentWords}
               accentClassName="gradient-text-impact font-semibold"
             />
           </h2>
         )}
 
-        {count > 0 && (
+        {count > 0 && grid && (
+          <ul className="sp-testimonials-grid mt-[clamp(24px,3.33vw,64px)] grid gap-[clamp(16px,1.46vw,28px)] sm:grid-cols-2 lg:grid-cols-4">
+            {slides.map((person, i) => (
+              <li key={person.id}>{renderCard(person, i)}</li>
+            ))}
+          </ul>
+        )}
+
+        {count > 0 && !grid && (
           <div ref={viewportRef} className="mt-[clamp(24px,3.33vw,64px)] overflow-hidden">
             <div
               onTransitionEnd={handleTransitionEnd}
@@ -113,98 +241,16 @@ export function Testimonials({ data }: TestimonialsProps) {
               }}
             >
               <div className="spotlight-track">
-                {slides.map((person, i) => {
-                  const quote = cmsText(person.description);
-                  const embedUrl = toEmbedUrl(person.videoUrl);
-                  const play = (
-                    <>
-                      <span className="spotlight-play-icon flex size-[42px] shrink-0 items-center justify-center rounded-full">
-                        {/* 24x24 icon frame holding Figma's 12x13 triangle. */}
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                          <polygon points="6 5.5 18 12 6 18.5" />
-                        </svg>
-                      </span>
-                      <span className="flex-1 text-center text-d18 font-light leading-none">
-                        Play
-                      </span>
-                    </>
-                  );
-
-                  return (
-                    <figure
-                      key={`${person.id}-${i}`}
-                      aria-hidden={i >= count || undefined}
-                      className="spotlight-card relative flex h-[clamp(400px,27.08vw,520px)] flex-col justify-end overflow-hidden rounded-[14px]"
-                      style={{
-                        backgroundImage:
-                          'linear-gradient(-80.31deg, #56F72F 73.097%, #0C3CED 134.19%)',
-                      }}
-                    >
-                      <CmsImage
-                        media={person.image}
-                        fallback="portrait"
-                        alt={i < count ? person.name : ''}
-                        className="absolute inset-0 size-full object-cover object-top"
-                      />
-
-                      <div
-                        aria-hidden
-                        className="pointer-events-none absolute inset-x-0 bottom-0 h-[45%] bg-gradient-to-b from-transparent to-black"
-                      />
-
-                      <figcaption className="relative z-10 flex flex-col items-center px-[clamp(16px,1.25vw,24px)] pb-[clamp(18px,1.56vw,30px)]">
-                        {embedUrl ? (
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setActiveVideo({
-                                src: embedUrl,
-                                title: cmsText(person.name),
-                              })
-                            }
-                            aria-label={`Play video: ${cmsText(person.name)}`}
-                            tabIndex={i >= count ? -1 : undefined}
-                            /* Tailwind v4 preflight leaves buttons with the
-                               default cursor, unlike the link this replaced. */
-                            className="spotlight-play flex h-12 w-[133px] cursor-pointer items-center rounded-full p-[3px]"
-                          >
-                            {play}
-                          </button>
-                        ) : (
-                          <span className="spotlight-play flex h-12 w-[133px] items-center rounded-full p-[3px]">
-                            {play}
-                          </span>
-                        )}
-
-                        <div className="relative mt-[clamp(10px,1.3vw,25px)] grid h-[5.5rem] w-full items-start">
-                          <div className="spotlight-identity col-start-1 row-start-1 text-center">
-                            <h4 className="text-d24 font-medium leading-[1.3] text-white">
-                              {cmsText(person.name)}
-                            </h4>
-                            {person.designation && (
-                              <p className="mt-[clamp(2px,0.42vw,8px)] text-d16 leading-[1.3] text-white">
-                                {cmsText(person.designation)}
-                              </p>
-                            )}
-                          </div>
-                          {quote && (
-                            <p className="spotlight-quote col-start-1 row-start-1 px-1 text-center text-d16 leading-[1.4] text-white">
-                              {quote}
-                            </p>
-                          )}
-                        </div>
-                      </figcaption>
-                    </figure>
-                  );
-                })}
+                {slides.map((person, i) => renderCard(person, i))}
               </div>
             </div>
           </div>
         )}
 
-        {count > 1 && (
+        {count > 1 && !grid && (
           <CarouselControls
             pill="gradient"
+            href={hrefPath(data.url)}
             onPrev={() => go(-1)}
             onNext={() => go(1)}
           />

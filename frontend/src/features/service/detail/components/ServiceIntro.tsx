@@ -42,11 +42,11 @@ export function ServiceIntro({ data }: ServiceIntroProps) {
     'gradient-text mt-[clamp(12px,1.04vw,20px)] inline-flex w-fit cursor-pointer items-center gap-1 text-d16 font-medium';
 
   return (
-    <section className="w-full bg-bg-light pt-[clamp(40px,3.65vw,70px)] pb-[clamp(40px,4.17vw,80px)]">
+    <section className="sp-section sp-service-intro w-full bg-bg-light pt-[clamp(40px,3.65vw,70px)] pb-[clamp(40px,4.17vw,80px)]">
       <div className="shell grid gap-[clamp(16px,2vw,32px)] lg:grid-cols-[minmax(0,560fr)_minmax(0,820fr)] lg:gap-x-[clamp(40px,5.73vw,110px)]">
         {data.title && (
           <h2
-            className="gradient-text w-fit text-d40 font-semibold leading-[1.2]"
+            className="sp-title gradient-text w-fit text-d40 font-semibold leading-[1.2]"
             style={{ ['--grad-angle' as string]: '-60deg' }}
           >
             {cmsText(data.title)}

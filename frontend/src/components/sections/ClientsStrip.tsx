@@ -12,10 +12,10 @@ export function ClientsStrip({ data }: ClientsStripProps) {
   const loop = images.length > 0 ? [0, 1] : [];
 
   return (
-    <section className="w-full bg-bg-light pt-[clamp(28px,2.03vw,39px)] pb-[clamp(28px,2.4vw,46px)]">
+    <section className="sp-section sp-clients-strip w-full bg-bg-light pt-[clamp(28px,2.03vw,39px)] pb-[clamp(28px,2.4vw,46px)]">
       <div className="shell flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-0">
         {title && (
-          <h2 className="shrink-0 whitespace-pre-line text-d22 font-medium leading-[1.2] text-text-primary lg:w-[clamp(240px,21.4vw,411px)]">
+          <h2 className="sp-title shrink-0 whitespace-pre-line text-d22 font-medium leading-[1.2] text-text-primary lg:w-[clamp(240px,21.4vw,411px)]">
             {title}
           </h2>
         )}
