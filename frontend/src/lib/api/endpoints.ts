@@ -74,6 +74,27 @@ const LIVE_BI_POPULATE = [
   'populate[content][on][shared.contact-us][populate]=*',
 ].join('&');
 
+/**
+ * Testimonials listing page: hero CTA, the "Client Spotlight" blocks (the
+ * first is the featured carousel, later ones the video grid) and the
+ * "Client & Industry" logo gallery.
+ */
+const TESTIMONIALS_POPULATE = [
+  'populate[content][on][shared.contact-us][populate]=*',
+  'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
+  'populate[content][on][shared.industry-gallery][populate][gallery][populate]=*',
+].join('&');
+
+/**
+ * Whitepaper listing page: hero CTA and the whitepaper cards. The
+ * `whitepapers` relation needs the Public role's `find` on Whitepaper —
+ * without it Strapi silently drops the relation.
+ */
+const WHITEPAPER_POPULATE = [
+  'populate[content][on][shared.contact-us][populate]=*',
+  'populate[content][on][shared.whitepapers][populate][whitepapers][populate]=*',
+].join('&');
+
 /** All Strapi API endpoint paths. Import from here — never hardcode in components. */
 export const ENDPOINTS = {
   /** Landing page: slug `home`, with nested media and relations. */
@@ -88,6 +109,10 @@ export const ENDPOINTS = {
     '/cs-industries?fields[0]=title&fields[1]=slug&pagination[pageSize]=100',
   /** `/live-bi-visualization` listing page (Strapi page slug `live-bi-visualization`). */
   LIVE_BI_PAGE: `/pages?filters[slug][$eq]=live-bi-visualization&${LIVE_BI_POPULATE}`,
+  /** `/about/testimonials` listing page (Strapi page slug `testimonials`). */
+  TESTIMONIALS_PAGE: `/pages?filters[slug][$eq]=testimonials&${TESTIMONIALS_POPULATE}`,
+  /** `/whitepaper` listing page (Strapi page slug `whitepaper`). */
+  WHITEPAPER_PAGE: `/pages?filters[slug][$eq]=whitepaper&${WHITEPAPER_POPULATE}`,
   /** Visualization categories — the listing's tabs ("All Visualization", "Power BI", …). */
   VISUALIZATION_CATEGORIES:
     '/visualization-categories?fields[0]=title&fields[1]=slug&pagination[pageSize]=100',
