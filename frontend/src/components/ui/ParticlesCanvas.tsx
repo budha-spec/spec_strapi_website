@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Particles } from '@tsparticles/react';
 import type { ISourceOptions } from '@tsparticles/engine';
+import { ParticlesProviderRoot } from './ParticlesProviderRoot';
 
 interface ParticlesCanvasProps {
   id?: string;
@@ -13,8 +14,8 @@ interface ParticlesCanvasProps {
 }
 
 /**
- * The faint drifting dot field layered over the dark sections. Relies on
- * `ParticlesProviderRoot` having loaded the engine.
+ * The faint drifting dot field layered over the dark sections. Brings its own
+ * `ParticlesProviderRoot`, so only the canvas waits for the engine to load.
  */
 export default function ParticlesCanvas({
   id = 'tsparticles',
@@ -65,5 +66,9 @@ export default function ParticlesCanvas({
 
   if (!mounted) return <div className={className} aria-hidden />;
 
-  return <Particles id={id} className={className} options={options} />;
+  return (
+    <ParticlesProviderRoot>
+      <Particles id={id} className={className} options={options} />
+    </ParticlesProviderRoot>
+  );
 }

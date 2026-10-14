@@ -128,7 +128,7 @@ Names follow the Figma section labels so designers and developers mean the same 
 | `ClientsStrip` | "Trusted by global leaders" logo marquee | `shared.gallery` |
 | `ProvenImpact` | "Proven Impact" stats band | `shared.key-metrics-section` |
 | `CaseStudies` | "Client Success Stories" carousel | `shared.case-studies` |
-| `Testimonials` | "Client Spotlight" video cards | `shared.testimonial-section` |
+| `Testimonials` | "Client Spotlight" video cards — carousel, or `layout="grid"` for every card at once (testimonials listing) | `shared.testimonial-section` |
 | `FaqSection` | "Frequently Asked Questions" accordion | `shared.faqs` |
 | `CtaBanner` | "Hire Dedicated Development Team" banner | `shared.cta` |
 | `BlogSection` | "Latest Insights" carousel (WordPress, optional category) | — (`fetchLatestBlogs(category?)` in `src/lib/api/blogs.api.ts`) |

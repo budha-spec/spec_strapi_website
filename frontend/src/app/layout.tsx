@@ -3,7 +3,6 @@ import type { ReactNode } from 'react';
 import { Inter, Nunito, Poppins } from 'next/font/google';
 import './globals.css';
 import { Header, Footer } from '@/components/layout';
-import { ParticlesProviderRoot } from '@/components/ui/ParticlesProviderRoot';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -38,11 +37,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${nunito.variable} ${poppins.variable}`}>
       <body className="antialiased font-sans bg-bg-white text-text-primary">
-        <ParticlesProviderRoot>
-          <Header />
-          {children}
-          <Footer />
-        </ParticlesProviderRoot>
+        {/* No ParticlesProvider here: it renders nothing until the engine
+            loads in the browser, which would empty the server HTML.
+            `ParticlesCanvas` wraps itself instead. */}
+        <Header />
+        {children}
+        <Footer />
       </body>
     </html>
   );
