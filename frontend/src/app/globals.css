@@ -10,48 +10,48 @@
 
 @theme {
   /* ─── Fonts ────────────────────────────────────────── */
-  --font-sans: var(--font-inter), 'Inter', sans-serif;
-  --font-nunito: var(--font-nunito), 'Nunito', sans-serif;
+  --font-sans: var(--font-inter), "Inter", sans-serif;
+  --font-nunito: var(--font-nunito), "Nunito", sans-serif;
   /* `font-display` — Poppins, used by Figma for the Let's Talk / form headings. */
-  --font-display: var(--font-poppins), 'Poppins', sans-serif;
+  --font-display: var(--font-poppins), "Poppins", sans-serif;
 
   /* ─── Stroke / Border ───────────────────────────────── */
-  --color-stroke-main: #B9B9B9;
+  --color-stroke-main: #b9b9b9;
   --color-stroke-dark: #393939;
-  --color-stroke-outline: #D7D7D7;
-  --color-stroke-divider: #D9D9D9;
-  --color-stroke-grey: #6F6F6F;
+  --color-stroke-outline: #d7d7d7;
+  --color-stroke-divider: #d9d9d9;
+  --color-stroke-grey: #6f6f6f;
 
   /* ─── Backgrounds ───────────────────────────────────── */
   --color-bg-black: #000000;
   --color-bg-dark: #090909;
-  --color-bg-darker: #0E0E0D;
-  --color-bg-light: #F9F9F9;
-  --color-bg-white: #FFFFFF;
-  --color-bg-chip: #F4F4F4;   /* filter chips (case-study listing) */
+  --color-bg-darker: #0e0e0d;
+  --color-bg-light: #f9f9f9;
+  --color-bg-white: #ffffff;
+  --color-bg-chip: #f4f4f4; /* filter chips (case-study listing) */
 
   /* ─── Hero glow accents ─────────────────────────────── */
-  --color-hero-glow-blue: #0A2A6E;
-  --color-hero-glow-green: #0A3D1F;
+  --color-hero-glow-blue: #0a2a6e;
+  --color-hero-glow-green: #0a3d1f;
 
   /* ─── Text ──────────────────────────────────────────── */
   --color-text-primary: #000000;
-  --color-text-heading: #5E5E5E;
-  --color-text-secondary: #5E5E5E;
-  --color-text-muted: #6F6F6F;
-  --color-text-light: #B3B3B3;
-  --color-text-footer: #BABABA;
-  --color-text-inverse: #FFFFFF;
+  --color-text-heading: #5e5e5e;
+  --color-text-secondary: #5e5e5e;
+  --color-text-muted: #6f6f6f;
+  --color-text-light: #b3b3b3;
+  --color-text-footer: #bababa;
+  --color-text-inverse: #ffffff;
 
   /* ─── Brand ─────────────────────────────────────────── */
-  --color-brand-green: #56F72F;
-  --color-brand-blue: #0C3CED;
-  --color-brand-cta-blue: #0050FE;
-  --color-brand-pink: #EA407E;
+  --color-brand-green: #56f72f;
+  --color-brand-blue: #0c3ced;
+  --color-brand-cta-blue: #0050fe;
+  --color-brand-pink: #ea407e;
 
   /* ─── Glassmorphism (hero search bar) ───────────────── */
   --color-glass-bg: rgba(0, 0, 0, 0.4);
-  --color-glass-border: #6F8385;
+  --color-glass-border: #6f8385;
   --color-glass-pill: rgba(255, 255, 255, 0.1);
 
   /* ─── Radius ────────────────────────────────────────── */
@@ -199,9 +199,10 @@
     overflow: hidden;
     background-color: #ffffff;
     color: #000000;
-   
-    transition: color 0.35s ease, border-color 0.35s ease;
-    
+
+    transition:
+      color 0.35s ease,
+      border-color 0.35s ease;
   }
   /* .carousel-arrow::before {
     content: '';
@@ -221,8 +222,7 @@
     color: #ffffff;
     /* The gradient fill takes over the edge, so the grey ring steps aside. */
     border-color: transparent;
-    background: linear-gradient(272.76deg, #25BE00 -1.59%, #0C3CED 97.08%);
-
+    background: linear-gradient(272.76deg, #25be00 -1.59%, #0c3ced 97.08%);
   }
   .carousel-arrow:hover::before {
     opacity: 1;
@@ -245,7 +245,8 @@
     background-color: #ffffff;
     color: #ffffff;
     border: 0;
-    transition: color 0.35s ease;background-image: linear-gradient(90deg, #0c3ced 0%, #56f72f 100%);
+    transition: color 0.35s ease;
+    background-image: linear-gradient(90deg, #0c3ced 0%, #56f72f 100%);
   }
   /* .explore-all-gradient::before {
     content: '';
@@ -258,7 +259,8 @@
     transition: opacity 0.35s ease;
   } */
   .explore-all-gradient:hover {
-    color: #000000;  background: #fff;
+    color: #000000;
+    background: #fff;
   }
   .explore-all-gradient:hover::before {
     opacity: 0;
@@ -389,7 +391,9 @@
     transform: translateY(10px);
     pointer-events: none;
   }
-  .capability-card:hover .capability-swap:has(.capability-tags) .capability-desc {
+  .capability-card:hover
+    .capability-swap:has(.capability-tags)
+    .capability-desc {
     opacity: 0;
     transform: translateY(-10px);
     pointer-events: none;
@@ -429,8 +433,6 @@
       background-image 0.25s ease,
       transform 0.35s ease;
   }
-  
-
 
   .capability-card:hover .explore-more .explore-more-arrow {
     border-color: #25be00;
@@ -469,7 +471,7 @@
       border-color 0.3s ease;
   }
   .gradient-hover::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: -1px;
     border-radius: inherit;
@@ -500,7 +502,9 @@
   .capability-grid-card:is(:hover, :focus-within) .capability-grid-title {
     -webkit-text-fill-color: #ffffff;
   }
-  .capability-grid-card:is(:hover, :focus-within) .explore-more .explore-more-label {
+  .capability-grid-card:is(:hover, :focus-within)
+    .explore-more
+    .explore-more-label {
     background-image: none;
     color: #ffffff;
     -webkit-text-fill-color: #ffffff;
@@ -540,10 +544,14 @@
     flex: 0 0 var(--cs-card);
   }
   @media (min-width: 768px) {
-    .case-study-track { --cs-card: 82%; }
+    .case-study-track {
+      --cs-card: 82%;
+    }
   }
   @media (min-width: 1024px) {
-    .case-study-track { --cs-card: 74.6%; }
+    .case-study-track {
+      --cs-card: 74.6%;
+    }
   }
 
   /* Service page capability tabs — the incoming panel fades up. */
@@ -552,13 +560,17 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .capability-panel { animation: none; }
+    .capability-panel {
+      animation: none;
+    }
   }
 
   .client-logo {
     filter: grayscale(1);
     opacity: 0.85;
-    transition: filter 0.35s ease, opacity 0.35s ease;
+    transition:
+      filter 0.35s ease,
+      opacity 0.35s ease;
   }
   .client-logo:hover {
     filter: grayscale(0);
@@ -570,8 +582,7 @@
     transition: color 0.25s ease;
   }
   .contact-link:hover {
-   background: linear-gradient(
-268deg, #25be00 55.96% 1.96%, #0c3ced 97.05%); 
+    background: linear-gradient(268deg, #25be00 55.96% 1.96%, #0c3ced 97.05%);
 
     -webkit-background-clip: text;
     background-clip: text;
@@ -595,24 +606,24 @@
   .social-btn:hover img {
     filter: brightness(0) invert(1);
   }
-  .social-btn[data-network='linkedin']:hover {
+  .social-btn[data-network="linkedin"]:hover {
     background-color: #0a66c2;
     border-color: #0a66c2;
   }
-  .social-btn[data-network='facebook']:hover {
+  .social-btn[data-network="facebook"]:hover {
     background-color: #1877f2;
     border-color: #1877f2;
   }
-  .social-btn[data-network='pinterest']:hover {
+  .social-btn[data-network="pinterest"]:hover {
     background-color: #e60023;
     border-color: #e60023;
   }
-  .social-btn[data-network='twitter']:hover {
+  .social-btn[data-network="twitter"]:hover {
     background-color: #000000;
     border-color: #000000;
   }
   /* Instagram's mark is a gradient rather than a flat colour. */
-  .social-btn[data-network='instagram']:hover {
+  .social-btn[data-network="instagram"]:hover {
     border-color: #dd2a7b;
     background-image: linear-gradient(
       45deg,
@@ -631,13 +642,12 @@
       #56f72f 10.862%,
       #0c3ced 97.041%
     );
-    border: none !important; 
+    border: none !important;
   }
 
   .behance-pill:hover span {
     color: #fff;
-}
-
+  }
 
   .behance-pill:hover .behance-pill-icon {
     background-color: rgb(255 255 255 / 0.2);
@@ -648,7 +658,8 @@
     --spotlight-n: 1;
     --spotlight-gap: clamp(16px, 1.46vw, 28px);
     --spotlight-card: calc(
-      (100% - (var(--spotlight-n) - 1) * var(--spotlight-gap)) / var(--spotlight-n)
+      (100% - (var(--spotlight-n) - 1) * var(--spotlight-gap)) /
+        var(--spotlight-n)
     );
     display: flex;
     gap: var(--spotlight-gap);
@@ -657,10 +668,14 @@
     flex: 0 0 var(--spotlight-card);
   }
   @media (min-width: 640px) {
-    .spotlight-track { --spotlight-n: 2; }
+    .spotlight-track {
+      --spotlight-n: 2;
+    }
   }
   @media (min-width: 1024px) {
-    .spotlight-track { --spotlight-n: 4; }
+    .spotlight-track {
+      --spotlight-n: 4;
+    }
   }
 
   /*
@@ -695,7 +710,9 @@
   .spotlight-card .spotlight-play-icon {
     background-color: #000000;
     color: #ffffff;
-    transition: background-color 0.35s ease, color 0.35s ease;
+    transition:
+      background-color 0.35s ease,
+      color 0.35s ease;
   }
   .spotlight-card:is(:hover, :focus-within) .spotlight-play-icon {
     background-color: rgb(255 255 255 / 0.22);
@@ -747,17 +764,22 @@
     gap: var(--blog-gap);
   }
   .blog-track > * {
-    flex: 0 0 calc((100% - (var(--blog-n) - 1) * var(--blog-gap)) / var(--blog-n));
+    flex: 0 0
+      calc((100% - (var(--blog-n) - 1) * var(--blog-gap)) / var(--blog-n));
   }
   @media (min-width: 640px) {
-    .blog-track { --blog-n: 2; }
+    .blog-track {
+      --blog-n: 2;
+    }
   }
   @media (min-width: 1024px) {
-    .blog-track { --blog-n: 4; }
+    .blog-track {
+      --blog-n: 4;
+    }
   }
   /* 6px gradient dot — the same green→blue ramp in every section */
   .section-tag::before {
-    content: '';
+    content: "";
     flex: none;
     width: clamp(4px, 0.31vw, 6px);
     height: clamp(4px, 0.31vw, 6px);
@@ -767,8 +789,12 @@
 
   /* ─── Clients marquee ───────────────────────────────── */
   @keyframes marquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
   }
   .marquee-track {
     display: flex;
@@ -779,137 +805,160 @@
     animation-play-state: paused;
   }
   @media (prefers-reduced-motion: reduce) {
-    .marquee-track { animation: none; }
+    .marquee-track {
+      animation: none;
+    }
   }
 
   /* ─── Utilities ─────────────────────────────────────── */
-  .no-scrollbar::-webkit-scrollbar { display: none; }
-  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 
   /* Softens the dot sphere at its limb only — the design keeps the
      lower rim visible behind the prompt card. */
   .mask-sphere {
-    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 70%, transparent 92%);
+    -webkit-mask-image: radial-gradient(
+      circle at 50% 50%,
+      #000 70%,
+      transparent 92%
+    );
     mask-image: radial-gradient(circle at 50% 50%, #000 70%, transparent 92%);
   }
 }
 
 @keyframes capability-panel-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: none; }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
-
 
 /* custom css */
 
-
-.capability-card:hover .explore-more--outline .explore-more-arrow, .explore-more:hover{
- background:
-        linear-gradient(#fff, #fff) padding-box,
-        linear-gradient(252.16deg, #0C3DEB 5.3%, #20A42F 89.32%) border-box;
+.capability-card:hover .explore-more--outline .explore-more-arrow,
+.explore-more:hover {
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(252.16deg, #0c3deb 5.3%, #20a42f 89.32%) border-box;
 }
 
 .explore-more-arrow--filled {
-    width: 58px;
-    height: 34px;
-     position: relative;
+  width: 58px;
+  height: 34px;
+  position: relative;
 }
 .explore-all {
-    border: none;
+  border: none;
 }
 
 .explore-more--outline span.explore-more-arrow {
-    width: 44px;
+  width: 44px;
+  background: transparent;
+  color: #000;
+  border-color: #b9b9b9;
 }
-
 
 .explore-more-arrow {
-    width: 45px;
-    height: 29px;
-     border: 1px solid transparent;
-    border-radius: 20px;
- background:
-        linear-gradient(#000, #000) padding-box,
-        linear-gradient(252.16deg, #B9B9B9 5.3%, #B9B9B9 89.32%) border-box;
-   
+  width: 45px;
+  height: 29px;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  background:
+    linear-gradient(#000, #000) padding-box,
+    linear-gradient(252.16deg, #b9b9b9 5.3%, #b9b9b9 89.32%) border-box;
 }
 
- .capability-card:hover .explore-more-arrow {
- background:
-        linear-gradient(#fff, #fff) padding-box,
-        linear-gradient(252.16deg, #0C3DEB 5.3%, #20A42F 89.32%) border-box; color: #fff
+.capability-card:hover .explore-more-arrow {
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(252.16deg, #0c3deb 5.3%, #20a42f 89.32%) border-box;
+  color: #fff;
 }
 
-.capability-card:hover .explore-more-arrow svg{ color: #25BE00 }
-
-
-
+.capability-card:hover .explore-more-arrow svg {
+  color: #25be00;
+}
 
 .blog-card:hover .explore-more-arrow {
- background:
-        linear-gradient(#fff, #fff) padding-box,
-        linear-gradient(252.16deg, #0C3DEB 5.3%, #20A42F 89.32%) border-box; color: #fff
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(252.16deg, #0c3deb 5.3%, #20a42f 89.32%) border-box;
+  color: #fff;
 }
 
-.blog-card:hover .explore-more-arrow svg{ color: #25BE00 }
-
+.blog-card:hover .explore-more-arrow svg {
+  color: #25be00;
+}
 
 .visualization-card:hover .explore-more-arrow {
- background:
-        linear-gradient(#fff, #fff) padding-box,
-        linear-gradient(252.16deg, #0C3DEB 5.3%, #20A42F 89.32%) border-box; color: #fff
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(252.16deg, #0c3deb 5.3%, #20a42f 89.32%) border-box;
+  color: #fff;
 }
 
-.visualization-card:hover .explore-more--outline span.explore-more-arrow{ color : #25be00 ; }
-article.visualization-card:hover a.explore-more .explore-more-label{
-     background-image: linear-gradient(var(--grad-angle, -54deg), #25be00 0.209%, #0c3ced 100%);
-    -webkit-text-fill-color: transparent;
-    color: #0000;
-    -webkit-background-clip: text;
-    background-clip: text;
+.visualization-card:hover .explore-more--outline span.explore-more-arrow {
+  color: #25be00;
+}
+article.visualization-card:hover a.explore-more .explore-more-label {
+  background-image: linear-gradient(
+    var(--grad-angle, -54deg),
+    #25be00 0.209%,
+    #0c3ced 100%
+  );
+  -webkit-text-fill-color: transparent;
+  color: #0000;
+  -webkit-background-clip: text;
+  background-clip: text;
 }
 
- .explore-more-arrow {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    background-color: #000000;
-    color: #fff;
-    transition: color 0.35s ease; transition: all 300ms ease ;
-  }
+.explore-more-arrow {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: #000000;
+  color: #fff;
+  transition: color 0.35s ease;
+  transition: all 300ms ease;
+}
 
-  .explore-more-arrow svg {
-    display: inline-flex; transition: all 300ms ease ;
-  }
+.explore-more-arrow svg {
+  display: inline-flex;
+  transition: all 300ms ease;
+}
 
+.carousel-arrow:hover::before {
+  opacity: 1;
+  transition: all 300ms ease;
+}
+.explore-more--filled:hover svg {
+  transform: translateX(5px);
+  filter: grayscale(1), brightness(1000);
+  transition: all 300ms ease;
+}
 
+.explore-more--filled:hover .explore-more-arrow {
+  background: linear-gradient(272.76deg, #25be00 -1.59%, #0c3ced 97.08%);
+  color: #fff;
+  transition: all 300ms ease;
+}
 
-
-  
-  .carousel-arrow:hover::before {
-    opacity: 1; transition: all 300ms ease ;
-  }
-   .explore-more--filled:hover  svg  {
-    transform: translateX(5px); filter: grayscale(1),brightness(1000); transition: all 300ms ease ;
-  }
- 
-
-   .explore-more--filled:hover .explore-more-arrow {
-    background: linear-gradient(272.76deg, #25BE00 -1.59%, #0C3CED 97.08%); color: #fff; transition: all 300ms ease ;
-  }
-
-
-
-
-
- /* .explore-more--filled:hover .explore-more-arrow svg {
+/* .explore-more--filled:hover .explore-more-arrow svg {
     background: linear-gradient(272.76deg, #25BE00 -1.59%, #0C3CED 97.08%); color: #fff; transition: all 300ms ease ;
   } */
 
-    .capability-card:hover .explore-more.explore-more--outline .explore-more-arrow{
-            transform: translate(0);
-    }
-
+.capability-card:hover .explore-more.explore-more--outline .explore-more-arrow {
+  transform: translate(0);
+}
 
 /*
  * Service detail capability cards (dark on hover). The Explore More rules
@@ -920,56 +969,60 @@ article.visualization-card:hover a.explore-more .explore-more-label{
 .capability-grid-card:is(:hover, :focus-within) .explore-more {
   background: transparent;
 }
-.capability-grid-card:is(:hover, :focus-within) .explore-more .explore-more-arrow {
+.capability-grid-card:is(:hover, :focus-within)
+  .explore-more
+  .explore-more-arrow {
   background: transparent;
   border-color: rgba(255, 255, 255, 0.85);
   color: #ffffff;
 }
 
-
 section.sp-footer-contact {
-    background: transparent;
+  background: transparent;
 }
 
 .sp-proven-impact h4 {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 img.cta-banner-image {
-    opacity: 0.3;
+  opacity: 0.3;
 }
 
-.cta-banner:hover img.cta-banner-image{ opacity: 1;}
+.cta-banner:hover img.cta-banner-image {
+  opacity: 1;
+}
 .sp-case-study-filters .case-study-filter:hover {
-    background: #5E5E5E ; color: #fff
+  background: #5e5e5e;
+  color: #fff;
 }
 
 button.case-study-filter[aria-pressed="true"] {
-      background: #5E5E5E ;
+  background: #5e5e5e;
 }
 
 .explore-more--outline span.explore-more-arrow svg {
-    width: 22px !important;
-    height: 16px;
+  width: 22px !important;
+  height: 16px;
 }
-ul.sp-live-bi-grid li:nth-child(-n+4) {
-    margin-bottom: 45px;
+ul.sp-live-bi-grid li:nth-child(-n + 4) {
+  margin-bottom: 45px;
 }
 
 footer {
-    background: #f9f9f9;
+  background: #f9f9f9;
 }
 
-
-
-@media(max-width: 1280px){
-ul.sp-live-bi-grid li:nth-child(-n+4) {
+@media (max-width: 1280px) {
+  ul.sp-live-bi-grid li:nth-child(-n + 4) {
     margin-bottom: 0px;
-}
+  }
 }
 
-@media(max-width: 767px){
-.sp-header > div{ height: 60px !important}
+@media (max-width: 767px) {
+  .sp-header > div {
+    height: 60px !important;
+  }
 }
 
 /*
@@ -983,11 +1036,11 @@ ul.sp-live-bi-grid li:nth-child(-n+4) {
 .whitepaper-card:is(:hover, :focus-within) .explore-more-arrow {
   background:
     linear-gradient(#fff, #fff) padding-box,
-    linear-gradient(252.16deg, #0C3DEB 5.3%, #20A42F 89.32%) border-box;
+    linear-gradient(252.16deg, #0c3deb 5.3%, #20a42f 89.32%) border-box;
 }
 .explore-more--outline:hover .explore-more-arrow svg,
 .whitepaper-card:is(:hover, :focus-within) .explore-more-arrow svg {
-  color: #25BE00;
+  color: #25be00;
 }
 .whitepaper-card:is(:hover, :focus-within) .explore-more-label {
   background-image: linear-gradient(-54deg, #25be00 0.209%, #0c3ced 100%);
