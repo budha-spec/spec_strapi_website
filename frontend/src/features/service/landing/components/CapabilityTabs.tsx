@@ -114,13 +114,16 @@ export function CapabilityTabs({ data }: CapabilityTabsProps) {
           </h2>
         )}
 
-        <div className="relative mx-auto mt-[clamp(24px,3.13vw,60px)] w-fit max-w-full overflow-hidden rounded-full bg-bg-white lg:min-w-[min(1316px,100%)]">
+        <div className="relative mx-auto mt-[clamp(24px,3.13vw,60px)] w-fit max-w-full overflow-hidden rounded-full bg-bg-white">
           <div
             ref={listRef}
             role="tablist"
             aria-label={cmsText(data.title) || 'Capabilities'}
             onScroll={measure}
-            className="no-scrollbar flex gap-1 overflow-x-auto scroll-smooth p-[clamp(5px,0.42vw,8px)]"
+            // Pills hug their labels with even padding; tabs sit a fixed gap
+            // apart (Figma: ~70px at 1920), so five tabs fill the 1316px bar
+            // and fewer tabs give a shorter, centred bar instead of holes.
+            className="no-scrollbar flex gap-[clamp(6px,1.04vw,20px)] overflow-x-auto scroll-smooth p-[clamp(6px,0.52vw,10px)] lg:gap-[clamp(24px,3.65vw,70px)]"
           >
             {items.map((item, index) => {
               const selected = index === active;
@@ -139,7 +142,7 @@ export function CapabilityTabs({ data }: CapabilityTabsProps) {
                   onClick={() => setActive(index)}
                   onKeyDown={onKeyDown}
                   className={cn(
-                    'h-[clamp(36px,2.6vw,50px)] shrink-0 cursor-pointer whitespace-nowrap rounded-full px-[clamp(14px,1.25vw,24px)] text-d16 transition-colors lg:grow',
+                    'h-[clamp(36px,2.4vw,46px)] shrink-0 cursor-pointer whitespace-nowrap rounded-full px-[clamp(16px,1.04vw,20px)] text-d16 transition-colors',
                     selected
                       ? 'gradient-btn text-white'
                       : 'gradient-hover text-text-primary hover:text-white focus-visible:text-white',
