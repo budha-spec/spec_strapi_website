@@ -81,6 +81,8 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* In-page links (#contact) stop below the fixed glass header. */
+    scroll-padding-top: 96px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -939,4 +941,29 @@ button.case-study-filter[aria-pressed="true"] {
 
 @media(max-width: 767px){
 .sp-header > div{ height: 60px !important}
+}
+
+/*
+ * Explore More — label and arrow always hover together. The custom block
+ * above resets the arrow's border, which overrides the layered
+ * `.explore-more:hover` rule; restate it here, unlayered and last, so
+ * hovering the text lights the arrow and hovering the arrow lights the text.
+ * Whitepaper cards trigger the same state from anywhere on the card.
+ */
+.explore-more--outline:hover .explore-more-arrow,
+.whitepaper-card:is(:hover, :focus-within) .explore-more-arrow {
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(252.16deg, #0C3DEB 5.3%, #20A42F 89.32%) border-box;
+}
+.explore-more--outline:hover .explore-more-arrow svg,
+.whitepaper-card:is(:hover, :focus-within) .explore-more-arrow svg {
+  color: #25BE00;
+}
+.whitepaper-card:is(:hover, :focus-within) .explore-more-label {
+  background-image: linear-gradient(-54deg, #25be00 0.209%, #0c3ced 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }

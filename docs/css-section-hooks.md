@@ -73,7 +73,8 @@ The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
 
 | Class | Section |
 |---|---|
-| `sp-header` | Top navigation bar |
+| `sp-header` | Top navigation bar — fixed, stays on screen while scrolling |
+| `sp-header-bar` | The header's glass bar (translucent black + backdrop blur) |
 | `sp-footer` | Whole footer |
 | `sp-footer-contact` | Light band holding Let's Talk + the enquiry form |
 | `sp-lets-talk` | "Let's Talk to OUR EXPERT!" card + "Share Your Project's Vision" form |

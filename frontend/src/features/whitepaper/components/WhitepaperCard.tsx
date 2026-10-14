@@ -5,26 +5,29 @@ import { cmsText, hrefPath } from '@/lib/media';
 import type { Whitepaper } from '../types/whitepaper.types';
 
 /**
- * One whitepaper: cover image on the left, title, summary and Download Now
- * on the right; image on top on phones. The title link covers the card.
+ * One whitepaper (Figma): cover image flush to the card's left edge, title,
+ * summary and Download Now on the right; image on top on phones. The title
+ * link covers the card. Hovering anywhere on the card lights up Download
+ * Now — gradient text + gradient-border arrow (`.whitepaper-card` rules at
+ * the end of globals.css). The image itself does not move.
  */
 export function WhitepaperCard({ item }: { item: Whitepaper }) {
   const href = hrefPath(item.url);
 
   return (
-    <article className="whitepaper-card group relative grid h-full gap-[clamp(14px,1.25vw,24px)] rounded-[14px] bg-bg-white p-[clamp(10px,0.73vw,14px)] transition-shadow duration-300 hover:shadow-[0_12px_32px_rgb(0_0_0/0.08)] focus-within:shadow-[0_12px_32px_rgb(0_0_0/0.08)] sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
-      <div className="whitepaper-card-media overflow-hidden rounded-[10px] bg-bg-chip">
+    <article className="whitepaper-card group relative grid h-full overflow-hidden rounded-[14px] bg-bg-white sm:grid-cols-[minmax(0,285fr)_minmax(0,550fr)]">
+      <div className="whitepaper-card-media bg-bg-chip">
         <CmsImage
           media={item.featuredImage}
           fallback="cover"
           alt={cmsText(item.featuredImage?.alternativeText) || ''}
           width={item.featuredImage?.width ?? 600}
           height={item.featuredImage?.height ?? 600}
-          className="aspect-[16/10] size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] group-focus-within:scale-[1.04] motion-reduce:transition-none sm:aspect-auto sm:min-h-[clamp(200px,14.58vw,280px)]"
+          className="aspect-[16/10] size-full object-cover sm:aspect-auto sm:min-h-[clamp(240px,19.27vw,370px)]"
         />
       </div>
 
-      <div className="flex flex-col px-[clamp(4px,0.31vw,6px)] pb-[clamp(4px,0.42vw,8px)] sm:py-[clamp(6px,0.63vw,12px)] sm:pr-[clamp(6px,0.83vw,16px)]">
+      <div className="flex flex-col p-[clamp(18px,1.56vw,30px)] sm:py-[clamp(24px,2.6vw,50px)]">
         <h3 className="text-d22 font-medium leading-[1.3] text-text-primary">
           <Link
             href={href}
