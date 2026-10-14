@@ -4,11 +4,17 @@
  */
 const HOME_POPULATE = [
   'populate[content][on][shared.home-page-section1][populate][capabilities][populate]=*',
-  'populate[content][on][shared.enterprise-solution][populate][enterpriseSolution][populate]=*',
   'populate[content][on][shared.gallery][populate][images][populate]=*',
   'populate[content][on][shared.key-metrics-section][populate][keyMetrics][populate]=*',
   'populate[content][on][shared.case-studies][populate][case_studies][populate]=*',
   'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
+  'populate[content][on][shared.home-blogs][populate][blogs][populate]=*',
+  // Core Capabilities cards: image, plus their category Content Items with
+  // the service / industry / visualization / whitepaper each one links to.
+  // Needs the Public role's `find` on Content Item — otherwise Strapi drops
+  // `pages` silently and the hover shows no categories.
+  'populate[content][on][shared.enterprise-solution][populate][enterpriseSolution][populate][image][populate]=*',
+  'populate[content][on][shared.enterprise-solution][populate][enterpriseSolution][populate][pages][populate]=*',
 ].join('&');
 
 /**
