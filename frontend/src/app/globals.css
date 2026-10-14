@@ -848,7 +848,7 @@
 .explore-more:hover {
   background:
     linear-gradient(#fff, #fff) padding-box,
-    linear-gradient(252.16deg, #0c3deb 5.3%, #20a42f 89.32%) border-box;
+    linear-gradient(252.16deg, #0c3deb 5.3%, #20a42f 89.32%) border-box; border-color: transparent;
 }
 
 .explore-more-arrow--filled {
@@ -892,9 +892,11 @@
   background:
     linear-gradient(#fff, #fff) padding-box,
     linear-gradient(252.16deg, #0c3deb 5.3%, #20a42f 89.32%) border-box;
-  color: #fff;
+  color: #fff; border-color: transparent
 }
-
+.carousel-arrows button {
+    border: 1px solid #B9B9B9 !important;
+}
 .blog-card:hover .explore-more-arrow svg {
   color: #25be00;
 }
