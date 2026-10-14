@@ -15,7 +15,7 @@ export function HeroPrompt({ suggestions }: HeroPromptProps) {
   const [prompt, setPrompt] = useState('');
 
   return (
-    <div className="mt-[clamp(26px,4.27vw,82px)] flex h-[clamp(150px,10.42vw,200px)] w-[min(835px,100%)] flex-col justify-between rounded-[16px] border border-glass-border bg-[rgba(0,0,0,0.55)] p-[clamp(13px,1.04vw,20px)] text-left backdrop-blur-[28px]">
+    <div className="mt-[clamp(26px,4.27vw,82px)] flex h-[clamp(150px,10.42vw,200px)] w-[min(835px,100%)] flex-col justify-between rounded-[16px] border border-glass-border bg-[rgba(0,0,0,0.4)] p-[clamp(13px,1.04vw,20px)] text-left backdrop-blur-[8px]">
       <label htmlFor="hero-prompt" className="sr-only">
         Ask SPEC anything
       </label>
@@ -36,7 +36,7 @@ export function HeroPrompt({ suggestions }: HeroPromptProps) {
               key={suggestion}
               type="button"
               onClick={() => setPrompt(suggestion)}
-              className="rounded-full border border-white/15 bg-white/[0.08] px-[clamp(8px,0.73vw,14px)] py-[clamp(4px,0.36vw,7px)] text-d12 font-normal whitespace-nowrap text-white/90 transition-colors hover:border-white/30 hover:bg-white/[0.16]"
+              className="rounded-full border border-white/0 bg-white/[0.08] px-[clamp(8px,0.73vw,14px)] py-[clamp(4px,0.36vw,7px)] text-d12 font-normal whitespace-nowrap text-white/90 transition-colors hover:border-white/30 hover:bg-white/[0.16]"
             >
               {suggestion}
             </button>

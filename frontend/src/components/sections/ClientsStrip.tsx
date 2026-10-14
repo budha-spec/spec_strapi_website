@@ -39,7 +39,7 @@ export function ClientsStrip({ data }: ClientsStripProps) {
                   {images.map((logo, index) => (
                     <li
                       key={`${copy}-${logo.url}-${index}`}
-                      className="flex items-center justify-center px-[clamp(28px,3.1vw,60px)]"
+                      className="flex items-center justify-center px-[clamp(16px,1.56vw,30px)]"
                     >
                       <CmsImage
                         media={logo}

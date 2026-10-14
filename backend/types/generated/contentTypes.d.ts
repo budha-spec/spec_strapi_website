@@ -641,6 +641,49 @@ export interface ApiContactUsContactUs extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiContentItemContentItem extends Struct.CollectionTypeSchema {
+  collectionName: 'content_items';
+  info: {
+    displayName: 'Content Item';
+    pluralName: 'content-items';
+    singularName: 'content-item';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    industry: Schema.Attribute.Relation<'oneToMany', 'api::industry.industry'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::content-item.content-item'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    service: Schema.Attribute.Relation<'oneToMany', 'api::service.service'>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    type: Schema.Attribute.Enumeration<
+      ['service', 'industry', 'visualization', 'whitepaper']
+    > &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    visualization: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::visualization.visualization'
+    >;
+    whitepaper: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::whitepaper.whitepaper'
+    >;
+  };
+}
+
 export interface ApiCsIndustryCsIndustry extends Struct.CollectionTypeSchema {
   collectionName: 'cs_industries';
   info: {
@@ -1580,6 +1623,7 @@ declare module '@strapi/strapi' {
       'api::case-study.case-study': ApiCaseStudyCaseStudy;
       'api::category.category': ApiCategoryCategory;
       'api::contact-us.contact-us': ApiContactUsContactUs;
+      'api::content-item.content-item': ApiContentItemContentItem;
       'api::cs-industry.cs-industry': ApiCsIndustryCsIndustry;
       'api::cs-tag.cs-tag': ApiCsTagCsTag;
       'api::footer.footer': ApiFooterFooter;

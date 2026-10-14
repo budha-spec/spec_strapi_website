@@ -18,30 +18,51 @@ interface GraphErrorResponse {
   };
 }
 
-const tenantId = process.env.MS_TENANT_ID;
-const clientId = process.env.MS_CLIENT_ID;
-const clientSecret = process.env.MS_CLIENT_SECRET;
-
-if (!tenantId || !clientId || !clientSecret) {
-  throw new Error(
-    'Missing Microsoft environment variables: ' +
-      'MS_TENANT_ID, MS_CLIENT_ID, or MS_CLIENT_SECRET'
-  );
+interface Mailer {
+  client: ConfidentialClientApplication;
+  senderEmail: string;
 }
 
-const senderEmail = process.env.MS_SENDER_EMAIL;
+let mailer: Mailer | undefined;
 
-if (!senderEmail) {
-  throw new Error('Missing environment variable: MS_SENDER_EMAIL');
+/**
+ * Build the Graph client on first use. Checking the env here, not at import,
+ * keeps Strapi booting without mail credentials — sendMail throws instead,
+ * and the contact-us controller records the inquiry with emailStatus "failed".
+ */
+function getMailer(): Mailer {
+  if (mailer) return mailer;
+
+  const tenantId = process.env.MS_TENANT_ID;
+  const clientId = process.env.MS_CLIENT_ID;
+  const clientSecret = process.env.MS_CLIENT_SECRET;
+
+  if (!tenantId || !clientId || !clientSecret) {
+    throw new Error(
+      'Missing Microsoft environment variables: ' +
+        'MS_TENANT_ID, MS_CLIENT_ID, or MS_CLIENT_SECRET'
+    );
+  }
+
+  const senderEmail = process.env.MS_SENDER_EMAIL;
+
+  if (!senderEmail) {
+    throw new Error('Missing environment variable: MS_SENDER_EMAIL');
+  }
+
+  mailer = {
+    client: new ConfidentialClientApplication({
+      auth: {
+        clientId,
+        authority: `https://login.microsoftonline.com/${tenantId}`,
+        clientSecret,
+      },
+    }),
+    senderEmail,
+  };
+
+  return mailer;
 }
-
-const msalClient = new ConfidentialClientApplication({
-  auth: {
-    clientId,
-    authority: `https://login.microsoftonline.com/${tenantId}`,
-    clientSecret,
-  },
-});
 
 export function escapeHtml(value: unknown = ''): string {
   return String(value).replace(/[&<>"']/g, (char: string) => ({
@@ -59,7 +80,9 @@ export async function sendMail({
   html,
   replyTo,
 }: SendMailOptions): Promise<void> {
-  const token = await msalClient.acquireTokenByClientCredential({
+  const { client, senderEmail } = getMailer();
+
+  const token = await client.acquireTokenByClientCredential({
     scopes: ['https://graph.microsoft.com/.default'],
   });
 
