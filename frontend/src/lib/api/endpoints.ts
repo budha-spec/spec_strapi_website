@@ -57,6 +57,8 @@ export const ENDPOINTS = {
   /** One service detail page, matched by its public path, e.g. `services/ai-ml-development`. */
   SERVICE_BY_URL: (url: string) =>
     `/services?filters[url][$eq]=${encodeURIComponent(url)}&${SERVICE_DETAIL_POPULATE}`,
+  /** Enquiry form (POST, multipart). Public custom route — verifies hCaptcha server-side. */
+  CONTACT_SUBMIT: '/contact-us/submit',
 } as const;
 
 /** Most posts the Insights carousel will show, however many the API returns. */

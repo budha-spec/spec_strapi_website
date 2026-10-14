@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { Inter, Nunito } from 'next/font/google';
+import { Toaster } from 'sonner';
 import './globals.css';
 import { Header, Footer } from '@/components/layout';
 import { ParticlesProviderRoot } from '@/components/ui/ParticlesProviderRoot';
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           {children}
           <Footer />
         </ParticlesProviderRoot>
+        <Toaster position="top-right" richColors closeButton />
       </body>
     </html>
   );
