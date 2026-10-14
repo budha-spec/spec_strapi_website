@@ -151,4 +151,12 @@ export const WP_ENDPOINTS = {
 export const REVALIDATE = {
   CONTENT: 60,
   LAYOUT: 3600,
+  /** Reference data that almost never changes (country list). */
+  STATIC: 86400,
 } as const;
+
+/**
+ * Country names, ISO codes and dial codes for the enquiry form. Free, no API
+ * key (restcountries.com now requires one).
+ */
+export const COUNTRIES_API_URL = 'https://countriesnow.space/api/v0.1/countries/codes';

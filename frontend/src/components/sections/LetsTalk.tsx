@@ -3,6 +3,7 @@ import { CmsImage } from '@/components/ui/CmsImage';
 import { cmsText } from '@/lib/media';
 import { cn } from '@/lib/utils';
 import { LetsTalkForm } from './LetsTalkForm';
+import type { Country } from '@/types/contact.types';
 import type { FooterData, FooterSocial } from '@/types/footer.types';
 
 type Network = 'linkedin' | 'instagram' | 'pinterest' | 'facebook' | 'twitter';
@@ -106,6 +107,8 @@ const CARD_HEADING =
 interface LetsTalkProps {
   /** Strapi `footer` single type; the contact card is skipped when null. */
   data?: FooterData | null;
+  /** Enquiry-form country options, from `fetchCountries()`. */
+  countries: Country[];
   className?: string;
 }
 
@@ -115,7 +118,7 @@ interface LetsTalkProps {
  * the Strapi `footer` single type; it carries no section background so a page
  * can drop it onto any surface. Spacing follows Figma node 87:882.
  */
-export function LetsTalk({ data, className }: LetsTalkProps) {
+export function LetsTalk({ data, countries, className }: LetsTalkProps) {
   const offices = (data?.address ?? []).filter(
     (office) =>
       office.country || office.phone || office.email || office.address,
@@ -299,7 +302,7 @@ export function LetsTalk({ data, className }: LetsTalkProps) {
       <div className="rounded-[16px] border border-stroke-outline/70 bg-bg-white px-[clamp(20px,2.08vw,40px)] pt-[clamp(20px,1.56vw,30px)] pb-[clamp(20px,1.93vw,37px)]">
         <h3 className={CARD_HEADING}>Share Your Project&rsquo;s Vision</h3>
 
-        <LetsTalkForm />
+        <LetsTalkForm countries={countries} />
       </div>
     </div>
   );

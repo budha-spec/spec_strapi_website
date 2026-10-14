@@ -4,7 +4,7 @@
  * request is sent; the server still has the final say.
  */
 
-import type { ContactFieldErrors, ContactFormValues } from '@/types/contact.types';
+import type { ContactFieldErrors, ContactFormValues, Country } from '@/types/contact.types';
 
 /** Same caps the backend enforces. */
 export const CONTACT_MAX_LENGTH: Record<keyof ContactFormValues, number> = {
@@ -30,10 +30,22 @@ export const ATTACHMENT_MAX_BYTES = 5 * 1024 * 1024;
 export const ATTACHMENT_EXTENSIONS = ['doc', 'docx', 'pdf'];
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PHONE_PATTERN = /^[\d\s()+-]{6,20}$/;
+/** Used when no country is known (e.g. re-checking a server error). */
+const DEFAULT_PHONE_MAX = 10;
 
-/** Inline errors for the text fields; empty object when valid. */
-export function validateContactValues(values: ContactFormValues): ContactFieldErrors {
+/** "Phone number must be 10 digits." or "… 10–11 digits." for the selected country. */
+export function phoneLengthHint(min: number, max: number): string {
+  return `Phone number must be ${min === max ? max : `${min}–${max}`} digits.`;
+}
+
+/**
+ * Inline errors for the text fields; empty object when valid. The phone is
+ * national digits only, checked against the selected country's lengths.
+ */
+export function validateContactValues(
+  values: ContactFormValues,
+  country?: Country
+): ContactFieldErrors {
   const errors: ContactFieldErrors = {};
 
   for (const field of REQUIRED) {
@@ -46,8 +58,11 @@ export function validateContactValues(values: ContactFormValues): ContactFieldEr
   }
 
   const phone = values.phone.trim();
-  if (phone && !PHONE_PATTERN.test(phone)) {
-    errors.phone = 'Please enter a valid phone number.';
+  if (phone) {
+    const min = country?.minLength ?? 1;
+    const max = country?.maxLength ?? DEFAULT_PHONE_MAX;
+    if (!/^\d+$/.test(phone)) errors.phone = 'Phone number can contain digits only.';
+    else if (phone.length < min || phone.length > max) errors.phone = phoneLengthHint(min, max);
   }
 
   for (const field of Object.keys(CONTACT_MAX_LENGTH) as (keyof ContactFormValues)[]) {
