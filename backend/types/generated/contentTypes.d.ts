@@ -529,7 +529,18 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    content: Schema.Attribute.DynamicZone<['shared.testimonial-section']>;
+    client: Schema.Attribute.String;
+    content: Schema.Attribute.DynamicZone<
+      [
+        'shared.testimonial-section',
+        'shared.rich-text',
+        'shared.challenges',
+        'shared.gallery',
+        'shared.solutions',
+        'shared.cs-result',
+      ]
+    >;
+    country: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -548,9 +559,14 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    scale: Schema.Attribute.String;
     services: Schema.Attribute.Relation<'oneToMany', 'api::service.service'>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     tags: Schema.Attribute.Relation<'oneToMany', 'api::cs-tag.cs-tag'>;
+    technologies: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::cs-technology.cs-technology'
+    >;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -700,6 +716,44 @@ export interface ApiCsTagCsTag extends Struct.CollectionTypeSchema {
     parent_tag: Schema.Attribute.Relation<'oneToMany', 'api::cs-tag.cs-tag'>;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCsTechnologyCsTechnology
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'cs_technologies';
+  info: {
+    displayName: 'CS Technology';
+    pluralName: 'cs-technologies';
+    singularName: 'cs-technology';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::cs-technology.cs-technology'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    technologies: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::cs-technology.cs-technology'
+    >;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
@@ -1580,6 +1634,7 @@ declare module '@strapi/strapi' {
       'api::content-item.content-item': ApiContentItemContentItem;
       'api::cs-industry.cs-industry': ApiCsIndustryCsIndustry;
       'api::cs-tag.cs-tag': ApiCsTagCsTag;
+      'api::cs-technology.cs-technology': ApiCsTechnologyCsTechnology;
       'api::footer.footer': ApiFooterFooter;
       'api::industry.industry': ApiIndustryIndustry;
       'api::page.page': ApiPagePage;

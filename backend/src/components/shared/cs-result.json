@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_cs_results",
+  "info": {
+    "displayName": "CS Result"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subTitle": {
+      "type": "string"
+    },
+    "result": {
+      "type": "component",
+      "component": "shared.cs-result-item",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}

@@ -53,11 +53,30 @@
       "relation": "oneToMany",
       "target": "api::service.service"
     },
+    "technologies": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::cs-technology.cs-technology"
+    },
     "content": {
       "type": "dynamiczone",
       "components": [
-        "shared.testimonial-section"
+        "shared.testimonial-section",
+        "shared.rich-text",
+        "shared.challenges",
+        "shared.gallery",
+        "shared.solutions",
+        "shared.cs-result"
       ]
+    },
+    "client": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "scale": {
+      "type": "string"
     }
   }
 }

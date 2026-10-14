@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_solutions",
+  "info": {
+    "displayName": "Solutions"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "solution": {
+      "type": "component",
+      "component": "shared.challenges-item",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}
