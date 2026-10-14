@@ -15,7 +15,7 @@ export function HeroPrompt({ suggestions }: HeroPromptProps) {
   const [prompt, setPrompt] = useState('');
 
   return (
-    <div className="mt-[clamp(26px,4.27vw,82px)] flex h-[clamp(150px,10.42vw,200px)] w-[min(835px,100%)] flex-col justify-between rounded-[16px] border border-glass-border bg-[rgba(0,0,0,0.55)] p-[clamp(13px,1.04vw,20px)] text-left backdrop-blur-[28px]">
+    <div className="mt-[clamp(26px,4.27vw,82px)] flex h-[clamp(150px,10.42vw,200px)] w-[min(835px,100%)] flex-col justify-between rounded-[16px] border border-glass-border bg-[rgba(0,0,0,0.55)] p-[clamp(13px,1.04vw,20px)] text-left backdrop-blur-[2px]">
       <label htmlFor="hero-prompt" className="sr-only">
         Ask SPEC anything
       </label>

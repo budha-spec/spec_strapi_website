@@ -416,7 +416,7 @@ export function LetsTalk({ data, className }: LetsTalkProps) {
 
             <button
               type="submit"
-              className="gradient-btn inline-flex h-[clamp(32px,1.88vw,36px)] w-fit shrink-0 items-center justify-center rounded-full px-[clamp(14px,1.04vw,20px)] text-d16 text-white transition-[filter] hover:brightness-110"
+              className="gradient-btn inline-flex h-[clamp(32px,1.88vw,36px)] w-fit shrink-0 cursor-pointer items-center justify-center rounded-full px-[clamp(14px,1.04vw,20px)] text-d16 text-white transition-[filter] hover:brightness-110"
             >
               Submit
             </button>

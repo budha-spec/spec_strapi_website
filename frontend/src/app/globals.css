@@ -800,16 +800,7 @@
 
 /* custom css */
 
- .explore-more-arrow {
-    width: 45px;
-    height: 29px;
-     border: 1px solid transparent;
-    border-radius: 20px;
- background:
-        linear-gradient(#fff, #fff) padding-box,
-        linear-gradient(252.16deg, #B9B9B9 5.3%, #B9B9B9 89.32%) border-box;
-   
-}
+
 .capability-card:hover .explore-more--outline .explore-more-arrow, .explore-more:hover{
  background:
         linear-gradient(#fff, #fff) padding-box,
@@ -836,11 +827,11 @@
      border: 1px solid transparent;
     border-radius: 20px;
  background:
-        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(#000, #000) padding-box,
         linear-gradient(252.16deg, #B9B9B9 5.3%, #B9B9B9 89.32%) border-box;
    
 }
- 
+
  .capability-card:hover .explore-more-arrow {
  background:
         linear-gradient(#fff, #fff) padding-box,
@@ -861,13 +852,27 @@
 .blog-card:hover .explore-more-arrow svg{ color: #25BE00 }
 
 
+.visualization-card:hover .explore-more-arrow {
+ background:
+        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(252.16deg, #0C3DEB 5.3%, #20A42F 89.32%) border-box; color: #fff
+}
+
+.visualization-card:hover .explore-more--outline span.explore-more-arrow{ color : #25be00 ; }
+article.visualization-card:hover a.explore-more .explore-more-label{
+     background-image: linear-gradient(var(--grad-angle, -54deg), #25be00 0.209%, #0c3ced 100%);
+    -webkit-text-fill-color: transparent;
+    color: #0000;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
 
  .explore-more-arrow {
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #000000;
+    color: #fff;
     transition: color 0.35s ease; transition: all 300ms ease ;
   }
 
@@ -890,6 +895,10 @@
    .explore-more--filled:hover .explore-more-arrow {
     background: linear-gradient(272.76deg, #25BE00 -1.59%, #0C3CED 97.08%); color: #fff; transition: all 300ms ease ;
   }
+
+
+
+
 
  /* .explore-more--filled:hover .explore-more-arrow svg {
     background: linear-gradient(272.76deg, #25BE00 -1.59%, #0C3CED 97.08%); color: #fff; transition: all 300ms ease ;
@@ -935,6 +944,26 @@ img.cta-banner-image {
 
 button.case-study-filter[aria-pressed="true"] {
       background: #5E5E5E ;
+}
+
+.explore-more--outline span.explore-more-arrow svg {
+    width: 22px !important;
+    height: 16px;
+}
+ul.sp-live-bi-grid li:nth-child(-n+4) {
+    margin-bottom: 45px;
+}
+
+footer {
+    background: #f9f9f9;
+}
+
+
+
+@media(max-width: 1280px){
+ul.sp-live-bi-grid li:nth-child(-n+4) {
+    margin-bottom: 0px;
+}
 }
 
 @media(max-width: 767px){
