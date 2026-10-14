@@ -4,10 +4,37 @@ import { CmsImage } from '@/components/ui/CmsImage';
 import { ExploreMore } from '@/components/ui/ExploreMore';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { cmsText, hrefPath } from '@/lib/media';
-import type { SolutionsBlock } from '@/types/sections.types';
+import type { ContentItem, SolutionsBlock } from '@/types/sections.types';
 
 interface ServicesSectionProps {
   data: SolutionsBlock;
+}
+
+interface CategoryChip {
+  key: string;
+  title: string;
+  href: string;
+}
+
+/**
+ * The hover chips for one card. Each Content Item groups entries of one
+ * `type` (e.g. "Service" → AI Agent, AI Development, AI/ML); every linked
+ * entry becomes a chip pointing at its own page. Entries without a URL
+ * (industries have none yet) link to the card's own page instead.
+ */
+function categoryChips(items: ContentItem[], cardUrl?: string | null): CategoryChip[] {
+  const seen = new Set<string>();
+  const chips: CategoryChip[] = [];
+  for (const item of items) {
+    const entries = (item.type ? item[item.type] : null) ?? [];
+    for (const entry of entries) {
+      const key = `${item.type}-${entry.id}`;
+      if (!entry.title || seen.has(key)) continue;
+      seen.add(key);
+      chips.push({ key, title: cmsText(entry.title), href: hrefPath(entry.url || cardUrl) });
+    }
+  }
+  return chips;
 }
 
 export function ServicesSection({ data }: ServicesSectionProps) {
@@ -15,13 +42,13 @@ export function ServicesSection({ data }: ServicesSectionProps) {
 
   return (
     <section
-      className="w-full bg-bg-light pt-[clamp(30px,3.0vw,58px)] pb-[clamp(40px,3.65vw,70px)]"
+      className="sp-section sp-home-services w-full bg-bg-light pt-[clamp(30px,3.0vw,58px)] pb-[clamp(40px,3.65vw,70px)]"
     >
       <div className="shell">
         {data.title && <SectionEyebrow>{cmsText(data.title)}</SectionEyebrow>}
 
         {data.subTitle && (
-          <h2 className="mt-[clamp(6px,0.52vw,10px)] max-w-[1200px] text-d40 font-medium leading-[1.2] text-text-heading">
+          <h2 className="sp-title mt-[clamp(6px,0.52vw,10px)] max-w-[1200px] text-d40 font-medium leading-[1.2] text-text-heading">
             <AccentHeading
               text={cmsText(data.subTitle)}
               accentClassName="gradient-text font-semibold"
@@ -31,7 +58,7 @@ export function ServicesSection({ data }: ServicesSectionProps) {
 
         <div className="mt-[clamp(24px,3.65vw,70px)] grid grid-cols-1 gap-[clamp(16px,1.67vw,32px)] sm:grid-cols-2 lg:grid-cols-4">
           {items.map((service) => {
-            const pages = (service.pages ?? []).filter((page) => page.title);
+            const pages = categoryChips(service.pages ?? [], service.url);
 
             return (
               <article
@@ -53,13 +80,13 @@ export function ServicesSection({ data }: ServicesSectionProps) {
                     {pages.length > 0 && (
                       <ul className="capability-tags flex flex-wrap content-start gap-[clamp(8px,0.63vw,12px)]">
                         {pages.map((page) => (
-                          <li key={page.id}>
+                          <li key={page.key}>
                             <Link
-                              href={hrefPath(page.slug)}
+                              href={page.href}
                               tabIndex={-1}
                               className="capability-tag flex h-[clamp(30px,1.98vw,38px)] items-center rounded-full border border-stroke-main px-[clamp(10px,0.73vw,14px)] text-d14 text-text-primary"
                             >
-                              {cmsText(page.title)}
+                              {page.title}
                             </Link>
                           </li>
                         ))}

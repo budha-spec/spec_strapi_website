@@ -107,13 +107,13 @@ export function BlogSection({
   return (
     <section
       id="insights"
-      className="w-full bg-bg-light pt-[clamp(40px,3.33vw,64px)] pb-[clamp(40px,3.65vw,70px)]"
+      className="sp-section sp-blog w-full bg-bg-light pt-[clamp(40px,3.33vw,64px)] pb-[clamp(40px,3.65vw,70px)]"
     >
       <div className="shell">
         {title && <SectionEyebrow>{cmsText(title)}</SectionEyebrow>}
 
         {subTitle && (
-          <h2 className="mt-[clamp(6px,0.52vw,10px)] text-d40 font-medium leading-[1.2] text-text-heading">
+          <h2 className="sp-title mt-[clamp(6px,0.52vw,10px)] text-d40 font-medium leading-[1.2] text-text-heading">
             <AccentHeading text={cmsText(subTitle)} accentClassName="gradient-text font-bold" />
           </h2>
         )}

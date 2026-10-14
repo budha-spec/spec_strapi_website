@@ -23,6 +23,8 @@ frontend/src/
 │   ├── layout.tsx                    ← Header + Footer + fonts on every page
 │   ├── globals.css                   ← @theme tokens + shared component classes
 │   ├── page.tsx                      ← /                 Home (Strapi page `home` + WordPress posts)
+│   ├── case-study/
+│   │   └── page.tsx              ← /case-study       Case-study listing (filters + carousel)
 │   └── services/
 │       ├── page.tsx                  ← /services         Services landing (Service entry `slug=services`)
 │       ├── loading.tsx
@@ -43,7 +45,7 @@ frontend/src/
 │   │   ├── FaqSection.tsx            ← "Frequently Asked Questions"
 │   │   ├── CtaBanner.tsx             ← "Hire Dedicated Team" banner
 │   │   ├── BlogSection.tsx           ← "Latest Insights" (WordPress)
-│   │   ├── LetsTalk.tsx              ← contact card + enquiry form
+│   │   ├── LetsTalk.tsx              ← contact card + enquiry form (Strapi `footer`)
 │   │   └── index.ts
 │   └── ui/                           ← primitives: ExploreMore, CarouselControls,
 │                                       CmsImage, RichText, SectionEyebrow, …
@@ -53,6 +55,10 @@ frontend/src/
 │   │   ├── components/               ← HeroSection, ServicesSection, HomeBlocks
 │   │   ├── api/home.api.ts
 │   │   └── types/
+│   ├── case-study/                   ← /case-study listing
+│   │   ├── api/case-study.api.ts     ← fetchCaseStudies, fetchCaseStudyIndustries, fetchSpotlightTestimonials
+│   │   ├── types/case-study.types.ts
+│   │   └── components/               ← CaseStudyExplorer (filters + peek carousel), CaseStudyCard
 │   └── service/                      ← all three service page types
 │       ├── api/service.api.ts        ← fetchServiceBySlug / fetchServiceByUrl, serviceTemplate()
 │       ├── types/service.types.ts
@@ -65,6 +71,7 @@ frontend/src/
 ├── lib/
 │   ├── api/strapi.ts, wordpress.ts   ← the only places that call fetch()
 │   ├── api/blogs.api.ts              ← fetchLatestBlogs(category?) — WordPress Insights
+│   ├── api/footer.api.ts             ← fetchFooter() — Strapi `footer` single type
 │   ├── api/endpoints.ts              ← every endpoint + populate query
 │   ├── media.ts                      ← cmsText, hrefPath, media URLs
 │   └── utils.ts                      ← cn()
@@ -85,6 +92,8 @@ Adding a section to a page = add the block to the renderer + its `populate`
 line in `endpoints.ts`.
 
 ---
+
+> Section CSS hooks (`sp-*` classes) for the design developer: see `docs/css-section-hooks.md`.
 
 ## CTA + Footer Strategy
 

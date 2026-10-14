@@ -20,7 +20,7 @@ interface CtaBannerProps {
  */
 export function CtaBanner({ data }: CtaBannerProps) {
   return (
-    <section className="w-full bg-bg-light pb-[clamp(48px,6.25vw,120px)]">
+    <section className="sp-section sp-cta-banner w-full bg-bg-light pb-[clamp(48px,6.25vw,120px)]">
       <div className="shell">
         <div className="cta-banner group relative isolate flex flex-col overflow-hidden rounded-[20px] bg-bg-black md:block md:min-h-[clamp(240px,18.2vw,350px)]">
           {data.image?.url && (
@@ -55,7 +55,7 @@ export function CtaBanner({ data }: CtaBannerProps) {
               className="absolute inset-0 -z-10 bg-bg-black opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-within:opacity-100"
             />
 
-            <h2 className="max-w-[720px] text-d30 font-medium leading-[1.3] text-white">
+            <h2 className="sp-title max-w-[720px] text-d30 font-medium leading-[1.3] text-white">
               {cmsText(data.title)}
             </h2>
 

@@ -20,12 +20,12 @@ export function CapabilityGrid({ data }: CapabilityGridProps) {
   if (items.length === 0) return null;
 
   return (
-    <section className="w-full bg-bg-light pt-[clamp(32px,3.65vw,70px)] pb-[clamp(48px,4.69vw,90px)]">
+    <section className="sp-section sp-service-capability-grid w-full bg-bg-light pt-[clamp(32px,3.65vw,70px)] pb-[clamp(48px,4.69vw,90px)]">
       <div className="shell">
         {data.title && <SectionEyebrow>{cmsText(data.title)}</SectionEyebrow>}
 
         {data.subTitle && (
-          <h2 className="mt-[clamp(6px,0.52vw,10px)] max-w-[1200px] text-d40 font-medium leading-[1.2] text-text-heading">
+          <h2 className="sp-title mt-[clamp(6px,0.52vw,10px)] max-w-[1200px] text-d40 font-medium leading-[1.2] text-text-heading">
             <AccentHeading
               text={cmsText(data.subTitle)}
               accentClassName="gradient-text font-semibold"

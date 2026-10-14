@@ -28,12 +28,12 @@ export function CaseStudies({ data }: CaseStudiesProps) {
   );
 
   return (
-    <section className="w-full bg-bg-light pt-[clamp(40px,3.44vw,66px)] pb-[clamp(40px,3.65vw,70px)]">
+    <section className="sp-section sp-case-studies w-full bg-bg-light pt-[clamp(40px,3.44vw,66px)] pb-[clamp(40px,3.65vw,70px)]">
       <div className="shell">
         {data.title && <SectionEyebrow>{cmsText(data.title)}</SectionEyebrow>}
 
         {data.subTitle && (
-          <h2 className="mt-[clamp(6px,0.52vw,10px)] text-d40 font-medium leading-[1.2] text-text-heading">
+          <h2 className="sp-title mt-[clamp(6px,0.52vw,10px)] text-d40 font-medium leading-[1.2] text-text-heading">
             <AccentHeading text={cmsText(data.subTitle)} accentClassName="gradient-text font-bold" />
           </h2>
         )}

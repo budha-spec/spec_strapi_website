@@ -161,7 +161,7 @@ export function LetsTalkForm() {
       noValidate
       onSubmit={handleSubmit}
       aria-busy={submitting}
-      className="mt-[clamp(16px,1.72vw,33px)] flex flex-col gap-[clamp(12px,1.04vw,20px)]"
+      className="mt-[clamp(16px,1.56vw,30px)] flex flex-col gap-[clamp(12px,1.04vw,20px)]"
     >
       <div className="grid gap-[clamp(12px,1.25vw,24px)] sm:grid-cols-2">
         <div>
@@ -281,7 +281,7 @@ export function LetsTalkForm() {
           rows={4}
           value={values.message}
           onChange={handleChange('message')}
-          className={cn(fieldBase, 'block resize-none py-[clamp(10px,0.73vw,14px)]', borderFor(errors.message))}
+          className={cn(fieldBase, 'block h-[clamp(72px,4.69vw,90px)] resize-none py-[clamp(10px,0.73vw,14px)]', borderFor(errors.message))}
           {...a11y('message')}
         />
         <FieldError id={errorId('message')} message={errors.message} />
@@ -364,7 +364,7 @@ export function LetsTalkForm() {
         <button
           type="submit"
           disabled={submitting}
-          className="gradient-btn inline-flex h-[clamp(40px,2.4vw,46px)] w-fit shrink-0 items-center justify-center rounded-full px-[clamp(24px,1.98vw,38px)] text-d16 text-white transition-[filter] hover:brightness-110 disabled:cursor-wait disabled:opacity-70"
+          className="gradient-btn inline-flex h-[clamp(32px,1.88vw,36px)] w-fit shrink-0 cursor-pointer items-center justify-center rounded-full px-[clamp(14px,1.04vw,20px)] text-d16 text-white transition-[filter] hover:brightness-110 disabled:cursor-wait disabled:opacity-70"
         >
           {submitting ? 'Submitting…' : 'Submit'}
         </button>

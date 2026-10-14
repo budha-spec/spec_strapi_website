@@ -13,10 +13,32 @@ export interface GalleryBlock {
   images?: CmsMedia[] | null;
 }
 
-export interface RelatedPage {
+/** An entry a Content Item points at (a service, industry, visualization or whitepaper). */
+export interface LinkedEntry {
   id: number;
   title?: string | null;
   slug?: string | null;
+  /** Public path. Industries have none yet. */
+  url?: string | null;
+}
+
+export type ContentItemType = 'service' | 'industry' | 'visualization' | 'whitepaper';
+
+/**
+ * `content-items` collection — a group of category chips on a home "Core
+ * Capabilities" card. `type` says which of the four relations holds the
+ * entries; each of those entries is one chip (e.g. "Service" → AI Agent,
+ * AI Development, AI/ML).
+ */
+export interface ContentItem {
+  id: number;
+  title?: string | null;
+  slug?: string | null;
+  type?: ContentItemType | null;
+  service?: LinkedEntry[] | null;
+  industry?: LinkedEntry[] | null;
+  visualization?: LinkedEntry[] | null;
+  whitepaper?: LinkedEntry[] | null;
 }
 
 export interface SolutionItem {
@@ -26,7 +48,8 @@ export interface SolutionItem {
   txt?: string | null;
   url?: string | null;
   image?: CmsMedia | null;
-  pages?: RelatedPage[] | null;
+  /** Category chips shown on hover (Content Items). */
+  pages?: ContentItem[] | null;
 }
 
 /** `shared.enterprise-solution` — the "Core Capabilities" block. */
@@ -122,4 +145,12 @@ export interface CtaBlock {
   txt?: string | null;
   url?: string | null;
   image?: CmsMedia | null;
+}
+
+/** `shared.contact-us` — feeds the page hero's button; not rendered on its own. */
+export interface ContactBlock {
+  __component: 'shared.contact-us';
+  id: number;
+  txt?: string | null;
+  url?: string | null;
 }

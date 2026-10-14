@@ -16,8 +16,14 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="absolute inset-x-0 top-0 z-50">
-      <div className="h-[86px] border-b border-[#242424] bg-[#0d0d0d]/70 backdrop-blur-[2px]">
+    /*
+      Fixed, not sticky: pages already start under the header (heroes pad
+      for it), so it stays out of the flow and floats over every section as
+      you scroll. Glass bar per Figma — translucent black + strong blur, so
+      the section behind shows through softly.
+    */
+    <header className="sp-header fixed inset-x-0 top-0 z-50">
+      <div className="sp-header-bar h-[86px] border-b border-white/10 bg-bg-black/60 backdrop-blur-[20px] backdrop-saturate-150">
         <div className="shell flex h-full items-center justify-between gap-6">
           {/*
             The nav sits close to the logo rather than centred — in the design

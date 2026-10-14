@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "content_items",
+  "info": {
+    "singularName": "content-item",
+    "pluralName": "content-items",
+    "displayName": "Content Item"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "type": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "service",
+        "industry",
+        "visualization",
+        "whitepaper"
+      ]
+    },
+    "service": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service.service"
+    },
+    "industry": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::industry.industry"
+    },
+    "visualization": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::visualization.visualization"
+    },
+    "whitepaper": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::whitepaper.whitepaper"
+    }
+  }
+}

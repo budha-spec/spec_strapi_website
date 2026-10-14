@@ -109,11 +109,12 @@ The existing SPEC India website is already indexed by search engines and all URL
 6. Long or unknown-length rows (tab bars, chips, logo strips) must wrap or scroll inside their own container — never widen the page.
 7. Every hover effect also works on keyboard focus (`group-focus-within:` / `:focus-visible`) and respects `prefers-reduced-motion` for long animations.
 8. Give repeated controls a stable class hook (`.explore-more`, `.explore-all`, `.carousel-arrow`, …) so design can restyle them in one place.
+9. **Every section's outer element gets `sp-section sp-<name>`; its main `h2` gets `sp-title`; its small label uses `SectionEyebrow` (carries `sp-eyebrow`); a hero `h1` gets `sp-page-title`; every page's `<main>` gets `sp-page sp-page-<name>`.** Add the new class to `docs/css-section-hooks.md` (the list the design developer uses) in the same change.
 
 **Before calling it done**
-9. `npm run type-check` passes.
-10. `npm run check:layout -- <path>` passes at every default width (320 → 2560). Fix any reported overflow, including in shared parts like the Footer.
-11. Look at the page at a phone width and a desktop width (`--shots=<dir>` saves full-page screenshots), and check hover states.
+10. `npm run type-check` passes.
+11. `npm run check:layout -- <path>` passes at every default width (320 → 2560). Fix any reported overflow, including in shared parts like the Footer.
+12. Look at the page at a phone width and a desktop width (`--shots=<dir>` saves full-page screenshots), and check hover states.
 
 ---
 
@@ -127,11 +128,11 @@ Names follow the Figma section labels so designers and developers mean the same 
 | `ClientsStrip` | "Trusted by global leaders" logo marquee | `shared.gallery` |
 | `ProvenImpact` | "Proven Impact" stats band | `shared.key-metrics-section` |
 | `CaseStudies` | "Client Success Stories" carousel | `shared.case-studies` |
-| `Testimonials` | "Client Spotlight" video cards | `shared.testimonial-section` |
+| `Testimonials` | "Client Spotlight" video cards — carousel, or `layout="grid"` for every card at once (testimonials listing) | `shared.testimonial-section` |
 | `FaqSection` | "Frequently Asked Questions" accordion | `shared.faqs` |
 | `CtaBanner` | "Hire Dedicated Development Team" banner | `shared.cta` |
 | `BlogSection` | "Latest Insights" carousel (WordPress, optional category) | — (`fetchLatestBlogs(category?)` in `src/lib/api/blogs.api.ts`) |
-| `LetsTalk` | "Let's Talk to OUR EXPERT!" + enquiry form | — (rendered by Footer) |
+| `LetsTalk` | "Let's Talk to OUR EXPERT!" + enquiry form | Strapi `footer` single type (`fetchFooter()` in `src/lib/api/footer.api.ts`), rendered by Footer with the awards/ratings strip |
 
 ---
 
@@ -152,6 +153,8 @@ Names follow the Figma section labels so designers and developers mean the same 
 - Gradient text (`.gradient-text`) uses `-webkit-text-fill-color: transparent`; to switch it to a solid colour on hover, set `-webkit-text-fill-color`, not `color`.
 - `globals.css` ends with an **unlayered** "custom css" block (designer-owned Explore More / Explore All / carousel styles). Unlayered CSS beats every `@layer` rule *and* Tailwind utilities, whatever the specificity. To override it for one component (e.g. the dark `.capability-grid-card` hover), add an unlayered rule **after** that block — a rule inside `@layer components` can never win.
 - Tailwind v4 `scale-*` / `rotate-*` / `translate-*` set the separate CSS `scale` / `rotate` / `translate` properties, not `transform`. Animate them with `transition-transform` (covers all four) or list them explicitly (`transition-[scale,filter]`) — `transition-[transform,…]` makes the zoom jump.
+- Figma uses **Poppins** for the footer card headings ("Let's Talk to", "OUR EXPERT!", "Share Your Project's Vision") — use the `font-display` class, not Inter. `docs/landing page/` is a code export of the landing design: grep it for exact font sizes/weights when Figma's API is rate-limited.
+- `CarouselControls` takes an optional `progress={{ index, count }}` for the Figma progress bar (case-study listing); reuse it rather than drawing a new bar.
 - Fade gradients with an opacity layer (`::before` or an absolutely positioned span) — `background-image` does not transition.
 
 ---
