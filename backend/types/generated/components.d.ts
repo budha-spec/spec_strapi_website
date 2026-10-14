@@ -178,21 +178,6 @@ export interface SharedHomePageSection1 extends Struct.ComponentSchema {
   };
 }
 
-export interface SharedIndustries extends Struct.ComponentSchema {
-  collectionName: 'components_shared_industries';
-  info: {
-    displayName: 'Industries';
-  };
-  attributes: {
-    industries: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::industry.industry'
-    >;
-    subTitle: Schema.Attribute.String;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
-  };
-}
-
 export interface SharedIndustryGallery extends Struct.ComponentSchema {
   collectionName: 'components_shared_industry_galleries';
   info: {
@@ -214,6 +199,21 @@ export interface SharedIndustryGalleryItem extends Struct.ComponentSchema {
     description: Schema.Attribute.Text & Schema.Attribute.Required;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
       Schema.Attribute.Required;
+  };
+}
+
+export interface SharedIndustrySection extends Struct.ComponentSchema {
+  collectionName: 'components_shared_industry_sections';
+  info: {
+    displayName: 'Industry Section';
+  };
+  attributes: {
+    industries: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::industry.industry'
+    >;
+    subTitle: Schema.Attribute.Text;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -432,9 +432,9 @@ declare module '@strapi/strapi' {
       'shared.gallery': SharedGallery;
       'shared.home-blogs': SharedHomeBlogs;
       'shared.home-page-section1': SharedHomePageSection1;
-      'shared.industries': SharedIndustries;
       'shared.industry-gallery': SharedIndustryGallery;
       'shared.industry-gallery-item': SharedIndustryGalleryItem;
+      'shared.industry-section': SharedIndustrySection;
       'shared.key-metrics': SharedKeyMetrics;
       'shared.key-metrics-section': SharedKeyMetricsSection;
       'shared.live-bi-visualization': SharedLiveBiVisualization;

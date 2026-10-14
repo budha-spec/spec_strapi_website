@@ -1,7 +1,7 @@
 {
-  "collectionName": "components_shared_industries",
+  "collectionName": "components_shared_industry_sections",
   "info": {
-    "displayName": "Industries"
+    "displayName": "Industry Section"
   },
   "options": {},
   "attributes": {
@@ -10,8 +10,7 @@
       "required": true
     },
     "subTitle": {
-      "type": "string",
-      "required": false
+      "type": "text"
     },
     "industries": {
       "type": "relation",
