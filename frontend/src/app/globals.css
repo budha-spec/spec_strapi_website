@@ -783,16 +783,7 @@
 
 /* custom css */
 
- .explore-more-arrow {
-    width: 45px;
-    height: 29px;
-     border: 1px solid transparent;
-    border-radius: 20px;
- background:
-        linear-gradient(#fff, #fff) padding-box,
-        linear-gradient(252.16deg, #B9B9B9 5.3%, #B9B9B9 89.32%) border-box;
-   
-}
+
 .capability-card:hover .explore-more--outline .explore-more-arrow, .explore-more:hover{
  background:
         linear-gradient(#fff, #fff) padding-box,
@@ -819,11 +810,11 @@
      border: 1px solid transparent;
     border-radius: 20px;
  background:
-        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(#000, #000) padding-box,
         linear-gradient(252.16deg, #B9B9B9 5.3%, #B9B9B9 89.32%) border-box;
    
 }
- 
+
  .capability-card:hover .explore-more-arrow {
  background:
         linear-gradient(#fff, #fff) padding-box,
@@ -863,8 +854,8 @@ article.visualization-card:hover a.explore-more .explore-more-label{
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #000000;
+    color: #fff;
     transition: color 0.35s ease; transition: all 300ms ease ;
   }
 
@@ -945,6 +936,12 @@ button.case-study-filter[aria-pressed="true"] {
 ul.sp-live-bi-grid li:nth-child(-n+4) {
     margin-bottom: 45px;
 }
+
+footer {
+    background: #f9f9f9;
+}
+
+
 
 @media(max-width: 1280px){
 ul.sp-live-bi-grid li:nth-child(-n+4) {
