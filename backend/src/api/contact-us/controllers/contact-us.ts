@@ -133,6 +133,226 @@ async function verifyCaptcha(token: string): Promise<boolean> {
 export default factories.createCoreController(
   'api::contact-us.contact-us',
   ({ strapi }) => ({
+async findForHr(ctx: Context) {
+  const query = ctx.query as Record<string, unknown>;
+
+  const requestedStatus =
+    typeof query.readStatus === 'string'
+      ? query.readStatus
+      : 'all';
+
+  if (!['all', 'read', 'unread'].includes(requestedStatus)) {
+  return ctx.badRequest(
+    'readStatus must be all, read or unread.'
+  );
+}
+
+  const page = Math.max(
+    1,
+    Number.parseInt(String(query.page ?? '1'), 10) || 1
+  );
+
+  const pageSize = Math.min(
+    50,
+    Math.max(
+      1,
+      Number.parseInt(String(query.pageSize ?? '10'), 10) || 10
+    )
+  );
+
+  const filters =
+  requestedStatus === 'all'
+    ? {}
+    : {
+        readStatus: {
+          $eq: requestedStatus as 'read' | 'unread',
+        },
+      };
+
+  const [inquiries, total] = await Promise.all([
+    strapi.documents('api::contact-us.contact-us').findMany({
+      filters,
+      sort: { createdAt: 'desc' },
+      pagination: { page, pageSize },
+    }),
+    strapi.documents('api::contact-us.contact-us').count({
+      filters,
+    }),
+  ]);
+
+  ctx.body = {
+    data: inquiries.map((item) => ({
+      documentId: item.documentId,
+      name: item.name,
+      email: item.email,
+      country: item.country,
+      company: item.company,
+      designation: item.designation,
+      message: item.message,
+      readStatus: item.readStatus,
+      readAt: item.readAt,
+      createdAt: item.createdAt,
+      emailStatus: item.emailStatus,
+    })),
+    meta: {
+      pagination: {
+        page,
+        pageSize,
+        total,
+        pageCount: Math.ceil(total / pageSize),
+      },
+    },
+  };
+},
+
+async findOneForHr(ctx: Context) {
+  const { documentId } = ctx.params;
+
+  if (!documentId) {
+    return ctx.badRequest('Inquiry documentId is required.');
+  }
+
+  const inquiry = await strapi
+    .documents('api::contact-us.contact-us')
+    .findOne({
+      documentId,
+      populate: { attachment: true },
+    });
+
+  if (!inquiry) {
+    return ctx.notFound('Inquiry not found.');
+  }
+
+  // Opening an inquiry marks it as read.
+  if (inquiry.readStatus === 'unread') {
+    await strapi.documents('api::contact-us.contact-us').update({
+      documentId,
+      data: { readStatus: 'read', readAt: new Date() },
+    });
+  }
+
+  // Fetch again so the attachment relation remains populated in the response.
+  const viewedInquiry = await strapi
+    .documents('api::contact-us.contact-us')
+    .findOne({
+      documentId,
+      populate: { attachment: true },
+    });
+
+  ctx.body = {
+    data: viewedInquiry,
+  };
+},
+
+
+async updateReadStatusBulk(ctx: Context) {
+  const body = ctx.request.body as {
+    documentIds?: unknown;
+    readStatus?: unknown;
+  };
+
+  const documentIds = body?.documentIds;
+  const readStatus = body?.readStatus;
+
+  if (!Array.isArray(documentIds) || documentIds.length === 0) {
+    return ctx.badRequest('documentIds must be a non-empty array.');
+  }
+
+  if (
+    documentIds.some((id) => typeof id !== 'string' || !id.trim()) ||
+    documentIds.length > 100
+  ) {
+    return ctx.badRequest('documentIds must contain up to 100 valid document IDs.');
+  }
+
+  if (readStatus !== 'read' && readStatus !== 'unread') {
+    return ctx.badRequest('readStatus must be read or unread.');
+  }
+
+  const uniqueIds = [...new Set(documentIds as string[])];
+  const results = await Promise.all(
+    uniqueIds.map(async (documentId) => {
+      const existing = await strapi
+        .documents('api::contact-us.contact-us')
+        .findOne({ documentId });
+
+      if (!existing) {
+        return { documentId, success: false, reason: 'not_found' };
+      }
+
+      const updated = await strapi
+        .documents('api::contact-us.contact-us')
+        .update({
+          documentId,
+          data: {
+            readStatus,
+            readAt: readStatus === 'read' ? new Date() : null,
+          },
+        });
+
+      return {
+        documentId: updated.documentId,
+        success: true,
+        readStatus: updated.readStatus,
+        readAt: updated.readAt,
+      };
+    })
+  );
+
+  ctx.body = {
+    data: results,
+    meta: {
+      updated: results.filter((item) => item.success).length,
+      failed: results.filter((item) => !item.success).length,
+    },
+  };
+},
+
+async updateReadStatus(ctx: Context) {
+  const { documentId } = ctx.params;
+  const body = ctx.request.body as {
+    readStatus?: unknown;
+  };
+
+  const readStatus = body?.readStatus;
+
+  if (!documentId) {
+    return ctx.badRequest('Inquiry documentId is required.');
+  }
+
+  if (readStatus !== 'read' && readStatus !== 'unread') {
+    return ctx.badRequest(
+      'readStatus must be read or unread.'
+    );
+  }
+
+  const existing = await strapi
+    .documents('api::contact-us.contact-us')
+    .findOne({ documentId });
+
+  if (!existing) {
+    return ctx.notFound('Inquiry not found.');
+  }
+
+  const updated = await strapi
+    .documents('api::contact-us.contact-us')
+    .update({
+      documentId,
+      data: {
+        readStatus,
+        readAt: readStatus === 'read' ? new Date() : null,
+      },
+    });
+
+  ctx.body = {
+    data: {
+      documentId: updated.documentId,
+      readStatus: updated.readStatus,
+      readAt: updated.readAt,
+    },
+  };
+},
+
     async submit(ctx: Context) {
       let inquiryDocumentId: string | undefined;
 
@@ -244,6 +464,8 @@ export default factories.createCoreController(
               hrEmailSent: false,
               confirmationEmailSent: 'No' satisfies YesNo,
               captchaVerified: 'Yes' satisfies YesNo,
+              readStatus: 'unread',
+              readAt: null,
             },
           });
 

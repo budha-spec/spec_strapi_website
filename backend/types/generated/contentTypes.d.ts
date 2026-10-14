@@ -635,6 +635,10 @@ export interface ApiContactUsContactUs extends Struct.CollectionTypeSchema {
     name: Schema.Attribute.String & Schema.Attribute.Required;
     phone: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    readAt: Schema.Attribute.DateTime;
+    readStatus: Schema.Attribute.Enumeration<['unread', 'read']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'unread'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

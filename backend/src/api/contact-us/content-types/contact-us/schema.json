@@ -71,6 +71,18 @@
         "Yes",
         "No"
       ]
+    },
+    "readStatus": {
+      "type": "enumeration",
+      "required": true,
+      "default": "unread",
+      "enum": [
+        "unread",
+        "read"
+      ]
+    },
+    "readAt": {
+      "type": "datetime"
     }
   }
 }
