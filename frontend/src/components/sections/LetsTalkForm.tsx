@@ -1,30 +1,34 @@
 'use client';
 
-import { useEffect, useId, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
+import { useEffect, useId, useMemo, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import { SearchableSelect } from '@/components/ui/SearchableSelect';
 import { submitContactForm } from '@/lib/api/contact.api';
 import { validateAttachment, validateContactValues } from '@/lib/contact-form';
-import type { ContactField, ContactFieldErrors, ContactFormValues } from '@/types/contact.types';
+import type { ContactField, ContactFieldErrors, ContactFormValues, Country } from '@/types/contact.types';
 
 const HCAPTCHA_SITEKEY = process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY?.trim() ?? '';
 
-const COUNTRIES = [
-  { name: 'India', dialCode: '+91' },
-  { name: 'USA', dialCode: '+1' },
-  { name: 'UK', dialCode: '+44' },
-];
+/** Pre-selected when it is in the list. */
+const DEFAULT_COUNTRY_ISO = 'IN';
 
-const INITIAL_VALUES: ContactFormValues = {
-  name: '',
-  email: '',
-  country: 'India',
-  phone: '',
-  company: '',
-  designation: '',
-  message: '',
-};
+/** Phone digits allowed when the selected country has no length data. */
+const DEFAULT_PHONE_MAX = 10;
+
+function initialValues(countries: Country[]): ContactFormValues {
+  const country = countries.find((c) => c.iso === DEFAULT_COUNTRY_ISO) ?? countries[0];
+  return {
+    name: '',
+    email: '',
+    country: country?.name ?? '',
+    phone: '',
+    company: '',
+    designation: '',
+    message: '',
+  };
+}
 
 /** hCaptcha's normal widget is 303px wide — too wide for the card below this. */
 const COMPACT_CAPTCHA_QUERY = '(max-width: 419px)';
@@ -52,12 +56,17 @@ function FieldError({ id, message }: { id: string; message?: string }) {
  * `contact-us/submit` route with an hCaptcha token, shows server and client
  * validation under each field, and reports the outcome in a toast.
  */
-export function LetsTalkForm() {
+interface LetsTalkFormProps {
+  /** From `fetchCountries()` on the server, A–Z. */
+  countries: Country[];
+}
+
+export function LetsTalkForm({ countries }: LetsTalkFormProps) {
   const uid = useId();
   const captchaRef = useRef<HCaptcha>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
-  const [values, setValues] = useState<ContactFormValues>(INITIAL_VALUES);
+  const [values, setValues] = useState<ContactFormValues>(() => initialValues(countries));
   const [attachment, setAttachment] = useState<File | null>(null);
   const [captchaToken, setCaptchaToken] = useState('');
   const [errors, setErrors] = useState<ContactFieldErrors>({});
@@ -95,6 +104,28 @@ export function LetsTalkForm() {
       clearError(field);
     };
 
+  const selectedCountry = countries.find((c) => c.name === values.country);
+
+  const countryOptions = useMemo(
+    () => countries.map((c) => ({ value: c.name, label: c.name, hint: c.dialCode })),
+    [countries]
+  );
+  const phoneMax = selectedCountry?.maxLength ?? DEFAULT_PHONE_MAX;
+
+  /** National digits only, capped at the selected country's mobile length. */
+  const handlePhone = (event: ChangeEvent<HTMLInputElement>) => {
+    const phone = event.target.value.replace(/\D/g, '').slice(0, phoneMax);
+    setValues((prev) => ({ ...prev, phone }));
+    clearError('phone');
+  };
+
+  /** A new country changes the allowed length, so re-check the number on change. */
+  const handleCountry = (country: string) => {
+    setValues((prev) => ({ ...prev, country }));
+    clearError('country');
+    clearError('phone');
+  };
+
   const handleFile = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] ?? null;
     const error = validateAttachment(file);
@@ -119,7 +150,7 @@ export function LetsTalkForm() {
     event.preventDefault();
     if (submitting) return;
 
-    const nextErrors: ContactFieldErrors = validateContactValues(values);
+    const nextErrors: ContactFieldErrors = validateContactValues(values, selectedCountry);
     if (!HCAPTCHA_SITEKEY) nextErrors.captcha = 'Captcha is not configured. Please try again later.';
     else if (!captchaToken) nextErrors.captcha = 'Please verify that you are human.';
 
@@ -130,13 +161,7 @@ export function LetsTalkForm() {
     }
 
     setSubmitting(true);
-    const country = COUNTRIES.find((c) => c.name === values.country);
-    const phone = values.phone.trim();
-    const result = await submitContactForm(
-      { ...values, phone: phone && country ? `${country.dialCode} ${phone}` : phone },
-      attachment,
-      captchaToken
-    );
+    const result = await submitContactForm(values, selectedCountry, attachment, captchaToken);
     setSubmitting(false);
     resetCaptcha();
 
@@ -144,7 +169,7 @@ export function LetsTalkForm() {
       toast.success(result.message || 'Your inquiry has been received.', {
         description: result.reference ? `Reference: ${result.reference}` : undefined,
       });
-      setValues(INITIAL_VALUES);
+      setValues(initialValues(countries));
       setErrors({});
       removeFile();
       return;
@@ -153,8 +178,6 @@ export function LetsTalkForm() {
     setErrors(result.fieldErrors);
     toast.error(result.message);
   };
-
-  const dialCode = COUNTRIES.find((c) => c.name === values.country)?.dialCode ?? '';
 
   return (
     <form
@@ -198,21 +221,16 @@ export function LetsTalkForm() {
 
       <div className="grid gap-[clamp(12px,1.25vw,24px)] sm:grid-cols-2">
         <div>
-          <select
-            name="country"
-            aria-label="Country*"
-            required
+          <SearchableSelect
+            label="Country*"
+            options={countryOptions}
             value={values.country}
-            onChange={handleChange('country')}
-            className={cn(inputStyles, 'appearance-none text-text-secondary', borderFor(errors.country))}
+            onChange={handleCountry}
+            searchPlaceholder="Search country or code"
+            emptyText="No countries found"
+            className={cn(inputStyles, 'text-text-secondary', borderFor(errors.country))}
             {...a11y('country')}
-          >
-            {COUNTRIES.map((country) => (
-              <option key={country.name} value={country.name}>
-                {country.name}
-              </option>
-            ))}
-          </select>
+          />
           <FieldError id={errorId('country')} message={errors.country} />
         </div>
         <div>
@@ -223,16 +241,18 @@ export function LetsTalkForm() {
                 borderFor(errors.phone)
               )}
             >
-              {dialCode}
+              {selectedCountry?.dialCode}
             </span>
             <input
               type="tel"
               name="phone"
+              inputMode="numeric"
               autoComplete="tel-national"
               placeholder="Phone Number"
-              aria-label="Phone Number"
+              aria-label={`Phone Number, up to ${phoneMax} digits`}
+              maxLength={phoneMax}
               value={values.phone}
-              onChange={handleChange('phone')}
+              onChange={handlePhone}
               className={cn(inputStyles, 'min-w-0 rounded-l-none', borderFor(errors.phone))}
               {...a11y('phone')}
             />

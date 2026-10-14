@@ -38,3 +38,15 @@ export interface StrapiErrorResponse {
 export type ContactSubmitResult =
   | { ok: true; message: string; reference?: string }
   | { ok: false; message: string; fieldErrors: ContactFieldErrors };
+
+/** One option of the enquiry form's country select. */
+export interface Country {
+  name: string;
+  /** ISO 3166-1 alpha-2, e.g. `IN`. */
+  iso: string;
+  /** e.g. `+91`, or `+1 684` for NANP territories. */
+  dialCode: string;
+  /** Digits allowed in a national mobile number (without the dial code). */
+  minLength: number;
+  maxLength: number;
+}

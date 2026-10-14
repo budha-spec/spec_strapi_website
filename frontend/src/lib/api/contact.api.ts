@@ -12,6 +12,7 @@ import type {
   ContactFormValues,
   ContactSubmitResponse,
   ContactSubmitResult,
+  Country,
   StrapiErrorResponse,
 } from '@/types/contact.types';
 
@@ -33,7 +34,8 @@ function isStrapiError(body: unknown): body is StrapiErrorResponse {
 function fieldErrorsFrom(
   message: string,
   body: StrapiErrorResponse | null,
-  values: ContactFormValues
+  values: ContactFormValues,
+  country: Country | undefined
 ): ContactFieldErrors {
   const errors: ContactFieldErrors = {};
 
@@ -45,18 +47,26 @@ function fieldErrorsFrom(
   if (/captcha/i.test(message)) errors.captcha = message;
   else if (/attachment/i.test(message)) errors.attachment = message;
   else if (/valid email/i.test(message)) errors.email = message;
-  else if (/required|exceed/i.test(message)) Object.assign(errors, validateContactValues(values));
+  else if (/required|exceed/i.test(message)) Object.assign(errors, validateContactValues(values, country));
 
   return errors;
 }
 
+/**
+ * `values.phone` holds national digits only; the selected country's dial
+ * code is prefixed here, e.g. `+91 9876543210`.
+ */
 export async function submitContactForm(
   values: ContactFormValues,
+  country: Country | undefined,
   attachment: File | null,
   captchaToken: string
 ): Promise<ContactSubmitResult> {
+  const phone = values.phone.trim();
+  const payload = { ...values, phone: phone && country ? `${country.dialCode} ${phone}` : phone };
+
   const form = new FormData();
-  for (const [key, value] of Object.entries(values)) form.append(key, value.trim());
+  for (const [key, value] of Object.entries(payload)) form.append(key, value.trim());
   form.append('captchaToken', captchaToken);
   if (attachment) form.append('attachment', attachment);
 
@@ -76,7 +86,7 @@ export async function submitContactForm(
       (data && !isStrapiError(data) ? data.message : '') ||
       FALLBACK_ERROR;
 
-    return { ok: false, message, fieldErrors: fieldErrorsFrom(message, strapiError, values) };
+    return { ok: false, message, fieldErrors: fieldErrorsFrom(message, strapiError, values, country) };
   } catch {
     return {
       ok: false,
