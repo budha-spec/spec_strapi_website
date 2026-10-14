@@ -809,7 +809,6 @@ export interface ApiIndustryIndustry extends Struct.CollectionTypeSchema {
       [
         'shared.services',
         'shared.rich-text',
-        'shared.industries',
         'shared.cta',
         'shared.case-studies',
         'shared.blogs',
@@ -866,6 +865,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'shared.contact-us',
         'shared.live-bi-visualization',
         'shared.whitepapers',
+        'shared.industry-section',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -918,7 +918,6 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
         'shared.contact-us',
         'shared.cta',
         'shared.faqs',
-        'shared.industries',
         'shared.testimonial-section',
       ]
     >;
