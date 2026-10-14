@@ -105,7 +105,10 @@ export interface SharedEnterpriseSolutionItem extends Struct.ComponentSchema {
     description: Schema.Attribute.Text & Schema.Attribute.Required;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
       Schema.Attribute.Required;
-    pages: Schema.Attribute.Relation<'oneToMany', 'api::page.page'>;
+    pages: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::content-item.content-item'
+    >;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     txt: Schema.Attribute.String & Schema.Attribute.Required;
     url: Schema.Attribute.Text & Schema.Attribute.Required;

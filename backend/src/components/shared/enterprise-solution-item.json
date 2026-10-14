@@ -36,7 +36,7 @@
     "pages": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::page.page"
+      "target": "api::content-item.content-item"
     }
   },
   "config": {}
