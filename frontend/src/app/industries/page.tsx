@@ -11,9 +11,9 @@ import { cmsText } from '@/lib/media';
 import type { ContactBlock, IndustryGalleryBlock } from '@/types/sections.types';
 
 /*
- * Copy from Figma (331:7265). The Strapi page entry (slug `industries`)
- * overrides the hero once it is published; the explorer heading has no
- * Strapi field yet.
+ * Copy from Figma (331:7265). Hero text comes from the Strapi page entry
+ * (slug `industries`) if published, else the Industry entry with that slug,
+ * else this. The explorer heading has no Strapi field yet.
  */
 const HERO = {
   title: 'Industry-Focused Technology Solutions Built for Growth & Innovation',
@@ -36,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function IndustriesLandingPage() {
-  const [page, industries] = await Promise.all([
+  const [page, { landing, industries }] = await Promise.all([
     fetchIndustriesPage(),
     fetchIndustries(),
   ]);
@@ -53,8 +53,8 @@ export default async function IndustriesLandingPage() {
   return (
     <main className="sp-page sp-page-industries flex w-full flex-col bg-bg-white">
       <PageHero
-        title={page?.title || HERO.title}
-        description={page?.description || HERO.description}
+        title={page?.title || landing?.title || HERO.title}
+        description={page?.description || landing?.description || HERO.description}
         crumbs={CRUMBS}
         currentCrumb="Industry"
         ctaLabel={contact?.txt || HERO.cta}

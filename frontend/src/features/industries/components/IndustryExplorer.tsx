@@ -3,15 +3,16 @@
 import { useId, useState, type KeyboardEvent } from 'react';
 import { CmsImage } from '@/components/ui/CmsImage';
 import { ExploreMore } from '@/components/ui/ExploreMore';
-import { cmsText, hrefPath } from '@/lib/media';
+import { cmsText } from '@/lib/media';
 import { cn } from '@/lib/utils';
+import { industryHref } from '../lib/industry-href';
 import type { Industry } from '../types/industries.types';
 
 /**
  * Industries landing explorer (Figma 331:7265): industry list on the left,
  * the selected industry's image, summary and Explore More on the right.
- * Hover, click or arrow keys pick an industry. On phones the list becomes a
- * scrolling row above the panel.
+ * Click (or arrow keys) picks an industry — hover only highlights it — and
+ * the panel fades in. On phones the list becomes a scrolling row above it.
  */
 export function IndustryExplorer({ industries }: { industries: Industry[] }) {
   const [active, setActive] = useState(0);
@@ -33,8 +34,6 @@ export function IndustryExplorer({ industries }: { industries: Industry[] }) {
     document.getElementById(`${baseId}-tab-${next}`)?.focus();
   };
 
-  // Industries have no `url` field yet; Explore More appears once they do.
-  const href = current.url ? hrefPath(current.url) : null;
 
   return (
     <div className="sp-industry-explorer grid overflow-hidden rounded-[14px] lg:grid-cols-[minmax(0,690fr)_minmax(0,1010fr)]">
@@ -56,10 +55,12 @@ export function IndustryExplorer({ industries }: { industries: Industry[] }) {
               aria-controls={`${baseId}-panel`}
               tabIndex={selected ? 0 : -1}
               onClick={() => setActive(index)}
-              onMouseEnter={() => setActive(index)}
               onKeyDown={onKeyDown}
               className={cn(
-                'industry-tab w-fit shrink-0 cursor-pointer whitespace-nowrap text-left text-d22 leading-[1.3] transition-colors',
+                // w-fit keeps the gradient as wide as the word (a full-width button
+                // stretches it so short names look solid green). Long names still
+                // wrap in the desktop column; the phone row scrolls instead.
+                'industry-tab w-fit max-w-full shrink-0 cursor-pointer whitespace-nowrap text-left text-d22 leading-[1.3] transition-colors duration-300 lg:whitespace-normal',
                 selected
                   ? 'gradient-text-impact font-medium'
                   : 'text-white/90 hover:text-white focus-visible:text-white'
@@ -77,7 +78,7 @@ export function IndustryExplorer({ industries }: { industries: Industry[] }) {
         id={`${baseId}-panel`}
         role="tabpanel"
         aria-labelledby={`${baseId}-tab-${active}`}
-        className="capability-panel flex flex-col bg-bg-chip"
+        className="industry-panel flex flex-col bg-bg-chip"
       >
         <div className="relative h-[clamp(200px,26.72vw,513px)] overflow-hidden bg-bg-dark">
           <CmsImage
@@ -99,9 +100,10 @@ export function IndustryExplorer({ industries }: { industries: Industry[] }) {
               {cmsText(current.description)}
             </p>
           )}
-          {href && (
-            <ExploreMore href={href} className="mt-auto self-start pt-[clamp(18px,1.82vw,35px)]" />
-          )}
+          <ExploreMore
+            href={industryHref(current)}
+            className="mt-auto self-start pt-[clamp(18px,1.82vw,35px)]"
+          />
         </div>
       </div>
     </div>

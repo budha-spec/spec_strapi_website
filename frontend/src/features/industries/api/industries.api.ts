@@ -26,19 +26,30 @@ export async function fetchIndustriesPage(): Promise<IndustriesPage | null> {
   }
 }
 
+/** Slug of the Industry entry that holds the landing page's own copy. */
+export const INDUSTRIES_LANDING_SLUG = 'industries';
+
 /**
- * Every published industry. Fails soft to an empty list (e.g. while the
- * Public role still lacks `find` on Industry), which hides the explorer.
+ * Every published industry, split into the landing entry (slug
+ * `industries` — its title/description are the hero, not a list item) and
+ * the real industries. Fails soft to an empty list, which hides the explorer.
  */
-export async function fetchIndustries(): Promise<Industry[]> {
+export async function fetchIndustries(): Promise<{
+  landing: Industry | null;
+  industries: Industry[];
+}> {
   try {
     const { data } = await strapiGet<StrapiListResponse<Industry>>(
       ENDPOINTS.INDUSTRIES,
       CONTENT
     );
-    return data.filter((industry) => industry.title);
+    const valid = data.filter((industry) => industry.title);
+    return {
+      landing: valid.find((industry) => industry.slug === INDUSTRIES_LANDING_SLUG) ?? null,
+      industries: valid.filter((industry) => industry.slug !== INDUSTRIES_LANDING_SLUG),
+    };
   } catch (error) {
     console.error('[industries] list unavailable:', error);
-    return [];
+    return { landing: null, industries: [] };
   }
 }
