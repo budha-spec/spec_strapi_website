@@ -851,11 +851,10 @@ export interface ApiIndustryIndustry extends Struct.CollectionTypeSchema {
   attributes: {
     content: Schema.Attribute.DynamicZone<
       [
-        'shared.services',
         'shared.rich-text',
         'shared.cta',
         'shared.case-studies',
-        'shared.blogs',
+        'shared.key-metrics-section',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
