@@ -595,6 +595,57 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiContactUsContactUs extends Struct.CollectionTypeSchema {
+  collectionName: 'contact_uses';
+  info: {
+    displayName: 'Contact Us';
+    pluralName: 'contact-uses';
+    singularName: 'contact-us';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    attachment: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    captchaVerified: Schema.Attribute.Enumeration<['Yes', 'No']> &
+      Schema.Attribute.DefaultTo<'No'>;
+    company: Schema.Attribute.String;
+    confirmationEmailSent: Schema.Attribute.Enumeration<['Yes', 'No']> &
+      Schema.Attribute.DefaultTo<'No'>;
+    country: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    designation: Schema.Attribute.String;
+    email: Schema.Attribute.Email & Schema.Attribute.Required;
+    emailStatus: Schema.Attribute.Enumeration<
+      ['pending', 'sent', 'partial', 'failed']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'pending'>;
+    hrEmailSent: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contact-us.contact-us'
+    > &
+      Schema.Attribute.Private;
+    message: Schema.Attribute.Text & Schema.Attribute.Required;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    phone: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    readAt: Schema.Attribute.DateTime;
+    readStatus: Schema.Attribute.Enumeration<['unread', 'read']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'unread'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiContentItemContentItem extends Struct.CollectionTypeSchema {
   collectionName: 'content_items';
   info: {
@@ -709,6 +760,45 @@ export interface ApiCsTagCsTag extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiEmailTemplateEmailTemplate
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'email_templates';
+  info: {
+    displayName: 'Email Template';
+    pluralName: 'email-templates';
+    singularName: 'email-template';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    htmlBody: Schema.Attribute.Text & Schema.Attribute.Required;
+    isActive: Schema.Attribute.Enumeration<['true', 'false']> &
+      Schema.Attribute.DefaultTo<'true'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::email-template.email-template'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publishedAt: Schema.Attribute.DateTime;
+    subject: Schema.Attribute.String & Schema.Attribute.Required;
+    templateKey: Schema.Attribute.Enumeration<
+      ['contact-inquiry-lead', 'contact-inquiry-confirmation']
+    > &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiFooterFooter extends Struct.SingleTypeSchema {
   collectionName: 'footers';
   info: {
@@ -763,7 +853,6 @@ export interface ApiIndustryIndustry extends Struct.CollectionTypeSchema {
       [
         'shared.services',
         'shared.rich-text',
-        'shared.industries',
         'shared.cta',
         'shared.case-studies',
         'shared.blogs',
@@ -820,6 +909,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'shared.contact-us',
         'shared.live-bi-visualization',
         'shared.whitepapers',
+        'shared.industry-section',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -872,7 +962,6 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
         'shared.contact-us',
         'shared.cta',
         'shared.faqs',
-        'shared.industries',
         'shared.testimonial-section',
       ]
     >;
@@ -1577,9 +1666,11 @@ declare module '@strapi/strapi' {
       'api::blog-post.blog-post': ApiBlogPostBlogPost;
       'api::case-study.case-study': ApiCaseStudyCaseStudy;
       'api::category.category': ApiCategoryCategory;
+      'api::contact-us.contact-us': ApiContactUsContactUs;
       'api::content-item.content-item': ApiContentItemContentItem;
       'api::cs-industry.cs-industry': ApiCsIndustryCsIndustry;
       'api::cs-tag.cs-tag': ApiCsTagCsTag;
+      'api::email-template.email-template': ApiEmailTemplateEmailTemplate;
       'api::footer.footer': ApiFooterFooter;
       'api::industry.industry': ApiIndustryIndustry;
       'api::page.page': ApiPagePage;

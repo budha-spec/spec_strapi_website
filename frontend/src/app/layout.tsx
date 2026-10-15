@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { Inter, Nunito, Poppins } from 'next/font/google';
+import { Toaster } from 'sonner';
 import './globals.css';
 import { Header, Footer } from '@/components/layout';
 
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Header />
         {children}
         <Footer />
+        <Toaster position="top-right" richColors closeButton />
       </body>
     </html>
   );

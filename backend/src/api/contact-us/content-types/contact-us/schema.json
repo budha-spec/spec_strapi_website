@@ -1,0 +1,92 @@
+{
+  "kind": "collectionType",
+  "collectionName": "contact_uses",
+  "info": {
+    "singularName": "contact-us",
+    "pluralName": "contact-uses",
+    "displayName": "Contact Us"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "country": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "company": {
+      "type": "string"
+    },
+    "designation": {
+      "type": "string"
+    },
+    "message": {
+      "type": "text",
+      "required": true
+    },
+    "attachment": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "emailStatus": {
+      "type": "enumeration",
+      "required": true,
+      "default": "pending",
+      "enum": [
+        "pending",
+        "sent",
+        "partial",
+        "failed"
+      ]
+    },
+    "hrEmailSent": {
+      "type": "boolean",
+      "default": false
+    },
+    "confirmationEmailSent": {
+      "type": "enumeration",
+      "default": "No",
+      "enum": [
+        "Yes",
+        "No"
+      ]
+    },
+    "captchaVerified": {
+      "type": "enumeration",
+      "default": "No",
+      "enum": [
+        "Yes",
+        "No"
+      ]
+    },
+    "readStatus": {
+      "type": "enumeration",
+      "required": true,
+      "default": "unread",
+      "enum": [
+        "unread",
+        "read"
+      ]
+    },
+    "readAt": {
+      "type": "datetime"
+    }
+  }
+}

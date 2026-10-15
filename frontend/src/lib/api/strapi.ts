@@ -44,3 +44,23 @@ export async function strapiGet<T>(
 
   return res.json() as Promise<T>;
 }
+
+/**
+ * POST multipart form data to a public Strapi route. Safe to call from the
+ * browser: it sends no API token, so the route must allow public access.
+ *
+ * An HTTP error does not throw — the caller reads Strapi's error body to show
+ * the reason. A network failure still throws.
+ */
+export async function strapiPostForm<T>(
+  path: string,
+  body: FormData
+): Promise<{ ok: boolean; status: number; data: T | null }> {
+  const res = await fetch(`${STRAPI_URL}/api${path}`, {
+    method: 'POST',
+    body,
+  });
+
+  const data = (await res.json().catch(() => null)) as T | null;
+  return { ok: res.ok, status: res.status, data };
+}

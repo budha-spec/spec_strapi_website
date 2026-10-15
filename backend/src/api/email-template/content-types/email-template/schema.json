@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "email_templates",
+  "info": {
+    "singularName": "email-template",
+    "pluralName": "email-templates",
+    "displayName": "Email Template"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "templateKey": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "contact-inquiry-lead",
+        "contact-inquiry-confirmation"
+      ]
+    },
+    "subject": {
+      "type": "string",
+      "required": true
+    },
+    "htmlBody": {
+      "type": "text",
+      "required": true
+    },
+    "isActive": {
+      "type": "enumeration",
+      "default": "true",
+      "enum": [
+        "true",
+        "false"
+      ]
+    }
+  }
+}

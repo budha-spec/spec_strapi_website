@@ -49,6 +49,10 @@
   --color-brand-cta-blue: #0050fe;
   --color-brand-pink: #ea407e;
 
+  /* ─── Status (form validation) ──────────────────────── */
+  --color-status-error: #D92D20;
+  --color-status-success: #079455;
+
   /* ─── Glassmorphism (hero search bar) ───────────────── */
   --color-glass-bg: rgba(0, 0, 0, 0.4);
   --color-glass-border: #6f8385;

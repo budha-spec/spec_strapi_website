@@ -39,7 +39,6 @@
       "components": [
         "shared.services",
         "shared.rich-text",
-        "shared.industries",
         "shared.cta",
         "shared.case-studies",
         "shared.blogs"

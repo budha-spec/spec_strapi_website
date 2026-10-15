@@ -60,7 +60,8 @@
         "shared.industry-gallery",
         "shared.contact-us",
         "shared.live-bi-visualization",
-        "shared.whitepapers"
+        "shared.whitepapers",
+        "shared.industry-section"
       ]
     },
     "children": {
