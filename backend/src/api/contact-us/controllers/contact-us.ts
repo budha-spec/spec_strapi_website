@@ -1,10 +1,12 @@
 /**
- * contact-us controller
+ * Contact Us controller
+ * Strapi v5
  */
 
 import { factories } from '@strapi/strapi';
 import type { Context } from 'koa';
-import { sendMail, escapeHtml } from '../../../utils/microsoft-mail';
+import { sendMail } from '../../../utils/microsoft-mail';
+import { renderEmailTemplate } from '../../../utils/email-template';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
 
@@ -18,6 +20,7 @@ const ALLOWED_MIME_TYPES = new Set<string>([
 
 type EmailStatus = 'pending' | 'sent' | 'partial' | 'failed';
 type YesNo = 'Yes' | 'No';
+type ReadStatus = 'read' | 'unread';
 
 interface ContactFormBody {
   name?: unknown;
@@ -81,6 +84,36 @@ function getEmailStatus(
 }
 
 /**
+ * Collect request details for use in email templates.
+ *
+ * FRONTEND_URL should be configured in the backend environment.
+ * The Referer header may be absent and should not be treated as
+ * a trusted source for authorization or security decisions.
+ */
+function getRequestDetails(ctx: Context): {
+  requestIp: string;
+  pageUrl: string;
+  websiteBaseUrl: string;
+} {
+  const referer = ctx.get('referer') || '';
+  let websiteBaseUrl = cleanString(process.env.FRONTEND_URL);
+
+  if (!websiteBaseUrl && referer) {
+    try {
+      websiteBaseUrl = new URL(referer).origin;
+    } catch {
+      websiteBaseUrl = '';
+    }
+  }
+
+  return {
+    requestIp: ctx.ip || 'Unknown',
+    pageUrl: referer || 'Not available',
+    websiteBaseUrl: websiteBaseUrl || 'Not configured',
+  };
+}
+
+/**
  * Verify hCaptcha using the server-side Siteverify endpoint.
  * Never expose HCAPTCHA_SECRET to the frontend.
  */
@@ -115,15 +148,7 @@ async function verifyCaptcha(token: string): Promise<boolean> {
 
     const result = (await response.json()) as HCaptchaResult;
 
-    if (result.success !== true) {
-      return false;
-    }
-
-    // Optional production hardening:
-    // Check result.hostname against your configured website hostname.
-    // First confirm the actual hostname returned by hCaptcha.
-
-    return true;
+    return result.success === true;
   } catch {
     // Fail closed if verification fails or times out.
     return false;
@@ -133,151 +158,247 @@ async function verifyCaptcha(token: string): Promise<boolean> {
 export default factories.createCoreController(
   'api::contact-us.contact-us',
   ({ strapi }) => ({
-async findForHr(ctx: Context) {
-  const query = ctx.query as Record<string, unknown>;
 
-  const requestedStatus =
-    typeof query.readStatus === 'string'
-      ? query.readStatus
-      : 'all';
+    /**
+     * GET: List contact inquiries for HR.
+     *
+     * Query parameters:
+     * ?readStatus=all|read|unread&page=1&pageSize=10
+     *
+     * Protect this route with appropriate authentication and
+     * authorization in your Strapi route configuration.
+     */
+    async findForHr(ctx: Context) {
+      const query = ctx.query as Record<string, unknown>;
 
-  if (!['all', 'read', 'unread'].includes(requestedStatus)) {
-  return ctx.badRequest(
-    'readStatus must be all, read or unread.'
-  );
-}
+      const requestedStatus =
+        typeof query.readStatus === 'string'
+          ? query.readStatus
+          : 'all';
 
-  const page = Math.max(
-    1,
-    Number.parseInt(String(query.page ?? '1'), 10) || 1
-  );
+      if (!['all', 'read', 'unread'].includes(requestedStatus)) {
+        return ctx.badRequest(
+          'readStatus must be all, read or unread.'
+        );
+      }
 
-  const pageSize = Math.min(
-    50,
-    Math.max(
-      1,
-      Number.parseInt(String(query.pageSize ?? '10'), 10) || 10
-    )
-  );
+      const page = Math.max(
+        1,
+        Number.parseInt(String(query.page ?? '1'), 10) || 1
+      );
 
-  const filters =
-  requestedStatus === 'all'
-    ? {}
-    : {
-        readStatus: {
-          $eq: requestedStatus as 'read' | 'unread',
+      const pageSize = Math.min(
+        50,
+        Math.max(
+          1,
+          Number.parseInt(String(query.pageSize ?? '10'), 10) || 10
+        )
+      );
+
+      const filters =
+        requestedStatus === 'all'
+          ? {}
+          : {
+              readStatus: {
+                $eq: requestedStatus as ReadStatus,
+              },
+            };
+
+      const [inquiries, total] = await Promise.all([
+        strapi.documents('api::contact-us.contact-us').findMany({
+          filters,
+          sort: { createdAt: 'desc' },
+          pagination: { page, pageSize },
+        }),
+
+        strapi.documents('api::contact-us.contact-us').count({
+          filters,
+        }),
+      ]);
+
+      ctx.body = {
+        data: inquiries.map((item) => ({
+          documentId: item.documentId,
+          name: item.name,
+          email: item.email,
+          phone: item.phone,
+          country: item.country,
+          company: item.company,
+          designation: item.designation,
+          message: item.message,
+          readStatus: item.readStatus,
+          readAt: item.readAt,
+          createdAt: item.createdAt,
+          emailStatus: item.emailStatus,
+          hrEmailSent: item.hrEmailSent,
+          confirmationEmailSent: item.confirmationEmailSent,
+        })),
+
+        meta: {
+          pagination: {
+            page,
+            pageSize,
+            total,
+            pageCount: Math.ceil(total / pageSize),
+          },
         },
       };
-
-  const [inquiries, total] = await Promise.all([
-    strapi.documents('api::contact-us.contact-us').findMany({
-      filters,
-      sort: { createdAt: 'desc' },
-      pagination: { page, pageSize },
-    }),
-    strapi.documents('api::contact-us.contact-us').count({
-      filters,
-    }),
-  ]);
-
-  ctx.body = {
-    data: inquiries.map((item) => ({
-      documentId: item.documentId,
-      name: item.name,
-      email: item.email,
-      country: item.country,
-      company: item.company,
-      designation: item.designation,
-      message: item.message,
-      readStatus: item.readStatus,
-      readAt: item.readAt,
-      createdAt: item.createdAt,
-      emailStatus: item.emailStatus,
-    })),
-    meta: {
-      pagination: {
-        page,
-        pageSize,
-        total,
-        pageCount: Math.ceil(total / pageSize),
-      },
     },
-  };
-},
 
-async findOneForHr(ctx: Context) {
-  const { documentId } = ctx.params;
+    /**
+     * GET: Fetch a single inquiry.
+     * Opening an unread inquiry marks it as read.
+     */
+    async findOneForHr(ctx: Context) {
+      const { documentId } = ctx.params;
 
-  if (!documentId) {
-    return ctx.badRequest('Inquiry documentId is required.');
-  }
+      if (!documentId) {
+        return ctx.badRequest('Inquiry documentId is required.');
+      }
 
-  const inquiry = await strapi
-    .documents('api::contact-us.contact-us')
-    .findOne({
-      documentId,
-      populate: { attachment: true },
-    });
+      const inquiry = await strapi
+        .documents('api::contact-us.contact-us')
+        .findOne({
+          documentId,
+          populate: { attachment: true },
+        });
 
-  if (!inquiry) {
-    return ctx.notFound('Inquiry not found.');
-  }
+      if (!inquiry) {
+        return ctx.notFound('Inquiry not found.');
+      }
 
-  // Opening an inquiry marks it as read.
-  if (inquiry.readStatus === 'unread') {
-    await strapi.documents('api::contact-us.contact-us').update({
-      documentId,
-      data: { readStatus: 'read', readAt: new Date() },
-    });
-  }
+      if (inquiry.readStatus === 'unread') {
+        await strapi
+          .documents('api::contact-us.contact-us')
+          .update({
+            documentId,
+            data: {
+              readStatus: 'read',
+              readAt: new Date(),
+            },
+          });
+      }
 
-  // Fetch again so the attachment relation remains populated in the response.
-  const viewedInquiry = await strapi
-    .documents('api::contact-us.contact-us')
-    .findOne({
-      documentId,
-      populate: { attachment: true },
-    });
+      // Fetch again to return the updated record and populated attachment.
+      const viewedInquiry = await strapi
+        .documents('api::contact-us.contact-us')
+        .findOne({
+          documentId,
+          populate: { attachment: true },
+        });
 
-  ctx.body = {
-    data: viewedInquiry,
-  };
-},
+      ctx.body = {
+        data: viewedInquiry,
+      };
+    },
 
+    /**
+     * PUT: Bulk update inquiry read status.
+     */
+    async updateReadStatusBulk(ctx: Context) {
+      const body = ctx.request.body as {
+        documentIds?: unknown;
+        readStatus?: unknown;
+      };
 
-async updateReadStatusBulk(ctx: Context) {
-  const body = ctx.request.body as {
-    documentIds?: unknown;
-    readStatus?: unknown;
-  };
+      const documentIds = body?.documentIds;
+      const readStatus = body?.readStatus;
 
-  const documentIds = body?.documentIds;
-  const readStatus = body?.readStatus;
+      if (!Array.isArray(documentIds) || documentIds.length === 0) {
+        return ctx.badRequest(
+          'documentIds must be a non-empty array.'
+        );
+      }
 
-  if (!Array.isArray(documentIds) || documentIds.length === 0) {
-    return ctx.badRequest('documentIds must be a non-empty array.');
-  }
+      if (
+        documentIds.some(
+          (id) => typeof id !== 'string' || !id.trim()
+        ) ||
+        documentIds.length > 100
+      ) {
+        return ctx.badRequest(
+          'documentIds must contain up to 100 valid document IDs.'
+        );
+      }
 
-  if (
-    documentIds.some((id) => typeof id !== 'string' || !id.trim()) ||
-    documentIds.length > 100
-  ) {
-    return ctx.badRequest('documentIds must contain up to 100 valid document IDs.');
-  }
+      if (readStatus !== 'read' && readStatus !== 'unread') {
+        return ctx.badRequest(
+          'readStatus must be read or unread.'
+        );
+      }
 
-  if (readStatus !== 'read' && readStatus !== 'unread') {
-    return ctx.badRequest('readStatus must be read or unread.');
-  }
+      const uniqueIds = [...new Set(documentIds as string[])];
 
-  const uniqueIds = [...new Set(documentIds as string[])];
-  const results = await Promise.all(
-    uniqueIds.map(async (documentId) => {
+      const results = await Promise.all(
+        uniqueIds.map(async (documentId) => {
+          const existing = await strapi
+            .documents('api::contact-us.contact-us')
+            .findOne({ documentId });
+
+          if (!existing) {
+            return {
+              documentId,
+              success: false,
+              reason: 'not_found',
+            };
+          }
+
+          const updated = await strapi
+            .documents('api::contact-us.contact-us')
+            .update({
+              documentId,
+              data: {
+                readStatus,
+                readAt: readStatus === 'read' ? new Date() : null,
+              },
+            });
+
+          return {
+            documentId: updated.documentId,
+            success: true,
+            readStatus: updated.readStatus,
+            readAt: updated.readAt,
+          };
+        })
+      );
+
+      ctx.body = {
+        data: results,
+        meta: {
+          updated: results.filter((item) => item.success).length,
+          failed: results.filter((item) => !item.success).length,
+        },
+      };
+    },
+
+    /**
+     * PUT: Update a single inquiry's read status.
+     */
+    async updateReadStatus(ctx: Context) {
+      const { documentId } = ctx.params;
+
+      const body = ctx.request.body as {
+        readStatus?: unknown;
+      };
+
+      const readStatus = body?.readStatus;
+
+      if (!documentId) {
+        return ctx.badRequest('Inquiry documentId is required.');
+      }
+
+      if (readStatus !== 'read' && readStatus !== 'unread') {
+        return ctx.badRequest(
+          'readStatus must be read or unread.'
+        );
+      }
+
       const existing = await strapi
         .documents('api::contact-us.contact-us')
         .findOne({ documentId });
 
       if (!existing) {
-        return { documentId, success: false, reason: 'not_found' };
+        return ctx.notFound('Inquiry not found.');
       }
 
       const updated = await strapi
@@ -290,69 +411,25 @@ async updateReadStatusBulk(ctx: Context) {
           },
         });
 
-      return {
-        documentId: updated.documentId,
-        success: true,
-        readStatus: updated.readStatus,
-        readAt: updated.readAt,
+      ctx.body = {
+        data: {
+          documentId: updated.documentId,
+          readStatus: updated.readStatus,
+          readAt: updated.readAt,
+        },
       };
-    })
-  );
-
-  ctx.body = {
-    data: results,
-    meta: {
-      updated: results.filter((item) => item.success).length,
-      failed: results.filter((item) => !item.success).length,
     },
-  };
-},
 
-async updateReadStatus(ctx: Context) {
-  const { documentId } = ctx.params;
-  const body = ctx.request.body as {
-    readStatus?: unknown;
-  };
-
-  const readStatus = body?.readStatus;
-
-  if (!documentId) {
-    return ctx.badRequest('Inquiry documentId is required.');
-  }
-
-  if (readStatus !== 'read' && readStatus !== 'unread') {
-    return ctx.badRequest(
-      'readStatus must be read or unread.'
-    );
-  }
-
-  const existing = await strapi
-    .documents('api::contact-us.contact-us')
-    .findOne({ documentId });
-
-  if (!existing) {
-    return ctx.notFound('Inquiry not found.');
-  }
-
-  const updated = await strapi
-    .documents('api::contact-us.contact-us')
-    .update({
-      documentId,
-      data: {
-        readStatus,
-        readAt: readStatus === 'read' ? new Date() : null,
-      },
-    });
-
-  ctx.body = {
-    data: {
-      documentId: updated.documentId,
-      readStatus: updated.readStatus,
-      readAt: updated.readAt,
-    },
-  };
-},
-
+    /**
+     * POST: Submit the public contact form.
+     *
+     * Saves the inquiry first, then independently attempts:
+     * 1. HR notification email.
+     * 2. Customer confirmation email.
+     *
+     * Both email bodies and subjects are loaded from Strapi-managed
+     * Email Template entries.
+     */
     async submit(ctx: Context) {
       let inquiryDocumentId: string | undefined;
 
@@ -376,7 +453,9 @@ async updateReadStatus(ctx: Context) {
         }
 
         if (!validEmail(email)) {
-          return ctx.badRequest('Please enter a valid email address.');
+          return ctx.badRequest(
+            'Please enter a valid email address.'
+          );
         }
 
         if (
@@ -413,7 +492,9 @@ async updateReadStatus(ctx: Context) {
         let uploadedMedia: UploadedMedia | null = null;
 
         if (attachmentFile) {
-          const file = attachmentFile as unknown as UploadResultFile;
+          const file =
+            attachmentFile as unknown as UploadResultFile;
+
           const fileName = file.originalFilename ?? 'attachment';
           const mimeType = file.mimetype ?? '';
 
@@ -426,7 +507,6 @@ async updateReadStatus(ctx: Context) {
             );
           }
 
-          // The upload service expects a multipart upload file object.
           const uploadedFiles = (await strapi
             .plugin('upload')
             .service('upload')
@@ -471,47 +551,47 @@ async updateReadStatus(ctx: Context) {
 
         inquiryDocumentId = inquiry.documentId;
 
-        // 5. Prepare escaped HTML email content.
-        const attachmentInfo = uploadedMedia
-          ? `<p>Attachment: ${escapeHtml(uploadedMedia.name)}</p>`
-          : '<p>Attachment: None</p>';
+        // 5. Prepare template variables.
+        const requestDetails = getRequestDetails(ctx);
 
-        const inquiryHtml = `
-          <h2>New Contact Form Inquiry</h2>
-          <p><strong>Inquiry ID:</strong> ${escapeHtml(inquiryDocumentId)}</p>
-          <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-          <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-          <p><strong>Phone:</strong> ${escapeHtml(phone || 'Not provided')}</p>
-          <p><strong>Country:</strong> ${escapeHtml(country)}</p>
-          <p><strong>Company:</strong> ${escapeHtml(company || 'Not provided')}</p>
-          <p><strong>Designation:</strong> ${escapeHtml(designation || 'Not provided')}</p>
-          <p><strong>Message:</strong></p>
-          <p>${escapeHtml(message).replace(/\r?\n/g, '<br>')}</p>
-          ${attachmentInfo}
-        `;
+        const templateVariables: Record<string, string> = {
+          inquiryId: inquiryDocumentId,
+          name,
+          email,
+          phone: phone || 'Not provided',
+          country,
+          company: company || 'Not provided',
+          designation: designation || 'Not provided',
+          message,
+          attachment: uploadedMedia?.name || 'None',
+          requestIp: requestDetails.requestIp,
+          pageUrl: requestDetails.pageUrl,
+          websiteBaseUrl: requestDetails.websiteBaseUrl,
+        };
 
-        const confirmationHtml = `
-          <p>Hello ${escapeHtml(name)},</p>
-          <p>Thank you for contacting us. We have received your inquiry.</p>
-          <p>Our team will review your message and get back to you.</p>
-          <p>Your reference number is: ${escapeHtml(inquiryDocumentId)}</p>
-          <p>Regards,<br>Website Team</p>
-        `;
-
-        // 6. Send HR notification and user confirmation independently.
+        // 6. Send HR notification and customer confirmation independently.
         let hrEmailSent = false;
         let confirmationEmailSent = false;
 
-        const hrEmail = process.env.HR_EMAIL;
+        const hrEmail = cleanString(process.env.HR_EMAIL);
 
+        // HR notification.
         if (!hrEmail) {
-          strapi.log.error('HR_EMAIL is not configured.');
+          strapi.log.error(
+            'HR notification email was not sent: HR_EMAIL is not configured.'
+          );
         } else {
           try {
+            const hrTemplate = await renderEmailTemplate(
+              strapi,
+              'contact-inquiry-lead',
+              templateVariables
+            );
+
             await sendMail({
               to: hrEmail,
-              subject: `New website inquiry: ${name}`,
-              html: inquiryHtml,
+              subject: hrTemplate.subject,
+              html: hrTemplate.html,
               replyTo: email,
             });
 
@@ -524,11 +604,18 @@ async updateReadStatus(ctx: Context) {
           }
         }
 
+        // Customer confirmation.
         try {
+          const confirmationTemplate = await renderEmailTemplate(
+            strapi,
+            'contact-inquiry-confirmation',
+            templateVariables
+          );
+
           await sendMail({
             to: email,
-            subject: 'We received your inquiry',
-            html: confirmationHtml,
+            subject: confirmationTemplate.subject,
+            html: confirmationTemplate.html,
           });
 
           confirmationEmailSent = true;
@@ -539,7 +626,7 @@ async updateReadStatus(ctx: Context) {
           );
         }
 
-        // 7. Persist delivery status.
+        // 7. Persist email delivery status.
         const emailStatus = getEmailStatus(
           hrEmailSent,
           confirmationEmailSent
@@ -576,7 +663,8 @@ async updateReadStatus(ctx: Context) {
           return;
         }
 
-        // 8. The inquiry is saved even if one or both emails fail.
+        // 8. Return success even if email delivery fails.
+        // The inquiry has already been saved.
         ctx.status = 200;
         ctx.body = {
           success: true,
@@ -590,6 +678,8 @@ async updateReadStatus(ctx: Context) {
           error
         );
 
+        // If the inquiry was already saved, do not report that the
+        // entire submission failed merely because a later step failed.
         if (inquiryDocumentId) {
           ctx.status = 200;
           ctx.body = {
