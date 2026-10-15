@@ -132,6 +132,7 @@ Names follow the Figma section labels so designers and developers mean the same 
 | `FaqSection` | "Frequently Asked Questions" accordion | `shared.faqs` |
 | `CtaBanner` | "Hire Dedicated Development Team" banner | `shared.cta` |
 | `BlogSection` | "Latest Insights" carousel (WordPress, optional category) | — (`fetchLatestBlogs(category?)` in `src/lib/api/blogs.api.ts`) |
+| `IndustryGallery` | "Client & Industry" logo tiles (logo moves top-left, description fades in on hover) | `shared.industry-gallery` |
 | `LetsTalk` | "Let's Talk to OUR EXPERT!" + enquiry form | Strapi `footer` single type (`fetchFooter()` in `src/lib/api/footer.api.ts`), rendered by Footer with the awards/ratings strip |
 
 ---
