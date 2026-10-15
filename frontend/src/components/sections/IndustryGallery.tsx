@@ -3,7 +3,7 @@ import { CmsImage } from '@/components/ui/CmsImage';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { cmsText } from '@/lib/media';
 import { cn } from '@/lib/utils';
-import type { IndustryGalleryBlock } from '../types/testimonials.types';
+import type { IndustryGalleryBlock } from '@/types/sections.types';
 
 /** "Client & Industry" — white logo tiles, 2 → 3 → 4 → 6 per row. */
 export function IndustryGallery({ data }: { data: IndustryGalleryBlock }) {

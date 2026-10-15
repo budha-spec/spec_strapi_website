@@ -101,6 +101,25 @@ const WHITEPAPER_POPULATE = [
   'populate[content][on][shared.whitepapers][populate][whitepapers][populate]=*',
 ].join('&');
 
+/**
+ * Industries landing page entry: hero CTA and the "Client & Industry" logos.
+ * The industry list itself comes from the Industry collection (below).
+ */
+const INDUSTRIES_PAGE_POPULATE = [
+  'populate[content][on][shared.contact-us][populate]=*',
+  'populate[content][on][shared.industry-gallery][populate][gallery][populate]=*',
+].join('&');
+
+/** Industry list for the landing explorer — what each panel shows, oldest first. */
+const INDUSTRY_LIST_QUERY = [
+  'fields[0]=title',
+  'fields[1]=slug',
+  'fields[2]=description',
+  'populate[image]=true',
+  'sort[0]=id:asc',
+  'pagination[pageSize]=100',
+].join('&');
+
 /** All Strapi API endpoint paths. Import from here — never hardcode in components. */
 export const ENDPOINTS = {
   /** Landing page: slug `home`, with nested media and relations. */
@@ -119,6 +138,10 @@ export const ENDPOINTS = {
   TESTIMONIALS_PAGE: `/pages?filters[slug][$eq]=testimonials&${TESTIMONIALS_POPULATE}`,
   /** `/whitepaper` listing page (Strapi page slug `whitepaper`). */
   WHITEPAPER_PAGE: `/pages?filters[slug][$eq]=whitepaper&${WHITEPAPER_POPULATE}`,
+  /** `/industries` landing page (Strapi page slug `industries`). */
+  INDUSTRIES_PAGE: `/pages?filters[slug][$eq]=industries&${INDUSTRIES_PAGE_POPULATE}`,
+  /** Every published industry — needs the Public role's `find` on Industry. */
+  INDUSTRIES: `/industries?${INDUSTRY_LIST_QUERY}`,
   /** Visualization categories — the listing's tabs ("All Visualization", "Power BI", …). */
   VISUALIZATION_CATEGORIES:
     '/visualization-categories?fields[0]=title&fields[1]=slug&pagination[pageSize]=100',

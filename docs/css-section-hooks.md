@@ -68,6 +68,7 @@ The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
 | `sp-page-live-bi` | `/live-bi-visualization` Live BI listing |
 | `sp-page-testimonials` | `/about/testimonials` Testimonials listing |
 | `sp-page-whitepaper` | `/whitepaper` Whitepaper listing |
+| `sp-page-industries` | `/industries` Industries landing |
 
 ## Layout (every page)
 
@@ -117,10 +118,13 @@ The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
 | `sp-live-bi-empty` | "No dashboards in this category" message | Live BI |
 | `sp-testimonial-feature` | Light "Client Spotlight" carousel (wide quote cards) | Testimonials |
 | `sp-testimonials-grid` | Card grid inside `sp-testimonials` when it uses `layout="grid"` | Testimonials |
-| `sp-industry-gallery` | "Client & Industry" logo tiles | Testimonials |
+| `sp-industry-gallery` | "Client & Industry" logo tiles | Testimonials, Industries |
 | `sp-whitepaper-listing` | Heading + whitepaper cards band | Whitepaper |
 | `sp-whitepaper-grid` | Two-column whitepaper card grid | Whitepaper |
 | `sp-whitepaper-empty` | "New whitepapers are on their way" message | Whitepaper |
+| `sp-industries-intro` | "Capabilities" heading band above the explorer | Industries |
+| `sp-industries-explorer` | Dark band holding the industry explorer | Industries |
+| `sp-industry-explorer` | Industry list + selected industry panel | Industries |
 
 ## Repeated controls (inside sections)
 
@@ -141,6 +145,7 @@ These were added earlier and work the same way.
 | `industry-logo` (+ `industry-logo-img`, `industry-logo-description`) | One "Client & Industry" logo tile; on hover the logo moves top-left and the description fades in |
 | `spotlight-card` (+ `has-quote`, `spotlight-shade`, `spotlight-identity`, `spotlight-quote`, `spotlight-play`) | Client Spotlight card; on hover the name collapses and the quote opens (CSS in `globals.css`) |
 | `whitepaper-card`, `whitepaper-card-media` | One whitepaper card and its cover image |
+| `industry-tab` | One industry in the explorer list (`aria-selected="true"` when active) |
 
 ## Rules for new work
 
