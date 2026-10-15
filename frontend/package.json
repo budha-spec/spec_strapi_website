@@ -11,6 +11,7 @@
     "check:layout": "node scripts/check-layout.mjs"
   },
   "dependencies": {
+    "@hcaptcha/react-hcaptcha": "^2.2.0",
     "@tailwindcss/postcss": "^4.3.3",
     "@tsparticles/engine": "^4.4.0",
     "@tsparticles/react": "^4.4.0",
@@ -18,9 +19,11 @@
     "clsx": "^2.1.1",
     "cobe": "^2.0.1",
     "framer-motion": "^14.0.0",
+    "libphonenumber-js": "^1.13.15",
     "next": "^16.3.8",
     "react": "19.0.0",
     "react-dom": "19.0.0",
+    "sonner": "^2.0.8",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {

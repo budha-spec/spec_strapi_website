@@ -127,6 +127,8 @@ export const ENDPOINTS = {
   /** One service detail page, matched by its public path, e.g. `services/ai-ml-development`. */
   SERVICE_BY_URL: (url: string) =>
     `/services?filters[url][$eq]=${encodeURIComponent(url)}&${SERVICE_DETAIL_POPULATE}`,
+  /** Enquiry form (POST, multipart). Public custom route — verifies hCaptcha server-side. */
+  CONTACT_SUBMIT: '/contact-us/submit',
 } as const;
 
 /** Most posts the Insights carousel will show, however many the API returns. */
@@ -149,4 +151,12 @@ export const WP_ENDPOINTS = {
 export const REVALIDATE = {
   CONTENT: 60,
   LAYOUT: 3600,
+  /** Reference data that almost never changes (country list). */
+  STATIC: 86400,
 } as const;
+
+/**
+ * Country names, ISO codes and dial codes for the enquiry form. Free, no API
+ * key (restcountries.com now requires one).
+ */
+export const COUNTRIES_API_URL = 'https://countriesnow.space/api/v0.1/countries/codes';

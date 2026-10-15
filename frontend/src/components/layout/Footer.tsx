@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { LetsTalk } from '@/components/sections';
 import { CmsImage } from '@/components/ui/CmsImage';
 import { fetchFooter } from '@/lib/api/footer.api';
+import { fetchCountries } from '@/lib/api/countries.api';
 import { cmsText } from '@/lib/media';
 
 const FOOTER_COLUMNS: {
@@ -77,7 +78,7 @@ const FOOTER_COLUMNS: {
  * review strip (Strapi `footer` single type), then the dark link columns.
  */
 export async function Footer() {
-  const data = await fetchFooter();
+  const [data, countries] = await Promise.all([fetchFooter(), fetchCountries()]);
   const certificates = (data?.certificates ?? []).filter((media) => media.url);
   const ratings = (data?.companyRating ?? []).filter((item) => item.logo?.url);
 
@@ -85,7 +86,7 @@ export async function Footer() {
     <footer id="contact" className="sp-footer w-full">
       {/* ─── CTA: contact details + enquiry form ─────────────── */}
       <section className="sp-footer-contact relative z-10 w-full bg-bg-light pt-[clamp(40px,3.65vw,70px)]">
-        <LetsTalk data={data} />
+        <LetsTalk data={data} countries={countries} />
 
         {/* Certifications + review scores. Overlaps the dark footer below. */}
         {(certificates.length > 0 || ratings.length > 0) && (
