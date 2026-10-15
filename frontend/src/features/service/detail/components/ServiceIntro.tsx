@@ -43,7 +43,7 @@ export function ServiceIntro({ data }: ServiceIntroProps) {
 
   return (
     <section className="sp-section sp-service-intro w-full bg-bg-light pt-[clamp(40px,3.65vw,70px)] pb-[clamp(40px,4.17vw,80px)]">
-      <div className="shell grid gap-[clamp(16px,2vw,32px)] lg:grid-cols-[minmax(0,560fr)_minmax(0,820fr)] lg:gap-x-[clamp(40px,5.73vw,110px)]">
+      <div className="shell grid gap-[clamp(16px,2vw,32px)] lg:grid-cols-[minmax(0,300fr)_minmax(0,700fr)] lg:gap-x-[clamp(40px,5.73vw,110px)]">
         {data.title && (
           <h2
             className="sp-title gradient-text w-fit text-d40 font-semibold leading-[1.2]"
@@ -53,7 +53,7 @@ export function ServiceIntro({ data }: ServiceIntroProps) {
           </h2>
         )}
 
-        <div>
+        <div className="max-w-[800px]">
           <div
             ref={bodyRef}
             id={bodyId}

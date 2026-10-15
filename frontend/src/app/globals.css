@@ -274,8 +274,8 @@
   .explore-all-on-light {
     background-image: linear-gradient(
       var(--grad-angle, -66.1deg),
-      #56f72f 10.862%,
-      #0c3ced 97.041%
+      #000 10.862%,
+      #000 97.041%
     );
     color: #ffffff;
     border: 1px solid transparent;
@@ -285,6 +285,18 @@
       background-color 0.2s ease,
       background-image 0.2s ease;
   }
+
+
+  .explore-all-on-light:hover{
+    background-image: linear-gradient(
+      var(--grad-angle, -66.1deg),
+      #56f72f 10.862%,
+      #0c3ced 97.041%
+    ) !important;
+  }
+
+
+
   .explore-all-on-light:hover {
     background-image: none;
     background-color: #090909;
@@ -1024,18 +1036,6 @@ footer {
   background: #f9f9f9;
 }
 
-@media (max-width: 1280px) {
-  ul.sp-live-bi-grid li:nth-child(-n + 4) {
-    margin-bottom: 0px;
-  }
-}
-
-@media (max-width: 767px) {
-  .sp-header > div {
-    height: 60px !important;
-  }
-}
-
 /*
  * Explore More — label and arrow always hover together. The custom block
  * above resets the arrow's border, which overrides the layered
@@ -1060,3 +1060,41 @@ footer {
   -webkit-text-fill-color: transparent;
   color: transparent;
 }
+.footer-social-icons li a {
+    padding: 10px;
+    border: 1px solid #6F6F6F;
+}
+.footer-social-icons li a:hover{ border: none;}
+ul.sp-testimonials-grid li:nth-child(-n + 4) {
+    margin-bottom: 52px;
+}
+
+.sp-whitepaper-grid li:nth-child(-n + 2) {
+    margin-bottom: 52px;
+}
+
+
+.whitepaper-card:hover span.explore-more-arrow {
+    border-color: transparent;
+}
+
+
+@media (max-width: 1280px) {
+  ul.sp-live-bi-grid li:nth-child(-n + 4) {
+    margin-bottom: 0px;
+  }
+  ul.sp-testimonials-grid li:nth-child(-n + 4) {
+   margin-bottom: 0px;
+}
+.sp-whitepaper-grid li:nth-child(-n + 2){
+  margin-bottom: 0px;
+}
+
+}
+
+@media (max-width: 767px) {
+  .sp-header > div {
+    height: 60px !important;
+  }
+}
+
