@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_shared_career_inquiry_ctas",
+  "info": {
+    "displayName": "Career Inquiry CTA"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "inquiryItems": {
+      "type": "component",
+      "component": "shared.career-inquiry-item",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

@@ -24,6 +24,35 @@ export interface SharedCapabilitiesItem extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedCareerInquiryCta extends Struct.ComponentSchema {
+  collectionName: 'components_shared_career_inquiry_ctas';
+  info: {
+    displayName: 'Career Inquiry CTA';
+  };
+  attributes: {
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    inquiryItems: Schema.Attribute.Component<
+      'shared.career-inquiry-item',
+      true
+    >;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedCareerInquiryItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_career_inquiry_items';
+  info: {
+    displayName: 'Career Inquiry Item';
+  };
+  attributes: {
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
+    item: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+  };
+}
+
 export interface SharedCaseStudies extends Struct.ComponentSchema {
   collectionName: 'components_shared_case_studies';
   info: {
@@ -534,6 +563,8 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'shared.blogs': SharedBlogs;
       'shared.capabilities-item': SharedCapabilitiesItem;
+      'shared.career-inquiry-cta': SharedCareerInquiryCta;
+      'shared.career-inquiry-item': SharedCareerInquiryItem;
       'shared.case-studies': SharedCaseStudies;
       'shared.challenges': SharedChallenges;
       'shared.challenges-item': SharedChallengesItem;
