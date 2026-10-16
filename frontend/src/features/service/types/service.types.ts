@@ -20,14 +20,24 @@ export interface ServiceLink {
   url?: string | null;
 }
 
-/** A Service entry related from a `shared.services` block. */
+/**
+ * One card in a `shared.services` block. Detail pages now get hand-entered
+ * `shared.service-item`s (title, description, image, optional `url` +
+ * `btnText`, `subServices`); the landing tabs still read the older
+ * Service-relation fields (`slug`, `children`).
+ */
 export interface ServiceCard {
   id: number;
   title: string;
   slug?: string | null;
   description?: string | null;
+  /** Explore More target — the button is hidden without it. */
   url?: string | null;
+  /** Explore More label; defaults to "Explore More". */
+  btnText?: string | null;
   image?: CmsMedia | null;
+  /** Services linked from a `shared.service-item`. */
+  subServices?: ServiceLink[] | null;
   children?: ServiceLink[] | null;
 }
 
