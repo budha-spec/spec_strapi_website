@@ -74,6 +74,7 @@ export interface SharedCaseStudyItem extends Struct.ComponentSchema {
   attributes: {
     btnText: Schema.Attribute.String;
     description: Schema.Attribute.Text & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     tags: Schema.Attribute.Relation<'oneToMany', 'api::cs-tag.cs-tag'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     url: Schema.Attribute.String;
