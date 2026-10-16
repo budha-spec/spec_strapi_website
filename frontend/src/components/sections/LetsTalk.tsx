@@ -8,7 +8,7 @@ import type { FooterData, FooterSocial } from '@/types/footer.types';
 
 type Network = 'linkedin' | 'instagram' | 'pinterest' | 'facebook' | 'twitter';
 
-const NETWORK_LABELS: Record<Network, string> = {
+export const NETWORK_LABELS: Record<Network, string> = {
   linkedin: 'LinkedIn',
   instagram: 'Instagram',
   pinterest: 'Pinterest',
@@ -20,7 +20,7 @@ const NETWORK_LABELS: Record<Network, string> = {
  * Which brand colour a social button fills with on hover. Read from the icon
  * file first so the colour always matches the picture, then from the URL.
  */
-function socialNetwork(social: FooterSocial): Network | null {
+export function socialNetwork(social: FooterSocial): Network | null {
   for (const source of [social.icon?.name, social.url]) {
     const value = (source ?? '').toLowerCase();
     if (value.includes('linkedin')) return 'linkedin';
@@ -37,7 +37,7 @@ function socialNetwork(social: FooterSocial): Network | null {
  * Hover marks for the portfolio pills, keyed by title. Strapi only holds the
  * resting logo; on hover the circle turns white and shows this coloured mark.
  */
-const PORTFOLIO_HOVER_ICONS: Record<string, string> = {
+export const PORTFOLIO_HOVER_ICONS: Record<string, string> = {
   behance: '/social/behance-hover.png',
   dribbble: '/social/dribbble-hover.png',
 };
@@ -48,7 +48,7 @@ const PORTFOLIO_HOVER_ICONS: Record<string, string> = {
  * start with a street number) is bold — Figma: "**SPEC House,** Parth
  * Complex, …" while "350 Grove Street, …" stays regular.
  */
-function renderAddress(text: string): ReactNode[] {
+export function renderAddress(text: string): ReactNode[] {
   if (!text.includes('**')) {
     const match = text.match(/^([^,\d][^,]*,)([\s\S]*)$/);
     if (match) {
@@ -72,7 +72,7 @@ function renderAddress(text: string): ReactNode[] {
   );
 }
 
-const PhoneIcon = () => (
+export const PhoneIcon = () => (
   <svg
     width="15"
     height="15"
@@ -84,7 +84,7 @@ const PhoneIcon = () => (
   </svg>
 );
 
-const MailIcon = () => (
+export const MailIcon = () => (
   <svg
     width="15"
     height="15"
@@ -101,8 +101,29 @@ const OFFICE_GRID =
   'grid gap-[clamp(16px,1.5vw,28px)] sm:grid-cols-[repeat(2,minmax(0,clamp(200px,13.33vw,256px)))] sm:gap-x-[clamp(20px,1.61vw,31px)]';
 
 /** Figma heading size 23.77px (Poppins) for "Let's Talk to" and the form title. */
-const CARD_HEADING =
+export const CARD_HEADING =
   'font-display text-[clamp(1.125rem,1.238vw,1.4854rem)] font-medium leading-[1.3] text-text-primary';
+
+interface EnquiryCardProps {
+  countries: Country[];
+  className?: string;
+}
+
+/** "Share Your Project's Vision" — the white card holding the enquiry form. */
+export function EnquiryCard({ countries, className }: EnquiryCardProps) {
+  return (
+    <div
+      className={cn(
+        'rounded-[16px] bg-bg-white px-[clamp(20px,2.08vw,40px)] pt-[clamp(20px,1.56vw,30px)] pb-[clamp(20px,1.93vw,37px)]',
+        className,
+      )}
+    >
+      <h3 className={CARD_HEADING}>Share Your Project&rsquo;s Vision</h3>
+
+      <LetsTalkForm countries={countries} />
+    </div>
+  );
+}
 
 interface LetsTalkProps {
   /** Strapi `footer` single type; the contact card is skipped when null. */
@@ -299,11 +320,7 @@ export function LetsTalk({ data, countries, className }: LetsTalkProps) {
       )}
 
       {/* Enquiry form */}
-      <div className="rounded-[16px] bg-bg-white px-[clamp(20px,2.08vw,40px)] pt-[clamp(20px,1.56vw,30px)] pb-[clamp(20px,1.93vw,37px)]">
-        <h3 className={CARD_HEADING}>Share Your Project&rsquo;s Vision</h3>
-
-        <LetsTalkForm countries={countries} />
-      </div>
+      <EnquiryCard countries={countries} />
     </div>
   );
 }

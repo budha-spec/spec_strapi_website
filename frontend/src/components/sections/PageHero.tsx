@@ -57,7 +57,7 @@ export function PageHero({
         )}
 
         <Link
-          href={hrefPath(ctaHref) === '#' ? '#contact' : hrefPath(ctaHref)}
+          href={hrefPath(ctaHref) === '#' ? '/contact-us' : hrefPath(ctaHref)}
           className="gradient-btn mt-[clamp(24px,2.08vw,40px)] inline-flex h-[clamp(36px,2.19vw,42px)] items-center justify-center rounded-full px-[clamp(14px,1.04vw,20px)] text-d16 leading-[1.4] whitespace-nowrap text-white transition-[filter] hover:brightness-110"
           style={{ ['--grad-angle' as string]: '-68.41deg' }}
         >
