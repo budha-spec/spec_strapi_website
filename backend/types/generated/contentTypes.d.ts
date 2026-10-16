@@ -925,6 +925,8 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'shared.live-bi-visualization',
         'shared.whitepapers',
         'shared.industry-section',
+        'shared.career-inquiry-cta',
+        'shared.challenges-item',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
