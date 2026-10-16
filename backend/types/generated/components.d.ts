@@ -437,13 +437,28 @@ export interface SharedServiceCards extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedServiceItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_service_items';
+  info: {
+    displayName: 'Service Item';
+  };
+  attributes: {
+    btnText: Schema.Attribute.String;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    subServices: Schema.Attribute.Relation<'oneToMany', 'api::service.service'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String;
+  };
+}
+
 export interface SharedServices extends Struct.ComponentSchema {
   collectionName: 'components_shared_services';
   info: {
     displayName: 'Services';
   };
   attributes: {
-    services: Schema.Attribute.Relation<'oneToMany', 'api::service.service'>;
+    services: Schema.Attribute.Component<'shared.service-item', true>;
     subTitle: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
@@ -560,6 +575,7 @@ export interface SharedTextBlock extends Struct.ComponentSchema {
     displayName: 'TextBlock';
   };
   attributes: {
+    btnText: Schema.Attribute.String;
     description: Schema.Attribute.Text & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     url: Schema.Attribute.String;
@@ -617,6 +633,7 @@ declare module '@strapi/strapi' {
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;
       'shared.service-cards': SharedServiceCards;
+      'shared.service-item': SharedServiceItem;
       'shared.services': SharedServices;
       'shared.services-card': SharedServicesCard;
       'shared.social': SharedSocial;
