@@ -59,13 +59,24 @@ export interface SharedCaseStudies extends Struct.ComponentSchema {
     displayName: 'Home Case Studies';
   };
   attributes: {
-    case_studies: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::case-study.case-study'
-    >;
+    caseStudy: Schema.Attribute.Component<'shared.case-study-item', true>;
     subTitle: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     url: Schema.Attribute.Text & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedCaseStudyItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_case_study_items';
+  info: {
+    displayName: 'Case Study Item';
+  };
+  attributes: {
+    btnText: Schema.Attribute.String;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    tags: Schema.Attribute.Relation<'oneToMany', 'api::cs-tag.cs-tag'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String;
   };
 }
 
@@ -543,6 +554,18 @@ export interface SharedTestimonialSection extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedTextBlock extends Struct.ComponentSchema {
+  collectionName: 'components_shared_text_blocks';
+  info: {
+    displayName: 'TextBlock';
+  };
+  attributes: {
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String;
+  };
+}
+
 export interface SharedWhitepapers extends Struct.ComponentSchema {
   collectionName: 'components_shared_whitepapers';
   info: {
@@ -566,6 +589,7 @@ declare module '@strapi/strapi' {
       'shared.career-inquiry-cta': SharedCareerInquiryCta;
       'shared.career-inquiry-item': SharedCareerInquiryItem;
       'shared.case-studies': SharedCaseStudies;
+      'shared.case-study-item': SharedCaseStudyItem;
       'shared.challenges': SharedChallenges;
       'shared.challenges-item': SharedChallengesItem;
       'shared.company-ratings': SharedCompanyRatings;
@@ -602,6 +626,7 @@ declare module '@strapi/strapi' {
       'shared.technology-item': SharedTechnologyItem;
       'shared.testimonial-item': SharedTestimonialItem;
       'shared.testimonial-section': SharedTestimonialSection;
+      'shared.text-block': SharedTextBlock;
       'shared.whitepapers': SharedWhitepapers;
     }
   }
