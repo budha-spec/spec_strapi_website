@@ -42,7 +42,7 @@ export default async function WhitepaperListingPage() {
       />
 
       {listing && (
-        <section className="sp-section sp-whitepaper-listing w-full bg-bg-light pt-[clamp(40px,3.13vw,60px)] pb-[clamp(48px,6.25vw,120px)]">
+        <section className="sp-section sp-whitepaper-listing w-full bg-bg-light pt-[clamp(40px,3.13vw,60px)] pb-[clamp(48px,6.25vw,50px)]">
           <div className="shell">
             {listing.title && <SectionEyebrow>{cmsText(listing.title)}</SectionEyebrow>}
             {listing.subTitle && (

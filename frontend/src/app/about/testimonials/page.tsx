@@ -1,15 +1,17 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { PageHero, Testimonials } from '@/components/sections';
+import { IndustryGallery, PageHero, Testimonials } from '@/components/sections';
 import {
   FeaturedTestimonials,
-  IndustryGallery,
   fetchTestimonialsPage,
-  type IndustryGalleryBlock,
   type TestimonialsPageBlock,
 } from '@/features/testimonials';
 import { cmsText } from '@/lib/media';
-import type { ContactBlock, TestimonialsBlock } from '@/types/sections.types';
+import type {
+  ContactBlock,
+  IndustryGalleryBlock,
+  TestimonialsBlock,
+} from '@/types/sections.types';
 
 const CRUMBS = [{ label: 'Home', href: '/' }];
 

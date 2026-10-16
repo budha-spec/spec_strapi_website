@@ -2,4 +2,3 @@
 export type * from './types/testimonials.types';
 export * from './api/testimonials.api';
 export * from './components/FeaturedTestimonials';
-export * from './components/IndustryGallery';

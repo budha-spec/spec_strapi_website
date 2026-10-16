@@ -3,7 +3,7 @@ import { CmsImage } from '@/components/ui/CmsImage';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { cmsText } from '@/lib/media';
 import { cn } from '@/lib/utils';
-import type { IndustryGalleryBlock } from '../types/testimonials.types';
+import type { IndustryGalleryBlock } from '@/types/sections.types';
 
 /** "Client & Industry" — white logo tiles, 2 → 3 → 4 → 6 per row. */
 export function IndustryGallery({ data }: { data: IndustryGalleryBlock }) {
@@ -30,7 +30,7 @@ export function IndustryGallery({ data }: { data: IndustryGalleryBlock }) {
               <li
                 key={item.id}
                 className={cn(
-                  'industry-logo group relative aspect-[6/5] overflow-hidden rounded-[12px] border border-transparent bg-bg-white transition-[border-color,box-shadow] duration-300 hover:border-stroke-outline hover:shadow-[0_10px_28px_rgb(0_0_0/0.06)]',
+                  'industry-logo group relative aspect-[6/5] overflow-hidden rounded-[12px]  bg-bg-white transition-[border-color,box-shadow] duration-300 hover:border-stroke-outline hover:shadow-[0_10px_28px_rgb(0_0_0/0.06)]',
                   description && 'has-description'
                 )}
               >

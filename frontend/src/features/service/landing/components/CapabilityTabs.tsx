@@ -123,7 +123,7 @@ export function CapabilityTabs({ data }: CapabilityTabsProps) {
             // Pills hug their labels with even padding; tabs sit a fixed gap
             // apart (Figma: ~70px at 1920), so five tabs fill the 1316px bar
             // and fewer tabs give a shorter, centred bar instead of holes.
-            className="no-scrollbar flex gap-[clamp(6px,1.04vw,20px)] overflow-x-auto scroll-smooth p-[clamp(6px,0.52vw,10px)] lg:gap-[clamp(24px,3.65vw,70px)]"
+            className="no-scrollbar flex gap-[clamp(6px,1.04vw,20px)] overflow-x-auto scroll-smooth p-[clamp(6px,0.52vw,10px)] lg:gap-[clamp(24px,3.65vw,10px)]"
           >
             {items.map((item, index) => {
               const selected = index === active;

@@ -140,7 +140,7 @@ export function LetsTalk({ data, countries, className }: LetsTalkProps) {
     >
       {/* Let's talk */}
       {data && (
-        <div className="flex flex-col rounded-[16px] border border-stroke-outline/70 bg-bg-white px-[clamp(20px,2.14vw,41px)] pt-[clamp(24px,2.55vw,49px)] pb-[clamp(24px,2.6vw,50px)]">
+        <div className="flex flex-col rounded-[16px]  bg-bg-white px-[clamp(20px,2.14vw,41px)] pt-[clamp(24px,2.55vw,49px)] pb-[clamp(24px,2.6vw,50px)]">
           {data.title && <p className={CARD_HEADING}>{cmsText(data.title)}</p>}
           {data.subTitle && (
             <h2 className="sp-title mt-[clamp(8px,0.83vw,16px)] font-display text-d60 font-bold leading-[1.3] text-text-heading">
@@ -208,7 +208,7 @@ export function LetsTalk({ data, countries, className }: LetsTalkProps) {
                       {cmsText(data.followTxt)}
                     </span>
                   )}
-                  <ul className="flex items-center gap-[clamp(8px,0.89vw,17px)]">
+                  <ul className="footer-social-icons flex items-center gap-[clamp(8px,0.89vw,17px)]">
                     {socials.map((social) => {
                       const network = socialNetwork(social);
                       return (
@@ -299,7 +299,7 @@ export function LetsTalk({ data, countries, className }: LetsTalkProps) {
       )}
 
       {/* Enquiry form */}
-      <div className="rounded-[16px] border border-stroke-outline/70 bg-bg-white px-[clamp(20px,2.08vw,40px)] pt-[clamp(20px,1.56vw,30px)] pb-[clamp(20px,1.93vw,37px)]">
+      <div className="rounded-[16px] bg-bg-white px-[clamp(20px,2.08vw,40px)] pt-[clamp(20px,1.56vw,30px)] pb-[clamp(20px,1.93vw,37px)]">
         <h3 className={CARD_HEADING}>Share Your Project&rsquo;s Vision</h3>
 
         <LetsTalkForm countries={countries} />

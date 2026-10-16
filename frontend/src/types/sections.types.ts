@@ -154,3 +154,19 @@ export interface ContactBlock {
   txt?: string | null;
   url?: string | null;
 }
+
+/** One logo tile in the "Client & Industry" gallery. */
+export interface IndustryLogo {
+  id: number;
+  description?: string | null;
+  image?: CmsMedia | null;
+}
+
+/** `shared.industry-gallery` — "Client & Industry" logo grid (testimonials, industries). */
+export interface IndustryGalleryBlock {
+  __component: 'shared.industry-gallery';
+  id: number;
+  title?: string | null;
+  subTitle?: string | null;
+  gallery?: IndustryLogo[] | null;
+}

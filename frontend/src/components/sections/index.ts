@@ -8,6 +8,7 @@ export * from './ClientsStrip';
 export * from './ProvenImpact';
 export * from './CaseStudies';
 export * from './Testimonials';
+export * from './IndustryGallery';
 export * from './FaqSection';
 export * from './CtaBanner';
 export * from './BlogSection';

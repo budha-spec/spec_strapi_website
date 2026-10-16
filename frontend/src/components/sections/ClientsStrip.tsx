@@ -23,7 +23,7 @@ export function ClientsStrip({ data }: ClientsStripProps) {
         {title && images.length > 0 && (
           <div
             aria-hidden
-            className="hidden h-[clamp(70px,6.56vw,126px)] w-px shrink-0 bg-stroke-main lg:block"
+            className="hidden h-[clamp(70px,6.56vw,126px)] w-px shrink-0 bg-black lg:block"
           />
         )}
 
