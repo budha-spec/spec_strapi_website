@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_industry_services",
+  "info": {
+    "displayName": "Industry Service"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subTitle": {
+      "type": "string"
+    },
+    "industryServices": {
+      "type": "component",
+      "component": "shared.industry-service-item",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

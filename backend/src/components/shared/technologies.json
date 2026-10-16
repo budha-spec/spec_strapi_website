@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_technologies",
+  "info": {
+    "displayName": "Technologies"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subTitle": {
+      "type": "string"
+    },
+    "technology": {
+      "type": "component",
+      "component": "shared.technology-item",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

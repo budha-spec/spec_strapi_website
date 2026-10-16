@@ -61,7 +61,9 @@
         "shared.contact-us",
         "shared.live-bi-visualization",
         "shared.whitepapers",
-        "shared.industry-section"
+        "shared.industry-section",
+        "shared.career-inquiry-cta",
+        "shared.challenges-item"
       ]
     },
     "children": {

@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_challenges",
+  "info": {
+    "displayName": "Challenges"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subTitle": {
+      "type": "string"
+    },
+    "challange": {
+      "type": "component",
+      "component": "shared.challenges-item",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

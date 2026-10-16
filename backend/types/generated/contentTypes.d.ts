@@ -529,7 +529,18 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    content: Schema.Attribute.DynamicZone<['shared.testimonial-section']>;
+    client: Schema.Attribute.String;
+    content: Schema.Attribute.DynamicZone<
+      [
+        'shared.testimonial-section',
+        'shared.rich-text',
+        'shared.challenges',
+        'shared.gallery',
+        'shared.solutions',
+        'shared.cs-result',
+      ]
+    >;
+    country: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -548,6 +559,7 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    scale: Schema.Attribute.String;
     services: Schema.Attribute.Relation<'oneToMany', 'api::service.service'>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     tags: Schema.Attribute.Relation<'oneToMany', 'api::cs-tag.cs-tag'>;
@@ -851,11 +863,14 @@ export interface ApiIndustryIndustry extends Struct.CollectionTypeSchema {
   attributes: {
     content: Schema.Attribute.DynamicZone<
       [
-        'shared.services',
         'shared.rich-text',
         'shared.cta',
         'shared.case-studies',
-        'shared.blogs',
+        'shared.key-metrics-section',
+        'shared.industry-service',
+        'shared.industry-gallery',
+        'shared.technologies',
+        'shared.faqs',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -910,6 +925,8 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'shared.live-bi-visualization',
         'shared.whitepapers',
         'shared.industry-section',
+        'shared.career-inquiry-cta',
+        'shared.challenges-item',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -987,6 +1004,43 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     url: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ApiTechnologyTechnology extends Struct.CollectionTypeSchema {
+  collectionName: 'technologies';
+  info: {
+    displayName: 'Technology';
+    pluralName: 'technologies';
+    singularName: 'technology';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::technology.technology'
+    > &
+      Schema.Attribute.Private;
+    parent_technology: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::technology.technology'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -1675,6 +1729,7 @@ declare module '@strapi/strapi' {
       'api::industry.industry': ApiIndustryIndustry;
       'api::page.page': ApiPagePage;
       'api::service.service': ApiServiceService;
+      'api::technology.technology': ApiTechnologyTechnology;
       'api::visualization-category.visualization-category': ApiVisualizationCategoryVisualizationCategory;
       'api::visualization.visualization': ApiVisualizationVisualization;
       'api::whitepaper.whitepaper': ApiWhitepaperWhitepaper;
