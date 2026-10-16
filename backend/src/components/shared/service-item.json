@@ -1,0 +1,39 @@
+{
+  "collectionName": "components_shared_service_items",
+  "info": {
+    "displayName": "Service Item"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "subServices": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service.service"
+    },
+    "url": {
+      "type": "string"
+    },
+    "btnText": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}
