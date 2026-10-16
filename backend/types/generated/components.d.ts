@@ -40,6 +40,29 @@ export interface SharedCaseStudies extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedChallenges extends Struct.ComponentSchema {
+  collectionName: 'components_shared_challenges';
+  info: {
+    displayName: 'Challenges';
+  };
+  attributes: {
+    challange: Schema.Attribute.Component<'shared.challenges-item', true>;
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedChallengesItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_challenges_items';
+  info: {
+    displayName: 'Challenges Item';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedCompanyRatings extends Struct.ComponentSchema {
   collectionName: 'components_shared_company_ratings';
   info: {
@@ -64,6 +87,29 @@ export interface SharedContactUs extends Struct.ComponentSchema {
   attributes: {
     txt: Schema.Attribute.String & Schema.Attribute.Required;
     url: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedCsResult extends Struct.ComponentSchema {
+  collectionName: 'components_shared_cs_results';
+  info: {
+    displayName: 'CS Result';
+  };
+  attributes: {
+    result: Schema.Attribute.Component<'shared.cs-result-item', false>;
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedCsResultItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_cs_result_items';
+  info: {
+    displayName: 'CS Result Item';
+  };
+  attributes: {
+    csResult: Schema.Attribute.Component<'shared.challenges-item', true>;
+    keyMetrics: Schema.Attribute.Component<'shared.key-metrics', true>;
   };
 }
 
@@ -217,6 +263,34 @@ export interface SharedIndustrySection extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedIndustryService extends Struct.ComponentSchema {
+  collectionName: 'components_shared_industry_services';
+  info: {
+    displayName: 'Industry Service';
+  };
+  attributes: {
+    industryServices: Schema.Attribute.Component<
+      'shared.industry-service-item',
+      true
+    >;
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedIndustryServiceItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_industry_service_items';
+  info: {
+    displayName: 'Industry Service Item';
+  };
+  attributes: {
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    txt: Schema.Attribute.String;
+    url: Schema.Attribute.String;
+  };
+}
+
 export interface SharedKeyMetrics extends Struct.ComponentSchema {
   collectionName: 'components_shared_key_metrics';
   info: {
@@ -362,6 +436,17 @@ export interface SharedSocial extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedSolutions extends Struct.ComponentSchema {
+  collectionName: 'components_shared_solutions';
+  info: {
+    displayName: 'Solutions';
+  };
+  attributes: {
+    solution: Schema.Attribute.Component<'shared.challenges-item', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface SharedTableOfContentItem extends Struct.ComponentSchema {
   collectionName: 'components_shared_table_of_content_items';
   info: {
@@ -370,6 +455,34 @@ export interface SharedTableOfContentItem extends Struct.ComponentSchema {
   attributes: {
     contentId: Schema.Attribute.String & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedTechnologies extends Struct.ComponentSchema {
+  collectionName: 'components_shared_technologies';
+  info: {
+    displayName: 'Technologies';
+  };
+  attributes: {
+    subTitle: Schema.Attribute.String;
+    technology: Schema.Attribute.Component<'shared.technology-item', true>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedTechnologyItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_technology_items';
+  info: {
+    displayName: 'Technology Item';
+  };
+  attributes: {
+    technologies: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::technology.technology'
+    >;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
   };
 }
 
@@ -422,8 +535,12 @@ declare module '@strapi/strapi' {
       'shared.blogs': SharedBlogs;
       'shared.capabilities-item': SharedCapabilitiesItem;
       'shared.case-studies': SharedCaseStudies;
+      'shared.challenges': SharedChallenges;
+      'shared.challenges-item': SharedChallengesItem;
       'shared.company-ratings': SharedCompanyRatings;
       'shared.contact-us': SharedContactUs;
+      'shared.cs-result': SharedCsResult;
+      'shared.cs-result-item': SharedCsResultItem;
       'shared.cta': SharedCta;
       'shared.enterprise-solution': SharedEnterpriseSolution;
       'shared.enterprise-solution-item': SharedEnterpriseSolutionItem;
@@ -435,6 +552,8 @@ declare module '@strapi/strapi' {
       'shared.industry-gallery': SharedIndustryGallery;
       'shared.industry-gallery-item': SharedIndustryGalleryItem;
       'shared.industry-section': SharedIndustrySection;
+      'shared.industry-service': SharedIndustryService;
+      'shared.industry-service-item': SharedIndustryServiceItem;
       'shared.key-metrics': SharedKeyMetrics;
       'shared.key-metrics-section': SharedKeyMetricsSection;
       'shared.live-bi-visualization': SharedLiveBiVisualization;
@@ -446,7 +565,10 @@ declare module '@strapi/strapi' {
       'shared.services': SharedServices;
       'shared.services-card': SharedServicesCard;
       'shared.social': SharedSocial;
+      'shared.solutions': SharedSolutions;
       'shared.table-of-content-item': SharedTableOfContentItem;
+      'shared.technologies': SharedTechnologies;
+      'shared.technology-item': SharedTechnologyItem;
       'shared.testimonial-item': SharedTestimonialItem;
       'shared.testimonial-section': SharedTestimonialSection;
       'shared.whitepapers': SharedWhitepapers;

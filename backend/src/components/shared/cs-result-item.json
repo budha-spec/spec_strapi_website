@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_shared_cs_result_items",
+  "info": {
+    "displayName": "CS Result Item"
+  },
+  "options": {},
+  "attributes": {
+    "keyMetrics": {
+      "type": "component",
+      "component": "shared.key-metrics",
+      "repeatable": true
+    },
+    "csResult": {
+      "type": "component",
+      "component": "shared.challenges-item",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}
