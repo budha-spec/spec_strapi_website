@@ -69,6 +69,7 @@ The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
 | `sp-page-testimonials` | `/about/testimonials` Testimonials listing |
 | `sp-page-whitepaper` | `/whitepaper` Whitepaper listing |
 | `sp-page-industries` | `/industries` Industries landing |
+| `sp-page-contact-us` | `/contact-us` Contact Us |
 
 ## Layout (every page)
 
@@ -88,7 +89,7 @@ The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
 |---|---|---|
 | `sp-page-hero` | Inner-page hero: breadcrumb, title, intro, button | Services, service, sub-service, case study |
 | `sp-page-hero-skeleton` | Loading placeholder of the hero | Same pages, while loading |
-| `sp-clients-strip` | "Trusted by global leaders" logo marquee | Home, Services |
+| `sp-clients-strip` | "Trusted by global leaders" logo marquee | Home, Services, Contact Us |
 | `sp-proven-impact` | "Proven Impact" stats | Home, service |
 | `sp-case-studies` | "Client Success Stories" carousel | Home, service, sub-service |
 | `sp-testimonials` | "Client Spotlight" video cards | Home, Services, case study |
@@ -125,6 +126,8 @@ The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
 | `sp-industries-intro` | "Capabilities" heading band above the explorer | Industries |
 | `sp-industries-explorer` | Dark band holding the industry explorer | Industries |
 | `sp-industry-explorer` | Industry list + selected industry panel | Industries |
+| `sp-contact-hero` | Title, office details + socials beside the enquiry form, over the artwork | Contact Us |
+| `sp-contact-career` | "For Career Inquiry" banner + "Current Job Opening" card | Contact Us |
 
 ## Repeated controls (inside sections)
 
@@ -145,6 +148,9 @@ These were added earlier and work the same way.
 | `industry-logo` (+ `industry-logo-img`, `industry-logo-description`) | One "Client & Industry" logo tile; on hover the logo moves top-left and the description fades in |
 | `spotlight-card` (+ `has-quote`, `spotlight-shade`, `spotlight-identity`, `spotlight-quote`, `spotlight-play`) | Client Spotlight card; on hover the name collapses and the quote opens (CSS in `globals.css`) |
 | `whitepaper-card`, `whitepaper-card-media` | One whitepaper card and its cover image |
+| `contact-social-icons` | "Follow us on" icon row in the contact hero (white icons on dark) |
+| `career-contact` | One HR phone / email link in the career banner |
+| `career-openings` | "Current Job Opening" card (white Explore More) |
 | `industry-tab` | One industry in the explorer list (`aria-selected="true"` when active) |
 
 ## Rules for new work

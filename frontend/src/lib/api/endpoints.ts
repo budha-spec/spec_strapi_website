@@ -110,6 +110,14 @@ const INDUSTRIES_PAGE_POPULATE = [
   'populate[content][on][shared.industry-gallery][populate][gallery][populate]=*',
 ].join('&');
 
+/**
+ * Contact page entry: the client logo strip. Offices, socials and portfolio
+ * come from the `footer` single type; `populate=*` on this entry is a 500.
+ */
+const CONTACT_PAGE_POPULATE = [
+  'populate[content][on][shared.gallery][populate][images][populate]=*',
+].join('&');
+
 /** Industry list for the landing explorer — what each panel shows, oldest first. */
 const INDUSTRY_LIST_QUERY = [
   'fields[0]=title',
@@ -140,6 +148,8 @@ export const ENDPOINTS = {
   WHITEPAPER_PAGE: `/pages?filters[slug][$eq]=whitepaper&${WHITEPAPER_POPULATE}`,
   /** `/industries` landing page (Strapi page slug `industries`). */
   INDUSTRIES_PAGE: `/pages?filters[slug][$eq]=industries&${INDUSTRIES_PAGE_POPULATE}`,
+  /** `/contact-us` page (Strapi page slug `contact-us`). */
+  CONTACT_PAGE: `/pages?filters[slug][$eq]=contact-us&${CONTACT_PAGE_POPULATE}`,
   /** Every published industry — needs the Public role's `find` on Industry. */
   INDUSTRIES: `/industries?${INDUSTRY_LIST_QUERY}`,
   /** Visualization categories — the listing's tabs ("All Visualization", "Power BI", …). */
