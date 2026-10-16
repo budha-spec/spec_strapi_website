@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_shared_industry_service_items",
+  "info": {
+    "displayName": "Industry Service Item"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "txt": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

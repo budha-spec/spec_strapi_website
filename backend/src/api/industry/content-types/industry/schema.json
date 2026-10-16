@@ -37,11 +37,14 @@
     "content": {
       "type": "dynamiczone",
       "components": [
-        "shared.services",
         "shared.rich-text",
         "shared.cta",
         "shared.case-studies",
-        "shared.blogs"
+        "shared.key-metrics-section",
+        "shared.industry-service",
+        "shared.industry-gallery",
+        "shared.technologies",
+        "shared.faqs"
       ]
     }
   }
