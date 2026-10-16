@@ -78,7 +78,7 @@ The existing SPEC India website is already indexed by search engines and all URL
 - Use `next/image` for all images — **never `<img>`**
 - tsParticles: always `dynamic(() => import(...), { ssr: false })`
 - Framer Motion: always `whileInView` + `viewport={{ once: true }}`
-- The Footer renders `LetsTalk` (contact card + enquiry form) on every page — do not add it to pages again
+- The Footer renders `LetsTalk` (contact card + enquiry form) on every page — do not add it to pages again. The only exception is a page that shows the form itself (`/contact-us`): list it in `ROUTES_WITH_OWN_FORM` in `Footer.tsx` and give its form `id="contact"` so the header button still lands on it
 
 ### Data Fetching Rules
 - Server Components by default — fetch in RSC, not in client components

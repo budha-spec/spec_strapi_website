@@ -1098,3 +1098,43 @@ ul.sp-testimonials-grid li:nth-child(-n + 4) {
   }
 }
 
+
+/*
+ * Contact page "Current Job Opening" card is dark: Explore More turns white
+ * at rest (the custom block above paints it black on white). Unlayered and
+ * last so it beats those rules; hover keeps the shared gradient arrow.
+ */
+.career-openings .explore-more,
+.career-openings .explore-more:hover {
+  background: transparent;
+}
+.career-openings .explore-more:not(:hover) .explore-more-label {
+  color: #ffffff;
+}
+.career-openings .explore-more--outline span.explore-more-arrow {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+.career-openings .explore-more--outline:hover span.explore-more-arrow {
+  border-color: transparent;
+}
+
+/*
+ * Contact hero office names. Figma paints the ramp across the whole column
+ * (not just the word), so the first letters are blue and the rest green.
+ */
+.contact-office-name {
+  background-image: linear-gradient(-20deg, #56f72f 62.7%, #0c3ced 97%);
+}
+
+/*
+ * Contact hero socials sit on black, where the shared X hover (black fill)
+ * vanishes: fill white and keep the mark black instead.
+ */
+.contact-social-icons .social-btn[data-network="twitter"]:hover {
+  background-color: #ffffff;
+  border-color: #ffffff;
+}
+.contact-social-icons .social-btn[data-network="twitter"]:hover img {
+  filter: brightness(0);
+}

@@ -59,7 +59,7 @@ export function Header() {
 
           <div className="flex items-center gap-3">
             <Link
-              href="#contact"
+              href="/contact-us"
               className="gradient-btn hidden h-[clamp(36px,2.19vw,42px)] items-center justify-center rounded-full px-[clamp(14px,1.04vw,20px)] text-d16 leading-[1.4] font-normal whitespace-nowrap text-white transition-[filter] hover:brightness-110 sm:inline-flex"
               style={{ ['--grad-angle' as string]: '-68.41deg' }}
             >
@@ -120,7 +120,7 @@ export function Header() {
             ))}
             <li className="pt-3">
               <Link
-                href="#contact"
+                href="/contact-us"
                 onClick={() => setOpen(false)}
                 className="gradient-btn inline-flex h-10 items-center rounded-full px-6 text-sm text-white"
               >

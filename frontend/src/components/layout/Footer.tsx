@@ -4,6 +4,10 @@ import { CmsImage } from '@/components/ui/CmsImage';
 import { fetchFooter } from '@/lib/api/footer.api';
 import { fetchCountries } from '@/lib/api/countries.api';
 import { cmsText } from '@/lib/media';
+import { HideOnRoutes } from './HideOnRoutes';
+
+/** Pages that carry the enquiry form themselves, so the Footer skips it. */
+const ROUTES_WITH_OWN_FORM = ['/contact-us'] as const;
 
 const FOOTER_COLUMNS: {
   heading: string;
@@ -73,6 +77,11 @@ const FOOTER_COLUMNS: {
   },
 ];
 
+/** Footer links that have a page; the rest stay `#` until theirs exist. */
+const FOOTER_LINK_HREFS: Record<string, string> = {
+  'Contact Us': '/contact-us',
+};
+
 /**
  * Site footer on every page: Let's Talk + enquiry form and the awards /
  * review strip (Strapi `footer` single type), then the dark link columns.
@@ -83,10 +92,15 @@ export async function Footer() {
   const ratings = (data?.companyRating ?? []).filter((item) => item.logo?.url);
 
   return (
-    <footer id="contact" className="sp-footer w-full">
+    <footer className="sp-footer w-full">
       {/* ─── CTA: contact details + enquiry form ─────────────── */}
       <section className="sp-footer-contact relative z-10 w-full bg-bg-light pt-[clamp(40px,3.65vw,70px)]">
-        <LetsTalk data={data} countries={countries} />
+        {/* `#contact` anchors the form; pages with their own form carry it instead. */}
+        <HideOnRoutes paths={ROUTES_WITH_OWN_FORM}>
+          <div id="contact" className="scroll-mt-[86px]">
+            <LetsTalk data={data} countries={countries} />
+          </div>
+        </HideOnRoutes>
 
         {/* Certifications + review scores. Overlaps the dark footer below. */}
         {(certificates.length > 0 || ratings.length > 0) && (
@@ -168,7 +182,7 @@ export async function Footer() {
                   {column.links.map((link) => (
                     <li key={link}>
                       <Link
-                        href="#"
+                        href={FOOTER_LINK_HREFS[link] ?? '#'}
                         className={`text-d18 leading-[normal] text-[#BBB] transition-colors hover:text-white ${
                           column.nowrap ? '2xl:whitespace-nowrap' : ''
                         }`}
