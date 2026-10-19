@@ -129,6 +129,8 @@ Names follow the Figma section labels so designers and developers mean the same 
 | `ProvenImpact` | "Proven Impact" stats band | `shared.key-metrics-section` |
 | `CaseStudies` | "Client Success Stories" carousel | `shared.case-studies` (slides are `caseStudy` components — populate `[caseStudy][populate]=*`) |
 | `Testimonials` | "Client Spotlight" video cards — carousel, or `layout="grid"` for every card at once (testimonials listing) | `shared.testimonial-section` |
+| `ServiceIntro` | Overview band: gradient heading + rich text with More + / Less – (service "AI Built for Business Enterprise", case study "Our Business Model Overview") | `shared.rich-text` |
+| `DarkCardGrid` | Dark band of titled cards, title fades to the gradient on hover; Explore More only for items with a link, static on hover (industry "Services We Are Offering", case study "Our Business Challenges") | `shared.industry-service` / `shared.challenges` (mapped to items by each page) |
 | `FaqSection` | "Frequently Asked Questions" accordion | `shared.faqs` |
 | `CtaBanner` | "Hire Dedicated Development Team" banner | `shared.cta` |
 | `BlogSection` | "Latest Insights" carousel (WordPress, optional category) | — (`fetchLatestBlogs(category?)` in `src/lib/api/blogs.api.ts`) |

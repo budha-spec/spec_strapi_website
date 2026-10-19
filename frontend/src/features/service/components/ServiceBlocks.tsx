@@ -4,10 +4,10 @@ import {
   CtaBanner,
   FaqSection,
   ProvenImpact,
+  ServiceIntro,
   Testimonials,
 } from '@/components/sections';
 import { CapabilityGrid } from '../detail/components/CapabilityGrid';
-import { ServiceIntro } from '../detail/components/ServiceIntro';
 import { CapabilityTabs } from '../landing/components/CapabilityTabs';
 import { OfferingGrid } from '../sub-service/components/OfferingGrid';
 import { UseCaseGrid } from '../sub-service/components/UseCaseGrid';

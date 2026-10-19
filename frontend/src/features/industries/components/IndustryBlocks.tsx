@@ -1,12 +1,13 @@
 import {
   CaseStudies,
   CtaBanner,
+  DarkCardGrid,
   FaqSection,
   IndustryGallery,
 } from '@/components/sections';
-import { IndustryServices } from '../detail/components/IndustryServices';
 import { TechStack } from '../detail/components/TechStack';
 import { UseCaseCarousel } from '../detail/components/UseCaseCarousel';
+import { cmsText, hrefPath } from '@/lib/media';
 import type {
   IndustryDetail,
   IndustryDetailBlock,
@@ -35,7 +36,23 @@ export function IndustryBlocks({ blocks }: { blocks: AnyBlock[] }) {
           return <UseCaseCarousel key={key} data={block} />;
         }
         if (isBlock(block, 'shared.industry-service')) {
-          return <IndustryServices key={key} data={block} />;
+          // Services link to their pages, so these cards get Explore More.
+          return (
+            <DarkCardGrid
+              key={key}
+              className="sp-industry-services"
+              eyebrow={block.title}
+              heading={block.subTitle}
+              items={(block.industryServices ?? []).map((item) => ({
+                id: item.id,
+                title: item.title,
+                description: item.description,
+                link: item.url
+                  ? { href: hrefPath(item.url), label: cmsText(item.txt) }
+                  : null,
+              }))}
+            />
+          );
         }
         if (isBlock(block, 'shared.case-studies')) {
           return <CaseStudies key={key} data={block} />;

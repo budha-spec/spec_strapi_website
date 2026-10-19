@@ -1,4 +1,3 @@
-import type { RichTextNode } from '@/components/ui/RichText';
 import type { CmsMedia } from '@/lib/media';
 import type {
   CaseStudiesBlock,
@@ -7,10 +6,11 @@ import type {
   FaqsBlock,
   GalleryBlock,
   MetricsBlock,
+  RichTextBlock,
   TestimonialsBlock,
 } from '@/types/sections.types';
 
-export type { ContactBlock };
+export type { ContactBlock, RichTextBlock };
 
 /** A child service shown as a chip link under its capability tab. */
 export interface ServiceLink {
@@ -52,15 +52,6 @@ export interface ServicesBlock {
   title: string;
   subTitle?: string | null;
   services?: ServiceCard[] | null;
-}
-
-/** `shared.rich-text` — the overview beside the gradient heading. */
-export interface RichTextBlock {
-  __component: 'shared.rich-text';
-  id: number;
-  title?: string | null;
-  content?: RichTextNode[] | null;
-  url?: string | null;
 }
 
 /** An Industry entry linked from a `shared.industries` block. */

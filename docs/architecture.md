@@ -24,7 +24,8 @@ frontend/src/
 │   ├── globals.css                   ← @theme tokens + shared component classes
 │   ├── page.tsx                      ← /                 Home (Strapi page `home` + WordPress posts)
 │   ├── case-study/
-│   │   └── page.tsx              ← /case-study       Case-study listing (filters + carousel)
+│   │   ├── page.tsx              ← /case-study       Case-study listing (filters + carousel)
+│   │   └── [slug]/page.tsx       ← /case-study/:slug Case-study detail
 │   └── services/
 │       ├── page.tsx                  ← /services         Services landing (Service entry `slug=services`)
 │       ├── loading.tsx
@@ -55,15 +56,18 @@ frontend/src/
 │   │   ├── components/               ← HeroSection, ServicesSection, HomeBlocks
 │   │   ├── api/home.api.ts
 │   │   └── types/
-│   ├── case-study/                   ← /case-study listing
-│   │   ├── api/case-study.api.ts     ← fetchCaseStudies, fetchCaseStudyIndustries, fetchSpotlightTestimonials
+│   ├── case-study/                   ← /case-study listing + /case-study/:slug detail
+│   │   ├── api/case-study.api.ts     ← fetchCaseStudies, fetchCaseStudyIndustries, fetchCaseStudyBySlug
 │   │   ├── types/case-study.types.ts
-│   │   └── components/               ← CaseStudyExplorer (filters + peek carousel), CaseStudyCard
+│   │   ├── components/CaseStudyBlocks.tsx  ← detail-page block renderer
+│   │   ├── listing/components/       ← CaseStudyExplorer (filters + peek carousel), CaseStudyCard
+│   │   └── detail/components/        ← CaseStudyFacts, OutcomeGallery, CaseStudySolutions,
+│   │                                   CaseStudyResults (challenges use shared DarkCardGrid)
 │   ├── industries/                   ← /industries landing + /industries/:slug detail
 │   │   ├── api/industries.api.ts     ← fetchIndustries, fetchIndustriesPage, fetchIndustryBySlug
 │   │   ├── components/IndustryBlocks.tsx  ← detail-page block renderer
 │   │   ├── landing/components/       ← IndustryExplorer
-│   │   └── detail/components/        ← UseCaseCarousel, IndustryServices, TechStack
+│   │   └── detail/components/        ← UseCaseCarousel, TechStack (services use shared DarkCardGrid)
 │   └── service/                      ← all three service page types
 │       ├── api/service.api.ts        ← fetchServiceBySlug / fetchServiceByUrl, serviceTemplate()
 │       ├── types/service.types.ts
