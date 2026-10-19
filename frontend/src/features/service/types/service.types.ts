@@ -63,22 +63,25 @@ export interface RichTextBlock {
   url?: string | null;
 }
 
-/** An Industry entry linked from a `shared.industries` block. */
-export interface IndustryCard {
+/** One hand-entered use-case card (`shared.text-block`). */
+export interface UseCaseItem {
   id: number;
   title: string;
-  slug?: string | null;
   description?: string | null;
   image?: CmsMedia | null;
+  /** Explore More target — the button is hidden without it. */
+  url?: string | null;
+  /** Explore More label; defaults to "Explore More". */
+  btnText?: string | null;
 }
 
-/** `shared.industries` — "Business Application and Use Cases" cards. */
-export interface IndustriesBlock {
-  __component: 'shared.industries';
+/** `shared.industry-case-study` — "Industry Use Cases" cards on a sub-service page. */
+export interface UseCasesBlock {
+  __component: 'shared.industry-case-study';
   id: number;
   title?: string | null;
   subTitle?: string | null;
-  industries?: IndustryCard[] | null;
+  caseStudy?: UseCaseItem[] | null;
 }
 
 export type ServiceBlock =
@@ -90,7 +93,7 @@ export type ServiceBlock =
   | MetricsBlock
   | CaseStudiesBlock
   | FaqsBlock
-  | IndustriesBlock
+  | UseCasesBlock
   | ContactBlock;
 
 /**

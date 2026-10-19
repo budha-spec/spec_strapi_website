@@ -50,10 +50,9 @@ const SERVICE_DETAIL_POPULATE = [
   // Hand-entered stories (`caseStudy` items) with their tags and media.
   'populate[content][on][shared.case-studies][populate][caseStudy][populate]=*',
   'populate[content][on][shared.faqs][populate]=*',
-  // `shared.industries` ("Business Application and Use Cases") was dropped from
-  // the service content zone in 7f268aa; asking for it 400s the whole query.
-  // Restore this line if the block comes back:
-  // 'populate[content][on][shared.industries][populate][industries][populate]=*',
+  // "Industry Use Cases" on sub-service pages: hand-entered `caseStudy` text
+  // blocks (title, description, image, optional link).
+  'populate[content][on][shared.industry-case-study][populate][caseStudy][populate]=*',
   'populate[content][on][shared.gallery][populate][images][populate]=*',
   'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
 ].join('&');
