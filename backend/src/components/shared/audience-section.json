@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_shared_audience_sections",
+  "info": {
+    "displayName": "Audience Section"
+  },
+  "options": {},
+  "attributes": {
+    "dashboard": {
+      "type": "string",
+      "required": true
+    },
+    "platform": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::visualization-category.visualization-category"
+    },
+    "focus": {
+      "type": "string"
+    },
+    "audience": {
+      "type": "component",
+      "component": "shared.capabilities-item",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

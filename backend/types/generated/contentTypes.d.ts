@@ -1101,6 +1101,20 @@ export interface ApiVisualizationVisualization
       'oneToMany',
       'api::visualization-category.visualization-category'
     >;
+    content: Schema.Attribute.DynamicZone<
+      [
+        'shared.text-block',
+        'shared.cta',
+        'shared.faqs',
+        'shared.audience-section',
+        'shared.dashboard-action',
+        'shared.challenges',
+        'shared.kpi-business-impact',
+        'shared.dashboard-improvement',
+        'shared.contact-us',
+        'shared.rich-text',
+      ]
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

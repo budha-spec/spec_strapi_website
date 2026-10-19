@@ -45,6 +45,21 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::visualization-category.visualization-category"
+    },
+    "content": {
+      "type": "dynamiczone",
+      "components": [
+        "shared.text-block",
+        "shared.cta",
+        "shared.faqs",
+        "shared.audience-section",
+        "shared.dashboard-action",
+        "shared.challenges",
+        "shared.kpi-business-impact",
+        "shared.dashboard-improvement",
+        "shared.contact-us",
+        "shared.rich-text"
+      ]
     }
   }
 }

@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_dashboard_improvements",
+  "info": {
+    "displayName": "Dashboard Improvement"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subTitle": {
+      "type": "string"
+    },
+    "improvement": {
+      "type": "component",
+      "component": "shared.text-block",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

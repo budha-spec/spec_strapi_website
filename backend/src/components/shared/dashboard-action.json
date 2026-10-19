@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_dashboard_actions",
+  "info": {
+    "displayName": "Dashboard Action"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "text",
+      "required": true
+    },
+    "disclaimerTxt": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "config": {}
+}
