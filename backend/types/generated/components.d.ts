@@ -265,6 +265,18 @@ export interface SharedHomePageSection1 extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedIndustryCaseStudy extends Struct.ComponentSchema {
+  collectionName: 'components_shared_industry_case_studies';
+  info: {
+    displayName: 'Industry Use Cases';
+  };
+  attributes: {
+    caseStudy: Schema.Attribute.Component<'shared.text-block', true>;
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedIndustryGallery extends Struct.ComponentSchema {
   collectionName: 'components_shared_industry_galleries';
   info: {
@@ -578,6 +590,7 @@ export interface SharedTextBlock extends Struct.ComponentSchema {
   attributes: {
     btnText: Schema.Attribute.String;
     description: Schema.Attribute.Text & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images' | 'files'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     url: Schema.Attribute.String;
   };
@@ -621,6 +634,7 @@ declare module '@strapi/strapi' {
       'shared.gallery': SharedGallery;
       'shared.home-blogs': SharedHomeBlogs;
       'shared.home-page-section1': SharedHomePageSection1;
+      'shared.industry-case-study': SharedIndustryCaseStudy;
       'shared.industry-gallery': SharedIndustryGallery;
       'shared.industry-gallery-item': SharedIndustryGalleryItem;
       'shared.industry-section': SharedIndustrySection;
