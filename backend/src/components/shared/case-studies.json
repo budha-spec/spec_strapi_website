@@ -13,10 +13,10 @@
       "type": "string",
       "required": false
     },
-    "case_studies": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::case-study.case-study"
+    "caseStudy": {
+      "type": "component",
+      "component": "shared.case-study-item",
+      "repeatable": true
     },
     "url": {
       "type": "text",
