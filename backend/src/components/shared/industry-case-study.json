@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_industry_case_studies",
+  "info": {
+    "displayName": "Industry Use Cases"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subTitle": {
+      "type": "string"
+    },
+    "caseStudy": {
+      "type": "component",
+      "component": "shared.text-block",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

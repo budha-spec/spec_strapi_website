@@ -61,7 +61,8 @@
         "shared.contact-us",
         "shared.cta",
         "shared.faqs",
-        "shared.testimonial-section"
+        "shared.testimonial-section",
+        "shared.industry-case-study"
       ]
     },
     "children": {

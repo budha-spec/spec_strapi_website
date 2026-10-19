@@ -980,6 +980,7 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
         'shared.cta',
         'shared.faqs',
         'shared.testimonial-section',
+        'shared.industry-case-study',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
