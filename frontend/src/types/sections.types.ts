@@ -3,6 +3,7 @@
  * blocks stay in `src/features/[page]/types/`.
  */
 
+import type { RichTextNode } from '@/components/ui/RichText';
 import type { CmsMedia } from '@/lib/media';
 
 /** `shared.gallery` — the "Trusted by global leaders" logo strip. */
@@ -10,6 +11,8 @@ export interface GalleryBlock {
   __component: 'shared.gallery';
   id: number;
   title?: string | null;
+  /** Section heading where one is shown (case-study "Outcomes & Business Impact"). */
+  subTitle?: string | null;
   images?: CmsMedia[] | null;
 }
 
@@ -178,4 +181,13 @@ export interface IndustryGalleryBlock {
   title?: string | null;
   subTitle?: string | null;
   gallery?: IndustryLogo[] | null;
+}
+
+/** `shared.rich-text` — the overview beside the gradient heading (service, case study). */
+export interface RichTextBlock {
+  __component: 'shared.rich-text';
+  id: number;
+  title?: string | null;
+  content?: RichTextNode[] | null;
+  url?: string | null;
 }

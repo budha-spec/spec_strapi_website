@@ -1,5 +1,7 @@
-/** Barrel export — case-study listing (`/case-study`). */
+/** Barrel export — case-study listing (`/case-study`) and detail (`/case-study/:slug`). */
 export type * from './types/case-study.types';
 export * from './api/case-study.api';
-export * from './components/CaseStudyCard';
-export * from './components/CaseStudyExplorer';
+export * from './components/CaseStudyBlocks';
+export * from './detail/components/CaseStudyFacts';
+export * from './listing/components/CaseStudyCard';
+export * from './listing/components/CaseStudyExplorer';

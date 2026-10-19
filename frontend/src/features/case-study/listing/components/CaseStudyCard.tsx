@@ -1,7 +1,7 @@
 import { CmsImage } from '@/components/ui/CmsImage';
 import { ExploreMore } from '@/components/ui/ExploreMore';
 import { cmsText, hrefPath } from '@/lib/media';
-import type { CaseStudyEntry } from '../types/case-study.types';
+import type { CaseStudyEntry } from '../../types/case-study.types';
 
 interface CaseStudyCardProps {
   study: CaseStudyEntry;

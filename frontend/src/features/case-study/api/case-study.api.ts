@@ -7,6 +7,7 @@ import { ENDPOINTS, REVALIDATE } from '@/lib/api/endpoints';
 import type { StrapiListResponse } from '@/types/strapi';
 import type { TestimonialsBlock } from '@/types/sections.types';
 import type {
+  CaseStudyDetail,
   CaseStudyEntry,
   CaseStudyTerm,
 } from '../types/case-study.types';
@@ -55,4 +56,17 @@ export function spotlightFromStudies(
     if (block) return block;
   }
   return null;
+}
+
+/**
+ * One case study with its page content, or null when no published study has
+ * this slug (the route then 404s). Throws on a Strapi error so a broken query
+ * shows the error page instead of a silent 404.
+ */
+export async function fetchCaseStudyBySlug(slug: string): Promise<CaseStudyDetail | null> {
+  const { data } = await strapiGet<StrapiListResponse<CaseStudyDetail>>(
+    ENDPOINTS.CASE_STUDY_BY_SLUG(slug),
+    CONTENT
+  );
+  return data[0] ?? null;
 }
