@@ -61,7 +61,9 @@
         "shared.challenges",
         "shared.gallery",
         "shared.solutions",
-        "shared.cs-result"
+        "shared.cs-result",
+        "shared.challenges-item",
+        "shared.contact-us"
       ]
     },
     "client": {
