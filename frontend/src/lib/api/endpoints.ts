@@ -6,6 +6,7 @@ const HOME_POPULATE = [
   'populate[content][on][shared.home-page-section1][populate][capabilities][populate]=*',
   'populate[content][on][shared.gallery][populate][images][populate]=*',
   'populate[content][on][shared.key-metrics-section][populate][keyMetrics][populate]=*',
+  // Hand-entered stories (`caseStudy` items) with their tags and media.
   'populate[content][on][shared.case-studies][populate][caseStudy][populate]=*',
   'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
   'populate[content][on][shared.home-blogs][populate][blogs][populate]=*',
@@ -46,8 +47,13 @@ const SERVICE_DETAIL_POPULATE = [
   'populate[content][on][shared.services][populate][services][populate]=*',
   'populate[content][on][shared.cta][populate]=*',
   'populate[content][on][shared.key-metrics-section][populate]=*',
+  // Hand-entered stories (`caseStudy` items) with their tags and media.
   'populate[content][on][shared.case-studies][populate][caseStudy][populate]=*',
   'populate[content][on][shared.faqs][populate]=*',
+  // `shared.industries` ("Business Application and Use Cases") was dropped from
+  // the service content zone in 7f268aa; asking for it 400s the whole query.
+  // Restore this line if the block comes back:
+  // 'populate[content][on][shared.industries][populate][industries][populate]=*',
   'populate[content][on][shared.gallery][populate][images][populate]=*',
   'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
 ].join('&');

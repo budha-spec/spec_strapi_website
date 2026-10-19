@@ -20,7 +20,7 @@ export function IndustryGallery({ data, columns = 6 }: IndustryGalleryProps) {
   if (logos.length === 0) return null;
 
   return (
-    <section className="sp-section sp-industry-gallery w-full bg-bg-light py-[clamp(48px,6.25vw,120px)]">
+    <section className="sp-section sp-industry-gallery w-full bg-bg-light py-[clamp(48px,6.25vw,50px)]">
       <div className="shell">
         {data.title && <SectionEyebrow>{cmsText(data.title)}</SectionEyebrow>}
         {data.subTitle && (

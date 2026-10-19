@@ -15,7 +15,8 @@ interface CaseStudiesProps {
 
 /**
  * "Client Success Stories" — one study per slide: copy left, image right.
- * Hidden until the block has at least one study.
+ * Stories are entered by hand in the block; tags and the link are optional.
+ * Hidden until the block has at least one story (e.g. a new industry page).
  */
 export function CaseStudies({ data }: CaseStudiesProps) {
   const studies = (data.caseStudy ?? []).filter((study) => study.title);
@@ -39,7 +40,10 @@ export function CaseStudies({ data }: CaseStudiesProps) {
 
         {data.subTitle && (
           <h2 className="sp-title mt-[clamp(6px,0.52vw,10px)] text-d40 font-medium leading-[1.2] text-text-heading">
-            <AccentHeading text={cmsText(data.subTitle)} accentClassName="gradient-text font-bold" />
+            <AccentHeading
+              text={cmsText(data.subTitle)}
+              accentClassName="gradient-text font-bold"
+            />
           </h2>
         )}
 
@@ -51,10 +55,14 @@ export function CaseStudies({ data }: CaseStudiesProps) {
             >
               {studies.map((study, slide) => {
                 const tags = (study.tags ?? []).filter((tag) => tag.title);
+                const href = study.url?.trim()
+                  ? hrefPath(study.url.trim())
+                  : null;
 
                 return (
                   <article
                     key={study.id}
+                    // Off-screen slides keep their links out of the tab order.
                     inert={slide !== index}
                     className="grid w-full shrink-0 bg-bg-white lg:grid-cols-[720fr_980fr]"
                   >
@@ -69,30 +77,38 @@ export function CaseStudies({ data }: CaseStudiesProps) {
                         </p>
                       )}
 
-                      <div className="mt-auto pt-[clamp(28px,4.17vw,80px)]">
-                        {tags.length > 0 && (
-                          <div className="border-t border-stroke-main pt-[clamp(16px,1.67vw,32px)]">
-                            <ul className="flex flex-wrap gap-[clamp(6px,0.47vw,9px)]">
-                              {tags.map((tag) => (
-                                <li
-                                  key={tag.id}
-                                  className="flex h-[clamp(32px,2.19vw,42px)] items-center rounded-full border border-stroke-main px-[clamp(12px,0.89vw,17px)] text-d14 text-text-secondary"
-                                >
-                                  {cmsText(tag.title)}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
+                      {(tags.length > 0 || href) && (
+                        <div className="mt-auto pt-[clamp(28px,4.17vw,80px)]">
+                          {tags.length > 0 && (
+                            <div className="border-t border-stroke-main pt-[clamp(16px,1.67vw,32px)]">
+                              <ul className="flex flex-wrap gap-[clamp(6px,0.47vw,9px)]">
+                                {tags.map((tag) => (
+                                  <li
+                                    key={tag.id}
+                                    className="flex h-[clamp(32px,2.19vw,42px)] items-center rounded-full border border-stroke-main px-[clamp(12px,0.89vw,17px)] text-d14 text-text-secondary"
+                                  >
+                                    {cmsText(tag.title)}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
 
-                        <ExploreMore
-                          href={hrefPath(study.url)}
-                          label={cmsText(study.btnText) || undefined}
-                          variant="filled"
-                          size="lg"
-                          className="mt-[clamp(20px,2.5vw,48px)]"
-                        />
-                      </div>
+                          {href && (
+                            <ExploreMore
+                              href={href}
+                              label={cmsText(study.btnText) || undefined}
+                              variant="filled"
+                              size="lg"
+                              className={
+                                tags.length > 0
+                                  ? 'mt-[clamp(20px,2.5vw,48px)]'
+                                  : undefined
+                              }
+                            />
+                          )}
+                        </div>
+                      )}
                     </div>
 
                     <div className="relative min-h-[260px] w-full overflow-hidden lg:min-h-[clamp(400px,34.3vw,659px)]">
@@ -110,9 +126,12 @@ export function CaseStudies({ data }: CaseStudiesProps) {
           </div>
         )}
 
+        {/* One story needs no Explore All or arrows. */}
         {count > 1 && (
           <CarouselControls
-            href={hrefPath(data.url || 'case-study')}
+            href={
+              hrefPath(data.url) === '#' ? '/case-study' : hrefPath(data.url)
+            }
             pill="dark"
             onPrev={() => go(-1)}
             onNext={() => go(1)}
