@@ -34,10 +34,12 @@ export function IndustryGallery({ data, columns = 6 }: IndustryGalleryProps) {
 
         <ul
           className={cn(
-            'mt-[clamp(24px,2.6vw,50px)] grid grid-cols-2 gap-[clamp(12px,1.04vw,20px)]',
+            'mt-[clamp(24px,2.6vw,50px)] grid gap-[clamp(12px,1.04vw,20px)]',
+            // Compliance badges carry long descriptions, so they stay wide
+            // until there is room for four: 1 → 2 → 4.
             columns === 4
-              ? 'md:grid-cols-4'
-              : 'sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6'
+              ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
+              : 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6'
           )}
         >
           {logos.map((item) => {
@@ -48,7 +50,7 @@ export function IndustryGallery({ data, columns = 6 }: IndustryGalleryProps) {
                 tabIndex={description ? 0 : undefined}
                 className={cn(
                   'industry-logo group relative overflow-hidden rounded-[12px]  bg-bg-white transition-[border-color,box-shadow] duration-300 hover:border-stroke-outline hover:shadow-[0_10px_28px_rgb(0_0_0/0.06)] focus-visible:shadow-[0_10px_28px_rgb(0_0_0/0.06)] focus-visible:outline-none',
-                  columns === 4 ? 'aspect-[4/3]' : 'aspect-[6/5]',
+                  columns === 4 ? 'aspect-[2/1] lg:aspect-[4/3]' : 'aspect-[6/5]',
                   description && 'has-description'
                 )}
               >
@@ -68,8 +70,14 @@ export function IndustryGallery({ data, columns = 6 }: IndustryGalleryProps) {
                       'group-hover:top-[clamp(12px,1.04vw,20px)] group-focus-visible:top-[clamp(12px,1.04vw,20px)] group-hover:left-[clamp(12px,1.04vw,20px)] group-focus-visible:left-[clamp(12px,1.04vw,20px)] group-hover:translate-x-0 group-focus-visible:translate-x-0 group-hover:translate-y-0 group-focus-visible:translate-y-0 group-hover:scale-[0.72] group-focus-visible:scale-[0.72]'
                   )}
                 />
+                {/*
+                  The description sits at the bottom, capped so it can never
+                  reach the shrunken logo (max 26% tall × 0.72 ≈ 19% of the
+                  tile, plus the top inset and an 8px gap); a longer one is
+                  clipped rather than drawn over the logo.
+                */}
                 {description && (
-                  <p className="industry-logo-description absolute inset-x-[clamp(12px,1.04vw,20px)] bottom-[clamp(12px,1.04vw,20px)] translate-y-2 text-d14 leading-[1.4] text-text-secondary opacity-0 transition-[opacity,translate] duration-500 group-hover:translate-y-0 group-focus-visible:translate-y-0 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none">
+                  <p className="industry-logo-description absolute inset-x-[clamp(12px,1.04vw,20px)] bottom-[clamp(12px,1.04vw,20px)] max-h-[calc(81%-2*clamp(12px,1.04vw,20px)-8px)] translate-y-2 overflow-hidden text-d14 leading-[1.4] text-text-secondary opacity-0 transition-[opacity,translate] duration-500 group-hover:translate-y-0 group-focus-visible:translate-y-0 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none">
                     {description}
                   </p>
                 )}

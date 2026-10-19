@@ -62,7 +62,8 @@ export function UseCaseCarousel({ data }: UseCaseCarouselProps) {
 
   return (
     <section className="sp-section sp-industry-use-cases w-full overflow-hidden bg-bg-light pt-[clamp(40px,3.65vw,70px)] pb-[clamp(48px,5.21vw,100px)]">
-      <div className="shell">
+      {/* `@container` so the cards size from the shell width (cqw), not the bleeding track. */}
+      <div className="shell @container">
         {data.title && <SectionEyebrow>{cmsText(data.title)}</SectionEyebrow>}
 
         {data.description && (
@@ -75,13 +76,15 @@ export function UseCaseCarousel({ data }: UseCaseCarouselProps) {
         )}
 
         {/*
-          Bleeds past the shell's right edge so the next card peeks out, as
-          in the design; the scrollbar is hidden (`.no-scrollbar`).
+          Bleeds from the shell's right edge to the viewport's (the shell is
+          centred, so that gutter is 50vw − 50%) so the fifth card peeks out,
+          as in the design; the matching padding lets the last card scroll
+          back to the shell edge. The scrollbar is hidden (`.no-scrollbar`).
         */}
         <ul
           ref={trackRef}
           onScroll={measure}
-          className="use-case-track no-scrollbar mt-[clamp(24px,3.13vw,60px)] -mr-[4vw] flex snap-x snap-mandatory gap-[clamp(12px,1.04vw,20px)] overflow-x-auto pr-[4vw] pb-1"
+          className="use-case-track no-scrollbar mt-[clamp(24px,3.13vw,60px)] mr-[calc(50%-50vw)] flex snap-x snap-mandatory gap-[clamp(12px,1.46vw,28px)] overflow-x-auto pr-[calc(50vw-50%)] pb-1"
         >
           {items.map((item, index) => {
             const number = cmsText(item.number) || String(index + 1).padStart(2, '0');
@@ -91,11 +94,12 @@ export function UseCaseCarousel({ data }: UseCaseCarouselProps) {
               <li
                 key={item.id}
                 tabIndex={0}
-                className="use-case-card group grid w-[78%] shrink-0 snap-start grid-rows-[auto_1fr] rounded-[12px] bg-bg-white p-[clamp(16px,1.25vw,24px)] outline-none transition-shadow duration-300 hover:shadow-[0_10px_28px_rgb(0_0_0/0.06)] focus-visible:shadow-[0_0_0_2px_var(--color-stroke-main)] sm:w-[44%] lg:w-[calc((100%-3*clamp(12px,1.04vw,20px))/4.3)]"
+                // Figma: four 404×440 cards fill the 1700 shell (28px gaps), the fifth peeks.
+                className="use-case-card group grid min-h-[clamp(280px,22.92vw,440px)] w-[78cqw] shrink-0 snap-start grid-rows-[auto_1fr] rounded-[14px] bg-bg-white p-[clamp(18px,1.46vw,28px)] outline-none transition-shadow duration-300 hover:shadow-[0_10px_28px_rgb(0_0_0/0.06)] focus-visible:shadow-[0_0_0_2px_var(--color-stroke-main)] sm:w-[calc((100cqw-clamp(12px,1.46vw,28px))/2)] lg:w-[calc((100cqw-3*clamp(12px,1.46vw,28px))/4)]"
               >
                 <span
                   aria-hidden
-                  className="text-d40 font-normal leading-none text-stroke-outline"
+                  className="text-d60 font-normal leading-none text-stroke-outline/60"
                 >
                   {number}
                 </span>
@@ -104,13 +108,13 @@ export function UseCaseCarousel({ data }: UseCaseCarouselProps) {
                 <div className="mt-[clamp(32px,3.13vw,60px)] grid items-end">
                   <h3
                     aria-hidden
-                    className="use-case-card-title col-start-1 row-start-1 text-d18 font-normal leading-[1.35] text-text-primary transition-[opacity,translate] duration-500 ease-out group-hover:-translate-y-2 group-hover:opacity-0 group-focus-visible:-translate-y-2 group-focus-visible:opacity-0 motion-reduce:transition-none"
+                    className="use-case-card-title col-start-1 row-start-1 max-w-[clamp(180px,12.5vw,240px)] text-d22 font-normal leading-[1.25] text-text-heading transition-[opacity,translate] duration-500 ease-out group-hover:-translate-y-2 group-hover:opacity-0 group-focus-visible:-translate-y-2 group-focus-visible:opacity-0 motion-reduce:transition-none"
                   >
                     {title}
                   </h3>
 
                   <div className="use-case-card-detail col-start-1 row-start-1 translate-y-3 opacity-0 transition-[opacity,translate] duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 motion-reduce:transition-none">
-                    <h3 className="w-fit text-d18 font-normal leading-[1.35]">
+                    <h3 className="w-fit max-w-[clamp(180px,12.5vw,240px)] text-d22 font-normal leading-[1.25]">
                       <span className="gradient-text" style={{ ['--grad-angle' as string]: '-60deg' }}>
                         {title}
                       </span>
