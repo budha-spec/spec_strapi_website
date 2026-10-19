@@ -76,6 +76,26 @@ const CASE_STUDY_LIST_QUERY = [
 ].join('&');
 
 /**
+ * Case-study detail page (`/case-study/:slug`): the facts card (client,
+ * country, scale, services, tags) and every block its `content` zone can
+ * hold. `populate=*` alone is rejected on the dynamic zone, so each block is
+ * listed; `shared.cs-result` nests its metrics and result cards one level down.
+ */
+const CASE_STUDY_DETAIL_POPULATE = [
+  'populate[featuredImage]=true',
+  'populate[industries][fields][0]=title',
+  'populate[tags][fields][0]=title',
+  'populate[services][fields][0]=title',
+  'populate[services][fields][1]=url',
+  'populate[content][on][shared.rich-text][populate]=*',
+  'populate[content][on][shared.challenges][populate][challange][populate]=*',
+  'populate[content][on][shared.gallery][populate]=*',
+  'populate[content][on][shared.solutions][populate][solution][populate]=*',
+  'populate[content][on][shared.cs-result][populate][result][populate]=*',
+  'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
+].join('&');
+
+/**
  * Live BI listing page: the hero CTA and the "Client Spotlight" block, whose
  * `visualizations` (with image + categories) are the cards, in editor order.
  */
@@ -157,6 +177,9 @@ export const ENDPOINTS = {
     `/services?filters[slug]=${encodeURIComponent(slug)}&${SERVICE_POPULATE}`,
   /** All published case studies for the `/case-study` listing. */
   CASE_STUDIES: `/case-studies?${CASE_STUDY_LIST_QUERY}`,
+  /** One case study, matched by slug, e.g. `ai-based-chatbot-application-for-hospital`. */
+  CASE_STUDY_BY_SLUG: (slug: string) =>
+    `/case-studies?filters[slug][$eq]=${encodeURIComponent(slug)}&${CASE_STUDY_DETAIL_POPULATE}`,
   /** Case-study industries — the listing's "Industries" filter chips. */
   CASE_STUDY_INDUSTRIES:
     '/cs-industries?fields[0]=title&fields[1]=slug&pagination[pageSize]=100',

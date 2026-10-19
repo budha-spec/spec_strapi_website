@@ -39,7 +39,7 @@ export function TechStack({ data }: TechStackProps) {
               <li
                 key={group.id}
                 tabIndex={0}
-                className="tech-stack-card rounded-[12px] bg-bg-white p-[clamp(16px,1.25vw,24px)] outline-none transition-shadow duration-300 hover:shadow-[0_10px_28px_rgb(0_0_0/0.06)] focus-visible:shadow-[0_0_0_2px_var(--color-stroke-main)]"
+                className="tech-stack-card rounded-[12px] bg-bg-white p-[clamp(16px,1.25vw,24px)] outline-none"
               >
                 <h3 className="tech-stack-card-title w-fit text-d22 font-medium leading-[1.3] text-text-primary">
                   {cmsText(group.title)}

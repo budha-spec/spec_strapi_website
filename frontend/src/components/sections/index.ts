@@ -11,5 +11,7 @@ export * from './Testimonials';
 export * from './IndustryGallery';
 export * from './FaqSection';
 export * from './CtaBanner';
+export * from './DarkCardGrid';
 export * from './BlogSection';
 export * from './LetsTalk';
+export * from './ServiceIntro';
