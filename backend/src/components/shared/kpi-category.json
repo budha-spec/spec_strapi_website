@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_shared_kpi_categories",
+  "info": {
+    "displayName": "KPI Category"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "subCategory": {
+      "type": "component",
+      "component": "shared.capabilities-item",
+      "repeatable": true,
+      "required": true
+    }
+  },
+  "config": {}
+}

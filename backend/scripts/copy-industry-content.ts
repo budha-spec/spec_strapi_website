@@ -1,6 +1,6 @@
 import { createStrapi } from "@strapi/strapi";
 
-const SOURCE_DOCUMENT_ID = "rmlx5416mgu292j36wd867s4";
+const SOURCE_DOCUMENT_ID = "yvy6k4azkprclivocqwujua0";
 const PAGE_SIZE = 100;
 
 console.log("RUNNING COPY SCRIPT VERSION 2")
@@ -12,7 +12,7 @@ async function main(): Promise<void> {
   }).load();
 
   try {
-    const service = strapi.documents("api::case-study.case-study");
+    const service = strapi.documents("api::visualization.visualization");
 
     console.log("Fetching source Industry...");
 

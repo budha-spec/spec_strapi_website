@@ -1,5 +1,21 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface SharedAudienceSection extends Struct.ComponentSchema {
+  collectionName: 'components_shared_audience_sections';
+  info: {
+    displayName: 'Audience Section';
+  };
+  attributes: {
+    audience: Schema.Attribute.Component<'shared.capabilities-item', true>;
+    dashboard: Schema.Attribute.String & Schema.Attribute.Required;
+    focus: Schema.Attribute.String;
+    platform: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::visualization-category.visualization-category'
+    >;
+  };
+}
+
 export interface SharedBlogs extends Struct.ComponentSchema {
   collectionName: 'components_shared_blogs';
   info: {
@@ -165,6 +181,30 @@ export interface SharedCta extends Struct.ComponentSchema {
     title: Schema.Attribute.String & Schema.Attribute.Required;
     txt: Schema.Attribute.String;
     url: Schema.Attribute.String;
+  };
+}
+
+export interface SharedDashboardAction extends Struct.ComponentSchema {
+  collectionName: 'components_shared_dashboard_actions';
+  info: {
+    displayName: 'Dashboard Action';
+  };
+  attributes: {
+    disclaimerTxt: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.Text & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedDashboardImprovement extends Struct.ComponentSchema {
+  collectionName: 'components_shared_dashboard_improvements';
+  info: {
+    displayName: 'Dashboard Improvement';
+  };
+  attributes: {
+    improvement: Schema.Attribute.Component<'shared.text-block', true>;
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -365,6 +405,34 @@ export interface SharedKeyMetricsSection extends Struct.ComponentSchema {
     description: Schema.Attribute.Text;
     keyMetrics: Schema.Attribute.Component<'shared.key-metrics', true>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedKpiBusinessImpact extends Struct.ComponentSchema {
+  collectionName: 'components_shared_kpi_business_impacts';
+  info: {
+    displayName: 'KPI Business Impact';
+  };
+  attributes: {
+    category: Schema.Attribute.Component<'shared.kpi-category', true>;
+    image: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.Required;
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedKpiCategory extends Struct.ComponentSchema {
+  collectionName: 'components_shared_kpi_categories';
+  info: {
+    displayName: 'KPI Category';
+  };
+  attributes: {
+    subCategory: Schema.Attribute.Component<'shared.capabilities-item', true> &
+      Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
   };
 }
 
@@ -614,6 +682,7 @@ export interface SharedWhitepapers extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'shared.audience-section': SharedAudienceSection;
       'shared.blogs': SharedBlogs;
       'shared.capabilities-item': SharedCapabilitiesItem;
       'shared.career-inquiry-cta': SharedCareerInquiryCta;
@@ -627,6 +696,8 @@ declare module '@strapi/strapi' {
       'shared.cs-result': SharedCsResult;
       'shared.cs-result-item': SharedCsResultItem;
       'shared.cta': SharedCta;
+      'shared.dashboard-action': SharedDashboardAction;
+      'shared.dashboard-improvement': SharedDashboardImprovement;
       'shared.enterprise-solution': SharedEnterpriseSolution;
       'shared.enterprise-solution-item': SharedEnterpriseSolutionItem;
       'shared.faq-item': SharedFaqItem;
@@ -642,6 +713,8 @@ declare module '@strapi/strapi' {
       'shared.industry-service-item': SharedIndustryServiceItem;
       'shared.key-metrics': SharedKeyMetrics;
       'shared.key-metrics-section': SharedKeyMetricsSection;
+      'shared.kpi-business-impact': SharedKpiBusinessImpact;
+      'shared.kpi-category': SharedKpiCategory;
       'shared.live-bi-visualization': SharedLiveBiVisualization;
       'shared.office-addresses': SharedOfficeAddresses;
       'shared.portfolio': SharedPortfolio;
