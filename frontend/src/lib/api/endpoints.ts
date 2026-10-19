@@ -6,7 +6,8 @@ const HOME_POPULATE = [
   'populate[content][on][shared.home-page-section1][populate][capabilities][populate]=*',
   'populate[content][on][shared.gallery][populate][images][populate]=*',
   'populate[content][on][shared.key-metrics-section][populate][keyMetrics][populate]=*',
-  'populate[content][on][shared.case-studies][populate][case_studies][populate]=*',
+  // Hand-entered stories (`caseStudy` items) with their tags and media.
+  'populate[content][on][shared.case-studies][populate][caseStudy][populate]=*',
   'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
   'populate[content][on][shared.home-blogs][populate][blogs][populate]=*',
   // Core Capabilities cards: image, plus their category Content Items with
@@ -46,9 +47,13 @@ const SERVICE_DETAIL_POPULATE = [
   'populate[content][on][shared.services][populate][services][populate]=*',
   'populate[content][on][shared.cta][populate]=*',
   'populate[content][on][shared.key-metrics-section][populate]=*',
-  'populate[content][on][shared.case-studies][populate][case_studies][populate]=*',
+  // Hand-entered stories (`caseStudy` items) with their tags and media.
+  'populate[content][on][shared.case-studies][populate][caseStudy][populate]=*',
   'populate[content][on][shared.faqs][populate]=*',
-  'populate[content][on][shared.industries][populate][industries][populate]=*',
+  // `shared.industries` ("Business Application and Use Cases") was dropped from
+  // the service content zone in 7f268aa; asking for it 400s the whole query.
+  // Restore this line if the block comes back:
+  // 'populate[content][on][shared.industries][populate][industries][populate]=*',
   'populate[content][on][shared.gallery][populate][images][populate]=*',
   'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
 ].join('&');
@@ -111,6 +116,22 @@ const INDUSTRIES_PAGE_POPULATE = [
 ].join('&');
 
 /**
+ * Industry detail page (`/industries/:slug`): every block the Industry
+ * `content` zone can hold, so editors can add or reorder them freely.
+ * `shared.case-studies` holds its slides as `caseStudy` components (with
+ * their tags and image); `shared.technologies` relates Technology entries.
+ */
+const INDUSTRY_DETAIL_POPULATE = [
+  'populate[content][on][shared.key-metrics-section][populate][keyMetrics][populate]=*',
+  'populate[content][on][shared.industry-service][populate][industryServices][populate]=*',
+  'populate[content][on][shared.case-studies][populate][caseStudy][populate]=*',
+  'populate[content][on][shared.cta][populate]=*',
+  'populate[content][on][shared.industry-gallery][populate][gallery][populate]=*',
+  'populate[content][on][shared.technologies][populate][technology][populate]=*',
+  'populate[content][on][shared.faqs][populate][faq][populate]=*',
+].join('&');
+
+/**
  * Contact page entry: the client logo strip. Offices, socials and portfolio
  * come from the `footer` single type; `populate=*` on this entry is a 500.
  */
@@ -152,6 +173,9 @@ export const ENDPOINTS = {
   CONTACT_PAGE: `/pages?filters[slug][$eq]=contact-us&${CONTACT_PAGE_POPULATE}`,
   /** Every published industry — needs the Public role's `find` on Industry. */
   INDUSTRIES: `/industries?${INDUSTRY_LIST_QUERY}`,
+  /** One industry detail page, matched by slug, e.g. `manufacturing-software-development`. */
+  INDUSTRY_BY_SLUG: (slug: string) =>
+    `/industries?filters[slug][$eq]=${encodeURIComponent(slug)}&${INDUSTRY_DETAIL_POPULATE}`,
   /** Visualization categories — the listing's tabs ("All Visualization", "Power BI", …). */
   VISUALIZATION_CATEGORIES:
     '/visualization-categories?fields[0]=title&fields[1]=slug&pagination[pageSize]=100',

@@ -59,6 +59,11 @@ frontend/src/
 │   │   ├── api/case-study.api.ts     ← fetchCaseStudies, fetchCaseStudyIndustries, fetchSpotlightTestimonials
 │   │   ├── types/case-study.types.ts
 │   │   └── components/               ← CaseStudyExplorer (filters + peek carousel), CaseStudyCard
+│   ├── industries/                   ← /industries landing + /industries/:slug detail
+│   │   ├── api/industries.api.ts     ← fetchIndustries, fetchIndustriesPage, fetchIndustryBySlug
+│   │   ├── components/IndustryBlocks.tsx  ← detail-page block renderer
+│   │   ├── landing/components/       ← IndustryExplorer
+│   │   └── detail/components/        ← UseCaseCarousel, IndustryServices, TechStack
 │   └── service/                      ← all three service page types
 │       ├── api/service.api.ts        ← fetchServiceBySlug / fetchServiceByUrl, serviceTemplate()
 │       ├── types/service.types.ts

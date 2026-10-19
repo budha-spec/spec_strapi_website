@@ -69,6 +69,7 @@ The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
 | `sp-page-testimonials` | `/about/testimonials` Testimonials listing |
 | `sp-page-whitepaper` | `/whitepaper` Whitepaper listing |
 | `sp-page-industries` | `/industries` Industries landing |
+| `sp-page-industry-detail` | `/industries/…` industry page, e.g. Manufacturing |
 | `sp-page-contact-us` | `/contact-us` Contact Us |
 
 ## Layout (every page)
@@ -91,10 +92,10 @@ The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
 | `sp-page-hero-skeleton` | Loading placeholder of the hero | Same pages, while loading |
 | `sp-clients-strip` | "Trusted by global leaders" logo marquee | Home, Services, Contact Us |
 | `sp-proven-impact` | "Proven Impact" stats | Home, service |
-| `sp-case-studies` | "Client Success Stories" carousel | Home, service, sub-service |
+| `sp-case-studies` | "Client Success Stories" carousel | Home, service, sub-service, industry |
 | `sp-testimonials` | "Client Spotlight" video cards | Home, Services, case study |
-| `sp-faq` | "Frequently Asked Questions" | Service |
-| `sp-cta-banner` | "Hire Dedicated Development Team" banner | Service, sub-service |
+| `sp-faq` | "Frequently Asked Questions" | Service, industry |
+| `sp-cta-banner` | "Hire Dedicated Development Team" banner | Service, sub-service, industry |
 | `sp-blog` | "Latest Insights" blog carousel | Home, sub-service |
 
 ## Page-specific sections
@@ -119,13 +120,16 @@ The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
 | `sp-live-bi-empty` | "No dashboards in this category" message | Live BI |
 | `sp-testimonial-feature` | Light "Client Spotlight" carousel (wide quote cards) | Testimonials |
 | `sp-testimonials-grid` | Card grid inside `sp-testimonials` when it uses `layout="grid"` | Testimonials |
-| `sp-industry-gallery` | "Client & Industry" logo tiles | Testimonials, Industries |
+| `sp-industry-gallery` | "Client & Industry" logo tiles ("Industry Compliances" badges, 4 to a row, on an industry page) | Testimonials, Industries, industry |
 | `sp-whitepaper-listing` | Heading + whitepaper cards band | Whitepaper |
 | `sp-whitepaper-grid` | Two-column whitepaper card grid | Whitepaper |
 | `sp-whitepaper-empty` | "New whitepapers are on their way" message | Whitepaper |
 | `sp-industries-intro` | "Capabilities" heading band above the explorer | Industries |
 | `sp-industries-explorer` | Dark band holding the industry explorer | Industries |
 | `sp-industry-explorer` | Industry list + selected industry panel | Industries |
+| `sp-industry-use-cases` | "Key Use Cases" numbered card carousel | Industry |
+| `sp-industry-services` | "Services We Are Offering" dark cards | Industry |
+| `sp-industry-tech-stack` | "Tech Stack / Technology and Integration" cards | Industry |
 | `sp-contact-hero` | Title, office details + socials beside the enquiry form, over the artwork | Contact Us |
 | `sp-contact-career` | "For Career Inquiry" banner + "Current Job Opening" card | Contact Us |
 
@@ -152,6 +156,9 @@ These were added earlier and work the same way.
 | `career-contact` | One HR phone / email link in the career banner |
 | `career-openings` | "Current Job Opening" card (white Explore More) |
 | `industry-tab` | One industry in the explorer list (`aria-selected="true"` when active) |
+| `use-case-track`, `use-case-card` (+ `use-case-card-title`, `use-case-card-detail`) | Key Use Cases track and card; on hover the bottom title fades out and the gradient title, divider and description rise in |
+| `industry-service-card` | Industry "Services We Are Offering" card; on hover the title rolls up into a gradient copy and Explore More lights up |
+| `tech-stack-card` (+ `tech-stack-card-title`, `tech-chip`) | Tech Stack card, its title (gradient on hover) and one technology chip |
 
 ## Rules for new work
 

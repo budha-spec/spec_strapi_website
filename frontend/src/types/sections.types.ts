@@ -101,14 +101,22 @@ export interface LabeledItem {
   title?: string | null;
 }
 
-export interface CaseStudy {
+/**
+ * One story in the carousel (`shared.case-study-item`), entered by hand in
+ * the block rather than linked from the Case Study collection.
+ */
+export interface CaseStudyItem {
   id: number;
   title: string;
-  slug: string;
   description?: string | null;
-  featuredImage?: CmsMedia | null;
-  industries?: LabeledItem[] | null;
+  /** Optional chips under the copy (`cs-tag` relation). */
   tags?: LabeledItem[] | null;
+  /** Explore More label; defaults to "Explore More". */
+  btnText?: string | null;
+  /** Explore More target — the button is hidden without it. */
+  url?: string | null;
+  /** Slide image. Not in the schema yet; a placeholder shows until it is. */
+  image?: CmsMedia | null;
 }
 
 /** `shared.case-studies` — the "Client Success Stories" carousel. */
@@ -117,8 +125,9 @@ export interface CaseStudiesBlock {
   id: number;
   title: string;
   subTitle?: string | null;
+  /** "Explore All" target, e.g. `case-study`. */
   url?: string | null;
-  case_studies?: CaseStudy[] | null;
+  caseStudy?: CaseStudyItem[] | null;
 }
 
 export interface FaqItem {
