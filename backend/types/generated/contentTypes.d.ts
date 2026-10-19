@@ -538,6 +538,8 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
         'shared.gallery',
         'shared.solutions',
         'shared.cs-result',
+        'shared.challenges-item',
+        'shared.contact-us',
       ]
     >;
     country: Schema.Attribute.String;

@@ -68,7 +68,7 @@ export function ServiceBlocks({ blocks, template }: ServiceBlocksProps) {
         if (isBlock(block, 'shared.services')) {
           return <Services key={key} data={block} />;
         }
-        if (isBlock(block, 'shared.industries')) {
+        if (isBlock(block, 'shared.industry-case-study')) {
           return <UseCaseGrid key={key} data={block} />;
         }
         if (isBlock(block, 'shared.cta')) {
