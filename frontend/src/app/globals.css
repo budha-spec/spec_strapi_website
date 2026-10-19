@@ -972,7 +972,7 @@ article.visualization-card:hover a.explore-more .explore-more-label {
 .explore-more--filled:hover .explore-more-arrow {
   background: linear-gradient(272.76deg, #25be00 -1.59%, #0c3ced 97.08%);
   color: #fff;
-  transition: all 300ms ease;
+  transition: all 300ms ease; border : transparent
 }
 
 /* .explore-more--filled:hover .explore-more-arrow svg {
@@ -1077,6 +1077,25 @@ ul.sp-testimonials-grid li:nth-child(-n + 4) {
 .whitepaper-card:hover span.explore-more-arrow {
     border-color: transparent;
 }
+.sp-industry-explorer a.explore-more {
+    background: transparent;
+}
+
+.sp-industry-explore .explore-more--outline span.explore-more-arrow{
+   border: transparent; background-color: transparent;
+}
+
+.sp-industries-explorer span.explore-more-arrow:hover {
+    background-color: transparent !important;
+    border-color: transparent;
+}
+
+.faq-item p {
+    max-width: 1440px; color: #fff; 
+}
+.faq-item h3 button{
+  color: #C1C1C1
+}
 
 
 @media (max-width: 1280px) {
@@ -1096,6 +1115,10 @@ ul.sp-testimonials-grid li:nth-child(-n + 4) {
   .sp-header > div {
     height: 60px !important;
   }
+
+  .footer-social-icons li a {
+    padding: 6px;
+}
 }
 
 
@@ -1124,7 +1147,7 @@ ul.sp-testimonials-grid li:nth-child(-n + 4) {
  * (not just the word), so the first letters are blue and the rest green.
  */
 .contact-office-name {
-  background-image: linear-gradient(-20deg, #56f72f 62.7%, #0c3ced 97%);
+  background-image: linear-gradient(-20deg, #0c3ced 62.7%, #56f72f 97%);
 }
 
 /*
@@ -1137,4 +1160,8 @@ ul.sp-testimonials-grid li:nth-child(-n + 4) {
 }
 .contact-social-icons .social-btn[data-network="twitter"]:hover img {
   filter: brightness(0);
+}
+
+.career-openings .explore-more:hover span.explore-more-arrow {
+    background: linear-gradient(#0e0e0d, #0e0e0d) padding-box padding-box, linear-gradient(252.16deg, #0c3deb 5.3%, #20a42f 89.32%) border-box;
 }

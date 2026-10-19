@@ -30,7 +30,7 @@ export function CareerInquiry() {
           */}
           <div
             aria-hidden
-            className="absolute top-1/2 right-[calc(var(--art)*-0.2186)] aspect-[736/1308] h-(--art) -translate-y-1/2 -rotate-90 opacity-50 [--art:clamp(420px,46.9vw,900px)] lg:opacity-100"
+            className="absolute top-1/2 right-[calc(var(--art)*-0.0001)] aspect-[736/1308] h-(--art) -translate-y-1/2 -rotate-90 opacity-50 [--art:clamp(420px,46.9vw,900px)] lg:opacity-100"
           >
             <Image
               src="/contact/career-banner.png"

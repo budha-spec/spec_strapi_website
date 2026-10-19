@@ -62,7 +62,7 @@ export function ContactHero({ title, description, footer, countries }: ContactHe
         />
       </div>
 
-      <div className="shell relative lg:pl-[clamp(0px,7.5vw,144px)]">
+      <div className="shell relative ">
         <h1 className="sp-page-title text-d60 font-semibold leading-[1.3] text-white">
           {cmsText(title)}
         </h1>
@@ -80,7 +80,7 @@ export function ContactHero({ title, description, footer, countries }: ContactHe
           className="absolute inset-x-0 -top-[clamp(24px,3.7vw,71px)] bottom-0 hidden bg-black/30 backdrop-blur-[19.45px] lg:block"
         />
 
-        <div className="shell relative grid gap-[clamp(32px,3vw,56px)] lg:grid-cols-[minmax(0,866fr)_688fr] lg:gap-0 lg:pl-[clamp(0px,7.5vw,144px)]">
+        <div className="shell relative grid gap-[clamp(32px,3vw,56px)] lg:grid-cols-[minmax(0,866fr)_688fr] lg:gap-0 ">
           <div className="min-w-0 lg:pt-[clamp(20px,2.03vw,39px)] lg:pr-[clamp(24px,6vw,115px)]">
             <h2 className={cn(CARD_HEADING, 'sp-title text-white')}>{INTRO_HEADING}</h2>
             <p className="mt-[clamp(10px,0.89vw,17px)] max-w-[749px] text-d18 leading-[1.4] text-text-light">
