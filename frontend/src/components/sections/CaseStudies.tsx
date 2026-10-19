@@ -16,6 +16,7 @@ interface CaseStudiesProps {
 /**
  * "Client Success Stories" — one study per slide: copy left, image right.
  * Stories are entered by hand in the block; tags and the link are optional.
+ * Hidden until the block has at least one story (e.g. a new industry page).
  */
 export function CaseStudies({ data }: CaseStudiesProps) {
   const studies = (data.caseStudy ?? []).filter((study) => study.title);
@@ -29,6 +30,8 @@ export function CaseStudies({ data }: CaseStudiesProps) {
     },
     [count]
   );
+
+  if (count === 0) return null;
 
   return (
     <section className="sp-section sp-case-studies w-full bg-bg-light pt-[clamp(40px,3.44vw,66px)] pb-[clamp(40px,3.65vw,70px)]">
@@ -50,7 +53,7 @@ export function CaseStudies({ data }: CaseStudiesProps) {
               className="flex transition-transform duration-500 ease-out"
               style={{ transform: `translate3d(-${index * 100}%, 0, 0)` }}
             >
-              {studies.map((study) => {
+              {studies.map((study, slide) => {
                 const tags = (study.tags ?? []).filter((tag) => tag.title);
                 const href = study.url?.trim()
                   ? hrefPath(study.url.trim())
@@ -59,6 +62,8 @@ export function CaseStudies({ data }: CaseStudiesProps) {
                 return (
                   <article
                     key={study.id}
+                    // Off-screen slides keep their links out of the tab order.
+                    inert={slide !== index}
                     className="grid w-full shrink-0 bg-bg-white lg:grid-cols-[720fr_980fr]"
                   >
                     <div className="flex flex-col p-[clamp(20px,2.08vw,40px)]">

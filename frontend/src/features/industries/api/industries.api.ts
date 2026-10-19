@@ -5,7 +5,7 @@
 import { strapiGet } from '@/lib/api/strapi';
 import { ENDPOINTS, REVALIDATE } from '@/lib/api/endpoints';
 import type { StrapiListResponse } from '@/types/strapi';
-import type { Industry, IndustriesPage } from '../types/industries.types';
+import type { Industry, IndustriesPage, IndustryDetail } from '../types/industries.types';
 
 const CONTENT = { next: { revalidate: REVALIDATE.CONTENT } };
 
@@ -52,4 +52,17 @@ export async function fetchIndustries(): Promise<{
     console.error('[industries] list unavailable:', error);
     return { landing: null, industries: [] };
   }
+}
+
+/**
+ * One industry with its page content, or null when no published entry has
+ * this slug (the route then 404s). Throws on a Strapi error so a broken
+ * query shows the error page instead of a silent 404.
+ */
+export async function fetchIndustryBySlug(slug: string): Promise<IndustryDetail | null> {
+  const { data } = await strapiGet<StrapiListResponse<IndustryDetail>>(
+    ENDPOINTS.INDUSTRY_BY_SLUG(slug),
+    CONTENT
+  );
+  return data[0] ?? null;
 }

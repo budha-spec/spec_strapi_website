@@ -531,7 +531,8 @@
    * Let's Talk links). The gradient always sits behind the text and the
    * solid fill fades out, because background-image itself can't animate.
    */
-  .offering-card-title {
+  .offering-card-title,
+  .tech-stack-card-title {
     background-image: linear-gradient(
       var(--grad-angle, -85.51deg),
       #25be00 0.209%,
@@ -542,7 +543,8 @@
     -webkit-text-fill-color: currentColor;
     transition: -webkit-text-fill-color 0.35s ease;
   }
-  .offering-card:hover .offering-card-title {
+  .offering-card:hover .offering-card-title,
+  .tech-stack-card:is(:hover, :focus-visible) .tech-stack-card-title {
     -webkit-text-fill-color: transparent;
   }
 
@@ -1162,6 +1164,44 @@ ul.sp-testimonials-grid li:nth-child(-n + 4) {
   filter: brightness(0);
 }
 
+/*
+ * Industry page "Services We Are Offering" cards are dark: Explore More is
+ * white at rest (the custom block above paints it black on white) and takes
+ * the shared gradient pill when anywhere on the card is hovered or focused.
+ */
+.industry-service-card .explore-more,
+.industry-service-card .explore-more:hover {
+  background: transparent;
+}
+.industry-service-card .explore-more-label {
+  color: #ffffff;
+}
+.industry-service-card .explore-more--outline span.explore-more-arrow {
+  border-color: rgba(255, 255, 255, 0.85);
+  color: #ffffff;
+}
+.industry-service-card:is(:hover, :focus-within) .explore-more--outline span.explore-more-arrow {
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(252.16deg, #0c3deb 5.3%, #20a42f 89.32%) border-box;
+  border-color: transparent;
+}
+.industry-service-card:is(:hover, :focus-within) .explore-more-arrow svg {
+  color: #25be00;
+}
+
+/*
+ * Section spacing on industry pages. The CTA banner only has bottom padding
+ * (on service pages it follows a light section), so after a dark band it
+ * needs its own top gap; and the compliance tiles drop their top padding
+ * after the banner so the gap is not doubled.
+ */
+:is(.bg-bg-darker, .bg-bg-dark) + .sp-cta-banner {
+  padding-top: clamp(48px, 6.25vw, 120px);
+}
+.sp-cta-banner + .sp-industry-gallery {
+  padding-top: 0;
+}
 .career-openings .explore-more:hover span.explore-more-arrow {
     background: linear-gradient(#0e0e0d, #0e0e0d) padding-box padding-box, linear-gradient(252.16deg, #0c3deb 5.3%, #20a42f 89.32%) border-box;
 }

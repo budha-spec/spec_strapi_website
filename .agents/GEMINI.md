@@ -127,12 +127,12 @@ Names follow the Figma section labels so designers and developers mean the same 
 | `PageHero` (+ `PageHeroSkeleton`) | Inner-page hero: breadcrumb pill, title, intro, CTA | entry `title` / `description` + `shared.contact-us` |
 | `ClientsStrip` | "Trusted by global leaders" logo marquee | `shared.gallery` |
 | `ProvenImpact` | "Proven Impact" stats band | `shared.key-metrics-section` |
-| `CaseStudies` | "Client Success Stories" carousel | `shared.case-studies` |
+| `CaseStudies` | "Client Success Stories" carousel | `shared.case-studies` (slides are `caseStudy` components — populate `[caseStudy][populate]=*`) |
 | `Testimonials` | "Client Spotlight" video cards — carousel, or `layout="grid"` for every card at once (testimonials listing) | `shared.testimonial-section` |
 | `FaqSection` | "Frequently Asked Questions" accordion | `shared.faqs` |
 | `CtaBanner` | "Hire Dedicated Development Team" banner | `shared.cta` |
 | `BlogSection` | "Latest Insights" carousel (WordPress, optional category) | — (`fetchLatestBlogs(category?)` in `src/lib/api/blogs.api.ts`) |
-| `IndustryGallery` | "Client & Industry" logo tiles (logo moves top-left, description fades in on hover) | `shared.industry-gallery` |
+| `IndustryGallery` | "Client & Industry" logo tiles (logo moves top-left, description fades in on hover); `columns={4}` for an industry page's "Industry Compliances" | `shared.industry-gallery` |
 | `LetsTalk` | "Let's Talk to OUR EXPERT!" + enquiry form | Strapi `footer` single type (`fetchFooter()` in `src/lib/api/footer.api.ts`), rendered by Footer with the awards/ratings strip |
 
 ---
