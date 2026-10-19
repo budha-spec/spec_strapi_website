@@ -6,16 +6,19 @@ import { CarouselControls } from '@/components/ui/CarouselControls';
 import { CmsImage } from '@/components/ui/CmsImage';
 import { ExploreMore } from '@/components/ui/ExploreMore';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
-import { cmsText, joinPath } from '@/lib/media';
+import { cmsText, hrefPath } from '@/lib/media';
 import type { CaseStudiesBlock } from '@/types/sections.types';
 
 interface CaseStudiesProps {
   data: CaseStudiesBlock;
 }
 
-/** "Client Success Stories" — one study per slide: copy left, image right. */
+/**
+ * "Client Success Stories" — one study per slide: copy left, image right.
+ * Hidden until the block has at least one study.
+ */
 export function CaseStudies({ data }: CaseStudiesProps) {
-  const studies = data.case_studies ?? [];
+  const studies = (data.caseStudy ?? []).filter((study) => study.title);
   const [index, setIndex] = useState(0);
   const count = studies.length;
 
@@ -26,6 +29,8 @@ export function CaseStudies({ data }: CaseStudiesProps) {
     },
     [count]
   );
+
+  if (count === 0) return null;
 
   return (
     <section className="sp-section sp-case-studies w-full bg-bg-light pt-[clamp(40px,3.44vw,66px)] pb-[clamp(40px,3.65vw,70px)]">
@@ -44,15 +49,13 @@ export function CaseStudies({ data }: CaseStudiesProps) {
               className="flex transition-transform duration-500 ease-out"
               style={{ transform: `translate3d(-${index * 100}%, 0, 0)` }}
             >
-              {studies.map((study) => {
-                const tags = [
-                  ...(study.industries ?? []),
-                  ...(study.tags ?? []),
-                ].filter((tag) => tag.title);
+              {studies.map((study, slide) => {
+                const tags = (study.tags ?? []).filter((tag) => tag.title);
 
                 return (
                   <article
                     key={study.id}
+                    inert={slide !== index}
                     className="grid w-full shrink-0 bg-bg-white lg:grid-cols-[720fr_980fr]"
                   >
                     <div className="flex flex-col p-[clamp(20px,2.08vw,40px)]">
@@ -83,7 +86,8 @@ export function CaseStudies({ data }: CaseStudiesProps) {
                         )}
 
                         <ExploreMore
-                          href={joinPath(data.url ?? '/case-study', study.slug)}
+                          href={hrefPath(study.url)}
+                          label={cmsText(study.btnText) || undefined}
                           variant="filled"
                           size="lg"
                           className="mt-[clamp(20px,2.5vw,48px)]"
@@ -93,7 +97,7 @@ export function CaseStudies({ data }: CaseStudiesProps) {
 
                     <div className="relative min-h-[260px] w-full overflow-hidden lg:min-h-[clamp(400px,34.3vw,659px)]">
                       <CmsImage
-                        media={study.featuredImage}
+                        media={study.image}
                         fallback="cover"
                         alt=""
                         className="absolute inset-0 size-full object-cover"
@@ -108,6 +112,7 @@ export function CaseStudies({ data }: CaseStudiesProps) {
 
         {count > 1 && (
           <CarouselControls
+            href={hrefPath(data.url || 'case-study')}
             pill="dark"
             onPrev={() => go(-1)}
             onNext={() => go(1)}

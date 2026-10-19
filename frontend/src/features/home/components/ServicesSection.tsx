@@ -19,8 +19,9 @@ interface CategoryChip {
 /**
  * The hover chips for one card. Each Content Item groups entries of one
  * `type` (e.g. "Service" → AI Agent, AI Development, AI/ML); every linked
- * entry becomes a chip pointing at its own page. Entries without a URL
- * (industries have none yet) link to the card's own page instead.
+ * entry becomes a chip pointing at its own page. Industries have no `url`
+ * yet, so they link to `/industries/<slug>` (as `industryHref` does); any
+ * other entry without one links to the card's own page instead.
  */
 function categoryChips(items: ContentItem[], cardUrl?: string | null): CategoryChip[] {
   const seen = new Set<string>();
@@ -31,7 +32,9 @@ function categoryChips(items: ContentItem[], cardUrl?: string | null): CategoryC
       const key = `${item.type}-${entry.id}`;
       if (!entry.title || seen.has(key)) continue;
       seen.add(key);
-      chips.push({ key, title: cmsText(entry.title), href: hrefPath(entry.url || cardUrl) });
+      const ownPage =
+        entry.url || (item.type === 'industry' && entry.slug ? `industries/${entry.slug}` : null);
+      chips.push({ key, title: cmsText(entry.title), href: hrefPath(ownPage || cardUrl) });
     }
   }
   return chips;

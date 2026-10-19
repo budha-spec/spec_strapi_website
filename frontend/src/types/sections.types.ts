@@ -101,13 +101,16 @@ export interface LabeledItem {
   title?: string | null;
 }
 
-export interface CaseStudy {
+/** `shared.case-study-item` — one slide, written in the block itself. */
+export interface CaseStudyItem {
   id: number;
   title: string;
-  slug: string;
   description?: string | null;
-  featuredImage?: CmsMedia | null;
-  industries?: LabeledItem[] | null;
+  /** Explore More label; defaults to "Explore More". */
+  btnText?: string | null;
+  /** The study's page, e.g. `case-study/ai-based-chatbot-application-for-hospital`. */
+  url?: string | null;
+  image?: CmsMedia | null;
   tags?: LabeledItem[] | null;
 }
 
@@ -117,8 +120,9 @@ export interface CaseStudiesBlock {
   id: number;
   title: string;
   subTitle?: string | null;
+  /** The listing behind Explore All, e.g. `case-study`. */
   url?: string | null;
-  case_studies?: CaseStudy[] | null;
+  caseStudy?: CaseStudyItem[] | null;
 }
 
 export interface FaqItem {

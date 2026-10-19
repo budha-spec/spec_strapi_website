@@ -5,8 +5,8 @@ import { CmsImage } from '@/components/ui/CmsImage';
 import { ExploreMore } from '@/components/ui/ExploreMore';
 import { cmsText } from '@/lib/media';
 import { cn } from '@/lib/utils';
-import { industryHref } from '../lib/industry-href';
-import type { Industry } from '../types/industries.types';
+import { industryHref } from '../../lib/industry-href';
+import type { Industry } from '../../types/industries.types';
 
 /**
  * Industries landing explorer (Figma 331:7265): industry list on the left,
