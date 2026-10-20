@@ -10,7 +10,7 @@ const ANGLES = ['-76deg', '-71deg', '-70deg', '-76deg'];
 /**
  * "What CEO Dashboard Can Improve?" (Figma 432:6911) — dark band of tall
  * white cards: icon top-left, the figure on the brand gradient and its
- * caption pinned to the bottom. Four to a row on desktop, two on tablets,
+ * caption pinned to the bottom. Four to a row from `lg`, two on tablets,
  * one on phones.
  */
 export function DashboardImprovements({ data }: { data: DashboardImprovementBlock }) {
@@ -35,7 +35,7 @@ export function DashboardImprovements({ data }: { data: DashboardImprovementBloc
           </h2>
         )}
 
-        <ul className="mt-[clamp(24px,3.13vw,60px)] grid gap-[clamp(16px,1.46vw,28px)] sm:grid-cols-2 xl:grid-cols-4">
+        <ul className="mt-[clamp(24px,3.13vw,60px)] grid gap-[clamp(16px,1.46vw,28px)] sm:grid-cols-2 lg:grid-cols-4">
           {cards.map((card, i) => (
             <li
               key={card.id}
