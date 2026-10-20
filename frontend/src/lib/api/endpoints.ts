@@ -96,6 +96,29 @@ const CASE_STUDY_DETAIL_POPULATE = [
 ].join('&');
 
 /**
+ * Live BI dashboard detail page: hero CTA, overview, facts card, the live
+ * embed, the titled cards, KPI rows (image + chips), metric cards (icons),
+ * CTA banner and FAQs — in editor order.
+ */
+const VISUALIZATION_DETAIL_POPULATE = [
+  'fields[0]=title',
+  'fields[1]=slug',
+  'fields[2]=description',
+  'fields[3]=url',
+  'populate[content][on][shared.contact-us][populate]=*',
+  'populate[content][on][shared.rich-text][populate]=*',
+  'populate[content][on][shared.audience-section][populate][platform][fields][0]=title',
+  'populate[content][on][shared.audience-section][populate][audience]=true',
+  'populate[content][on][shared.dashboard-action][populate]=*',
+  'populate[content][on][shared.challenges][populate][challange]=true',
+  'populate[content][on][shared.kpi-business-impact][populate][image]=true',
+  'populate[content][on][shared.kpi-business-impact][populate][category][populate][subCategory]=true',
+  'populate[content][on][shared.dashboard-improvement][populate][improvement][populate][image]=true',
+  'populate[content][on][shared.cta][populate]=*',
+  'populate[content][on][shared.faqs][populate]=*',
+].join('&');
+
+/**
  * Live BI listing page: the hero CTA and the "Client Spotlight" block, whose
  * `visualizations` (with image + categories) are the cards, in editor order.
  */
@@ -198,6 +221,9 @@ export const ENDPOINTS = {
   /** One industry detail page, matched by slug, e.g. `manufacturing-software-development`. */
   INDUSTRY_BY_SLUG: (slug: string) =>
     `/industries?filters[slug][$eq]=${encodeURIComponent(slug)}&${INDUSTRY_DETAIL_POPULATE}`,
+  /** One Live BI dashboard, matched by slug, e.g. `ceo-dashboard`. */
+  VISUALIZATION_BY_SLUG: (slug: string) =>
+    `/visualizations?filters[slug][$eq]=${encodeURIComponent(slug)}&${VISUALIZATION_DETAIL_POPULATE}`,
   /** Visualization categories — the listing's tabs ("All Visualization", "Power BI", …). */
   VISUALIZATION_CATEGORIES:
     '/visualization-categories?fields[0]=title&fields[1]=slug&pagination[pageSize]=100',

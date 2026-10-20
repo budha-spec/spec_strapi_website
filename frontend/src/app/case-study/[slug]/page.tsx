@@ -1,12 +1,8 @@
 import { cache } from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { PageHero } from '@/components/sections';
-import {
-  CaseStudyBlocks,
-  CaseStudyFacts,
-  fetchCaseStudyBySlug,
-} from '@/features/case-study';
+import { FactsCard, PageHero } from '@/components/sections';
+import { CaseStudyBlocks, fetchCaseStudyBySlug } from '@/features/case-study';
 import { cmsText } from '@/lib/media';
 
 interface CaseStudyDetailPageProps {
@@ -48,6 +44,10 @@ export default async function CaseStudyDetailPage({
   // No `shared.contact-us` block on case studies: name the industry instead,
   // as the design does ("Contact Our HealthTech Expert").
   const industry = cmsText(study.industries?.[0]?.title);
+  const services = (study.services ?? [])
+    .map((service) => cmsText(service.title))
+    .filter(Boolean)
+    .join(', ');
 
   return (
     <main className="sp-page sp-page-case-study-detail flex w-full flex-col bg-bg-light">
@@ -57,7 +57,16 @@ export default async function CaseStudyDetailPage({
         crumbs={CRUMBS}
         ctaLabel={industry ? `Contact Our ${industry} Expert` : 'Contact Our Expert'}
       />
-      <CaseStudyFacts study={study} />
+      <FactsCard
+        className="sp-case-study-facts"
+        facts={[
+          { label: 'Client', value: study.client },
+          { label: 'Country', value: study.country },
+          { label: 'Services', value: services },
+          { label: 'Scale', value: study.scale },
+        ]}
+        chips={{ label: 'Technology & Integration', items: study.tags ?? [] }}
+      />
       <CaseStudyBlocks blocks={study.content ?? []} />
     </main>
   );

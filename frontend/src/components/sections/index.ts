@@ -15,3 +15,4 @@ export * from './DarkCardGrid';
 export * from './BlogSection';
 export * from './LetsTalk';
 export * from './ServiceIntro';
+export * from './FactsCard';
