@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shared_about_menu_socials",
+  "info": {
+    "displayName": "About Menu Social"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "social": {
+      "type": "component",
+      "component": "shared.social",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

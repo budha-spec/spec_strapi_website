@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_shared_industry_menu_sections",
+  "info": {
+    "displayName": "Industry Menu Section"
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "txt": {
+      "type": "string",
+      "required": true
+    },
+    "industryPortfolio": {
+      "type": "component",
+      "component": "shared.portfolio",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}
