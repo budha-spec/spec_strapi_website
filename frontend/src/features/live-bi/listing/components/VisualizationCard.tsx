@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { CmsImage } from '@/components/ui/CmsImage';
 import { ExploreMore } from '@/components/ui/ExploreMore';
 import { cmsText, hrefPath } from '@/lib/media';
-import type { Visualization } from '../types/live-bi.types';
+import type { Visualization } from '../../types/live-bi.types';
 
 /**
  * One dashboard on the Live BI listing: screenshot on a light tile, title,

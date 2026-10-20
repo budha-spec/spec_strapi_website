@@ -67,6 +67,7 @@ The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
 | `sp-page-case-study` | `/case-study` Case-study listing |
 | `sp-page-case-study-detail` | `/case-study/…` one case study |
 | `sp-page-live-bi` | `/live-bi-visualization` Live BI listing |
+| `sp-page-live-bi-detail` | `/live-bi-visualization/…` one dashboard, e.g. CEO Dashboard |
 | `sp-page-testimonials` | `/about/testimonials` Testimonials listing |
 | `sp-page-whitepaper` | `/whitepaper` Whitepaper listing |
 | `sp-page-industries` | `/industries` Industries landing |
@@ -95,10 +96,11 @@ The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
 | `sp-proven-impact` | "Proven Impact" stats | Home, service |
 | `sp-case-studies` | "Client Success Stories" carousel | Home, service, sub-service, industry |
 | `sp-testimonials` | "Client Spotlight" video cards | Home, Services, case study |
-| `sp-faq` | "Frequently Asked Questions" | Service, industry |
-| `sp-cta-banner` | "Hire Dedicated Development Team" banner | Service, sub-service, industry |
-| `sp-service-intro` | Overview band: gradient heading + text with More + / Less – | Service, case study |
-| `sp-dark-card-grid` | Dark titled-card grid (also carries `sp-industry-services` / `sp-case-study-challenges`) | Industry, case study detail |
+| `sp-faq` | "Frequently Asked Questions" | Service, industry, Live BI detail |
+| `sp-cta-banner` | "Hire Dedicated Development Team" banner | Service, sub-service, industry, Live BI detail |
+| `sp-service-intro` | Overview band: gradient heading + text with More + / Less – | Service, case study, Live BI detail |
+| `sp-dark-card-grid` | Dark titled-card grid (also carries `sp-industry-services` / `sp-case-study-challenges` / `sp-dashboard-highlights`) | Industry, case study detail, Live BI detail |
+| `sp-facts-card` | White facts card: gradient labels + values, then a labelled chip row (also carries `sp-case-study-facts` / `sp-dashboard-facts`) | Case study detail, Live BI detail |
 | `sp-blog` | "Latest Insights" blog carousel | Home, sub-service |
 
 ## Page-specific sections
@@ -116,7 +118,7 @@ The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
 | `sp-case-study-filters` | "Services" / "Industries" filter boxes | Case study |
 | `sp-case-study-carousel` | Case-study cards + progress bar + controls | Case study |
 | `sp-case-study-empty` | "No case studies match" message | Case study |
-| `sp-case-study-facts` | Client / Country / Services / Scale card + technology chips | Case study detail |
+| `sp-case-study-facts` | Client / Country / Services / Scale card + technology chips — the shared facts card on this page | Case study detail |
 | `sp-case-study-challenges` | "Our Business Challenges" — the shared dark card grid on this page | Case study detail |
 | `sp-case-study-gallery` | "Outcomes & Business Impact" image carousel (blurred next-slide peek) | Case study detail |
 | `sp-case-study-solutions` | White solution cards under the gallery | Case study detail |
@@ -125,6 +127,13 @@ The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
 | `sp-live-bi-tabs` | "All Visualization" / "Power BI" / … tab bar | Live BI |
 | `sp-live-bi-grid` | Dashboard card grid | Live BI |
 | `sp-live-bi-empty` | "No dashboards in this category" message | Live BI |
+| `sp-dashboard-facts` | Dashboard / Platform / Focus card + audience chips — the shared facts card on this page | Live BI detail |
+| `sp-dashboard-embed` | "See the dashboard in action": live report in the black-bordered frame | Live BI detail |
+| `sp-dashboard-disclaimer` | Disclaimer line under the live report | Live BI detail |
+| `sp-dashboard-highlights` | "What can leadership see at a glance?" — the shared card grid, white cards three to a row | Live BI detail |
+| `sp-kpi-impact` | "Outcomes & Business Impact": image + KPI category rows of chips | Live BI detail |
+| `sp-dashboard-improvements` | "What … Dashboard Can Improve?" metric cards (icon, figure, caption) | Live BI detail |
+| `sp-dashboard-skeleton` | Loading placeholder under the hero | Live BI detail |
 | `sp-testimonial-feature` | Light "Client Spotlight" carousel (wide quote cards) | Testimonials |
 | `sp-testimonials-grid` | Card grid inside `sp-testimonials` when it uses `layout="grid"` | Testimonials |
 | `sp-industry-gallery` | "Client & Industry" logo tiles ("Industry Compliances" badges, 4 to a row, on an industry page) | Testimonials, Industries, industry |
@@ -164,7 +173,10 @@ These were added earlier and work the same way.
 | `career-openings` | "Current Job Opening" card (white Explore More) |
 | `industry-tab` | One industry in the explorer list (`aria-selected="true"` when active) |
 | `use-case-track`, `use-case-card` (+ `use-case-card-title`, `use-case-card-detail`) | Key Use Cases track and card; on hover the bottom title fades out and the gradient title, divider and description rise in |
-| `dark-card` (+ `dark-card-title`) | One card in the dark card grid; title fades into the bright gradient on hover, Explore More (when present) stays static |
+| `dark-card` (+ `dark-card-title`, `dark-card--light`) | One card in the dark card grid; title fades into the bright gradient on hover, Explore More (when present) stays static. `--light` marks the white-card tone (Live BI) |
+| `dashboard-frame` | Live BI report frame (black border; sized to the report so it fills the border with nothing cut off) |
+| `kpi-row`, `kpi-chip` | One "Outcomes & Business Impact" category row; on hover every chip in it fills with the brand gradient |
+| `improvement-card` | One "Can Improve?" metric card |
 | `cs-solution-card` (+ `cs-solution-card-title`) | Case-study solution card; title fades into the brand gradient on hover |
 | `cs-result-tile` (+ `cs-result-tile-detail`) | Case-study result tile; on hover the title rises as a gradient with the description |
 | `outcome-gallery-track`, `outcome-gallery-slide` | Case-study outcomes carousel track and one image (inactive ones blurred/greyed) |

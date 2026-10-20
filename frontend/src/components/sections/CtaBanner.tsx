@@ -2,10 +2,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { CmsImage } from '@/components/ui/CmsImage';
 import { cmsText, hrefPath } from '@/lib/media';
+import { cn } from '@/lib/utils';
 import type { CtaBlock } from '@/types/sections.types';
 
 interface CtaBannerProps {
   data: CtaBlock;
+  /**
+   * Adds the band's own top spacing — for when the banner follows a dark
+   * section instead of a light one that already spaces it (Live BI detail).
+   */
+  padTop?: boolean;
 }
 
 /**
@@ -18,9 +24,14 @@ interface CtaBannerProps {
  * Below `md` the image becomes a strip under the panel. On touch screens a
  * tap triggers the same states (see the `hover` variant in globals.css).
  */
-export function CtaBanner({ data }: CtaBannerProps) {
+export function CtaBanner({ data, padTop = false }: CtaBannerProps) {
   return (
-    <section className="sp-section sp-cta-banner w-full bg-bg-light pb-[clamp(48px,6.25vw,120px)]">
+    <section
+      className={cn(
+        'sp-section sp-cta-banner w-full bg-bg-light pb-[clamp(48px,6.25vw,120px)]',
+        padTop && 'pt-[clamp(48px,5.73vw,110px)]'
+      )}
+    >
       <div className="shell">
         <div className="cta-banner group relative isolate flex flex-col overflow-hidden rounded-[20px] bg-bg-black md:block md:min-h-[clamp(240px,18.2vw,350px)]">
           {data.image?.url && (

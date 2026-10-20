@@ -135,6 +135,9 @@ Names follow the Figma section labels so designers and developers mean the same 
 | `CtaBanner` | "Hire Dedicated Development Team" banner | `shared.cta` |
 | `BlogSection` | "Latest Insights" carousel (WordPress, optional category) | — (`fetchLatestBlogs(category?)` in `src/lib/api/blogs.api.ts`) |
 | `IndustryGallery` | "Client & Industry" logo tiles (logo moves top-left, description fades in on hover); `columns={4}` for an industry page's "Industry Compliances" | `shared.industry-gallery` |
+| `ServiceIntro` | Overview band: gradient heading + rich copy, "More +" expands in place (or links out when the block has a `url`) | `shared.rich-text` |
+| `DarkCardGrid` | Titled-card grid, title fades to gradient on hover; `tone="light"` + `columns={3}` for white cards (Live BI "What can leadership see") | `shared.challenges` (and industry services) |
+| `FactsCard` | White card: gradient-labelled facts + one labelled chip row (case-study facts, Live BI Dashboard / Platform / Focus / Audience) | built from entry fields / `shared.audience-section` |
 | `LetsTalk` | "Let's Talk to OUR EXPERT!" + enquiry form | Strapi `footer` single type (`fetchFooter()` in `src/lib/api/footer.api.ts`), rendered by Footer with the awards/ratings strip |
 
 ---
