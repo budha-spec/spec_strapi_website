@@ -128,7 +128,7 @@ The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
 | `sp-live-bi-grid` | Dashboard card grid | Live BI |
 | `sp-live-bi-empty` | "No dashboards in this category" message | Live BI |
 | `sp-dashboard-facts` | Dashboard / Platform / Focus card + audience chips — the shared facts card on this page | Live BI detail |
-| `sp-dashboard-embed` | "See the dashboard in action": live report in the black-bordered frame + Full screen | Live BI detail |
+| `sp-dashboard-embed` | "See the dashboard in action": live report in the black-bordered frame | Live BI detail |
 | `sp-dashboard-disclaimer` | Disclaimer line under the live report | Live BI detail |
 | `sp-dashboard-highlights` | "What can leadership see at a glance?" — the shared card grid, white cards three to a row | Live BI detail |
 | `sp-kpi-impact` | "Outcomes & Business Impact": image + KPI category rows of chips | Live BI detail |
@@ -174,7 +174,7 @@ These were added earlier and work the same way.
 | `industry-tab` | One industry in the explorer list (`aria-selected="true"` when active) |
 | `use-case-track`, `use-case-card` (+ `use-case-card-title`, `use-case-card-detail`) | Key Use Cases track and card; on hover the bottom title fades out and the gradient title, divider and description rise in |
 | `dark-card` (+ `dark-card-title`, `dark-card--light`) | One card in the dark card grid; title fades into the bright gradient on hover, Explore More (when present) stays static. `--light` marks the white-card tone (Live BI) |
-| `dashboard-frame`, `dashboard-fullscreen` | Live BI report frame (black border; sized to the report so nothing is cut off) and its Full screen button |
+| `dashboard-frame` | Live BI report frame (black border; sized to the report so it fills the border with nothing cut off) |
 | `kpi-row`, `kpi-chip` | One "Outcomes & Business Impact" category row; on hover every chip in it fills with the brand gradient |
 | `improvement-card` | One "Can Improve?" metric card |
 | `cs-solution-card` (+ `cs-solution-card-title`) | Case-study solution card; title fades into the brand gradient on hover |

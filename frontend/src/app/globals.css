@@ -806,6 +806,9 @@
   .section-tag::before {
     content: "";
     flex: none;
+    /* Centred on the first line, so a label that wraps on phones keeps its dot beside the text. */
+    align-self: flex-start;
+    margin-top: calc(0.605em - clamp(2px, 0.155vw, 3px));
     width: clamp(4px, 0.31vw, 6px);
     height: clamp(4px, 0.31vw, 6px);
     border-radius: 9999px;
