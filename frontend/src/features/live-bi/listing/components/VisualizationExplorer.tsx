@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
-import type { Visualization, VisualizationTab } from '../types/live-bi.types';
+import type { Visualization, VisualizationTab } from '../../types/live-bi.types';
 import { VisualizationCard } from './VisualizationCard';
 
 interface VisualizationExplorerProps {

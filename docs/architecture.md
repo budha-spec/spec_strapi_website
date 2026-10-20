@@ -26,6 +26,10 @@ frontend/src/
 │   ├── case-study/
 │   │   ├── page.tsx              ← /case-study       Case-study listing (filters + carousel)
 │   │   └── [slug]/page.tsx       ← /case-study/:slug Case-study detail
+│   ├── live-bi-visualization/
+│   │   ├── page.tsx              ← /live-bi-visualization        Live BI listing (tabs + cards)
+│   │   └── [slug]/page.tsx       ← /live-bi-visualization/:slug  Dashboard detail (Strapi
+│   │                               `visualizations` by slug, e.g. ceo-dashboard)
 │   └── services/
 │       ├── page.tsx                  ← /services         Services landing (Service entry `slug=services`)
 │       ├── loading.tsx
@@ -47,6 +51,9 @@ frontend/src/
 │   │   ├── CtaBanner.tsx             ← "Hire Dedicated Team" banner
 │   │   ├── BlogSection.tsx           ← "Latest Insights" (WordPress)
 │   │   ├── LetsTalk.tsx              ← contact card + enquiry form (Strapi `footer`)
+│   │   ├── ServiceIntro.tsx          ← overview: gradient heading + copy with More + / Less –
+│   │   ├── DarkCardGrid.tsx          ← titled-card grid (`tone` glass | light, 2 or 3 columns)
+│   │   ├── FactsCard.tsx             ← white facts card + labelled chip row
 │   │   └── index.ts
 │   └── ui/                           ← primitives: ExploreMore, CarouselControls,
 │                                       CmsImage, RichText, SectionEyebrow, …
@@ -61,8 +68,15 @@ frontend/src/
 │   │   ├── types/case-study.types.ts
 │   │   ├── components/CaseStudyBlocks.tsx  ← detail-page block renderer
 │   │   ├── listing/components/       ← CaseStudyExplorer (filters + peek carousel), CaseStudyCard
-│   │   └── detail/components/        ← CaseStudyFacts, OutcomeGallery, CaseStudySolutions,
-│   │                                   CaseStudyResults (challenges use shared DarkCardGrid)
+│   │   └── detail/components/        ← OutcomeGallery, CaseStudySolutions, CaseStudyResults
+│   │                                   (facts / challenges use shared FactsCard / DarkCardGrid)
+│   ├── live-bi/                      ← /live-bi-visualization listing + /:slug dashboard detail
+│   │   ├── api/live-bi.api.ts        ← fetchLiveBiPage, fetchVisualizationCategories, fetchVisualizationBySlug
+│   │   ├── types/live-bi.types.ts
+│   │   ├── components/VisualizationBlocks.tsx  ← detail-page block renderer
+│   │   ├── listing/components/       ← VisualizationExplorer (tabs + grid), VisualizationCard
+│   │   └── detail/components/        ← DashboardEmbed (live iframe), KpiImpact, DashboardImprovements
+│   │                                   (overview / facts / highlights use shared sections)
 │   ├── industries/                   ← /industries landing + /industries/:slug detail
 │   │   ├── api/industries.api.ts     ← fetchIndustries, fetchIndustriesPage, fetchIndustryBySlug
 │   │   ├── components/IndustryBlocks.tsx  ← detail-page block renderer

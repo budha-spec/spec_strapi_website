@@ -78,6 +78,9 @@ const REPORT = `(() => {
   for (const el of document.querySelectorAll('body *')) {
     const r = el.getBoundingClientRect();
     if (!r.width || (r.right <= vw + 1 && r.left >= -1)) continue;
+    // Invisible boxes cannot be seen overflowing — e.g. hCaptcha's idle
+    // challenge popup, parked hidden at top:-10000px by the footer form.
+    if (getComputedStyle(el).visibility === 'hidden') continue;
     let p = el.parentElement, clipped = false;
     while (p && p !== document.body) {
       if (/hidden|auto|scroll|clip/.test(getComputedStyle(p).overflowX)) { clipped = true; break; }

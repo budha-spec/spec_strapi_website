@@ -2,6 +2,5 @@
 export type * from './types/case-study.types';
 export * from './api/case-study.api';
 export * from './components/CaseStudyBlocks';
-export * from './detail/components/CaseStudyFacts';
 export * from './listing/components/CaseStudyCard';
 export * from './listing/components/CaseStudyExplorer';

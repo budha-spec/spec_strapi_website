@@ -1,9 +1,11 @@
 import type { CmsMedia } from '@/lib/media';
 import type {
+  ChallengesBlock,
   GalleryBlock,
   Metric,
   RichTextBlock,
   TestimonialsBlock,
+  TitledPoint,
 } from '@/types/sections.types';
 
 /** A tag, industry or service attached to a case study. */
@@ -36,21 +38,7 @@ export interface CaseStudyFilterOption {
 }
 
 /** A titled paragraph — one card in Challenges, Solutions or Results. */
-export interface CaseStudyPoint {
-  id: number;
-  title: string;
-  description?: string | null;
-}
-
-/** `shared.challenges` — "Challenges / Our Business Challenges" dark cards. */
-export interface ChallengesBlock {
-  __component: 'shared.challenges';
-  id: number;
-  title?: string | null;
-  subTitle?: string | null;
-  /** Spelled this way in the Strapi schema. */
-  challange?: CaseStudyPoint[] | null;
-}
+export type CaseStudyPoint = TitledPoint;
 
 /** `shared.solutions` — the white cards under the outcomes gallery. */
 export interface CaseStudySolutionsBlock {

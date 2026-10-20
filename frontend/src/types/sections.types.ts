@@ -191,3 +191,23 @@ export interface RichTextBlock {
   content?: RichTextNode[] | null;
   url?: string | null;
 }
+
+/** A titled paragraph — one card in a Challenges grid (and case-study Solutions / Results). */
+export interface TitledPoint {
+  id: number;
+  title: string;
+  description?: string | null;
+}
+
+/**
+ * `shared.challenges` — titled-card grid: case-study "Our Business
+ * Challenges", Live BI "What can leadership see at a glance?".
+ */
+export interface ChallengesBlock {
+  __component: 'shared.challenges';
+  id: number;
+  title?: string | null;
+  subTitle?: string | null;
+  /** Spelled this way in the Strapi schema. */
+  challange?: TitledPoint[] | null;
+}
