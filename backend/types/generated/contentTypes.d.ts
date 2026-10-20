@@ -852,6 +852,60 @@ export interface ApiFooterFooter extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiHeaderMenuHeaderMenu extends Struct.CollectionTypeSchema {
+  collectionName: 'header_menus';
+  info: {
+    displayName: 'Header Menu';
+    pluralName: 'header-menus';
+    singularName: 'header-menu';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    child_menu: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::header-menu.header-menu'
+    >;
+    content: Schema.Attribute.DynamicZone<
+      [
+        'shared.text-block',
+        'shared.industry-menu-section',
+        'shared.insights-menu-section',
+        'shared.about-menu-social',
+        'shared.rich-text',
+      ]
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::header-menu.header-menu'
+    > &
+      Schema.Attribute.Private;
+    menuOrder: Schema.Attribute.Integer & Schema.Attribute.Unique;
+    parent_menu: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::header-menu.header-menu'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface ApiIndustryIndustry extends Struct.CollectionTypeSchema {
   collectionName: 'industries';
   info: {
@@ -1743,6 +1797,7 @@ declare module '@strapi/strapi' {
       'api::cs-tag.cs-tag': ApiCsTagCsTag;
       'api::email-template.email-template': ApiEmailTemplateEmailTemplate;
       'api::footer.footer': ApiFooterFooter;
+      'api::header-menu.header-menu': ApiHeaderMenuHeaderMenu;
       'api::industry.industry': ApiIndustryIndustry;
       'api::page.page': ApiPagePage;
       'api::service.service': ApiServiceService;

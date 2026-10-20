@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_shared_insights_menu_sections",
+  "info": {
+    "displayName": "Insights Menu Section"
+  },
+  "options": {},
+  "attributes": {
+    "testimonial": {
+      "type": "component",
+      "component": "shared.testimonial-item",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}
