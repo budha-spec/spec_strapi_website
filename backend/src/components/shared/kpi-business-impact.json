@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_shared_kpi_business_impacts",
+  "info": {
+    "displayName": "KPI Business Impact"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subTitle": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "category": {
+      "type": "component",
+      "component": "shared.kpi-category",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

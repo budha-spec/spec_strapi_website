@@ -538,6 +538,8 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
         'shared.gallery',
         'shared.solutions',
         'shared.cs-result',
+        'shared.challenges-item',
+        'shared.contact-us',
       ]
     >;
     country: Schema.Attribute.String;
@@ -980,6 +982,7 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
         'shared.cta',
         'shared.faqs',
         'shared.testimonial-section',
+        'shared.industry-case-study',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -1097,6 +1100,20 @@ export interface ApiVisualizationVisualization
     category: Schema.Attribute.Relation<
       'oneToMany',
       'api::visualization-category.visualization-category'
+    >;
+    content: Schema.Attribute.DynamicZone<
+      [
+        'shared.text-block',
+        'shared.cta',
+        'shared.faqs',
+        'shared.audience-section',
+        'shared.dashboard-action',
+        'shared.challenges',
+        'shared.kpi-business-impact',
+        'shared.dashboard-improvement',
+        'shared.contact-us',
+        'shared.rich-text',
+      ]
     >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

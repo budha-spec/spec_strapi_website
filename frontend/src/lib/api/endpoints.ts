@@ -50,10 +50,9 @@ const SERVICE_DETAIL_POPULATE = [
   // Hand-entered stories (`caseStudy` items) with their tags and media.
   'populate[content][on][shared.case-studies][populate][caseStudy][populate]=*',
   'populate[content][on][shared.faqs][populate]=*',
-  // `shared.industries` ("Business Application and Use Cases") was dropped from
-  // the service content zone in 7f268aa; asking for it 400s the whole query.
-  // Restore this line if the block comes back:
-  // 'populate[content][on][shared.industries][populate][industries][populate]=*',
+  // "Industry Use Cases" on sub-service pages: hand-entered `caseStudy` text
+  // blocks (title, description, image, optional link).
+  'populate[content][on][shared.industry-case-study][populate][caseStudy][populate]=*',
   'populate[content][on][shared.gallery][populate][images][populate]=*',
   'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
 ].join('&');
@@ -74,6 +73,49 @@ const CASE_STUDY_LIST_QUERY = [
   'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
   'sort[0]=publishedAt:desc',
   'pagination[pageSize]=100',
+].join('&');
+
+/**
+ * Case-study detail page (`/case-study/:slug`): the facts card (client,
+ * country, scale, services, tags) and every block its `content` zone can
+ * hold. `populate=*` alone is rejected on the dynamic zone, so each block is
+ * listed; `shared.cs-result` nests its metrics and result cards one level down.
+ */
+const CASE_STUDY_DETAIL_POPULATE = [
+  'populate[featuredImage]=true',
+  'populate[industries][fields][0]=title',
+  'populate[tags][fields][0]=title',
+  'populate[services][fields][0]=title',
+  'populate[services][fields][1]=url',
+  'populate[content][on][shared.rich-text][populate]=*',
+  'populate[content][on][shared.challenges][populate][challange][populate]=*',
+  'populate[content][on][shared.gallery][populate]=*',
+  'populate[content][on][shared.solutions][populate][solution][populate]=*',
+  'populate[content][on][shared.cs-result][populate][result][populate]=*',
+  'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
+].join('&');
+
+/**
+ * Live BI dashboard detail page: hero CTA, overview, facts card, the live
+ * embed, the titled cards, KPI rows (image + chips), metric cards (icons),
+ * CTA banner and FAQs — in editor order.
+ */
+const VISUALIZATION_DETAIL_POPULATE = [
+  'fields[0]=title',
+  'fields[1]=slug',
+  'fields[2]=description',
+  'fields[3]=url',
+  'populate[content][on][shared.contact-us][populate]=*',
+  'populate[content][on][shared.rich-text][populate]=*',
+  'populate[content][on][shared.audience-section][populate][platform][fields][0]=title',
+  'populate[content][on][shared.audience-section][populate][audience]=true',
+  'populate[content][on][shared.dashboard-action][populate]=*',
+  'populate[content][on][shared.challenges][populate][challange]=true',
+  'populate[content][on][shared.kpi-business-impact][populate][image]=true',
+  'populate[content][on][shared.kpi-business-impact][populate][category][populate][subCategory]=true',
+  'populate[content][on][shared.dashboard-improvement][populate][improvement][populate][image]=true',
+  'populate[content][on][shared.cta][populate]=*',
+  'populate[content][on][shared.faqs][populate]=*',
 ].join('&');
 
 /**
@@ -158,6 +200,9 @@ export const ENDPOINTS = {
     `/services?filters[slug]=${encodeURIComponent(slug)}&${SERVICE_POPULATE}`,
   /** All published case studies for the `/case-study` listing. */
   CASE_STUDIES: `/case-studies?${CASE_STUDY_LIST_QUERY}`,
+  /** One case study, matched by slug, e.g. `ai-based-chatbot-application-for-hospital`. */
+  CASE_STUDY_BY_SLUG: (slug: string) =>
+    `/case-studies?filters[slug][$eq]=${encodeURIComponent(slug)}&${CASE_STUDY_DETAIL_POPULATE}`,
   /** Case-study industries — the listing's "Industries" filter chips. */
   CASE_STUDY_INDUSTRIES:
     '/cs-industries?fields[0]=title&fields[1]=slug&pagination[pageSize]=100',
@@ -176,6 +221,9 @@ export const ENDPOINTS = {
   /** One industry detail page, matched by slug, e.g. `manufacturing-software-development`. */
   INDUSTRY_BY_SLUG: (slug: string) =>
     `/industries?filters[slug][$eq]=${encodeURIComponent(slug)}&${INDUSTRY_DETAIL_POPULATE}`,
+  /** One Live BI dashboard, matched by slug, e.g. `ceo-dashboard`. */
+  VISUALIZATION_BY_SLUG: (slug: string) =>
+    `/visualizations?filters[slug][$eq]=${encodeURIComponent(slug)}&${VISUALIZATION_DETAIL_POPULATE}`,
   /** Visualization categories — the listing's tabs ("All Visualization", "Power BI", …). */
   VISUALIZATION_CATEGORIES:
     '/visualization-categories?fields[0]=title&fields[1]=slug&pagination[pageSize]=100',

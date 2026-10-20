@@ -532,7 +532,8 @@
    * solid fill fades out, because background-image itself can't animate.
    */
   .offering-card-title,
-  .tech-stack-card-title {
+  .tech-stack-card-title,
+  .cs-solution-card-title {
     background-image: linear-gradient(
       var(--grad-angle, -85.51deg),
       #25be00 0.209%,
@@ -544,7 +545,8 @@
     transition: -webkit-text-fill-color 0.35s ease;
   }
   .offering-card:hover .offering-card-title,
-  .tech-stack-card:is(:hover, :focus-visible) .tech-stack-card-title {
+  .tech-stack-card:is(:hover, :focus-visible) .tech-stack-card-title,
+  .cs-solution-card:is(:hover, :focus-visible) .cs-solution-card-title {
     -webkit-text-fill-color: transparent;
   }
 
@@ -804,6 +806,9 @@
   .section-tag::before {
     content: "";
     flex: none;
+    /* Centred on the first line, so a label that wraps on phones keeps its dot beside the text. */
+    align-self: flex-start;
+    margin-top: calc(0.605em - clamp(2px, 0.155vw, 3px));
     width: clamp(4px, 0.31vw, 6px);
     height: clamp(4px, 0.31vw, 6px);
     border-radius: 9999px;
@@ -1165,29 +1170,28 @@ ul.sp-testimonials-grid li:nth-child(-n + 4) {
 }
 
 /*
- * Industry page "Services We Are Offering" cards are dark: Explore More is
- * white at rest (the custom block above paints it black on white) and takes
- * the shared gradient pill when anywhere on the card is hovered or focused.
+ * Dark card grid: Explore More is white (the custom block above paints it
+ * black on white) and stays as it is on hover — only the card title
+ * animates. These selectors out-rank the shared `.explore-more:hover` and
+ * `.explore-more--outline:hover` gradient rules above.
  */
-.industry-service-card .explore-more,
-.industry-service-card .explore-more:hover {
+.dark-card .explore-more,
+.dark-card .explore-more:hover {
   background: transparent;
 }
-.industry-service-card .explore-more-label {
+.dark-card .explore-more .explore-more-label {
+  background-image: none;
   color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
 }
-.industry-service-card .explore-more--outline span.explore-more-arrow {
+.dark-card .explore-more--outline span.explore-more-arrow {
+  background: transparent;
   border-color: rgba(255, 255, 255, 0.85);
   color: #ffffff;
 }
-.industry-service-card:is(:hover, :focus-within) .explore-more--outline span.explore-more-arrow {
-  background:
-    linear-gradient(#fff, #fff) padding-box,
-    linear-gradient(252.16deg, #0c3deb 5.3%, #20a42f 89.32%) border-box;
-  border-color: transparent;
-}
-.industry-service-card:is(:hover, :focus-within) .explore-more-arrow svg {
-  color: #25be00;
+.dark-card .explore-more--outline span.explore-more-arrow svg {
+  color: #ffffff;
+  transform: none;
 }
 
 /*

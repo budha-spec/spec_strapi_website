@@ -1,5 +1,12 @@
 import type { CmsMedia } from '@/lib/media';
-import type { TestimonialsBlock } from '@/types/sections.types';
+import type {
+  ChallengesBlock,
+  GalleryBlock,
+  Metric,
+  RichTextBlock,
+  TestimonialsBlock,
+  TitledPoint,
+} from '@/types/sections.types';
 
 /** A tag, industry or service attached to a case study. */
 export interface CaseStudyTerm {
@@ -28,4 +35,46 @@ export interface CaseStudyEntry {
 export interface CaseStudyFilterOption {
   slug: string;
   title: string;
+}
+
+/** A titled paragraph — one card in Challenges, Solutions or Results. */
+export type CaseStudyPoint = TitledPoint;
+
+/** `shared.solutions` — the white cards under the outcomes gallery. */
+export interface CaseStudySolutionsBlock {
+  __component: 'shared.solutions';
+  id: number;
+  title?: string | null;
+  solution?: CaseStudyPoint[] | null;
+}
+
+/** `shared.cs-result` — "Proven Impact / Delivering Measurable Business Outcomes…". */
+export interface CaseStudyResultBlock {
+  __component: 'shared.cs-result';
+  id: number;
+  title?: string | null;
+  subTitle?: string | null;
+  result?: {
+    id: number;
+    keyMetrics?: Metric[] | null;
+    csResult?: CaseStudyPoint[] | null;
+  } | null;
+}
+
+export type CaseStudyDetailBlock =
+  | RichTextBlock
+  | ChallengesBlock
+  | GalleryBlock
+  | CaseStudySolutionsBlock
+  | CaseStudyResultBlock
+  | TestimonialsBlock;
+
+/** A case study with everything its detail page (`/case-study/:slug`) shows. */
+export interface CaseStudyDetail extends Omit<CaseStudyEntry, 'content' | 'services'> {
+  client?: string | null;
+  country?: string | null;
+  /** Headline outcome, e.g. "4X Faster insights". */
+  scale?: string | null;
+  services?: Array<CaseStudyTerm & { url?: string | null }> | null;
+  content?: Array<CaseStudyDetailBlock | { __component: string; id: number }> | null;
 }

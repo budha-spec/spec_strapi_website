@@ -4,10 +4,10 @@ import {
   CtaBanner,
   FaqSection,
   ProvenImpact,
+  ServiceIntro,
   Testimonials,
 } from '@/components/sections';
 import { CapabilityGrid } from '../detail/components/CapabilityGrid';
-import { ServiceIntro } from '../detail/components/ServiceIntro';
 import { CapabilityTabs } from '../landing/components/CapabilityTabs';
 import { OfferingGrid } from '../sub-service/components/OfferingGrid';
 import { UseCaseGrid } from '../sub-service/components/UseCaseGrid';
@@ -68,7 +68,7 @@ export function ServiceBlocks({ blocks, template }: ServiceBlocksProps) {
         if (isBlock(block, 'shared.services')) {
           return <Services key={key} data={block} />;
         }
-        if (isBlock(block, 'shared.industries')) {
+        if (isBlock(block, 'shared.industry-case-study')) {
           return <UseCaseGrid key={key} data={block} />;
         }
         if (isBlock(block, 'shared.cta')) {

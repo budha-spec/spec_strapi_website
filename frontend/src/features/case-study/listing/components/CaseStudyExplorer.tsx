@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import type {
   CaseStudyEntry,
   CaseStudyFilterOption,
-} from '../types/case-study.types';
+} from '../../types/case-study.types';
 import { CaseStudyCard } from './CaseStudyCard';
 
 interface CaseStudyExplorerProps {

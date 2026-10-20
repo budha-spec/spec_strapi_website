@@ -3,6 +3,7 @@
  * blocks stay in `src/features/[page]/types/`.
  */
 
+import type { RichTextNode } from '@/components/ui/RichText';
 import type { CmsMedia } from '@/lib/media';
 
 /** `shared.gallery` — the "Trusted by global leaders" logo strip. */
@@ -10,6 +11,8 @@ export interface GalleryBlock {
   __component: 'shared.gallery';
   id: number;
   title?: string | null;
+  /** Section heading where one is shown (case-study "Outcomes & Business Impact"). */
+  subTitle?: string | null;
   images?: CmsMedia[] | null;
 }
 
@@ -178,4 +181,33 @@ export interface IndustryGalleryBlock {
   title?: string | null;
   subTitle?: string | null;
   gallery?: IndustryLogo[] | null;
+}
+
+/** `shared.rich-text` — the overview beside the gradient heading (service, case study). */
+export interface RichTextBlock {
+  __component: 'shared.rich-text';
+  id: number;
+  title?: string | null;
+  content?: RichTextNode[] | null;
+  url?: string | null;
+}
+
+/** A titled paragraph — one card in a Challenges grid (and case-study Solutions / Results). */
+export interface TitledPoint {
+  id: number;
+  title: string;
+  description?: string | null;
+}
+
+/**
+ * `shared.challenges` — titled-card grid: case-study "Our Business
+ * Challenges", Live BI "What can leadership see at a glance?".
+ */
+export interface ChallengesBlock {
+  __component: 'shared.challenges';
+  id: number;
+  title?: string | null;
+  subTitle?: string | null;
+  /** Spelled this way in the Strapi schema. */
+  challange?: TitledPoint[] | null;
 }

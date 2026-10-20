@@ -1,5 +1,6 @@
 /**
- * Live BI visualization listing API (`/live-bi-visualization`).
+ * Live BI visualization API — listing (`/live-bi-visualization`) and
+ * dashboard detail (`/live-bi-visualization/:slug`).
  */
 
 import { strapiGet } from '@/lib/api/strapi';
@@ -11,6 +12,7 @@ import type {
   LiveBiPage,
   LiveBiPageBlock,
   VisualizationCategory,
+  VisualizationDetail,
 } from '../types/live-bi.types';
 
 const CONTENT = { next: { revalidate: REVALIDATE.CONTENT } };
@@ -19,6 +21,17 @@ const CONTENT = { next: { revalidate: REVALIDATE.CONTENT } };
 export async function fetchLiveBiPage(): Promise<LiveBiPage | null> {
   const { data } = await strapiGet<StrapiListResponse<LiveBiPage>>(
     ENDPOINTS.LIVE_BI_PAGE,
+    CONTENT
+  );
+  return data[0] ?? null;
+}
+
+/** One dashboard with its detail-page blocks, or null when it is not published. */
+export async function fetchVisualizationBySlug(
+  slug: string
+): Promise<VisualizationDetail | null> {
+  const { data } = await strapiGet<StrapiListResponse<VisualizationDetail>>(
+    ENDPOINTS.VISUALIZATION_BY_SLUG(slug),
     CONTENT
   );
   return data[0] ?? null;
@@ -50,7 +63,9 @@ export function findLiveBiBlock(blocks: LiveBiPageBlock[]): LiveBiBlock | undefi
   );
 }
 
-export function findLiveBiContact(blocks: LiveBiPageBlock[]): ContactBlock | undefined {
+export function findLiveBiContact(
+  blocks: Array<LiveBiPageBlock | { __component: string; id: number }>
+): ContactBlock | undefined {
   return blocks.find(
     (block): block is ContactBlock => block.__component === 'shared.contact-us'
   );
