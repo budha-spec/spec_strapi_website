@@ -1,3 +1,4 @@
+import { AccentHeading } from '@/components/ui/AccentHeading';
 import { CountUp } from '@/components/ui/CountUp';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { cmsText } from '@/lib/media';
@@ -30,7 +31,10 @@ export function ProvenImpact({ data }: ProvenImpactProps) {
 
         {data.description && (
           <h2 className="sp-title mt-[clamp(8px,0.73vw,14px)] max-w-[788px] text-[clamp(1.75rem,3.125vw,2.5rem)] font-medium leading-[1.2] text-white">
-            {cmsText(data.description)}
+            <AccentHeading
+              text={cmsText(data.description)}
+              accentClassName="gradient-text-impact font-semibold"
+            />
           </h2>
         )}
 

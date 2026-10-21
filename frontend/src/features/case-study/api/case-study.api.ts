@@ -9,10 +9,28 @@ import type { TestimonialsBlock } from '@/types/sections.types';
 import type {
   CaseStudyDetail,
   CaseStudyEntry,
+  CaseStudyListingPage,
   CaseStudyTerm,
 } from '../types/case-study.types';
 
 const CONTENT = { next: { revalidate: REVALIDATE.CONTENT } };
+
+/**
+ * The listing's page entry (hero copy and CTA), or null when it is not
+ * published yet — the hero is then skipped.
+ */
+export async function fetchCaseStudyListingPage(): Promise<CaseStudyListingPage | null> {
+  try {
+    const { data } = await strapiGet<StrapiListResponse<CaseStudyListingPage>>(
+      ENDPOINTS.CASE_STUDY_PAGE,
+      CONTENT
+    );
+    return data[0] ?? null;
+  } catch (error) {
+    console.error('[case-study] listing page unavailable:', error);
+    return null;
+  }
+}
 
 /** Every published case study, newest first. */
 export async function fetchCaseStudies(): Promise<CaseStudyEntry[]> {

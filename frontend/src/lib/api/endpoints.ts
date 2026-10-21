@@ -9,7 +9,8 @@ const HOME_POPULATE = [
   // Hand-entered stories (`caseStudy` items) with their tags and media.
   'populate[content][on][shared.case-studies][populate][caseStudy][populate]=*',
   'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
-  'populate[content][on][shared.home-blogs][populate][blogs][populate]=*',
+  // "Latest Insights" heading; the posts come from WordPress.
+  'populate[content][on][shared.blogs][populate]=*',
   // Core Capabilities cards: image, plus their category Content Items with
   // the service / industry / visualization / whitepaper each one links to.
   // Needs the Public role's `find` on Content Item — otherwise Strapi drops
@@ -87,6 +88,7 @@ const CASE_STUDY_DETAIL_POPULATE = [
   'populate[tags][fields][0]=title',
   'populate[services][fields][0]=title',
   'populate[services][fields][1]=url',
+  'populate[content][on][shared.contact-us][populate]=*',
   'populate[content][on][shared.rich-text][populate]=*',
   'populate[content][on][shared.challenges][populate][challange][populate]=*',
   'populate[content][on][shared.gallery][populate]=*',
@@ -155,6 +157,9 @@ const WHITEPAPER_POPULATE = [
 const INDUSTRIES_PAGE_POPULATE = [
   'populate[content][on][shared.contact-us][populate]=*',
   'populate[content][on][shared.industry-gallery][populate][gallery][populate]=*',
+  // "Capabilities" heading above the explorer; its `industries` relation is unused.
+  'populate[content][on][shared.industry-section][fields][0]=title',
+  'populate[content][on][shared.industry-section][fields][1]=subTitle',
 ].join('&');
 
 /**
@@ -179,6 +184,9 @@ const INDUSTRY_DETAIL_POPULATE = [
  */
 const CONTACT_PAGE_POPULATE = [
   'populate[content][on][shared.gallery][populate][images][populate]=*',
+  // Intro heading + text beside the offices.
+  'populate[content][on][shared.challenges-item][populate]=*',
+  'populate[content][on][shared.career-inquiry-cta][populate][inquiryItems][populate]=*',
 ].join('&');
 
 /** Industry list for the landing explorer — what each panel shows, oldest first. */
@@ -250,6 +258,9 @@ export const ENDPOINTS = {
     `/services?filters[slug]=${encodeURIComponent(slug)}&${SERVICE_POPULATE}`,
   /** All published case studies for the `/case-study` listing. */
   CASE_STUDIES: `/case-studies?${CASE_STUDY_LIST_QUERY}`,
+  /** `/case-study` listing hero (Strapi page slug `case-study`). */
+  CASE_STUDY_PAGE:
+    '/pages?filters[slug][$eq]=case-study&populate[content][on][shared.contact-us][populate]=*',
   /** One case study, matched by slug, e.g. `ai-based-chatbot-application-for-hospital`. */
   CASE_STUDY_BY_SLUG: (slug: string) =>
     `/case-studies?filters[slug][$eq]=${encodeURIComponent(slug)}&${CASE_STUDY_DETAIL_POPULATE}`,

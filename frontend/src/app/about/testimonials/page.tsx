@@ -42,7 +42,7 @@ function renderBlocks(blocks: TestimonialsPageBlock[]) {
       return first ? (
         <FeaturedTestimonials key={key} data={block} />
       ) : (
-        <Testimonials key={key} data={block} layout="grid" accentWords={2} />
+        <Testimonials key={key} data={block} layout="grid" />
       );
     }
     if (block.__component === 'shared.industry-gallery') {

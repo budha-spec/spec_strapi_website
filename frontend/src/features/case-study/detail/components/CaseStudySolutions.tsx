@@ -1,3 +1,4 @@
+import { AccentHeading } from '@/components/ui/AccentHeading';
 import { cmsText } from '@/lib/media';
 import type { CaseStudySolutionsBlock } from '../../types/case-study.types';
 
@@ -21,7 +22,7 @@ export function CaseStudySolutions({ data }: CaseStudySolutionsProps) {
       <div className="shell">
         {data.title && (
           <h2 className="sp-title mb-[clamp(20px,2.08vw,40px)] text-d30 font-medium leading-[1.2] text-text-heading">
-            {cmsText(data.title)}
+            <AccentHeading text={cmsText(data.title)} accentClassName="gradient-text font-semibold" />
           </h2>
         )}
 

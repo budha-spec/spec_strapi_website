@@ -1,17 +1,17 @@
 import Image from 'next/image';
 import { ExploreMore } from '@/components/ui/ExploreMore';
-
-/** Not in Strapi yet — Figma copy for the career banner. */
-const CAREER_CONTACTS = [
-  { kind: 'phone', label: '+91 79 2640 4026' },
-  { kind: 'phone', label: '+91 79 2640 4080' },
-  { kind: 'email', label: 'hr@spec-india.com' },
-] as const;
+import { cmsText } from '@/lib/media';
+import type { CareerInquiryBlock } from '../types/contact-us.types';
 
 /** No careers route exists yet; point this at it once one does. */
 const JOB_OPENINGS_HREF = '#';
 
-function contactHref({ kind, label }: (typeof CAREER_CONTACTS)[number]) {
+interface CareerContact {
+  kind: 'phone' | 'email';
+  label: string;
+}
+
+function contactHref({ kind, label }: CareerContact) {
   return kind === 'email' ? `mailto:${label}` : `tel:${label.replace(/[^+\d]/g, '')}`;
 }
 
@@ -19,7 +19,12 @@ function contactHref({ kind, label }: (typeof CAREER_CONTACTS)[number]) {
  * "For Career Inquiry" banner with the HR phone numbers and email, beside
  * the "Current Job Opening" card (Figma node 375:7839).
  */
-export function CareerInquiry() {
+export function CareerInquiry({ data }: { data: CareerInquiryBlock }) {
+  const contacts: CareerContact[] = (data.inquiryItems ?? [])
+    .map((entry) => cmsText(entry.item).trim())
+    .filter(Boolean)
+    .map((label) => ({ kind: label.includes('@') ? 'email' : 'phone', label }));
+
   return (
     <section className="sp-section sp-contact-career w-full bg-bg-light pt-[clamp(40px,3.54vw,68px)] pb-[clamp(24px,2.6vw,50px)]">
       <div className="shell grid gap-[clamp(12px,1.04vw,20px)] lg:grid-cols-[1342fr_338fr]">
@@ -43,10 +48,10 @@ export function CareerInquiry() {
 
           <div className="relative flex flex-col gap-[clamp(14px,1.09vw,21px)]">
             <h2 className="sp-title text-d18 leading-[1.5] font-normal text-white">
-              For Career Inquiry
+              {cmsText(data.title)}
             </h2>
             <ul className="flex flex-wrap items-center gap-x-[clamp(24px,3.07vw,59px)] gap-y-4">
-              {CAREER_CONTACTS.map((contact) => (
+              {contacts.map((contact) => (
                 <li key={contact.label}>
                   <a
                     href={contactHref(contact)}
