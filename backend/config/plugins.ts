@@ -6,7 +6,9 @@ export default () => ({
   'deep-populate': {
     enabled: true,
   },
-
+  ferry: {
+    enabled: true,
+  },
   'deep-copy': {
     enabled: true,
     config: {
