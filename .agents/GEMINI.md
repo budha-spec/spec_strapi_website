@@ -145,6 +145,8 @@ Names follow the Figma section labels so designers and developers mean the same 
 ## Strapi Query Rules
 - Dynamic zones: populate each block explicitly — `populate[content][on][shared.<block>][populate]=*`, nesting one more level for relations (`…[populate][case_studies][populate]=*`). Keep every endpoint in `src/lib/api/endpoints.ts`.
 - `populate[seo]=*` is rejected (`Invalid key ogImage`) — request SEO text fields only: `populate[seo][fields][0]=metaTitle`.
+- Page and section titles, eyebrows and descriptions come only from Strapi — never hard-code copy or add a static fallback. When a field is empty, skip that element (or the hero/section) and tell the user which CMS block is missing.
+- Section titles mark the gradient word(s) in the CMS: `Enterprise <span>Growth</span>`. Render them with `AccentHeading` (never split the last word in code); it ignores the span's class and applies `accentClassName` — `gradient-text` on light bands, `gradient-text-impact` on dark ones.
 - Strapi text can contain mojibake (`Â`, `â€™`, `�`). `cmsText()` strips the stray `Â` before a non-breaking space; anything else must be fixed in the CMS, not in code.
 - Third-party feeds (WordPress Insights) must fail soft: return `[]` and hide the section, never crash the page.
 - WordPress filters blogs by **its own category slug** (`?category=ai`), which is Strapi's `blog_category.slug` — not the page URL slug. Populate `blog_category` with `fields` only (populating `blog_posts` is rejected).

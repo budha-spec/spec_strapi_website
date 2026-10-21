@@ -6,7 +6,12 @@ import { strapiGet } from '@/lib/api/strapi';
 import { ENDPOINTS, REVALIDATE } from '@/lib/api/endpoints';
 import type { StrapiListResponse } from '@/types/strapi';
 import type { GalleryBlock } from '@/types/sections.types';
-import type { ContactPage, ContactPageBlock } from '../types/contact-us.types';
+import type {
+  CareerInquiryBlock,
+  ContactIntroBlock,
+  ContactPage,
+  ContactPageBlock,
+} from '../types/contact-us.types';
 
 const CONTENT = { next: { revalidate: REVALIDATE.CONTENT } };
 
@@ -25,5 +30,24 @@ export function findContactGallery(
 ): GalleryBlock | undefined {
   return blocks.find(
     (block): block is GalleryBlock => block.__component === 'shared.gallery'
+  );
+}
+
+/** Intro heading and text beside the offices. */
+export function findContactIntro(
+  blocks: ContactPageBlock[]
+): ContactIntroBlock | undefined {
+  return blocks.find(
+    (block): block is ContactIntroBlock => block.__component === 'shared.challenges-item'
+  );
+}
+
+/** "For Career Inquiry" banner. */
+export function findCareerInquiry(
+  blocks: ContactPageBlock[]
+): CareerInquiryBlock | undefined {
+  return blocks.find(
+    (block): block is CareerInquiryBlock =>
+      block.__component === 'shared.career-inquiry-cta'
   );
 }

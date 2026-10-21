@@ -53,8 +53,9 @@ mobile font sizes) are written once.
 
 Some sections have no eyebrow by design (heroes, "Trusted by", the service
 intro, the CTA banner, FAQ, Let's Talk); their title still has `sp-title`.
-The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
-`.sp-title`, so `.sp-title span` reaches it.
+The highlighted word(s) inside a title (e.g. "Growth") come from Strapi
+already wrapped in a `<span>` (`Enterprise <span>Growth</span>`); `AccentHeading`
+renders it with the section's gradient class, so `.sp-title span` reaches it.
 
 ## Pages
 

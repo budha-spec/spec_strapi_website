@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { FactsCard, PageHero } from '@/components/sections';
 import { CaseStudyBlocks, fetchCaseStudyBySlug } from '@/features/case-study';
 import { cmsText } from '@/lib/media';
+import type { ContactBlock } from '@/types/sections.types';
 
 interface CaseStudyDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -41,9 +42,9 @@ export default async function CaseStudyDetailPage({
   const study = await getCaseStudy(slug);
   if (!study) notFound();
 
-  // No `shared.contact-us` block on case studies: name the industry instead,
-  // as the design does ("Contact Our HealthTech Expert").
-  const industry = cmsText(study.industries?.[0]?.title);
+  const contact = study.content?.find(
+    (block): block is ContactBlock => block.__component === 'shared.contact-us'
+  );
   const services = (study.services ?? [])
     .map((service) => cmsText(service.title))
     .filter(Boolean)
@@ -55,7 +56,8 @@ export default async function CaseStudyDetailPage({
         title={study.title}
         description={study.description}
         crumbs={CRUMBS}
-        ctaLabel={industry ? `Contact Our ${industry} Expert` : 'Contact Our Expert'}
+        ctaLabel={contact?.txt}
+        ctaHref={contact?.url}
       />
       <FactsCard
         className="sp-case-study-facts"

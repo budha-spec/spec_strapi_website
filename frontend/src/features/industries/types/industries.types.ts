@@ -20,9 +20,18 @@ export interface Industry {
   url?: string | null;
 }
 
+/** `shared.industry-section` — eyebrow and heading above the industry explorer. */
+export interface IndustrySectionBlock {
+  __component: 'shared.industry-section';
+  id: number;
+  title: string;
+  subTitle?: string | null;
+}
+
 export type IndustriesPageBlock =
   | ContactBlock
   | IndustryGalleryBlock
+  | IndustrySectionBlock
   | { __component: string; id: number };
 
 /** The `industries` entry of the Strapi `pages` collection. */

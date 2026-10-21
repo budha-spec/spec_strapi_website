@@ -19,14 +19,11 @@ interface TestimonialsProps {
    * without a video.
    */
   layout?: 'carousel' | 'grid';
-  /** Trailing title words on the gradient (testimonials listing: 2). */
-  accentWords?: number;
 }
 
 export function Testimonials({
   data,
   layout = 'carousel',
-  accentWords,
 }: TestimonialsProps) {
   const grid = layout === 'grid';
   const people = data.testimonials ?? [];
@@ -216,7 +213,6 @@ export function Testimonials({
           <h2 className="sp-title mt-[clamp(8px,0.78vw,15px)] text-d40 font-medium leading-[1.2] text-white">
             <AccentHeading
               text={cmsText(data.subTitle)}
-              accentWords={accentWords}
               accentClassName="gradient-text-impact font-semibold"
             />
           </h2>

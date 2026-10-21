@@ -12,11 +12,7 @@ import { cmsText } from '@/lib/media';
 import { cn } from '@/lib/utils';
 import type { Country } from '@/types/contact.types';
 import type { FooterData } from '@/types/footer.types';
-
-/** Not in Strapi yet — the page entry only has a title and description. */
-const INTRO_HEADING = 'Driving Growth Through Smart Engineering';
-const INTRO_TEXT =
-  'Every great software solution starts with a conversation. At SPEC India, we believe understanding your business comes first, before writing a single line of code.';
+import type { ContactIntroBlock } from '../types/contact-us.types';
 
 /** Figma office columns: 258px wide, 338px apart. */
 const OFFICE_COLUMNS =
@@ -25,6 +21,8 @@ const OFFICE_COLUMNS =
 interface ContactHeroProps {
   title: string;
   description?: string | null;
+  /** Heading and text beside the offices (`shared.challenges-item`). */
+  intro?: ContactIntroBlock;
   /** Strapi `footer` single type — offices, socials and portfolio links. */
   footer: FooterData | null;
   countries: Country[];
@@ -34,7 +32,7 @@ interface ContactHeroProps {
  * Contact page hero (Figma node 375:7743): title and intro on the dark band,
  * then the office details beside the enquiry form over a blurred artwork.
  */
-export function ContactHero({ title, description, footer, countries }: ContactHeroProps) {
+export function ContactHero({ title, description, intro, footer, countries }: ContactHeroProps) {
   const offices = (footer?.address ?? []).filter(
     (office) => office.country || office.phone || office.email || office.address,
   );
@@ -82,10 +80,14 @@ export function ContactHero({ title, description, footer, countries }: ContactHe
 
         <div className="shell relative grid gap-[clamp(32px,3vw,56px)] lg:grid-cols-[minmax(0,866fr)_688fr] lg:gap-0 ">
           <div className="min-w-0 lg:pt-[clamp(20px,2.03vw,39px)] lg:pr-[clamp(24px,6vw,115px)]">
-            <h2 className={cn(CARD_HEADING, 'sp-title text-white')}>{INTRO_HEADING}</h2>
-            <p className="mt-[clamp(10px,0.89vw,17px)] max-w-[749px] text-d18 leading-[1.4] text-text-light">
-              {INTRO_TEXT}
-            </p>
+            {intro?.title && (
+              <h2 className={cn(CARD_HEADING, 'sp-title text-white')}>{cmsText(intro.title)}</h2>
+            )}
+            {intro?.description && (
+              <p className="mt-[clamp(10px,0.89vw,17px)] max-w-[749px] text-d18 leading-[1.4] text-text-light">
+                {cmsText(intro.description)}
+              </p>
+            )}
 
             {offices.length > 0 && (
               <div
