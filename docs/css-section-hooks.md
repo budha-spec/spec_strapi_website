@@ -80,6 +80,18 @@ The highlighted last word inside a title (e.g. "Growth") is a `<span>` inside
 |---|---|
 | `sp-header` | Top navigation bar — fixed, stays on screen while scrolling |
 | `sp-header-bar` | The header's glass bar (translucent black + backdrop blur) |
+| `sp-nav-item` | Each top menu trigger (What we do, Who we are, Industries, Insights) |
+| `sp-nav-bar` | Gradient bar under the open menu (or the current page's section) |
+| `sp-mega-menu` | The dropped-down mega-menu panel (desktop, `lg` and up) |
+| `sp-mega-services` / `sp-mega-about` / `sp-mega-industries` / `sp-mega-insights` | Inside the panel: What we do / Who we are / Industries / Insights layout |
+| `sp-mobile-menu` | Accordion menu below `lg` |
+
+Inside the mega menu, repeated parts share these hooks: `mega-heading` (gradient
+title + ↗), `mega-link` / `mega-link-label` (links — gradient on hover, focus and
+current page), `mega-intro` (first-column title + text), `mega-card` (image card
+with gradient caption on hover), `mega-social` (Follow Us icons), `mega-showcase`
+and `mega-portfolio` (Industries carousel + Behance/Dribbble pills), `mega-insight`
+(Insights thumbnails), `mega-testimonial`, `mega-progress` (carousel track).
 | `sp-footer` | Whole footer |
 | `sp-footer-contact` | Light band holding Let's Talk + the enquiry form |
 | `sp-lets-talk` | "Let's Talk to OUR EXPERT!" card + "Share Your Project's Vision" form |

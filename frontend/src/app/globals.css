@@ -58,6 +58,9 @@
   --color-glass-border: #6f8385;
   --color-glass-pill: rgba(255, 255, 255, 0.1);
 
+  /* ─── Header mega menu ──────────────────────────────── */
+  --color-bg-card-dark: #1e1e1e; /* Insights testimonial card */
+
   /* ─── Radius ────────────────────────────────────────── */
   --radius-card: 1rem;
   --radius-btn: 9999px;
@@ -72,6 +75,7 @@
   --text-d14: clamp(0.75rem, 0.7292vw, 0.875rem);
   --text-d16: clamp(0.8125rem, 0.8333vw, 1rem);
   --text-d18: clamp(0.875rem, 0.9375vw, 1.125rem);
+  --text-d20: clamp(0.9375rem, 1.0417vw, 1.25rem);
   --text-d22: clamp(1rem, 1.1458vw, 1.375rem);
   --text-d24: clamp(1.0625rem, 1.25vw, 1.5rem);
   --text-d26: clamp(1.125rem, 1.3542vw, 1.625rem);
@@ -173,6 +177,40 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
+  }
+
+  /*
+   * Header mega menu links take the menu-heading ramp on hover, keyboard
+   * focus, the current page, and the Insights category being previewed.
+   * The gradient sits on the label span so it spans the words, not the row.
+   * `-webkit-text-fill-color` beats the link's `text-white` utility.
+   */
+  .mega-link:is(:hover, :focus-visible, [aria-current='page'], [data-active='true'])
+    .mega-link-label,
+  .mega-heading-white:is(:hover, :focus-visible) .mega-heading-label {
+    /* Figma's menu ramp at its steep angle: mostly green, teal at the end. */
+    background-image: linear-gradient(
+      -31.8deg,
+      #0044ff 14.749%,
+      #00d4ff 27.175%,
+      #32ff00 97.048%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Gradient menu headings ("Software Engineering ↗") turn white on hover. */
+  .mega-heading-gradient:is(:hover, :focus-visible) .mega-heading-label {
+    -webkit-text-fill-color: var(--color-text-inverse);
+  }
+
+  /* Insights menu: thumbnails ease in when another category is hovered. */
+  @keyframes mega-fade {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
   }
 
   /* ─── Glass morphism (hero search card) ─────────────── */
@@ -646,6 +684,15 @@
   .social-btn[data-network="twitter"]:hover {
     background-color: #000000;
     border-color: #000000;
+  }
+  /* Header "Follow Us" also lists the portfolio networks as square buttons. */
+  .social-btn[data-network="behance"]:hover {
+    background-color: #0057ff;
+    border-color: #0057ff;
+  }
+  .social-btn[data-network="dribbble"]:hover {
+    background-color: #ea4c89;
+    border-color: #ea4c89;
   }
   /* Instagram's mark is a gradient rather than a flat colour. */
   .social-btn[data-network="instagram"]:hover {
