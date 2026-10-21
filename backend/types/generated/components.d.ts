@@ -1,5 +1,16 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface SharedAboutMenuSocial extends Struct.ComponentSchema {
+  collectionName: 'components_shared_about_menu_socials';
+  info: {
+    displayName: 'About Menu Social';
+  };
+  attributes: {
+    social: Schema.Attribute.Component<'shared.social', true>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedAudienceSection extends Struct.ComponentSchema {
   collectionName: 'components_shared_audience_sections';
   info: {
@@ -265,6 +276,28 @@ export interface SharedFaqs extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedFooterColumns extends Struct.ComponentSchema {
+  collectionName: 'components_shared_footer_columns';
+  info: {
+    displayName: 'Footer Columns';
+  };
+  attributes: {
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedFooterMenuItems extends Struct.ComponentSchema {
+  collectionName: 'components_shared_footer_menu_items';
+  info: {
+    displayName: 'Footer Menu Items';
+  };
+  attributes: {
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    menuItem: Schema.Attribute.Component<'shared.footer-columns', true>;
+  };
+}
+
 export interface SharedGallery extends Struct.ComponentSchema {
   collectionName: 'components_shared_galleries';
   info: {
@@ -341,6 +374,19 @@ export interface SharedIndustryGalleryItem extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedIndustryMenuSection extends Struct.ComponentSchema {
+  collectionName: 'components_shared_industry_menu_sections';
+  info: {
+    displayName: 'Industry Menu Section';
+  };
+  attributes: {
+    image: Schema.Attribute.Media<'images' | 'files', true> &
+      Schema.Attribute.Required;
+    industryPortfolio: Schema.Attribute.Component<'shared.portfolio', true>;
+    txt: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedIndustrySection extends Struct.ComponentSchema {
   collectionName: 'components_shared_industry_sections';
   info: {
@@ -381,6 +427,16 @@ export interface SharedIndustryServiceItem extends Struct.ComponentSchema {
     title: Schema.Attribute.String & Schema.Attribute.Required;
     txt: Schema.Attribute.String;
     url: Schema.Attribute.String;
+  };
+}
+
+export interface SharedInsightsMenuSection extends Struct.ComponentSchema {
+  collectionName: 'components_shared_insights_menu_sections';
+  info: {
+    displayName: 'Insights Menu Section';
+  };
+  attributes: {
+    testimonial: Schema.Attribute.Component<'shared.testimonial-item', true>;
   };
 }
 
@@ -433,6 +489,18 @@ export interface SharedKpiCategory extends Struct.ComponentSchema {
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+  };
+}
+
+export interface SharedLeaders extends Struct.ComponentSchema {
+  collectionName: 'components_shared_leaders';
+  info: {
+    displayName: 'Leaders';
+  };
+  attributes: {
+    leader: Schema.Attribute.Component<'shared.testimonial-item', true>;
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -682,6 +750,7 @@ export interface SharedWhitepapers extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'shared.about-menu-social': SharedAboutMenuSocial;
       'shared.audience-section': SharedAudienceSection;
       'shared.blogs': SharedBlogs;
       'shared.capabilities-item': SharedCapabilitiesItem;
@@ -702,19 +771,24 @@ declare module '@strapi/strapi' {
       'shared.enterprise-solution-item': SharedEnterpriseSolutionItem;
       'shared.faq-item': SharedFaqItem;
       'shared.faqs': SharedFaqs;
+      'shared.footer-columns': SharedFooterColumns;
+      'shared.footer-menu-items': SharedFooterMenuItems;
       'shared.gallery': SharedGallery;
       'shared.home-blogs': SharedHomeBlogs;
       'shared.home-page-section1': SharedHomePageSection1;
       'shared.industry-case-study': SharedIndustryCaseStudy;
       'shared.industry-gallery': SharedIndustryGallery;
       'shared.industry-gallery-item': SharedIndustryGalleryItem;
+      'shared.industry-menu-section': SharedIndustryMenuSection;
       'shared.industry-section': SharedIndustrySection;
       'shared.industry-service': SharedIndustryService;
       'shared.industry-service-item': SharedIndustryServiceItem;
+      'shared.insights-menu-section': SharedInsightsMenuSection;
       'shared.key-metrics': SharedKeyMetrics;
       'shared.key-metrics-section': SharedKeyMetricsSection;
       'shared.kpi-business-impact': SharedKpiBusinessImpact;
       'shared.kpi-category': SharedKpiCategory;
+      'shared.leaders': SharedLeaders;
       'shared.live-bi-visualization': SharedLiveBiVisualization;
       'shared.office-addresses': SharedOfficeAddresses;
       'shared.portfolio': SharedPortfolio;

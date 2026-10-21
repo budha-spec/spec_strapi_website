@@ -63,7 +63,10 @@
         "shared.whitepapers",
         "shared.industry-section",
         "shared.career-inquiry-cta",
-        "shared.challenges-item"
+        "shared.challenges-item",
+        "shared.text-block",
+        "shared.industry-case-study",
+        "shared.leaders"
       ]
     },
     "children": {

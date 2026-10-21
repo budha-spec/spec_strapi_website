@@ -46,6 +46,11 @@
         "shared.technologies",
         "shared.faqs"
       ]
+    },
+    "url": {
+      "type": "string",
+      "required": true,
+      "unique": true
     }
   }
 }
