@@ -191,6 +191,56 @@ const INDUSTRY_LIST_QUERY = [
   'pagination[pageSize]=100',
 ].join('&');
 
+/** Fields every header-menu level needs. */
+const MENU_FIELDS = ['title', 'slug', 'url', 'menuOrder'];
+
+/** Panel blocks: intro text, image cards, socials, industry showcase, testimonials. */
+const MENU_CONTENT = [
+  '[on][shared.rich-text][populate]=*',
+  '[on][shared.text-block][populate]=*',
+  '[on][shared.about-menu-social][populate][social][populate]=*',
+  '[on][shared.industry-menu-section][populate][image]=true',
+  // `populate=*` stops at the pills and leaves their `logo` out.
+  '[on][shared.industry-menu-section][populate][industryPortfolio][populate]=*',
+  '[on][shared.insights-menu-section][populate][testimonial][populate]=*',
+];
+
+/**
+ * One level of the menu tree, then its children. Levels: top menu (1) →
+ * heading (2) → link (3) → services sub-link (4); panel blocks sit on 1–2.
+ */
+function menuLevel(prefix: string, depth: number): string[] {
+  const parts = MENU_FIELDS.map((field, i) => `${prefix}[fields][${i}]=${field}`);
+  if (depth <= 2) {
+    parts.push(...MENU_CONTENT.map((block) => `${prefix}[populate][content]${block}`));
+  }
+  if (depth < 4) parts.push(...menuLevel(`${prefix}[populate][child_menu]`, depth + 1));
+  return parts;
+}
+
+/**
+ * The whole header menu in one request. Listing fields explicitly keeps the
+ * deep-populate plugin from also expanding every `parent_menu`, which makes
+ * `populate=*` more than twice the size — and a single menu by slug bigger
+ * still, since it drags its parent tree along.
+ */
+const HEADER_MENU_QUERY = [
+  'filters[slug][$eq]=header-menu-items',
+  'fields[0]=slug',
+  ...menuLevel('populate[child_menu]', 1),
+].join('&');
+
+/** Latest entries for the Insights menu thumbnails: title, link and image only. */
+const LATEST_ENTRIES_QUERY = [
+  'fields[0]=title',
+  'fields[1]=url',
+  'populate[featuredImage][fields][0]=url',
+  'populate[featuredImage][fields][1]=alternativeText',
+  'populate[featuredImage][fields][2]=width',
+  'populate[featuredImage][fields][3]=height',
+  'sort[0]=publishedAt:desc',
+].join('&');
+
 /** All Strapi API endpoint paths. Import from here — never hardcode in components. */
 export const ENDPOINTS = {
   /** Landing page: slug `home`, with nested media and relations. */
@@ -234,6 +284,13 @@ export const ENDPOINTS = {
     `/services?filters[url][$eq]=${encodeURIComponent(url)}&${SERVICE_DETAIL_POPULATE}`,
   /** Enquiry form (POST, multipart). Public custom route — verifies hCaptcha server-side. */
   CONTACT_SUBMIT: '/contact-us/submit',
+  /** Header mega menu: the `header-menu-items` root with every panel under it. */
+  HEADER_MENU: `/header-menus?${HEADER_MENU_QUERY}`,
+  /** Newest entries of a listing, for the Insights menu thumbnails. */
+  LATEST_ENTRIES: (
+    collection: 'case-studies' | 'visualizations' | 'whitepapers',
+    limit: number
+  ) => `/${collection}?${LATEST_ENTRIES_QUERY}&pagination[pageSize]=${limit}`,
 } as const;
 
 /** Most posts the Insights carousel will show, however many the API returns. */

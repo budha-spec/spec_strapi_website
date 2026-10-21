@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import type { ReactNode } from 'react';
+import { Suspense, type ReactNode } from 'react';
 import { Inter, Nunito, Poppins } from 'next/font/google';
 import { Toaster } from 'sonner';
 import './globals.css';
-import { Header, Footer } from '@/components/layout';
+import { Header, HeaderSkeleton, Footer } from '@/components/layout';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -41,7 +41,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         {/* No ParticlesProvider here: it renders nothing until the engine
             loads in the browser, which would empty the server HTML.
             `ParticlesCanvas` wraps itself instead. */}
-        <Header />
+        <Suspense fallback={<HeaderSkeleton />}>
+          <Header />
+        </Suspense>
         {children}
         <Footer />
         <Toaster position="top-right" richColors closeButton />
