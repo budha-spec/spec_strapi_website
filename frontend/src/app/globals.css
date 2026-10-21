@@ -1209,9 +1209,15 @@ ul.sp-testimonials-grid li:nth-child(-n + 4) {
 .career-openings .explore-more:hover span.explore-more-arrow {
     background: linear-gradient(#0e0e0d, #0e0e0d) padding-box padding-box, linear-gradient(252.16deg, #0c3deb 5.3%, #20a42f 89.32%) border-box;
 }
-/* 
+
+
+.use-case-card-detail p{
+  font-size: 18px;
+}
 .industry-logo-description{ font-size: 18px;}
 
 @media(max-width : 1280px){
   .industry-logo-description{ font-size: 12px;}
-} */
+  .use-case-card-detail p{ font-size: 18px; }
+}
+
