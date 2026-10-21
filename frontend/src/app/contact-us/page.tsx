@@ -7,7 +7,9 @@ import {
   ContactHero,
   ContactHeroSkeleton,
   fetchContactPage,
+  findCareerInquiry,
   findContactGallery,
+  findContactIntro,
 } from '@/features/contact-us';
 import { fetchCountries } from '@/lib/api/countries.api';
 import { fetchFooter } from '@/lib/api/footer.api';
@@ -30,7 +32,9 @@ export default async function ContactUsPage() {
   ]);
   if (!page) notFound();
 
-  const gallery = findContactGallery(page.content ?? []);
+  const blocks = page.content ?? [];
+  const gallery = findContactGallery(blocks);
+  const career = findCareerInquiry(blocks);
 
   return (
     <main className="sp-page sp-page-contact-us flex w-full flex-col bg-bg-light">
@@ -38,6 +42,7 @@ export default async function ContactUsPage() {
         <ContactHero
           title={page.title}
           description={page.description}
+          intro={findContactIntro(blocks)}
           footer={footer}
           countries={countries}
         />
@@ -45,7 +50,7 @@ export default async function ContactUsPage() {
 
       {gallery && <ClientsStrip data={gallery} />}
 
-      <CareerInquiry />
+      {career && <CareerInquiry data={career} />}
     </main>
   );
 }

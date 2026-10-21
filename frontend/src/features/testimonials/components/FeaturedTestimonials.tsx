@@ -102,7 +102,6 @@ export function FeaturedTestimonials({ data }: { data: TestimonialsBlock }) {
           <h2 className="sp-title mt-[clamp(6px,0.52vw,10px)] max-w-[1200px] text-d40 font-medium leading-[1.2] text-text-heading">
             <AccentHeading
               text={cmsText(data.subTitle)}
-              accentWords={2}
               accentClassName="gradient-text font-semibold"
             />
           </h2>

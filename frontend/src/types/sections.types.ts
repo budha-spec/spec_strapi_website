@@ -7,6 +7,17 @@ import type { RichTextNode } from '@/components/ui/RichText';
 import type { CmsMedia } from '@/lib/media';
 
 /** `shared.gallery` — the "Trusted by global leaders" logo strip. */
+/**
+ * `shared.blogs` — eyebrow and heading for the "Latest Insights" carousel.
+ * The posts themselves come from WordPress, so the `blog` relation is unused.
+ */
+export interface BlogsBlock {
+  __component: 'shared.blogs';
+  id: number;
+  title: string;
+  subTitle?: string | null;
+}
+
 export interface GalleryBlock {
   __component: 'shared.gallery';
   id: number;

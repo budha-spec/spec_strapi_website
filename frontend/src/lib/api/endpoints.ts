@@ -9,7 +9,8 @@ const HOME_POPULATE = [
   // Hand-entered stories (`caseStudy` items) with their tags and media.
   'populate[content][on][shared.case-studies][populate][caseStudy][populate]=*',
   'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
-  'populate[content][on][shared.home-blogs][populate][blogs][populate]=*',
+  // "Latest Insights" heading; the posts come from WordPress.
+  'populate[content][on][shared.blogs][populate]=*',
   // Core Capabilities cards: image, plus their category Content Items with
   // the service / industry / visualization / whitepaper each one links to.
   // Needs the Public role's `find` on Content Item — otherwise Strapi drops
@@ -87,6 +88,7 @@ const CASE_STUDY_DETAIL_POPULATE = [
   'populate[tags][fields][0]=title',
   'populate[services][fields][0]=title',
   'populate[services][fields][1]=url',
+  'populate[content][on][shared.contact-us][populate]=*',
   'populate[content][on][shared.rich-text][populate]=*',
   'populate[content][on][shared.challenges][populate][challange][populate]=*',
   'populate[content][on][shared.gallery][populate]=*',
@@ -155,6 +157,9 @@ const WHITEPAPER_POPULATE = [
 const INDUSTRIES_PAGE_POPULATE = [
   'populate[content][on][shared.contact-us][populate]=*',
   'populate[content][on][shared.industry-gallery][populate][gallery][populate]=*',
+  // "Capabilities" heading above the explorer; its `industries` relation is unused.
+  'populate[content][on][shared.industry-section][fields][0]=title',
+  'populate[content][on][shared.industry-section][fields][1]=subTitle',
 ].join('&');
 
 /**
@@ -179,6 +184,9 @@ const INDUSTRY_DETAIL_POPULATE = [
  */
 const CONTACT_PAGE_POPULATE = [
   'populate[content][on][shared.gallery][populate][images][populate]=*',
+  // Intro heading + text beside the offices.
+  'populate[content][on][shared.challenges-item][populate]=*',
+  'populate[content][on][shared.career-inquiry-cta][populate][inquiryItems][populate]=*',
 ].join('&');
 
 /** Industry list for the landing explorer — what each panel shows, oldest first. */
@@ -191,6 +199,56 @@ const INDUSTRY_LIST_QUERY = [
   'pagination[pageSize]=100',
 ].join('&');
 
+/** Fields every header-menu level needs. */
+const MENU_FIELDS = ['title', 'slug', 'url', 'menuOrder'];
+
+/** Panel blocks: intro text, image cards, socials, industry showcase, testimonials. */
+const MENU_CONTENT = [
+  '[on][shared.rich-text][populate]=*',
+  '[on][shared.text-block][populate]=*',
+  '[on][shared.about-menu-social][populate][social][populate]=*',
+  '[on][shared.industry-menu-section][populate][image]=true',
+  // `populate=*` stops at the pills and leaves their `logo` out.
+  '[on][shared.industry-menu-section][populate][industryPortfolio][populate]=*',
+  '[on][shared.insights-menu-section][populate][testimonial][populate]=*',
+];
+
+/**
+ * One level of the menu tree, then its children. Levels: top menu (1) →
+ * heading (2) → link (3) → services sub-link (4); panel blocks sit on 1–2.
+ */
+function menuLevel(prefix: string, depth: number): string[] {
+  const parts = MENU_FIELDS.map((field, i) => `${prefix}[fields][${i}]=${field}`);
+  if (depth <= 2) {
+    parts.push(...MENU_CONTENT.map((block) => `${prefix}[populate][content]${block}`));
+  }
+  if (depth < 4) parts.push(...menuLevel(`${prefix}[populate][child_menu]`, depth + 1));
+  return parts;
+}
+
+/**
+ * The whole header menu in one request. Listing fields explicitly keeps the
+ * deep-populate plugin from also expanding every `parent_menu`, which makes
+ * `populate=*` more than twice the size — and a single menu by slug bigger
+ * still, since it drags its parent tree along.
+ */
+const HEADER_MENU_QUERY = [
+  'filters[slug][$eq]=header-menu-items',
+  'fields[0]=slug',
+  ...menuLevel('populate[child_menu]', 1),
+].join('&');
+
+/** Latest entries for the Insights menu thumbnails: title, link and image only. */
+const LATEST_ENTRIES_QUERY = [
+  'fields[0]=title',
+  'fields[1]=url',
+  'populate[featuredImage][fields][0]=url',
+  'populate[featuredImage][fields][1]=alternativeText',
+  'populate[featuredImage][fields][2]=width',
+  'populate[featuredImage][fields][3]=height',
+  'sort[0]=publishedAt:desc',
+].join('&');
+
 /** All Strapi API endpoint paths. Import from here — never hardcode in components. */
 export const ENDPOINTS = {
   /** Landing page: slug `home`, with nested media and relations. */
@@ -200,6 +258,9 @@ export const ENDPOINTS = {
     `/services?filters[slug]=${encodeURIComponent(slug)}&${SERVICE_POPULATE}`,
   /** All published case studies for the `/case-study` listing. */
   CASE_STUDIES: `/case-studies?${CASE_STUDY_LIST_QUERY}`,
+  /** `/case-study` listing hero (Strapi page slug `case-study`). */
+  CASE_STUDY_PAGE:
+    '/pages?filters[slug][$eq]=case-study&populate[content][on][shared.contact-us][populate]=*',
   /** One case study, matched by slug, e.g. `ai-based-chatbot-application-for-hospital`. */
   CASE_STUDY_BY_SLUG: (slug: string) =>
     `/case-studies?filters[slug][$eq]=${encodeURIComponent(slug)}&${CASE_STUDY_DETAIL_POPULATE}`,
@@ -234,6 +295,13 @@ export const ENDPOINTS = {
     `/services?filters[url][$eq]=${encodeURIComponent(url)}&${SERVICE_DETAIL_POPULATE}`,
   /** Enquiry form (POST, multipart). Public custom route — verifies hCaptcha server-side. */
   CONTACT_SUBMIT: '/contact-us/submit',
+  /** Header mega menu: the `header-menu-items` root with every panel under it. */
+  HEADER_MENU: `/header-menus?${HEADER_MENU_QUERY}`,
+  /** Newest entries of a listing, for the Insights menu thumbnails. */
+  LATEST_ENTRIES: (
+    collection: 'case-studies' | 'visualizations' | 'whitepapers',
+    limit: number
+  ) => `/${collection}?${LATEST_ENTRIES_QUERY}&pagination[pageSize]=${limit}`,
 } as const;
 
 /** Most posts the Insights carousel will show, however many the API returns. */

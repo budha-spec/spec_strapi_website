@@ -1,5 +1,5 @@
-import type { CmsMedia } from '@/lib/media';
 import type {
+  BlogsBlock,
   CaseStudiesBlock,
   GalleryBlock,
   MetricsBlock,
@@ -22,30 +22,6 @@ export interface HomeHeroBlock {
   suggestions?: HomeCapability[] | null;
 }
 
-export interface HomeBlogCategory {
-  id: number;
-  name?: string | null;
-  slug?: string | null;
-}
-
-export interface HomeBlog {
-  id: number;
-  title: string;
-  slug: string;
-  excerpt?: string | null;
-  featuredImage?: CmsMedia | null;
-  category?: HomeBlogCategory[] | HomeBlogCategory | null;
-}
-
-export interface HomeBlogsBlock {
-  __component: 'shared.home-blogs';
-  id: number;
-  title: string;
-  subTitle?: string | null;
-  url?: string | null;
-  blogs?: HomeBlog[] | null;
-}
-
 export type HomeBlock =
   | HomeHeroBlock
   | GalleryBlock
@@ -53,7 +29,7 @@ export type HomeBlock =
   | MetricsBlock
   | CaseStudiesBlock
   | TestimonialsBlock
-  | HomeBlogsBlock;
+  | BlogsBlock;
 
 export interface HomePageEntry {
   id: number;

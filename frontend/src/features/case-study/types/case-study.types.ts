@@ -1,6 +1,7 @@
 import type { CmsMedia } from '@/lib/media';
 import type {
   ChallengesBlock,
+  ContactBlock,
   GalleryBlock,
   Metric,
   RichTextBlock,
@@ -16,6 +17,15 @@ export interface CaseStudyTerm {
 }
 
 /** One entry from the Strapi `case-studies` collection, as the listing uses it. */
+/** The `case-study` entry of the Strapi `pages` collection — the listing hero. */
+export interface CaseStudyListingPage {
+  id: number;
+  title: string;
+  slug: string;
+  description?: string | null;
+  content?: Array<ContactBlock | { __component: string; id: number }> | null;
+}
+
 export interface CaseStudyEntry {
   id: number;
   title: string;

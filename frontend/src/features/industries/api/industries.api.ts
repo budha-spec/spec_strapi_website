@@ -11,7 +11,8 @@ const CONTENT = { next: { revalidate: REVALIDATE.CONTENT } };
 
 /**
  * The landing page entry, or null when it is not published yet — the page
- * then falls back to the Figma hero copy and skips the logo gallery.
+ * then takes its hero from the `industries` Industry entry and skips the
+ * explorer heading and logo gallery.
  */
 export async function fetchIndustriesPage(): Promise<IndustriesPage | null> {
   try {

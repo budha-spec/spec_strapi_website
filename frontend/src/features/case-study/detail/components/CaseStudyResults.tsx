@@ -1,3 +1,4 @@
+import { AccentHeading } from '@/components/ui/AccentHeading';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { cmsText } from '@/lib/media';
 import type { CaseStudyResultBlock } from '../../types/case-study.types';
@@ -28,7 +29,10 @@ export function CaseStudyResults({ data }: { data: CaseStudyResultBlock }) {
 
         {data.subTitle && (
           <h2 className="sp-title mt-[clamp(6px,0.52vw,10px)] max-w-[788px] text-d40 font-medium leading-[1.2] text-white">
-            {cmsText(data.subTitle).trim()}
+            <AccentHeading
+              text={cmsText(data.subTitle).trim()}
+              accentClassName="gradient-text-impact font-semibold"
+            />
           </h2>
         )}
 
