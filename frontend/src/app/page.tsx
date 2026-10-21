@@ -1,6 +1,7 @@
 import { BlogSection } from '@/components/sections';
-import { fetchHomePage, HomeBlocks, type HomeBlogsBlock } from '@/features/home';
+import { fetchHomePage, HomeBlocks } from '@/features/home';
 import { fetchLatestBlogs } from '@/lib/api/blogs.api';
+import type { BlogsBlock } from '@/types/sections.types';
 
 export default async function HomePage() {
   const [{ data }, blogs] = await Promise.all([
@@ -9,7 +10,7 @@ export default async function HomePage() {
   ]);
   const page = data[0];
   const blogHeading = page?.content?.find(
-    (block): block is HomeBlogsBlock => block.__component === 'shared.home-blogs'
+    (block): block is BlogsBlock => block.__component === 'shared.blogs'
   );
 
   return (

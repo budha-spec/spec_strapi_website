@@ -9,7 +9,8 @@ const HOME_POPULATE = [
   // Hand-entered stories (`caseStudy` items) with their tags and media.
   'populate[content][on][shared.case-studies][populate][caseStudy][populate]=*',
   'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
-  'populate[content][on][shared.home-blogs][populate][blogs][populate]=*',
+  // "Latest Insights" heading; the posts come from WordPress.
+  'populate[content][on][shared.blogs][populate]=*',
   // Core Capabilities cards: image, plus their category Content Items with
   // the service / industry / visualization / whitepaper each one links to.
   // Needs the Public role's `find` on Content Item — otherwise Strapi drops
