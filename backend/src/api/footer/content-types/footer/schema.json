@@ -52,6 +52,11 @@
       "type": "component",
       "component": "shared.company-ratings",
       "repeatable": true
+    },
+    "footerMenu": {
+      "type": "component",
+      "component": "shared.footer-menu-items",
+      "repeatable": true
     }
   }
 }
