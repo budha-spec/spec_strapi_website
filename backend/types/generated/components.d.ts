@@ -276,6 +276,28 @@ export interface SharedFaqs extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedFooterColumns extends Struct.ComponentSchema {
+  collectionName: 'components_shared_footer_columns';
+  info: {
+    displayName: 'Footer Columns';
+  };
+  attributes: {
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedFooterMenuItems extends Struct.ComponentSchema {
+  collectionName: 'components_shared_footer_menu_items';
+  info: {
+    displayName: 'Footer Menu Items';
+  };
+  attributes: {
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    menuItem: Schema.Attribute.Component<'shared.footer-columns', true>;
+  };
+}
+
 export interface SharedGallery extends Struct.ComponentSchema {
   collectionName: 'components_shared_galleries';
   info: {
@@ -467,6 +489,18 @@ export interface SharedKpiCategory extends Struct.ComponentSchema {
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+  };
+}
+
+export interface SharedLeaders extends Struct.ComponentSchema {
+  collectionName: 'components_shared_leaders';
+  info: {
+    displayName: 'Leaders';
+  };
+  attributes: {
+    leader: Schema.Attribute.Component<'shared.testimonial-item', true>;
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -737,6 +771,8 @@ declare module '@strapi/strapi' {
       'shared.enterprise-solution-item': SharedEnterpriseSolutionItem;
       'shared.faq-item': SharedFaqItem;
       'shared.faqs': SharedFaqs;
+      'shared.footer-columns': SharedFooterColumns;
+      'shared.footer-menu-items': SharedFooterMenuItems;
       'shared.gallery': SharedGallery;
       'shared.home-blogs': SharedHomeBlogs;
       'shared.home-page-section1': SharedHomePageSection1;
@@ -752,6 +788,7 @@ declare module '@strapi/strapi' {
       'shared.key-metrics-section': SharedKeyMetricsSection;
       'shared.kpi-business-impact': SharedKpiBusinessImpact;
       'shared.kpi-category': SharedKpiCategory;
+      'shared.leaders': SharedLeaders;
       'shared.live-bi-visualization': SharedLiveBiVisualization;
       'shared.office-addresses': SharedOfficeAddresses;
       'shared.portfolio': SharedPortfolio;

@@ -835,6 +835,7 @@ export interface ApiFooterFooter extends Struct.SingleTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     followTxt: Schema.Attribute.String & Schema.Attribute.Required;
+    footerMenu: Schema.Attribute.Component<'shared.footer-menu-items', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -948,6 +949,9 @@ export interface ApiIndustryIndustry extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    url: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
   };
 }
 
@@ -983,6 +987,9 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'shared.industry-section',
         'shared.career-inquiry-cta',
         'shared.challenges-item',
+        'shared.text-block',
+        'shared.industry-case-study',
+        'shared.leaders',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
