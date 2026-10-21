@@ -108,6 +108,22 @@ export interface SharedCaseStudyItem extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedCaseStudySection extends Struct.ComponentSchema {
+  collectionName: 'components_shared_case_study_sections';
+  info: {
+    displayName: 'Case Study Section';
+  };
+  attributes: {
+    industries: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::industry.industry'
+    >;
+    services: Schema.Attribute.Relation<'oneToMany', 'api::service.service'>;
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedChallenges extends Struct.ComponentSchema {
   collectionName: 'components_shared_challenges';
   info: {
@@ -178,6 +194,21 @@ export interface SharedCsResultItem extends Struct.ComponentSchema {
   attributes: {
     csResult: Schema.Attribute.Component<'shared.challenges-item', true>;
     keyMetrics: Schema.Attribute.Component<'shared.key-metrics', true>;
+  };
+}
+
+export interface SharedCsrKeyMetrics extends Struct.ComponentSchema {
+  collectionName: 'components_shared_csr_key_metrics';
+  info: {
+    displayName: 'CSR Key Metrics';
+  };
+  attributes: {
+    image: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.Required;
+    keyMetrics: Schema.Attribute.Component<'shared.key-metrics', true>;
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    videoUrl: Schema.Attribute.String;
   };
 }
 
@@ -758,12 +789,14 @@ declare module '@strapi/strapi' {
       'shared.career-inquiry-item': SharedCareerInquiryItem;
       'shared.case-studies': SharedCaseStudies;
       'shared.case-study-item': SharedCaseStudyItem;
+      'shared.case-study-section': SharedCaseStudySection;
       'shared.challenges': SharedChallenges;
       'shared.challenges-item': SharedChallengesItem;
       'shared.company-ratings': SharedCompanyRatings;
       'shared.contact-us': SharedContactUs;
       'shared.cs-result': SharedCsResult;
       'shared.cs-result-item': SharedCsResultItem;
+      'shared.csr-key-metrics': SharedCsrKeyMetrics;
       'shared.cta': SharedCta;
       'shared.dashboard-action': SharedDashboardAction;
       'shared.dashboard-improvement': SharedDashboardImprovement;

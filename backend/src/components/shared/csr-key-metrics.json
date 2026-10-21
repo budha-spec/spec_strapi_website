@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_shared_csr_key_metrics",
+  "info": {
+    "displayName": "CSR Key Metrics"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subTitle": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "videoUrl": {
+      "type": "string"
+    },
+    "keyMetrics": {
+      "type": "component",
+      "component": "shared.key-metrics",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}
