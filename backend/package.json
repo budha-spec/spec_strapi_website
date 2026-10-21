@@ -18,6 +18,7 @@
     "@azure/msal-node": "^7.0.1",
     "@fourlights/strapi-plugin-deep-copy": "^2.1.0",
     "@fourlights/strapi-plugin-deep-populate": "^1.17.1",
+    "@qkix/strapi-plugin-ferry": "^0.2.0",
     "@strapi/plugin-cloud": "5.48.1",
     "@strapi/plugin-users-permissions": "5.48.1",
     "@strapi/strapi": "5.48.1",
