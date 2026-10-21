@@ -552,7 +552,7 @@ export interface ApiCaseStudyCaseStudy extends Struct.CollectionTypeSchema {
     >;
     industries: Schema.Attribute.Relation<
       'oneToMany',
-      'api::cs-industry.cs-industry'
+      'api::industry.industry'
     >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -990,6 +990,8 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'shared.text-block',
         'shared.industry-case-study',
         'shared.leaders',
+        'shared.csr-key-metrics',
+        'shared.case-study-section',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;

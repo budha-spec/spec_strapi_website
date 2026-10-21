@@ -66,7 +66,9 @@
         "shared.challenges-item",
         "shared.text-block",
         "shared.industry-case-study",
-        "shared.leaders"
+        "shared.leaders",
+        "shared.csr-key-metrics",
+        "shared.case-study-section"
       ]
     },
     "children": {

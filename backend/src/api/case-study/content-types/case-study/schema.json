@@ -41,7 +41,7 @@
     "industries": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::cs-industry.cs-industry"
+      "target": "api::industry.industry"
     },
     "tags": {
       "type": "relation",
