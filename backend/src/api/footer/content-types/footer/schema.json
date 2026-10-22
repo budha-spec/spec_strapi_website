@@ -57,6 +57,11 @@
       "type": "component",
       "component": "shared.footer-menu-items",
       "repeatable": true
+    },
+    "footerPrivacyMenu": {
+      "type": "component",
+      "component": "shared.footer-privacy-section",
+      "repeatable": false
     }
   }
 }

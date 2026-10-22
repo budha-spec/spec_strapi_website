@@ -836,6 +836,10 @@ export interface ApiFooterFooter extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     followTxt: Schema.Attribute.String & Schema.Attribute.Required;
     footerMenu: Schema.Attribute.Component<'shared.footer-menu-items', true>;
+    footerPrivacyMenu: Schema.Attribute.Component<
+      'shared.footer-privacy-section',
+      false
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
