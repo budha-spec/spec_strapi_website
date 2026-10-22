@@ -1221,3 +1221,12 @@ ul.sp-testimonials-grid li:nth-child(-n + 4) {
   .use-case-card-detail p{ font-size: 18px; }
 }
 
+nav[aria-label="Resource"] {
+    white-space: pre;
+}
+
+@media(max-width: 767px){
+  #hero p {
+    white-space: normal;
+}
+}
