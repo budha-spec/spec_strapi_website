@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_shared_footer_privacy_sections",
+  "info": {
+    "displayName": "Footer Privacy Section"
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "footerMenu": {
+      "type": "component",
+      "component": "shared.footer-columns",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}
