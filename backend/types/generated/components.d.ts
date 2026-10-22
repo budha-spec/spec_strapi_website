@@ -329,6 +329,19 @@ export interface SharedFooterMenuItems extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedFooterPrivacySection extends Struct.ComponentSchema {
+  collectionName: 'components_shared_footer_privacy_sections';
+  info: {
+    displayName: 'Footer Privacy Section';
+  };
+  attributes: {
+    footerMenu: Schema.Attribute.Component<'shared.footer-columns', true>;
+    image: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.Required;
+    url: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedGallery extends Struct.ComponentSchema {
   collectionName: 'components_shared_galleries';
   info: {
@@ -806,6 +819,7 @@ declare module '@strapi/strapi' {
       'shared.faqs': SharedFaqs;
       'shared.footer-columns': SharedFooterColumns;
       'shared.footer-menu-items': SharedFooterMenuItems;
+      'shared.footer-privacy-section': SharedFooterPrivacySection;
       'shared.gallery': SharedGallery;
       'shared.home-blogs': SharedHomeBlogs;
       'shared.home-page-section1': SharedHomePageSection1;

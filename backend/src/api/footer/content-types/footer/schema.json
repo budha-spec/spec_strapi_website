@@ -32,6 +32,10 @@
       "component": "shared.social",
       "repeatable": true
     },
+    "portfolioTxt": {
+      "type": "string",
+      "required": true
+    },
     "portfolio": {
       "type": "component",
       "component": "shared.portfolio",
@@ -57,6 +61,11 @@
       "type": "component",
       "component": "shared.footer-menu-items",
       "repeatable": true
+    },
+    "footerPrivacyMenu": {
+      "type": "component",
+      "component": "shared.footer-privacy-section",
+      "repeatable": false
     }
   }
 }
