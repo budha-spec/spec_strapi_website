@@ -1276,4 +1276,24 @@ nav[aria-label="Resource"] {
   #hero p {
     white-space: normal;
 }
+
+.hero-sldier {
+    --tick: clamp(40px, 8.25vw, 40px) !important;
+}
+}
+
+.mega-showcase  { background : #090909; }
+.mega-showcase > div:last-child {
+    background: #fff;
+}
+
+.header-follow-us li a {
+    padding: 10px;
+    border: 1px solid #fff !important;
+    border-radius: 8px; 
+    
+}
+
+.header-follow-us li a:hover {
+    border: 1px solid transparent !important;
 }
