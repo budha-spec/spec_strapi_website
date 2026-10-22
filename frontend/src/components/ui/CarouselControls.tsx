@@ -36,8 +36,15 @@ interface CarouselControlsProps {
   /**
    * Optional progress bar left of Explore All (Figma case-study listing:
    * 821×5 grey track, gradient thumb one slide wide). Hidden on phones.
+   * Display only — it is not clickable.
+   *
+   * `loop`: for carousels that run over a doubled list, `index` may be
+   * `count` (the clone of the first slide). A second thumb trails one lap
+   * behind, so wrapping slides the thumb out on the right while it comes
+   * back in on the left instead of rewinding across the bar. `animate: false`
+   * matches the carousel's untransitioned snap back to the original slide.
    */
-  progress?: { index: number; count: number };
+  progress?: { index: number; count: number; loop?: boolean; animate?: boolean };
 }
 
 /**
@@ -62,6 +69,9 @@ export function CarouselControls({
   progress,
 }: CarouselControlsProps) {
   const slides = Math.max(progress?.count ?? 0, 1);
+  const position = progress?.index ?? 0;
+  // Thumb offsets in slide widths: the main one, plus one lap behind in a loop.
+  const thumbs = progress?.loop ? [position, position - slides] : [position];
 
   return (
     <div
@@ -78,17 +88,24 @@ export function CarouselControls({
           aria-label="Carousel position"
           aria-valuemin={1}
           aria-valuemax={slides}
-          aria-valuenow={progress.index + 1}
+          aria-valuenow={(position % slides) + 1}
           className="carousel-progress relative hidden h-[5px] w-[clamp(140px,42.76vw,821px)] shrink overflow-hidden rounded-full bg-stroke-main sm:block"
         >
-          <span
-            className="carousel-progress-thumb gradient-btn absolute inset-y-0 rounded-full transition-[left] duration-500 ease-out motion-reduce:transition-none"
-            style={{
-              ['--grad-angle' as string]: '-7.82deg',
-              width: `${100 / slides}%`,
-              left: `${(progress.index * 100) / slides}%`,
-            }}
-          />
+          {thumbs.map((offset, i) => (
+            <span
+              key={i}
+              className={cn(
+                'carousel-progress-thumb gradient-btn absolute inset-y-0 rounded-full',
+                progress.animate !== false &&
+                  'transition-[left] duration-500 ease-out motion-reduce:transition-none'
+              )}
+              style={{
+                ['--grad-angle' as string]: '-7.82deg',
+                width: `${100 / slides}%`,
+                left: `${(offset * 100) / slides}%`,
+              }}
+            />
+          ))}
         </div>
       )}
 

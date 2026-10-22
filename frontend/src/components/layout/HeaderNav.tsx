@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 import type { MegaMenuPanel } from '@/types/header-menu.types';
 import { AboutPanel } from './mega-menu/AboutPanel';
@@ -34,6 +34,7 @@ function MegaPanel({ panel }: { panel: MegaMenuPanel }) {
  */
 export function HeaderNav({ panels }: { panels: MegaMenuPanel[] | null }) {
   const pathname = usePathname();
+  const router = useRouter();
   // Remember the path a menu was opened on: navigating closes it without an effect.
   const [opened, setOpened] = useState<{ slug: string; path: string } | null>(null);
   const [mobile, setMobile] = useState<string | null>(null);
@@ -44,6 +45,20 @@ export function HeaderNav({ panels }: { panels: MegaMenuPanel[] | null }) {
   const openPanel = panels?.find((panel) => panel.slug === openSlug) ?? null;
 
   const close = () => setOpened(null);
+
+  /**
+   * On the home page the logo link would do nothing, so glide back to the top
+   * and refresh the server data in place — a reload without the white flash.
+   */
+  const handleLogoClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (pathname !== '/' || event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+    event.preventDefault();
+    setOpened(null);
+    setMobile(null);
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+    router.refresh();
+  };
 
   useEffect(() => {
     if (!openSlug) return;
@@ -77,7 +92,7 @@ export function HeaderNav({ panels }: { panels: MegaMenuPanel[] | null }) {
               it starts at x=489 on a 1920 canvas, 180px after the logo.
             */}
             <div className="flex h-full items-center gap-[clamp(20px,9.38vw,180px)]">
-              <Link href="/" className="shrink-0" aria-label="SPEC India — home">
+              <Link href="/" onClick={handleLogoClick} className="shrink-0" aria-label="SPEC India — home">
                 <Image
                   src="/logo.png"
                   alt="SPEC India"

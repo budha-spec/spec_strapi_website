@@ -1,12 +1,13 @@
 'use client';
 
-import { useCallback, useState } from 'react';
 import { AccentHeading } from '@/components/ui/AccentHeading';
 import { CarouselControls } from '@/components/ui/CarouselControls';
 import { CmsImage } from '@/components/ui/CmsImage';
 import { ExploreMore } from '@/components/ui/ExploreMore';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
+import { loopSlides, useLoopCarousel } from '@/hooks/useLoopCarousel';
 import { cmsText, hrefPath } from '@/lib/media';
+import { cn } from '@/lib/utils';
 import type { CaseStudiesBlock } from '@/types/sections.types';
 
 interface CaseStudiesProps {
@@ -20,16 +21,8 @@ interface CaseStudiesProps {
  */
 export function CaseStudies({ data }: CaseStudiesProps) {
   const studies = (data.caseStudy ?? []).filter((study) => study.title);
-  const [index, setIndex] = useState(0);
   const count = studies.length;
-
-  const go = useCallback(
-    (dir: -1 | 1) => {
-      if (count === 0) return;
-      setIndex((current) => (current + dir + count) % count);
-    },
-    [count]
-  );
+  const { index, animate, go, onTransitionEnd } = useLoopCarousel(count);
 
   if (count === 0) return null;
 
@@ -50,10 +43,14 @@ export function CaseStudies({ data }: CaseStudiesProps) {
         {count > 0 && (
           <div className="mt-[clamp(24px,3.65vw,70px)] overflow-hidden rounded-[16px]">
             <div
-              className="flex transition-transform duration-500 ease-out"
+              onTransitionEnd={onTransitionEnd}
+              className={cn(
+                'flex',
+                animate && 'transition-transform duration-500 ease-out motion-reduce:transition-none'
+              )}
               style={{ transform: `translate3d(-${index * 100}%, 0, 0)` }}
             >
-              {studies.map((study, slide) => {
+              {loopSlides(studies).map((study, slide) => {
                 const tags = (study.tags ?? []).filter((tag) => tag.title);
                 const href = study.url?.trim()
                   ? hrefPath(study.url.trim())
@@ -61,9 +58,10 @@ export function CaseStudies({ data }: CaseStudiesProps) {
 
                 return (
                   <article
-                    key={study.id}
-                    // Off-screen slides keep their links out of the tab order.
+                    key={`${study.id}-${slide}`}
+                    // Off-screen slides (and loop clones) keep their links out of the tab order.
                     inert={slide !== index}
+                    aria-hidden={slide >= count || undefined}
                     className="grid w-full shrink-0 bg-bg-white lg:grid-cols-[720fr_980fr]"
                   >
                     <div className="flex flex-col p-[clamp(20px,2.08vw,40px)]">

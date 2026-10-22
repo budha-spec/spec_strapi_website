@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
 import { AccentHeading } from '@/components/ui/AccentHeading';
 import { CarouselControls } from '@/components/ui/CarouselControls';
 import { CmsImage } from '@/components/ui/CmsImage';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
+import { loopSlides, useLoopCarousel } from '@/hooks/useLoopCarousel';
 import { cmsText } from '@/lib/media';
 import { cn } from '@/lib/utils';
 import type { GalleryBlock } from '@/types/sections.types';
@@ -21,11 +21,12 @@ const GAP = 'clamp(10px,0.83vw,16px)';
  */
 export function OutcomeGallery({ data }: { data: GalleryBlock }) {
   const images = (data.images ?? []).filter((image) => image.url);
-  const [index, setIndex] = useState(0);
   const count = images.length;
+  const { index, animate, go, onTransitionEnd } = useLoopCarousel(count);
   if (count === 0) return null;
 
-  const go = (dir: -1 | 1) => setIndex((current) => (current + dir + count) % count);
+  // While the track snaps back from a clone, the slides' blur must not animate either.
+  const motion = animate && 'duration-500 motion-reduce:transition-none';
 
   return (
     <section className="sp-section sp-case-study-gallery w-full bg-bg-light pt-[clamp(40px,3.65vw,70px)] pb-[clamp(20px,2.08vw,40px)]">
@@ -44,24 +45,32 @@ export function OutcomeGallery({ data }: { data: GalleryBlock }) {
         <div className="mt-[clamp(24px,2.6vw,50px)] rounded-[16px] bg-bg-white p-[clamp(12px,1.04vw,20px)] pb-[clamp(16px,1.56vw,30px)]">
           <div className="overflow-hidden rounded-[10px]">
             <ul
+              onTransitionEnd={onTransitionEnd}
               // `--slide`: the current image's share of the panel (Figma 1070 of ~1620).
-              className="outcome-gallery-track flex [--slide:86%] transition-transform md:[--slide:66%] duration-500 ease-out motion-reduce:transition-none"
+              className={cn(
+                'outcome-gallery-track flex [--slide:86%] md:[--slide:66%]',
+                animate && 'transition-transform ease-out',
+                motion
+              )}
               style={{
                 gap: GAP,
                 // Each step moves one slide (its % of the track) plus one gap.
                 transform: `translateX(calc(${index} * -1 * (var(--slide) + ${GAP})))`,
               }}
             >
-              {images.map((image, slide) => {
+              {loopSlides(images).map((image, slide) => {
                 const active = slide === index;
-                const next = slide === (index + 1) % count && count > 1;
+                // The peek is the next rendered slide — a clone after the last one.
+                const next = slide === index + 1 && count > 1;
                 return (
                   <li
-                    key={image.url}
+                    key={`${image.url}-${slide}`}
                     aria-hidden={!active}
                     onClick={next ? () => go(1) : undefined}
                     className={cn(
-                      'outcome-gallery-slide aspect-[1070/672] shrink-0 basis-(--slide) overflow-hidden rounded-[10px] bg-bg-light transition-[filter,opacity] duration-500 motion-reduce:transition-none',
+                      'outcome-gallery-slide aspect-[1070/672] shrink-0 basis-(--slide) overflow-hidden rounded-[10px] bg-bg-light',
+                      animate && 'transition-[filter,opacity]',
+                      motion,
                       !active && 'opacity-60 blur-[6px] grayscale',
                       next && 'cursor-pointer'
                     )}
@@ -84,7 +93,7 @@ export function OutcomeGallery({ data }: { data: GalleryBlock }) {
             <CarouselControls
               pill="dark"
               showExploreAll={false}
-              progress={{ index, count }}
+              progress={{ index, count, loop: true, animate }}
               onPrev={() => go(-1)}
               onNext={() => go(1)}
             />

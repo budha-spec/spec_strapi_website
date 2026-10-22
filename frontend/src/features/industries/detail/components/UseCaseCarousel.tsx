@@ -5,11 +5,15 @@ import { AccentHeading } from '@/components/ui/AccentHeading';
 import { CarouselControls } from '@/components/ui/CarouselControls';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { cmsText } from '@/lib/media';
+import { cn } from '@/lib/utils';
 import type { MetricsBlock } from '@/types/sections.types';
 
 interface UseCaseCarouselProps {
   data: MetricsBlock;
 }
+
+/** Matches the track's `duration-200` fade before it jumps between ends. */
+const WRAP_FADE_MS = 200;
 
 /**
  * "Key Use Cases" on an industry page (Figma 411:4615) — the industry's
@@ -49,13 +53,29 @@ export function UseCaseCarousel({ data }: UseCaseCarouselProps) {
     return () => observer.disconnect();
   }, [measure]);
 
+  /** True while the track fades out to jump between its ends. */
+  const [wrapping, setWrapping] = useState(false);
+
   const go = (dir: -1 | 1) => {
     const track = trackRef.current;
     const card = track?.firstElementChild as HTMLElement | null;
-    if (!track || !card) return;
+    if (!track || !card || wrapping) return;
     const stride = card.offsetWidth + parseFloat(getComputedStyle(track).columnGap || '0');
     const next = (position.index + dir + position.count) % position.count;
-    track.scrollTo({ left: next * stride, behavior: 'smooth' });
+    const wraps = next !== position.index + dir;
+
+    // Stepping within the row scrolls smoothly. Past either end the native
+    // scroll would rewind across every card, so it fades out, jumps to the
+    // other end and fades back in instead.
+    if (!wraps || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      track.scrollTo({ left: next * stride, behavior: wraps ? 'instant' : 'smooth' });
+      return;
+    }
+    setWrapping(true);
+    window.setTimeout(() => {
+      track.scrollTo({ left: next * stride, behavior: 'instant' });
+      setWrapping(false);
+    }, WRAP_FADE_MS);
   };
 
   if (items.length === 0) return null;
@@ -84,7 +104,10 @@ export function UseCaseCarousel({ data }: UseCaseCarouselProps) {
         <ul
           ref={trackRef}
           onScroll={measure}
-          className="use-case-track no-scrollbar mt-[clamp(24px,3.13vw,60px)] mr-[calc(50%-50vw)] flex snap-x snap-mandatory gap-[clamp(12px,1.46vw,28px)] overflow-x-auto pr-[calc(50vw-50%)] pb-1"
+          className={cn(
+            'use-case-track no-scrollbar mt-[clamp(24px,3.13vw,60px)] mr-[calc(50%-50vw)] flex snap-x snap-mandatory gap-[clamp(12px,1.46vw,28px)] overflow-x-auto pr-[calc(50vw-50%)] pb-1 transition-opacity duration-200 ease-out',
+            wrapping && 'opacity-0'
+          )}
         >
           {items.map((item, index) => {
             const number = cmsText(item.number) || String(index + 1).padStart(2, '0');

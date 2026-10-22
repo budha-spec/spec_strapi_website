@@ -33,15 +33,41 @@ export interface FooterRating {
   ratingImg?: CmsMedia | null;
 }
 
-/** Strapi single type `footer` — drives Let's Talk and the awards strip. */
+/** One footer link (`shared.footer-columns`). `#` means no page yet. */
+export interface FooterLink {
+  id: number;
+  title?: string | null;
+  url?: string | null;
+}
+
+/** A dark-footer link column (`shared.footer-menu-items`). */
+export interface FooterMenuColumn {
+  id: number;
+  label?: string | null;
+  menuItem?: FooterLink[] | null;
+}
+
+/** Bottom bar: DMCA badge + Privacy / Terms links (`shared.footer-privacy-section`). */
+export interface FooterPrivacy {
+  id: number;
+  image?: CmsMedia | null;
+  url?: string | null;
+  footerMenu?: FooterLink[] | null;
+}
+
+/** Strapi single type `footer` — drives Let's Talk, the awards strip and the dark link columns. */
 export interface FooterData {
   id: number;
   title?: string | null;
   subTitle?: string | null;
   followTxt?: string | null;
+  /** "Portfolio" label over the Behance / Dribbble pills; hidden when empty. */
+  portfolioTxt?: string | null;
   address?: FooterOffice[] | null;
   social?: FooterSocial[] | null;
   portfolio?: FooterPortfolio[] | null;
   certificates?: CmsMedia[] | null;
   companyRating?: FooterRating[] | null;
+  footerMenu?: FooterMenuColumn[] | null;
+  footerPrivacyMenu?: FooterPrivacy | null;
 }

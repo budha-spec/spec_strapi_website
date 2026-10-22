@@ -183,6 +183,7 @@ These were added earlier and work the same way.
 | `whitepaper-card`, `whitepaper-card-media` | One whitepaper card and its cover image |
 | `contact-social-icons` | "Follow us on" icon row in the contact hero (white icons on dark) |
 | `career-contact` | One HR phone / email link in the career banner |
+| `reset-btn` | Grey "Reset" pill beside Submit in the enquiry form |
 | `career-openings` | "Current Job Opening" card (white Explore More) |
 | `industry-tab` | One industry in the explorer list (`aria-selected="true"` when active) |
 | `use-case-track`, `use-case-card` (+ `use-case-card-title`, `use-case-card-detail`) | Key Use Cases track and card; on hover the bottom title fades out and the gradient title, divider and description rise in |
