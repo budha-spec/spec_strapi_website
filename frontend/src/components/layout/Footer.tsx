@@ -94,7 +94,7 @@ export async function Footer() {
   return (
     <footer className="sp-footer w-full">
       {/* ─── CTA: contact details + enquiry form ─────────────── */}
-      <section className="sp-footer-contact relative z-10 w-full bg-bg-light pt-[clamp(40px,3.65vw,70px)]">
+      <section className="sp-footer-contact relative z-10 w-full bg-bg-light ">
         {/* `#contact` anchors the form; pages with their own form carry it instead. */}
         <HideOnRoutes paths={ROUTES_WITH_OWN_FORM}>
           <div id="contact" className="scroll-mt-[86px]">
@@ -168,7 +168,7 @@ export async function Footer() {
             Proportional tracks keep that rhythm without overflowing the
             shell on laptops, where 1480px no longer fits.
           */}
-          <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-12 md:grid-cols-3 lg:max-w-[1480px] lg:grid-cols-[280fr_233fr_195fr_248fr_140fr] lg:gap-x-[clamp(24px,5vw,96px)]">
+          <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-12 md:grid-cols-3  lg:grid-cols-[280fr_233fr_195fr_248fr_140fr] lg:gap-x-[clamp(24px,5vw,96px)]">
             {FOOTER_COLUMNS.map((column) => (
               <nav
                 key={column.heading}
@@ -215,13 +215,13 @@ export async function Footer() {
             <div className="flex items-center justify-center gap-8 md:gap-10">
               <Link
                 href="#"
-                className="text-d18 leading-[normal] text-white hover:text-brand-green"
+                className="text-d18 leading-[normal] text-[#BBB] transition-colors hover:text-white"
               >
                 Privacy Policy
               </Link>
               <Link
                 href="#"
-                className="text-d18 leading-[normal] text-white hover:text-brand-green"
+                className="text-d18 leading-[normal] text-[#BBB] transition-colors hover:text-white "
               >
                 Terms of use
               </Link>
