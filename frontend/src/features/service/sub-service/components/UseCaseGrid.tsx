@@ -3,7 +3,7 @@ import { CmsImage } from '@/components/ui/CmsImage';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { ExploreMore } from '@/components/ui/ExploreMore';
 import { cmsText, hrefPath } from '@/lib/media';
-import type { UseCasesBlock } from '../../types/service.types';
+import type { UseCasesBlock } from '@/types/sections.types';
 
 interface UseCaseGridProps {
   data: UseCasesBlock;

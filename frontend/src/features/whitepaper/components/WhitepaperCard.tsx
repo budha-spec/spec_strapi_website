@@ -2,27 +2,28 @@ import Link from 'next/link';
 import { CmsImage } from '@/components/ui/CmsImage';
 import { ExploreMore } from '@/components/ui/ExploreMore';
 import { cmsText, hrefPath } from '@/lib/media';
-import type { Whitepaper } from '../types/whitepaper.types';
+import type { WhitepaperCardItem } from '../types/whitepaper.types';
 
 /**
  * One whitepaper (Figma): cover image flush to the card's left edge, title,
- * summary and Download Now on the right; image on top on phones. The title
- * link covers the card. Hovering anywhere on the card lights up Download
- * Now — gradient text + gradient-border arrow (`.whitepaper-card` rules at
- * the end of globals.css). The image itself does not move.
+ * summary and the CMS button (`btnText`) on the right; image on top on
+ * phones. The title link covers the card. Hovering anywhere on the card
+ * lights up the button — gradient text + gradient-border arrow
+ * (`.whitepaper-card` rules at the end of globals.css). The image itself
+ * does not move.
  */
-export function WhitepaperCard({ item }: { item: Whitepaper }) {
+export function WhitepaperCard({ item }: { item: WhitepaperCardItem }) {
   const href = hrefPath(item.url);
 
   return (
     <article className="whitepaper-card group relative grid h-full overflow-hidden rounded-[14px] bg-bg-white sm:grid-cols-[minmax(0,285fr)_minmax(0,550fr)]">
       <div className="whitepaper-card-media bg-bg-chip">
         <CmsImage
-          media={item.featuredImage}
+          media={item.image}
           fallback="cover"
-          alt={cmsText(item.featuredImage?.alternativeText) || ''}
-          width={item.featuredImage?.width ?? 600}
-          height={item.featuredImage?.height ?? 600}
+          alt={cmsText(item.image?.alternativeText) || ''}
+          width={item.image?.width ?? 600}
+          height={item.image?.height ?? 600}
           className="aspect-[16/10] size-full object-cover sm:aspect-auto sm:min-h-[clamp(240px,19.27vw,370px)]"
         />
       </div>
@@ -45,7 +46,7 @@ export function WhitepaperCard({ item }: { item: Whitepaper }) {
 
         <ExploreMore
           href={href}
-          label="Download Now"
+          label={cmsText(item.btnText) || undefined}
           className="relative z-10 mt-auto self-start pt-[clamp(16px,1.56vw,30px)]"
         />
       </div>

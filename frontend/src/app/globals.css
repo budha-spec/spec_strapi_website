@@ -187,6 +187,8 @@
    */
   .mega-link:is(:hover, :focus-visible, [aria-current='page'], [data-active='true'])
     .mega-link-label,
+  /* Dark footer links take the same ramp (Footer.tsx). */
+  .footer-link:is(:hover, :focus-visible) .footer-link-label,
   .mega-heading-white:is(:hover, :focus-visible) .mega-heading-label {
     /* Figma's menu ramp at its steep angle: mostly green, teal at the end. */
     background-image: linear-gradient(
@@ -260,7 +262,12 @@
     display: inline-flex;
     transition: transform 0.35s ease;
   }
-  .carousel-arrow:hover {
+  /*
+   * :active too, so a tap shows the gradient the moment the finger lands —
+   * touch browsers only apply :hover after the tap ends — and keyboard
+   * focus gets the same state.
+   */
+  .carousel-arrow:is(:hover, :active, :focus-visible) {
     color: #ffffff;
     /* The gradient fill takes over the edge, so the grey ring steps aside. */
     border-color: transparent;
@@ -269,11 +276,27 @@
   .carousel-arrow:hover::before {
     opacity: 1;
   }
-  .carousel-arrow-prev:hover .carousel-arrow-icon {
+  .carousel-arrow-prev:is(:hover, :active, :focus-visible) .carousel-arrow-icon {
     transform: translateX(-5px);
   }
-  .carousel-arrow-next:hover .carousel-arrow-icon {
+  .carousel-arrow-next:is(:hover, :active, :focus-visible) .carousel-arrow-icon {
     transform: translateX(5px);
+  }
+  /* Press: a small sink so the tap registers even before the slide moves. */
+  .carousel-arrow {
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      color 0.35s ease,
+      border-color 0.35s ease,
+      scale 0.15s ease;
+  }
+  .carousel-arrow:active {
+    scale: 0.94;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-arrow:active {
+      scale: none;
+    }
   }
 
   /*

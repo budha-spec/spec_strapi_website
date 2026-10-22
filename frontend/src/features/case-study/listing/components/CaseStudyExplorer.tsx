@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { CarouselControls } from '@/components/ui/CarouselControls';
+import { loopSlides, useLoopCarousel } from '@/hooks/useLoopCarousel';
 import { cmsText } from '@/lib/media';
 import { cn } from '@/lib/utils';
 import type {
@@ -83,7 +84,6 @@ export function CaseStudyExplorer({
 }: CaseStudyExplorerProps) {
   const [service, setService] = useState(ALL);
   const [industry, setIndustry] = useState(ALL);
-  const [index, setIndex] = useState(0);
 
   const visible = useMemo(
     () =>
@@ -94,13 +94,12 @@ export function CaseStudyExplorer({
     [studies, service, industry]
   );
   const count = visible.length;
-  const current = Math.min(index, Math.max(count - 1, 0));
+  const { index, animate, go, onTransitionEnd, reset } = useLoopCarousel(count);
 
   const pick = (setter: (slug: string) => void) => (slug: string) => {
     setter(slug);
-    setIndex(0);
+    reset();
   };
-  const go = (dir: -1 | 1) => setIndex((i) => (i + dir + count) % count);
 
   return (
     <>
@@ -123,7 +122,7 @@ export function CaseStudyExplorer({
             onClick={() => {
               setService(ALL);
               setIndustry(ALL);
-              setIndex(0);
+              reset();
             }}
             className="gradient-btn mt-5 inline-flex h-[clamp(36px,2.19vw,42px)] cursor-pointer items-center rounded-full px-6 text-d16 text-white"
           >
@@ -144,19 +143,24 @@ export function CaseStudyExplorer({
           */}
           <div className="shell [clip-path:inset(0_-100vw_0_0)]">
             <ul
-              className="case-study-track flex transition-transform duration-500 ease-out motion-reduce:transition-none"
+              onTransitionEnd={onTransitionEnd}
+              className={cn(
+                'case-study-track flex',
+                animate && 'transition-transform duration-500 ease-out motion-reduce:transition-none'
+              )}
               style={{
-                transform: `translate3d(calc(${-current} * (var(--cs-card) + var(--cs-gap))), 0, 0)`,
+                transform: `translate3d(calc(${-index} * (var(--cs-card) + var(--cs-gap))), 0, 0)`,
               }}
             >
-              {visible.map((study, i) => (
+              {loopSlides(visible).map((study, i) => (
                 <li
-                  key={study.id}
+                  key={`${study.id}-${i}`}
                   aria-roledescription="slide"
-                  aria-label={`${i + 1} of ${count}`}
+                  aria-label={`${(i % count) + 1} of ${count}`}
+                  aria-hidden={i >= count || undefined}
                   className="shrink-0"
                 >
-                  <CaseStudyCard study={study} inert={i !== current} />
+                  <CaseStudyCard study={study} inert={i !== index} />
                 </li>
               ))}
             </ul>
@@ -166,9 +170,11 @@ export function CaseStudyExplorer({
             <CarouselControls
               pill="dark"
               showArrows={count > 1}
+              // This page already is the full list — Explore All would loop back to it.
+              showExploreAll={false}
               onPrev={() => go(-1)}
               onNext={() => go(1)}
-              progress={{ index: current, count }}
+              progress={{ index, count, loop: true, animate }}
             />
           </div>
         </div>

@@ -3,11 +3,27 @@
  * Posts come from the live WordPress feed on spec-india.com, not from Strapi.
  */
 
-import { wordpressGet } from '@/lib/api/wordpress';
+import { WORDPRESS_URL, wordpressGet } from '@/lib/api/wordpress';
 import { BLOG_LIMIT, REVALIDATE, WP_ENDPOINTS } from '@/lib/api/endpoints';
 import { decodeEntities } from '@/lib/media';
 import type { BlogCardData } from '@/components/sections/BlogSection';
 import type { WpBlogsResponse } from '@/types/blog.types';
+
+/**
+ * WordPress gives absolute permalinks on the live site
+ * (`https://www.spec-india.com/blog/<slug>`). Cards link to the same path on
+ * this site instead, so visitors stay here — until our blog route exists
+ * that path shows the 404 page, never the live website.
+ */
+function toLocalPath(url?: string | null): string {
+  if (!url) return '#';
+  try {
+    const { pathname, search, hash } = new URL(url, WORDPRESS_URL);
+    return `${pathname}${search}${hash}`;
+  } catch {
+    return '#';
+  }
+}
 
 /** Maps one WordPress post onto the card shape the carousel renders. */
 function toCard(post: WpBlogsResponse['blogs'][number]): BlogCardData {
@@ -16,7 +32,7 @@ function toCard(post: WpBlogsResponse['blogs'][number]): BlogCardData {
   return {
     id: post.id,
     title: decodeEntities(post.title),
-    href: post.url,
+    href: toLocalPath(post.url),
     // The design shows image, category, and title only — the WordPress
     // excerpt is deliberately left out so the cards keep their height.
     excerpt: null,

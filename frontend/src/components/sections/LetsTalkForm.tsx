@@ -30,8 +30,12 @@ function initialValues(countries: Country[]): ContactFormValues {
   };
 }
 
-/** hCaptcha's normal widget is 303px wide — too wide for the card below this. */
-const COMPACT_CAPTCHA_QUERY = '(max-width: 419px)';
+/**
+ * hCaptcha's normal widget is a fixed 303×78 iframe. Where the card is
+ * narrower it is scaled down rather than swapped for the tall compact one.
+ */
+const CAPTCHA_WIDTH = 303;
+const CAPTCHA_HEIGHT = 78;
 
 const fieldBase =
   'w-full rounded-[10px] border bg-transparent px-[clamp(12px,0.94vw,18px)] text-d14 text-text-primary outline-none transition-colors placeholder:text-text-secondary focus:border-brand-cta-blue';
@@ -71,14 +75,17 @@ export function LetsTalkForm({ countries }: LetsTalkFormProps) {
   const [captchaToken, setCaptchaToken] = useState('');
   const [errors, setErrors] = useState<ContactFieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
-  const [compactCaptcha, setCompactCaptcha] = useState(false);
+  const captchaBoxRef = useRef<HTMLDivElement>(null);
+  const [captchaScale, setCaptchaScale] = useState(1);
 
   useEffect(() => {
-    const media = window.matchMedia(COMPACT_CAPTCHA_QUERY);
-    const update = () => setCompactCaptcha(media.matches);
-    update();
-    media.addEventListener('change', update);
-    return () => media.removeEventListener('change', update);
+    const box = captchaBoxRef.current;
+    if (!box) return;
+    const observer = new ResizeObserver(([entry]) =>
+      setCaptchaScale(Math.min(1, entry.contentRect.width / CAPTCHA_WIDTH))
+    );
+    observer.observe(box);
+    return () => observer.disconnect();
   }, []);
 
   const errorId = (field: ContactField) => `${uid}-${field}-error`;
@@ -146,6 +153,14 @@ export function LetsTalkForm({ countries }: LetsTalkFormProps) {
     setCaptchaToken('');
   };
 
+  /** Back to the initial state: default country, no file, errors or captcha. */
+  const handleReset = () => {
+    setValues(initialValues(countries));
+    setErrors({});
+    removeFile();
+    resetCaptcha();
+  };
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (submitting) return;
@@ -169,9 +184,7 @@ export function LetsTalkForm({ countries }: LetsTalkFormProps) {
       toast.success(result.message || 'Your inquiry has been received.', {
         description: result.reference ? `Reference: ${result.reference}` : undefined,
       });
-      setValues(initialValues(countries));
-      setErrors({});
-      removeFile();
+      handleReset();
       return;
     }
 
@@ -357,37 +370,59 @@ export function LetsTalkForm({ countries }: LetsTalkFormProps) {
       {/*
         Captcha and submit share a row so the card keeps Figma's 615px
         height — the design leaves only 37px below the captcha, which is
-        padding, not space for a button.
+        padding, not space for a button. The buttons line up with the
+        widget's bottom edge (label and error sit outside the row); on phones
+        they drop below it.
       */}
-      <div className="flex flex-wrap items-end justify-between gap-[clamp(12px,1.04vw,20px)]">
-        <div className="min-w-0">
-          <p className="text-d12 font-medium text-text-secondary">Verify that you are human*</p>
-          <div className="mt-[clamp(8px,0.63vw,12px)]" {...a11y('captcha')}>
+      <div>
+        <p className="text-d12 font-medium text-text-secondary">Verify that you are human*</p>
+        <div className="mt-[clamp(8px,0.63vw,12px)] flex flex-col items-start gap-[clamp(12px,1.04vw,20px)] sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
+          <div
+            ref={captchaBoxRef}
+            className="relative w-full max-w-[303px] min-w-0 overflow-hidden"
+            // Dynamic: the scaled widget's height, so nothing below overlaps.
+            style={{ height: CAPTCHA_HEIGHT * captchaScale }}
+            {...a11y('captcha')}
+          >
             {HCAPTCHA_SITEKEY && (
-              <HCaptcha
-                key={compactCaptcha ? 'compact' : 'normal'}
-                ref={captchaRef}
-                sitekey={HCAPTCHA_SITEKEY}
-                size={compactCaptcha ? 'compact' : 'normal'}
-                onVerify={(token) => {
-                  setCaptchaToken(token);
-                  clearError('captcha');
-                }}
-                onExpire={() => setCaptchaToken('')}
-                onError={() => setCaptchaToken('')}
-              />
+              // Absolute so the fixed 303px iframe never sets the card's min width.
+              <div
+                className="absolute top-0 left-0 w-[303px] origin-top-left"
+                style={{ transform: captchaScale < 1 ? `scale(${captchaScale})` : undefined }}
+              >
+                <HCaptcha
+                  ref={captchaRef}
+                  sitekey={HCAPTCHA_SITEKEY}
+                  onVerify={(token) => {
+                    setCaptchaToken(token);
+                    clearError('captcha');
+                  }}
+                  onExpire={() => setCaptchaToken('')}
+                  onError={() => setCaptchaToken('')}
+                />
+              </div>
             )}
           </div>
-          <FieldError id={errorId('captcha')} message={errors.captcha} />
-        </div>
 
-        <button
-          type="submit"
-          disabled={submitting}
-          className="gradient-btn inline-flex h-[clamp(32px,1.88vw,36px)] w-fit shrink-0 cursor-pointer items-center justify-center rounded-full px-[clamp(14px,1.04vw,20px)] text-d16 text-white transition-[filter] hover:brightness-110 disabled:cursor-wait disabled:opacity-70"
-        >
-          {submitting ? 'Submitting…' : 'Submit'}
-        </button>
+          <div className="flex shrink-0 items-center gap-[clamp(8px,0.63vw,12px)]">
+            <button
+              type="button"
+              onClick={handleReset}
+              disabled={submitting}
+              className="reset-btn inline-flex h-[clamp(32px,1.88vw,36px)] w-fit cursor-pointer items-center justify-center rounded-full border border-stroke-main bg-stroke-outline px-[clamp(14px,1.04vw,20px)] text-d16 text-text-primary transition-colors hover:bg-stroke-main focus-visible:bg-stroke-main disabled:cursor-not-allowed disabled:opacity-70"
+            >
+              Reset
+            </button>
+            <button
+              type="submit"
+              disabled={submitting}
+              className="gradient-btn inline-flex h-[clamp(32px,1.88vw,36px)] w-fit cursor-pointer items-center justify-center rounded-full px-[clamp(14px,1.04vw,20px)] text-d16 text-white transition-[filter] hover:brightness-110 disabled:cursor-wait disabled:opacity-70"
+            >
+              {submitting ? 'Submitting…' : 'Submit'}
+            </button>
+          </div>
+        </div>
+        <FieldError id={errorId('captcha')} message={errors.captcha} />
       </div>
     </form>
   );
