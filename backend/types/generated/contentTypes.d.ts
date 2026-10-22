@@ -847,6 +847,7 @@ export interface ApiFooterFooter extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     portfolio: Schema.Attribute.Component<'shared.portfolio', true>;
+    portfolioTxt: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     social: Schema.Attribute.Component<'shared.social', true>;
     subTitle: Schema.Attribute.String;

@@ -32,6 +32,10 @@
       "component": "shared.social",
       "repeatable": true
     },
+    "portfolioTxt": {
+      "type": "string",
+      "required": true
+    },
     "portfolio": {
       "type": "component",
       "component": "shared.portfolio",
