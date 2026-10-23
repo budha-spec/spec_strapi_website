@@ -38,7 +38,7 @@ export function AboutPanel({ panel }: { panel: AboutPanelData }) {
                 {panel.social.title}
               </p>
               {/* Same buttons and brand-colour hover as the footer's "Follow us on". */}
-              <ul className="flex items-center gap-[clamp(10px,0.94vw,18px)]">
+              <ul className="flex items-center gap-[clamp(10px,0.94vw,18px)] header-follow-us">
                 {panel.social.links.map((link) => {
                   const network = socialNetwork({ id: link.id, url: link.href, icon: link.icon });
                   const portfolio = PORTFOLIO_NETWORKS.find((name) => link.href.includes(name));

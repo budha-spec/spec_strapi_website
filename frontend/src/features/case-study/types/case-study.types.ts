@@ -16,16 +16,34 @@ export interface CaseStudyTerm {
   slug?: string | null;
 }
 
-/** One entry from the Strapi `case-studies` collection, as the listing uses it. */
-/** The `case-study` entry of the Strapi `pages` collection — the listing hero. */
+/**
+ * `shared.case-study-section` — the listing's eyebrow + heading and the
+ * Services / Industries filter chips (CMS may include its own "All" entry).
+ */
+export interface CaseStudySectionBlock {
+  __component: 'shared.case-study-section';
+  id: number;
+  title?: string | null;
+  subTitle?: string | null;
+  services?: CaseStudyTerm[] | null;
+  industries?: CaseStudyTerm[] | null;
+}
+
+/** The `case-study` entry of the Strapi `pages` collection — the listing page. */
 export interface CaseStudyListingPage {
   id: number;
   title: string;
   slug: string;
   description?: string | null;
-  content?: Array<ContactBlock | { __component: string; id: number }> | null;
+  content?: Array<
+    | ContactBlock
+    | CaseStudySectionBlock
+    | TestimonialsBlock
+    | { __component: string; id: number }
+  > | null;
 }
 
+/** One entry from the Strapi `case-studies` collection, as the listing uses it. */
 export interface CaseStudyEntry {
   id: number;
   title: string;
@@ -37,8 +55,6 @@ export interface CaseStudyEntry {
   tags?: CaseStudyTerm[] | null;
   industries?: CaseStudyTerm[] | null;
   services?: CaseStudyTerm[] | null;
-  /** Dynamic zone; the listing reads its `shared.testimonial-section`. */
-  content?: Array<TestimonialsBlock | { __component: string; id: number }> | null;
 }
 
 /** A filter chip: `slug` is the value matched against a study's terms. */

@@ -1,19 +1,19 @@
-import type { ReactNode } from 'react';
-import { CmsImage } from '@/components/ui/CmsImage';
-import { cmsText } from '@/lib/media';
-import { cn } from '@/lib/utils';
-import { LetsTalkForm } from './LetsTalkForm';
-import type { Country } from '@/types/contact.types';
-import type { FooterData, FooterSocial } from '@/types/footer.types';
+import type { ReactNode } from "react";
+import { CmsImage } from "@/components/ui/CmsImage";
+import { cmsText } from "@/lib/media";
+import { cn } from "@/lib/utils";
+import { LetsTalkForm } from "./LetsTalkForm";
+import type { Country } from "@/types/contact.types";
+import type { FooterData, FooterSocial } from "@/types/footer.types";
 
-type Network = 'linkedin' | 'instagram' | 'pinterest' | 'facebook' | 'twitter';
+type Network = "linkedin" | "instagram" | "pinterest" | "facebook" | "twitter";
 
 export const NETWORK_LABELS: Record<Network, string> = {
-  linkedin: 'LinkedIn',
-  instagram: 'Instagram',
-  pinterest: 'Pinterest',
-  facebook: 'Facebook',
-  twitter: 'X (Twitter)',
+  linkedin: "LinkedIn",
+  instagram: "Instagram",
+  pinterest: "Pinterest",
+  facebook: "Facebook",
+  twitter: "X (Twitter)",
 };
 
 /**
@@ -22,13 +22,13 @@ export const NETWORK_LABELS: Record<Network, string> = {
  */
 export function socialNetwork(social: FooterSocial): Network | null {
   for (const source of [social.icon?.name, social.url]) {
-    const value = (source ?? '').toLowerCase();
-    if (value.includes('linkedin')) return 'linkedin';
-    if (value.includes('instagram')) return 'instagram';
-    if (value.includes('pint')) return 'pinterest';
-    if (value.includes('facebook')) return 'facebook';
-    if (value.includes('twitter') || /(^|\/\/|\.)x\.com/.test(value))
-      return 'twitter';
+    const value = (source ?? "").toLowerCase();
+    if (value.includes("linkedin")) return "linkedin";
+    if (value.includes("instagram")) return "instagram";
+    if (value.includes("pint")) return "pinterest";
+    if (value.includes("facebook")) return "facebook";
+    if (value.includes("twitter") || /(^|\/\/|\.)x\.com/.test(value))
+      return "twitter";
   }
   return null;
 }
@@ -38,8 +38,8 @@ export function socialNetwork(social: FooterSocial): Network | null {
  * resting logo; on hover the circle turns white and shows this coloured mark.
  */
 export const PORTFOLIO_HOVER_ICONS: Record<string, string> = {
-  behance: '/social/behance-hover.png',
-  dribbble: '/social/dribbble-hover.png',
+  behance: "/social/behance-hover.png",
+  dribbble: "/social/dribbble-hover.png",
 };
 
 /**
@@ -49,7 +49,7 @@ export const PORTFOLIO_HOVER_ICONS: Record<string, string> = {
  * Complex, …" while "350 Grove Street, …" stays regular.
  */
 export function renderAddress(text: string): ReactNode[] {
-  if (!text.includes('**')) {
+  if (!text.includes("**")) {
     const match = text.match(/^([^,\d][^,]*,)([\s\S]*)$/);
     if (match) {
       return [
@@ -62,13 +62,13 @@ export function renderAddress(text: string): ReactNode[] {
     return [text];
   }
   return text.split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
-    part.startsWith('**') && part.endsWith('**') ? (
+    part.startsWith("**") && part.endsWith("**") ? (
       <strong key={i} className="font-bold">
         {part.slice(2, -2)}
       </strong>
     ) : (
       part
-    )
+    ),
   );
 }
 
@@ -98,11 +98,14 @@ export const MailIcon = () => (
 
 /** Figma places the two office columns 287px apart (256px + 31px gap). */
 const OFFICE_GRID =
-  'grid gap-[clamp(16px,1.5vw,28px)] sm:grid-cols-[repeat(2,minmax(0,clamp(200px,13.33vw,256px)))] sm:gap-x-[clamp(20px,1.61vw,31px)]';
+  "grid gap-[clamp(24px,2.08vw,40px)] sm:grid-cols-[repeat(2,minmax(0,clamp(200px,13.33vw,256px)))] sm:gap-x-[clamp(20px,1.61vw,31px)] sm:gap-y-[clamp(20px,2.08vw,40px)]";
+
+/** "Follow us on" / "Portfolio" labels over the bottom row. */
+const FOOTER_LABEL = "text-d18 font-medium leading-[1.3] text-text-secondary";
 
 /** Figma heading size 23.77px (Poppins) for "Let's Talk to" and the form title. */
 export const CARD_HEADING =
-  'font-display text-[clamp(1.125rem,1.238vw,1.4854rem)] font-medium leading-[1.3] text-text-primary';
+  "font-display text-[clamp(1.125rem,1.238vw,1.4854rem)] font-medium leading-[1.3] text-text-primary";
 
 interface EnquiryCardProps {
   countries: Country[];
@@ -114,7 +117,7 @@ export function EnquiryCard({ countries, className }: EnquiryCardProps) {
   return (
     <div
       className={cn(
-        'rounded-[16px] bg-bg-white px-[clamp(20px,2.08vw,40px)] pt-[clamp(20px,1.56vw,30px)] pb-[clamp(20px,1.93vw,37px)]',
+        "rounded-[16px] bg-bg-white px-[clamp(20px,2.08vw,40px)] pt-[clamp(20px,1.56vw,30px)] pb-[clamp(20px,1.93vw,37px)]",
         className,
       )}
     >
@@ -155,7 +158,7 @@ export function LetsTalk({ data, countries, className }: LetsTalkProps) {
   return (
     <div
       className={cn(
-        'sp-section sp-lets-talk shell grid gap-[clamp(16px,1.67vw,32px)] lg:grid-cols-[980fr_688fr]',
+        "sp-section sp-lets-talk shell grid gap-[clamp(16px,1.67vw,32px)] lg:grid-cols-[980fr_688fr]",
         className,
       )}
     >
@@ -170,16 +173,34 @@ export function LetsTalk({ data, countries, className }: LetsTalkProps) {
           )}
 
           {offices.length > 0 && (
-            <>
-              <div className={cn(OFFICE_GRID, 'mt-[clamp(20px,2.08vw,40px)]')}>
-                {offices.map((office) => (
-                  <div
-                    key={office.id}
-                    className="flex flex-col gap-[clamp(8px,0.94vw,18px)]"
-                  >
+            /*
+              Figma: country + address first, phone and email below. Each
+              office spans two subgrid rows so the phone rows line up across
+              columns on desktop, while on phones each office stays together.
+            */
+            <div className={cn(OFFICE_GRID, "mt-[clamp(20px,2.08vw,40px)]")}>
+              {offices.map((office) => (
+                <div
+                  key={office.id}
+                  className="grid gap-[clamp(20px,2.08vw,40px)] sm:row-span-2 sm:grid-rows-subgrid"
+                >
+                  <div>
+                    {office.country && (
+                      <p className="gradient-text w-fit text-d26 font-semibold leading-[1.3]">
+                        {cmsText(office.country)}
+                      </p>
+                    )}
+                    {office.address && (
+                      <address className="mt-[clamp(8px,0.83vw,16px)] max-w-[clamp(200px,13.44vw,258px)] whitespace-pre-line text-d18 font-normal leading-[1.22] text-text-secondary not-italic">
+                        {renderAddress(cmsText(office.address))}
+                      </address>
+                    )}
+                  </div>
+
+                  <div className="flex flex-col gap-[clamp(8px,0.94vw,18px)]">
                     {office.phone && (
                       <a
-                        href={`tel:${office.phone.replace(/[^+\d]/g, '')}`}
+                        href={`tel:${office.phone.replace(/[^+\d]/g, "")}`}
                         className="contact-link flex w-fit items-center gap-2 text-d16"
                       >
                         <PhoneIcon />
@@ -196,36 +217,23 @@ export function LetsTalk({ data, countries, className }: LetsTalkProps) {
                       </a>
                     )}
                   </div>
-                ))}
-              </div>
-
-              <div className={cn(OFFICE_GRID, 'mt-[clamp(20px,2.08vw,40px)]')}>
-                {offices.map((office) => (
-                  <div key={office.id}>
-                    {office.country && (
-                      <p
-                        className="gradient-text w-fit text-d26 font-semibold leading-[1.3]"
-                      >
-                        {cmsText(office.country)}
-                      </p>
-                    )}
-                    {office.address && (
-                      <address className="mt-[clamp(8px,0.83vw,16px)] max-w-[clamp(200px,13.44vw,258px)] whitespace-pre-line text-d18 font-normal leading-[1.22] text-text-secondary not-italic">
-                        {renderAddress(cmsText(office.address))}
-                      </address>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </>
+                </div>
+              ))}
+            </div>
           )}
 
+          {/* Figma 513:8422: "Follow us on" under India, "Portfolio" under USA. */}
           {(socials.length > 0 || portfolios.length > 0) && (
-            <div className="mt-auto flex flex-wrap items-end justify-between gap-6 pt-[clamp(24px,2.08vw,40px)]">
+            <div
+              className={cn(
+                OFFICE_GRID,
+                "mt-auto items-end pt-[clamp(24px,2.08vw,40px)]",
+              )}
+            >
               {socials.length > 0 && (
                 <div className="flex flex-col gap-[clamp(10px,0.89vw,17px)]">
                   {data.followTxt && (
-                    <span className="text-d18 font-medium leading-[1.3] text-text-secondary">
+                    <span className={FOOTER_LABEL}>
                       {cmsText(data.followTxt)}
                     </span>
                   )}
@@ -235,14 +243,14 @@ export function LetsTalk({ data, countries, className }: LetsTalkProps) {
                       return (
                         <li key={social.id}>
                           <a
-                            href={social.url ?? '#'}
+                            href={social.url ?? "#"}
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={
                               network
                                 ? NETWORK_LABELS[network]
                                 : cmsText(social.icon?.alternativeText) ||
-                                  'Social profile'
+                                  "Social profile"
                             }
                             data-network={network ?? undefined}
                             className="social-btn flex size-[clamp(30px,1.93vw,37px)] items-center justify-center overflow-hidden rounded-[8px] transition-colors"
@@ -265,53 +273,61 @@ export function LetsTalk({ data, countries, className }: LetsTalkProps) {
               )}
 
               {portfolios.length > 0 && (
-                <div className="flex items-center gap-[clamp(8px,0.78vw,15px)]">
-                  {portfolios.map((item) => {
-                    const hoverIcon =
-                      PORTFOLIO_HOVER_ICONS[
-                        (item.title ?? '').trim().toLowerCase()
-                      ];
-                    return (
-                      <a
-                        key={item.id}
-                        href={item.url ?? '#'}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="behance-pill group flex h-[clamp(38px,2.4vw,46px)] items-center gap-2 rounded-full border border-stroke-grey p-[clamp(4px,0.26vw,5px)] pr-[clamp(10px,0.83vw,16px)] text-text-primary transition-colors"
-                      >
-                        <span className="behance-pill-icon relative flex aspect-square h-full items-center justify-center overflow-hidden rounded-full">
-                          {/* The Strapi logo is the whole coloured circle. */}
-                          <CmsImage
-                            media={item.logo}
-                            fallback="logo"
-                            alt=""
-                            width={36}
-                            height={36}
-                            className={cn(
-                              'size-full object-contain',
-                              hoverIcon &&
-                                'transition-opacity duration-300 group-hover:opacity-0 group-focus-visible:opacity-0',
+                <div className="flex flex-col gap-[clamp(10px,0.89vw,17px)] sm:col-start-2">
+                  {data.portfolioTxt && (
+                    <span className={FOOTER_LABEL}>
+                      {cmsText(data.portfolioTxt)}
+                    </span>
+                  )}
+                  {/* One line from sm up: the pair may run past the narrow column into the card's free space. */}
+                  <div className="flex flex-wrap items-center gap-[clamp(8px,0.78vw,15px)] sm:w-max sm:flex-nowrap">
+                    {portfolios.map((item) => {
+                      const hoverIcon =
+                        PORTFOLIO_HOVER_ICONS[
+                          (item.title ?? "").trim().toLowerCase()
+                        ];
+                      return (
+                        <a
+                          key={item.id}
+                          href={item.url ?? "#"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="behance-pill group flex h-[clamp(38px,2.4vw,46px)] items-center gap-2 rounded-full border border-stroke-grey p-[clamp(4px,0.26vw,5px)] pr-[clamp(10px,0.83vw,16px)] text-text-primary transition-colors"
+                        >
+                          <span className="behance-pill-icon relative flex aspect-square h-full items-center justify-center overflow-hidden rounded-full">
+                            {/* The Strapi logo is the whole coloured circle. */}
+                            <CmsImage
+                              media={item.logo}
+                              fallback="logo"
+                              alt=""
+                              width={36}
+                              height={36}
+                              className={cn(
+                                "size-full object-contain",
+                                hoverIcon &&
+                                  "transition-opacity duration-300 group-hover:opacity-0 group-focus-visible:opacity-0",
+                              )}
+                            />
+                            {hoverIcon && (
+                              <span className="absolute inset-0 flex items-center justify-center rounded-full bg-bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img
+                                  src={hoverIcon}
+                                  alt=""
+                                  width={18}
+                                  height={18}
+                                  className="size-[18px] object-contain"
+                                />
+                              </span>
                             )}
-                          />
-                          {hoverIcon && (
-                            <span className="absolute inset-0 flex items-center justify-center rounded-full bg-bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
-                              {/* eslint-disable-next-line @next/next/no-img-element */}
-                              <img
-                                src={hoverIcon}
-                                alt=""
-                                width={18}
-                                height={18}
-                                className="size-[18px] object-contain"
-                              />
-                            </span>
-                          )}
-                        </span>
-                        <span className="text-d16 transition-colors duration-300 group-hover:text-white group-focus-visible:text-white">
-                          {cmsText(item.title)}
-                        </span>
-                      </a>
-                    );
-                  })}
+                          </span>
+                          <span className="text-d16 transition-colors duration-300 group-hover:text-white group-focus-visible:text-white">
+                            {cmsText(item.title)}
+                          </span>
+                        </a>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
             </div>

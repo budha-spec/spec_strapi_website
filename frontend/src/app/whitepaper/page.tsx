@@ -7,7 +7,7 @@ import {
   WhitepaperCard,
   fetchWhitepaperPage,
   findWhitepaperContact,
-  findWhitepapersBlock,
+  findWhitepaperListing,
 } from '@/features/whitepaper';
 import { cmsText } from '@/lib/media';
 
@@ -26,9 +26,9 @@ export default async function WhitepaperListingPage() {
   if (!page) notFound();
 
   const blocks = page.content ?? [];
-  const listing = findWhitepapersBlock(blocks);
+  const listing = findWhitepaperListing(blocks);
   const contact = findWhitepaperContact(blocks);
-  const items = (listing?.whitepapers ?? []).filter((item) => item.title);
+  const items = listing?.items ?? [];
 
   return (
     <main className="sp-page sp-page-whitepaper flex w-full flex-col bg-bg-white">

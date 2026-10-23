@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type TransitionEvent } from 'react';
 import { AccentHeading } from '@/components/ui/AccentHeading';
 import { CarouselControls } from '@/components/ui/CarouselControls';
 import { CmsImage } from '@/components/ui/CmsImage';
@@ -15,8 +15,9 @@ interface TestimonialsProps {
   data: TestimonialsBlock;
   /**
    * `carousel` (default) slides 1 / 2 / 4 cards at a time. `grid` shows every
-   * card at once (testimonials listing) and drops the Play pill on cards
-   * without a video.
+   * card at once (testimonials listing, Figma 502:7353): written testimonials
+   * only — no Play pill; the quote opens on hover. Video testimonials live in
+   * that page's featured carousel.
    */
   layout?: 'carousel' | 'grid';
 }
@@ -38,8 +39,9 @@ export function Testimonials({
   } | null>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
 
-  // The carousel loops over a doubled list; the grid shows each card once.
-  const slides = count > 0 ? (grid ? people : [...people, ...people]) : [];
+  // The carousel loops over a doubled list; the grid shows each card once
+  // (and, on phones, is swapped for the same looping carousel).
+  const slides = count > 0 ? [...people, ...people] : [];
 
   useEffect(() => {
     const viewport = viewportRef.current;
@@ -89,7 +91,9 @@ export function Testimonials({
     [count, index]
   );
 
-  const handleTransitionEnd = () => {
+  const handleTransitionEnd = (event: TransitionEvent<HTMLDivElement>) => {
+    // Card hover transitions bubble up here too — only the track's own counts.
+    if (event.target !== event.currentTarget) return;
     if (index >= count) {
       setAnimate(false);
       setIndex(0);
@@ -98,7 +102,7 @@ export function Testimonials({
 
   const renderCard = (person: Testimonial, i: number) => {
     const quote = cmsText(person.description);
-    const embedUrl = toEmbedUrl(person.videoUrl);
+    const embedUrl = grid ? null : toEmbedUrl(person.videoUrl);
     const play = (
       <>
         <span className="spotlight-play-icon flex size-[42px] shrink-0 items-center justify-center rounded-full">
@@ -161,11 +165,7 @@ export function Testimonials({
             >
               {play}
             </button>
-          ) : grid ? null : (
-            <span className="spotlight-play flex h-12 w-[133px] items-center rounded-full p-[3px]">
-              {play}
-            </span>
-          )}
+          ) : null}
 
           {/*
             Name and quote each sit in a collapsible grid row: on hover the
@@ -219,15 +219,19 @@ export function Testimonials({
         )}
 
         {count > 0 && grid && (
-          <ul className="sp-testimonials-grid mt-[clamp(24px,3.33vw,64px)] grid gap-[clamp(16px,1.46vw,28px)] sm:grid-cols-2 lg:grid-cols-4">
-            {slides.map((person, i) => (
+          <ul className="sp-testimonials-grid mt-[clamp(24px,3.33vw,64px)] hidden gap-[clamp(16px,1.46vw,28px)] sm:grid sm:grid-cols-2 lg:grid-cols-4">
+            {people.map((person, i) => (
               <li key={person.id}>{renderCard(person, i)}</li>
             ))}
           </ul>
         )}
 
-        {count > 0 && !grid && (
-          <div ref={viewportRef} className="mt-[clamp(24px,3.33vw,64px)] overflow-hidden">
+        {/* In grid layout the carousel is the phone view only. */}
+        {count > 0 && (
+          <div
+            ref={viewportRef}
+            className={cn('mt-[clamp(24px,3.33vw,64px)] overflow-hidden', grid && 'sm:hidden')}
+          >
             <div
               onTransitionEnd={handleTransitionEnd}
               style={{
@@ -243,10 +247,12 @@ export function Testimonials({
           </div>
         )}
 
-        {count > 1 && !grid && (
+        {count > 1 && (
           <CarouselControls
             pill="gradient"
             href={hrefPath(data.url)}
+            showExploreAll={!grid}
+            className={grid ? 'sm:hidden' : undefined}
             onPrev={() => go(-1)}
             onNext={() => go(1)}
           />

@@ -3,7 +3,7 @@
  * WordPress REST API. Never call fetch() directly in components or features.
  */
 
-const WORDPRESS_URL =
+export const WORDPRESS_URL =
   process.env.NEXT_PUBLIC_WORDPRESS_URL ?? 'https://www.spec-india.com';
 
 /**

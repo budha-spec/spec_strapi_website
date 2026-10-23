@@ -87,7 +87,7 @@ export function ServicesSection({ data }: ServicesSectionProps) {
                             <Link
                               href={page.href}
                               tabIndex={-1}
-                              className="capability-tag flex h-[clamp(30px,1.98vw,60px)] items-center rounded-full border border-stroke-main  py-[clamp(5px,0.5vw,10px)] px-[clamp(10px,0.73vw,14px)] text-d14 text-text-primary"
+                              className="capability-tag flex items-center rounded-full border border-stroke-main  py-[clamp(5px,0.2vw,5px)] px-[clamp(10px,0.73vw,14px)] text-d14 text-text-primary"
                             >
                               {page.title}
                             </Link>

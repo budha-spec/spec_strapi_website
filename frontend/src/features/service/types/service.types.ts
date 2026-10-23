@@ -8,6 +8,7 @@ import type {
   MetricsBlock,
   RichTextBlock,
   TestimonialsBlock,
+  UseCasesBlock,
 } from '@/types/sections.types';
 
 export type { ContactBlock, RichTextBlock };
@@ -52,27 +53,6 @@ export interface ServicesBlock {
   title: string;
   subTitle?: string | null;
   services?: ServiceCard[] | null;
-}
-
-/** One hand-entered use-case card (`shared.text-block`). */
-export interface UseCaseItem {
-  id: number;
-  title: string;
-  description?: string | null;
-  image?: CmsMedia | null;
-  /** Explore More target — the button is hidden without it. */
-  url?: string | null;
-  /** Explore More label; defaults to "Explore More". */
-  btnText?: string | null;
-}
-
-/** `shared.industry-case-study` — "Industry Use Cases" cards on a sub-service page. */
-export interface UseCasesBlock {
-  __component: 'shared.industry-case-study';
-  id: number;
-  title?: string | null;
-  subTitle?: string | null;
-  caseStudy?: UseCaseItem[] | null;
 }
 
 export type ServiceBlock =

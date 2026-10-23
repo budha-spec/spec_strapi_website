@@ -6,7 +6,9 @@ import { CarouselControls } from '@/components/ui/CarouselControls';
 import { CmsImage } from '@/components/ui/CmsImage';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { VideoModal } from '@/components/ui/VideoModal';
+import { loopSlides, useLoopCarousel } from '@/hooks/useLoopCarousel';
 import { cmsText } from '@/lib/media';
+import { cn } from '@/lib/utils';
 import { toEmbedUrl } from '@/lib/video';
 import type { Testimonial, TestimonialsBlock } from '@/types/sections.types';
 
@@ -84,15 +86,17 @@ function FeaturedCard({ person, onPlay }: CardProps) {
 /**
  * Light "Client Spotlight" carousel at the top of the testimonials listing:
  * one wide card with the next peeking past the shell, progress bar + arrows.
+ * It loops endlessly over a doubled list: after the last card the first one
+ * slides in, then the track snaps back to the original without animating.
  */
 export function FeaturedTestimonials({ data }: { data: TestimonialsBlock }) {
   const people = (data.testimonials ?? []).filter((person) => person.name);
   const count = people.length;
-  const [index, setIndex] = useState(0);
+  const { index, animate, go, onTransitionEnd } = useLoopCarousel(count);
   const [video, setVideo] = useState<{ src: string; title: string } | null>(null);
 
   if (count === 0) return null;
-  const go = (dir: -1 | 1) => setIndex((i) => (i + dir + count) % count);
+  const slides = loopSlides(people);
 
   return (
     <section className="sp-section sp-testimonial-feature w-full overflow-hidden bg-bg-light pt-[clamp(40px,3.13vw,60px)] pb-[clamp(48px,6.25vw,120px)]">
@@ -118,16 +122,23 @@ export function FeaturedTestimonials({ data }: { data: TestimonialsBlock }) {
             shell's right edge, the clip-path hides slides moved off left. */}
         <div className="shell [clip-path:inset(0_-100vw_0_0)]">
           <ul
-            className="testimonial-feature-track flex gap-(--tf-gap) transition-transform duration-500 ease-out [--tf-card:88%] [--tf-gap:clamp(16px,1.46vw,28px)] motion-reduce:transition-none md:[--tf-card:82%] lg:[--tf-card:74.6%]"
+            onTransitionEnd={onTransitionEnd}
+            className={cn(
+              'testimonial-feature-track flex gap-(--tf-gap) [--tf-card:88%] [--tf-gap:clamp(16px,1.46vw,28px)] md:[--tf-card:82%] lg:[--tf-card:74.6%]',
+              animate && 'transition-transform duration-500 ease-out motion-reduce:transition-none'
+            )}
             style={{
               transform: `translate3d(calc(${-index} * (var(--tf-card) + var(--tf-gap))), 0, 0)`,
             }}
           >
-            {people.map((person, i) => (
+            {slides.map((person, i) => (
               <li
-                key={person.id}
+                key={`${person.id}-${i}`}
                 aria-roledescription="slide"
-                aria-label={`${i + 1} of ${count}`}
+                aria-label={`${(i % count) + 1} of ${count}`}
+                // Loop clones stay out of the tab order and screen readers.
+                inert={i >= count || undefined}
+                aria-hidden={i >= count || undefined}
                 className="shrink-0 basis-(--tf-card)"
               >
                 {/* Not inert: the peeking card hovers and plays too (prototype). */}
@@ -146,7 +157,7 @@ export function FeaturedTestimonials({ data }: { data: TestimonialsBlock }) {
               showExploreAll={false}
               onPrev={() => go(-1)}
               onNext={() => go(1)}
-              progress={{ index, count }}
+              progress={{ index, count, loop: true, animate }}
             />
           </div>
         )}

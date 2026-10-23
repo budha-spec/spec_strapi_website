@@ -48,7 +48,7 @@ export function CapabilityTicker({
 
   return (
     <div
-      className={className}
+       className={`${className ?? ''} hero-sldier`}
       // --tick is the height of one line, matching the clipped window.
       style={{ ['--tick' as string]: 'clamp(18px, 1.25vw, 24px)' }}
     >

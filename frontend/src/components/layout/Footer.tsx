@@ -3,93 +3,54 @@ import { LetsTalk } from '@/components/sections';
 import { CmsImage } from '@/components/ui/CmsImage';
 import { fetchFooter } from '@/lib/api/footer.api';
 import { fetchCountries } from '@/lib/api/countries.api';
-import { cmsText } from '@/lib/media';
+import { cmsText, hrefPath } from '@/lib/media';
+import type { FooterLink } from '@/types/footer.types';
 import { HideOnRoutes } from './HideOnRoutes';
 
 /** Pages that carry the enquiry form themselves, so the Footer skips it. */
 const ROUTES_WITH_OWN_FORM = ['/contact-us'] as const;
 
-const FOOTER_COLUMNS: {
-  heading: string;
-  nowrap?: boolean;
-  links: string[];
-}[] = [
-  {
-    heading: 'Services',
-    links: [
-      'Custom Software Development',
-      'Enterprise software Development',
-      'Web Development',
-      'UI/UX Design',
-      'Mobile App Development',
-      'Software Testing & QA Services',
-      'Dedicated Development Team',
-    ],
-  },
-  {
-    heading: 'Hire Developers',
-    nowrap: true,
-    links: [
-      'Hire Mobile App Developers',
-      'Hire BI Developers',
-      'Hire UI/UX Designers',
-      'Hire Software Tester',
-      'Hire Frontend Developers',
-      'Hire Backend Developers',
-      'Hire Full Stack Developers',
-    ],
-  },
-  {
-    heading: 'Industries',
-    links: [
-      'Healthcare',
-      'Fitness',
-      'Fintech',
-      'Manufacturing',
-      'Retail',
-      'Media & Entertainment',
-      'Advertising',
-    ],
-  },
-  {
-    heading: 'Solutions',
-    links: [
-      'Custom ERP',
-      'Learning Management',
-      'Enterprise CRM',
-      'Enterprise Service',
-      'Help Desk Management',
-      'Spot Billing System',
-      'Warehouse Management',
-    ],
-  },
-  {
-    heading: 'Resource',
-    links: [
-      'Overview',
-      'Blog',
-      'Newsletter',
-      'Sitemap',
-      'Live Bi Examples',
-      'Career',
-      'Contact Us',
-    ],
-  },
-];
-
-/** Footer links that have a page; the rest stay `#` until theirs exist. */
-const FOOTER_LINK_HREFS: Record<string, string> = {
-  'Contact Us': '/contact-us',
-};
+const isExternal = (href: string) => /^https?:\/\//i.test(href);
 
 /**
- * Site footer on every page: Let's Talk + enquiry form and the awards /
- * review strip (Strapi `footer` single type), then the dark link columns.
+ * One dark-footer link. Takes the header menu's gradient on hover / focus
+ * (`.footer-link` in globals.css). A `#` URL has no page yet, so it renders
+ * as plain text rather than a dead link.
+ */
+function FooterLinkItem({ link }: { link: FooterLink }) {
+  // `hrefPath('#')` would give `/#`, so catch the placeholder first.
+  const placeholder = !link.url?.trim() || link.url.trim() === '#';
+  const href = hrefPath(link.url);
+  const className = 'footer-link text-d18 leading-[normal] text-text-footer outline-offset-4';
+  const label = <span className="footer-link-label">{cmsText(link.title)}</span>;
+
+  if (placeholder) return <span className={className}>{label}</span>;
+  return (
+    <Link
+      href={href}
+      className={className}
+      {...(isExternal(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+    >
+      {label}
+    </Link>
+  );
+}
+
+/**
+ * Site footer on every page, all from the Strapi `footer` single type:
+ * Let's Talk + enquiry form, the awards / review strip, the dark link
+ * columns and the DMCA / Privacy / Terms bar. Only the copyright line is
+ * static (its year is the current one).
  */
 export async function Footer() {
   const [data, countries] = await Promise.all([fetchFooter(), fetchCountries()]);
   const certificates = (data?.certificates ?? []).filter((media) => media.url);
   const ratings = (data?.companyRating ?? []).filter((item) => item.logo?.url);
+  const columns = (data?.footerMenu ?? []).filter(
+    (column) => column.label && column.menuItem?.some((link) => link.title)
+  );
+  const privacy = data?.footerPrivacyMenu;
+  const legalLinks = (privacy?.footerMenu ?? []).filter((link) => link.title);
 
   return (
     <footer className="sp-footer w-full">
@@ -162,70 +123,72 @@ export async function Footer() {
 
       {/* ─── Dark footer ─────────────────────────────────────── */}
       <section className="sp-footer-links relative z-0 w-full bg-bg-black pt-[clamp(80px,8.07vw,155px)]">
-        <div className="shell">
-          {/*
-            Figma columns are 280/233/195/248/140 with 96px gaps (1480px).
-            Proportional tracks keep that rhythm without overflowing the
-            shell on laptops, where 1480px no longer fits.
-          */}
-          <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-12 md:grid-cols-3  lg:grid-cols-[280fr_233fr_195fr_248fr_140fr] lg:gap-x-[clamp(24px,5vw,96px)]">
-            {FOOTER_COLUMNS.map((column) => (
-              <nav
-                key={column.heading}
-                aria-label={column.heading}
-                className="flex min-w-0 flex-col gap-4 sm:gap-[clamp(16px,1.56vw,30px)]"
-              >
-                <h4 className="text-d22 font-medium leading-[normal] text-white">
-                  {column.heading}
-                </h4>
-                <ul className="flex flex-col gap-3.5 sm:gap-5">
-                  {column.links.map((link) => (
-                    <li key={link}>
-                      <Link
-                        href={FOOTER_LINK_HREFS[link] ?? '#'}
-                        className={`text-d18 leading-[normal] text-[#BBB] transition-colors hover:text-white ${
-                          column.nowrap ? '2xl:whitespace-nowrap' : ''
-                        }`}
-                      >
-                        {link}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            ))}
+        {columns.length > 0 && (
+          <div className="shell">
+            {/*
+              From lg the CMS columns sit on one row, each as wide as its
+              content and spread edge to edge (Figma's 96px rhythm at 1920),
+              so any number of columns fits without fixed tracks.
+            */}
+            <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-12 md:grid-cols-3 lg:grid-flow-col lg:grid-cols-none lg:auto-cols-auto lg:justify-between lg:gap-x-[clamp(24px,5vw,96px)]">
+              {columns.map((column) => (
+                <nav
+                  key={column.id}
+                  aria-label={cmsText(column.label)}
+                  className="flex min-w-0 flex-col gap-4 sm:gap-[clamp(16px,1.56vw,30px)]"
+                >
+                  <h4 className="text-d22 font-medium leading-[normal] text-white">
+                    {cmsText(column.label)}
+                  </h4>
+                  <ul className="flex flex-col gap-3.5 sm:gap-5">
+                    {(column.menuItem ?? [])
+                      .filter((link) => link.title)
+                      .map((link) => (
+                        <li key={link.id}>
+                          <FooterLinkItem link={link} />
+                        </li>
+                      ))}
+                  </ul>
+                </nav>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="mt-[clamp(40px,3.96vw,76px)] border-t border-white/10">
           <div className="shell flex flex-col items-center gap-4 py-6 text-center md:flex-row md:justify-between md:py-[clamp(16px,1.15vw,22px)] md:text-left">
             <div className="flex flex-col items-center gap-3 md:flex-row md:gap-[30px]">
-              <img
-                src="/footer/dmca.png"
-                alt="DMCA Protected"
-                width={121}
-                height={24}
-                className="h-6 w-[121px]"
-              />
+              {privacy?.image?.url && (
+                <a
+                  href={hrefPath(privacy.url)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0"
+                >
+                  <CmsImage
+                    media={privacy.image}
+                    fallback="logo"
+                    alt={cmsText(privacy.image.alternativeText) || 'DMCA.com Protection Status'}
+                    width={privacy.image.width ?? 121}
+                    height={privacy.image.height ?? 24}
+                    className="h-6 w-auto"
+                  />
+                </a>
+              )}
               <p className="text-d18 leading-[normal] text-white">
-                &copy; 2024 SPEC INDIA. All Rights Reserved.
+                &copy; {new Date().getFullYear()} SPEC INDIA. All Rights Reserved.
               </p>
             </div>
 
-            <div className="flex items-center justify-center gap-8 md:gap-10">
-              <Link
-                href="#"
-                className="text-d18 leading-[normal] text-[#BBB] transition-colors hover:text-white"
-              >
-                Privacy Policy
-              </Link>
-              <Link
-                href="#"
-                className="text-d18 leading-[normal] text-[#BBB] transition-colors hover:text-white "
-              >
-                Terms of use
-              </Link>
-            </div>
+            {legalLinks.length > 0 && (
+              <ul className="flex items-center justify-center gap-8 md:gap-10">
+                {legalLinks.map((link) => (
+                  <li key={link.id}>
+                    <FooterLinkItem link={link} />
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       </section>

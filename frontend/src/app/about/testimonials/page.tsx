@@ -28,8 +28,9 @@ const isTestimonials = (block: TestimonialsPageBlock): block is TestimonialsBloc
 
 /**
  * Renders the page's dynamic zone in Strapi order. The first "Client
- * Spotlight" block is the light featured carousel; any later one is the dark
- * video grid. `shared.contact-us` only feeds the hero button.
+ * Spotlight" block is the light featured carousel (video testimonials); any
+ * later one is the dark grid of written testimonials (no Play, quote on
+ * hover). `shared.contact-us` only feeds the hero button.
  */
 function renderBlocks(blocks: TestimonialsPageBlock[]) {
   let spotlightSeen = false;

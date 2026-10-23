@@ -59,19 +59,20 @@ const SERVICE_DETAIL_POPULATE = [
 ].join('&');
 
 /**
- * Case-study listing: every study with what a card and the filters need —
- * image, tags, industries, services — plus the "Client Spotlight" block from
- * its `content`, which supplies the listing's heading and testimonials.
+ * Case-study listing cards: only what a card and the filters need — image,
+ * tags, and the industry / service slugs matched against the filter chips.
+ * The heading, chips and testimonials come from the `case-study` page entry.
  */
 const CASE_STUDY_LIST_QUERY = [
+  'fields[0]=title',
+  'fields[1]=slug',
+  'fields[2]=description',
+  'fields[3]=url',
   'populate[featuredImage]=true',
   'populate[tags][fields][0]=title',
   'populate[tags][fields][1]=slug',
-  'populate[industries][fields][0]=title',
-  'populate[industries][fields][1]=slug',
-  'populate[services][fields][0]=title',
-  'populate[services][fields][1]=slug',
-  'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
+  'populate[industries][fields][0]=slug',
+  'populate[services][fields][0]=slug',
   'sort[0]=publishedAt:desc',
   'pagination[pageSize]=100',
 ].join('&');
@@ -141,12 +142,15 @@ const TESTIMONIALS_POPULATE = [
 ].join('&');
 
 /**
- * Whitepaper listing page: hero CTA and the whitepaper cards. The
- * `whitepapers` relation needs the Public role's `find` on Whitepaper —
- * without it Strapi silently drops the relation.
+ * Whitepaper listing page: hero CTA and the whitepaper cards. The cards now
+ * come from `shared.industry-case-study` (each with its image and button
+ * text); `shared.whitepapers` is the older relation block, still read as a
+ * fallback — it needs the Public role's `find` on Whitepaper, or Strapi
+ * silently drops the relation.
  */
 const WHITEPAPER_POPULATE = [
   'populate[content][on][shared.contact-us][populate]=*',
+  'populate[content][on][shared.industry-case-study][populate][caseStudy][populate]=*',
   'populate[content][on][shared.whitepapers][populate][whitepapers][populate]=*',
 ].join('&');
 
@@ -258,15 +262,22 @@ export const ENDPOINTS = {
     `/services?filters[slug]=${encodeURIComponent(slug)}&${SERVICE_POPULATE}`,
   /** All published case studies for the `/case-study` listing. */
   CASE_STUDIES: `/case-studies?${CASE_STUDY_LIST_QUERY}`,
-  /** `/case-study` listing hero (Strapi page slug `case-study`). */
-  CASE_STUDY_PAGE:
-    '/pages?filters[slug][$eq]=case-study&populate[content][on][shared.contact-us][populate]=*',
+  /**
+   * `/case-study` listing page (Strapi page slug `case-study`): hero CTA, the
+   * section heading + filter chips, and the "Client Spotlight" testimonials.
+   */
+  CASE_STUDY_PAGE: [
+    '/pages?filters[slug][$eq]=case-study',
+    'populate[content][on][shared.contact-us][populate]=*',
+    'populate[content][on][shared.case-study-section][populate][services][fields][0]=title',
+    'populate[content][on][shared.case-study-section][populate][services][fields][1]=slug',
+    'populate[content][on][shared.case-study-section][populate][industries][fields][0]=title',
+    'populate[content][on][shared.case-study-section][populate][industries][fields][1]=slug',
+    'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
+  ].join('&'),
   /** One case study, matched by slug, e.g. `ai-based-chatbot-application-for-hospital`. */
   CASE_STUDY_BY_SLUG: (slug: string) =>
     `/case-studies?filters[slug][$eq]=${encodeURIComponent(slug)}&${CASE_STUDY_DETAIL_POPULATE}`,
-  /** Case-study industries — the listing's "Industries" filter chips. */
-  CASE_STUDY_INDUSTRIES:
-    '/cs-industries?fields[0]=title&fields[1]=slug&pagination[pageSize]=100',
   /** `/live-bi-visualization` listing page (Strapi page slug `live-bi-visualization`). */
   LIVE_BI_PAGE: `/pages?filters[slug][$eq]=live-bi-visualization&${LIVE_BI_POPULATE}`,
   /** `/about/testimonials` listing page (Strapi page slug `testimonials`). */
