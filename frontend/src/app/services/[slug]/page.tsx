@@ -10,6 +10,7 @@ import {
 } from '@/features/service';
 import { fetchLatestBlogs } from '@/lib/api/blogs.api';
 import { cmsText } from '@/lib/media';
+import type { BlogsBlock } from '@/types/sections.types';
 
 interface ServiceDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -58,13 +59,17 @@ export default async function ServiceDetailPage({
   const contact = findContactBlock(blocks);
   // AI/ML is a detail page; AI Development (its child) is a sub-service.
   const template = serviceTemplate(service);
-  // Sub-services end with Insights from their own WordPress category. Strapi's
-  // `blog_category.slug` is that category; the URL slug is only a fallback
-  // (it rarely matches one, and then the section simply hides).
-  const posts =
-    template === 'sub-service'
-      ? await fetchLatestBlogs(service.blog_category?.slug || slug)
-      : [];
+  // The `shared.blogs` block gives the Insights heading; the posts come from
+  // the service's WordPress category. Strapi's `blog_category.slug` is that
+  // category; the URL slug is only a fallback (it rarely matches one, and
+  // then the section simply hides). Sub-services always end with Insights.
+  const blogBlock = blocks.find(
+    (block): block is BlogsBlock => block.__component === 'shared.blogs'
+  );
+  const showBlogs = template === 'sub-service' || Boolean(blogBlock);
+  const posts = showBlogs
+    ? await fetchLatestBlogs(service.blog_category?.slug || slug)
+    : [];
 
   return (
     <main className={`sp-page sp-page-service-${template} flex w-full flex-col bg-bg-white`}>
@@ -76,7 +81,13 @@ export default async function ServiceDetailPage({
         ctaHref={contact?.url}
       />
       <ServiceBlocks blocks={blocks} template={template} />
-      {template === 'sub-service' && <BlogSection posts={posts} />}
+      {showBlogs && (
+        <BlogSection
+          title={blogBlock?.title}
+          subTitle={blogBlock?.subTitle}
+          posts={posts}
+        />
+      )}
     </main>
   );
 }

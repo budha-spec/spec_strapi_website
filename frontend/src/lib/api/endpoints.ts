@@ -56,6 +56,9 @@ const SERVICE_DETAIL_POPULATE = [
   'populate[content][on][shared.industry-case-study][populate][caseStudy][populate]=*',
   'populate[content][on][shared.gallery][populate][images][populate]=*',
   'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
+  // "Latest Insights" heading only; the posts come from WordPress by `blog_category`.
+  'populate[content][on][shared.blogs][fields][0]=title',
+  'populate[content][on][shared.blogs][fields][1]=subTitle',
 ].join('&');
 
 /**
