@@ -22,7 +22,7 @@ const GAP = 'clamp(10px,0.83vw,16px)';
 export function OutcomeGallery({ data }: { data: GalleryBlock }) {
   const images = (data.images ?? []).filter((image) => image.url);
   const count = images.length;
-  const { index, animate, go, onTransitionEnd } = useLoopCarousel(count);
+  const { index, animate, go, onTransitionEnd, swipe } = useLoopCarousel(count);
   if (count === 0) return null;
 
   // While the track snaps back from a clone, the slides' blur must not animate either.
@@ -43,7 +43,7 @@ export function OutcomeGallery({ data }: { data: GalleryBlock }) {
         )}
 
         <div className="mt-[clamp(24px,2.6vw,50px)] rounded-[16px] bg-bg-white p-[clamp(12px,1.04vw,20px)] pb-[clamp(16px,1.56vw,30px)]">
-          <div className="overflow-hidden rounded-[10px]">
+          <div {...swipe} className="overflow-hidden rounded-[10px] touch-pan-y touch-pinch-zoom">
             <ul
               onTransitionEnd={onTransitionEnd}
               // `--slide`: the current image's share of the panel (Figma 1070 of ~1620).
@@ -55,10 +55,10 @@ export function OutcomeGallery({ data }: { data: GalleryBlock }) {
               style={{
                 gap: GAP,
                 // Each step moves one slide (its % of the track) plus one gap.
-                transform: `translateX(calc(${index} * -1 * (var(--slide) + ${GAP})))`,
+                transform: `translateX(calc(${index} * -1 * (var(--slide) + ${GAP}) + var(--drag, 0px)))`,
               }}
             >
-              {loopSlides(images).map((image, slide) => {
+              {loopSlides(images, 2).map((image, slide) => {
                 const active = slide === index;
                 // The peek is the next rendered slide — a clone after the last one.
                 const next = slide === index + 1 && count > 1;

@@ -126,7 +126,7 @@ Names follow the Figma section labels so designers and developers mean the same 
 |---|---|---|
 | `PageHero` (+ `PageHeroSkeleton`) | Inner-page hero: breadcrumb pill, title, intro, CTA | entry `title` / `description` + `shared.contact-us` |
 | `ClientsStrip` | "Trusted by global leaders" logo marquee | `shared.gallery` |
-| `ProvenImpact` | "Proven Impact" stats band | `shared.key-metrics-section` |
+| `ProvenImpact` | "Proven Impact" stats band with count-up figures; `tone="light"` for the grey band (About) | `shared.key-metrics-section` |
 | `CaseStudies` | "Client Success Stories" carousel | `shared.case-studies` (slides are `caseStudy` components — populate `[caseStudy][populate]=*`) |
 | `Testimonials` | "Client Spotlight" video cards — carousel, or `layout="grid"` for every card at once (testimonials listing) | `shared.testimonial-section` |
 | `ServiceIntro` | Overview band: gradient heading + rich text with More + / Less – (service "AI Built for Business Enterprise", case study "Our Business Model Overview") | `shared.rich-text` |

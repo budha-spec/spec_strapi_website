@@ -1,11 +1,12 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState, type TransitionEvent } from 'react';
+import { useState } from 'react';
 import { AccentHeading } from '@/components/ui/AccentHeading';
 import { CarouselControls } from '@/components/ui/CarouselControls';
 import { CmsImage } from '@/components/ui/CmsImage';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { VideoModal } from '@/components/ui/VideoModal';
+import { loopSlides, useLoopCarousel } from '@/hooks/useLoopCarousel';
 import { cmsText, hrefPath } from '@/lib/media';
 import { cn } from '@/lib/utils';
 import { toEmbedUrl } from '@/lib/video';
@@ -22,83 +23,20 @@ interface TestimonialsProps {
   layout?: 'carousel' | 'grid';
 }
 
-export function Testimonials({
-  data,
-  layout = 'carousel',
-}: TestimonialsProps) {
+export function Testimonials({ data, layout = 'carousel' }: TestimonialsProps) {
   const grid = layout === 'grid';
   const people = data.testimonials ?? [];
   const count = people.length;
-  const [index, setIndex] = useState(0);
-  const [animate, setAnimate] = useState(true);
-  const [step, setStep] = useState(0);
+  const { index, animate, go, onTransitionEnd, swipe } = useLoopCarousel(count);
   /** Player currently open in the lightbox, or null when it is closed. */
   const [activeVideo, setActiveVideo] = useState<{
     src: string;
     title: string;
   } | null>(null);
-  const viewportRef = useRef<HTMLDivElement>(null);
 
-  // The carousel loops over a doubled list; the grid shows each card once
-  // (and, on phones, is swapped for the same looping carousel).
-  const slides = count > 0 ? [...people, ...people] : [];
-
-  useEffect(() => {
-    const viewport = viewportRef.current;
-    const track = viewport?.querySelector<HTMLElement>('.spotlight-track');
-    if (!viewport || !track) return;
-
-    const measure = () => {
-      const n = Number.parseFloat(getComputedStyle(track).getPropertyValue('--spotlight-n')) || 4;
-      const gap = Number.parseFloat(getComputedStyle(track).gap) || 28;
-      setStep((viewport.clientWidth + gap) / n);
-    };
-
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(viewport);
-    return () => observer.disconnect();
-  }, [count, grid]);
-
-  const go = useCallback(
-    (dir: -1 | 1) => {
-      if (count === 0) return;
-      const reduce =
-        typeof window !== 'undefined' &&
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      if (reduce) {
-        setAnimate(false);
-        setIndex((current) => (current + dir + count) % count);
-        return;
-      }
-
-      if (dir === -1 && index === 0) {
-        setAnimate(false);
-        setIndex(count);
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            setAnimate(true);
-            setIndex(count - 1);
-          });
-        });
-        return;
-      }
-
-      setAnimate(true);
-      setIndex((current) => current + dir);
-    },
-    [count, index]
-  );
-
-  const handleTransitionEnd = (event: TransitionEvent<HTMLDivElement>) => {
-    // Card hover transitions bubble up here too — only the track's own counts.
-    if (event.target !== event.currentTarget) return;
-    if (index >= count) {
-      setAnimate(false);
-      setIndex(0);
-    }
-  };
+  // The carousel loops over a repeated list (up to four cards in view); the
+  // grid shows each card once (and, on phones, is swapped for the carousel).
+  const slides = loopSlides(people, 4);
 
   const renderCard = (person: Testimonial, i: number) => {
     const quote = cmsText(person.description);
@@ -111,9 +49,7 @@ export function Testimonials({
             <polygon points="6 5.5 18 12 6 18.5" />
           </svg>
         </span>
-        <span className="flex-1 text-center text-d18 font-light leading-none">
-          Play
-        </span>
+        <span className="flex-1 text-center text-d18 font-light leading-none">Play</span>
       </>
     );
 
@@ -126,8 +62,7 @@ export function Testimonials({
           quote && 'has-quote'
         )}
         style={{
-          backgroundImage:
-            'linear-gradient(-80.31deg, #56F72F 73.097%, #0C3CED 134.19%)',
+          backgroundImage: 'linear-gradient(-80.31deg, #56F72F 73.097%, #0C3CED 134.19%)',
         }}
       >
         <CmsImage
@@ -229,20 +164,21 @@ export function Testimonials({
         {/* In grid layout the carousel is the phone view only. */}
         {count > 0 && (
           <div
-            ref={viewportRef}
-            className={cn('mt-[clamp(24px,3.33vw,64px)] overflow-hidden', grid && 'sm:hidden')}
+            {...swipe}
+            className={cn('mt-[clamp(24px,3.33vw,64px)] overflow-hidden touch-pan-y touch-pinch-zoom', grid && 'sm:hidden')}
           >
             <div
-              onTransitionEnd={handleTransitionEnd}
+              onTransitionEnd={onTransitionEnd}
+              className={cn(
+                'spotlight-track will-change-transform',
+                animate &&
+                  'transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none'
+              )}
               style={{
-                transform: `translate3d(${-index * step}px, 0, 0)`,
-                transition: animate ? 'transform 500ms cubic-bezier(0.22, 1, 0.36, 1)' : 'none',
-                willChange: 'transform',
+                transform: `translate3d(calc(${-index} * (var(--spotlight-card) + var(--spotlight-gap)) + var(--drag, 0px)), 0, 0)`,
               }}
             >
-              <div className="spotlight-track">
-                {slides.map((person, i) => renderCard(person, i))}
-              </div>
+              {slides.map((person, i) => renderCard(person, i))}
             </div>
           </div>
         )}

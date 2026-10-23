@@ -29,6 +29,9 @@ export function UseCaseCarousel({ data }: UseCaseCarouselProps) {
   const items = (data.keyMetrics ?? []).filter((item) => item.name);
   const trackRef = useRef<HTMLUListElement>(null);
   const [position, setPosition] = useState({ index: 0, count: 1 });
+  // Card a smooth scroll is heading for: rapid clicks step on from there, not
+  // from wherever the scroll has got to so far.
+  const target = useRef<number | null>(null);
 
   /** Which "stop" the track is at, counting each card the user can scroll past. */
   const measure = useCallback(() => {
@@ -39,6 +42,7 @@ export function UseCaseCarousel({ data }: UseCaseCarouselProps) {
     const maxScroll = track.scrollWidth - track.clientWidth;
     const count = maxScroll > 1 ? Math.round(maxScroll / stride) + 1 : 1;
     const index = Math.min(Math.round(track.scrollLeft / stride), count - 1);
+    if (index === target.current) target.current = null;
     setPosition((prev) =>
       prev.index === index && prev.count === count ? prev : { index, count }
     );
@@ -61,16 +65,19 @@ export function UseCaseCarousel({ data }: UseCaseCarouselProps) {
     const card = track?.firstElementChild as HTMLElement | null;
     if (!track || !card || wrapping) return;
     const stride = card.offsetWidth + parseFloat(getComputedStyle(track).columnGap || '0');
-    const next = (position.index + dir + position.count) % position.count;
-    const wraps = next !== position.index + dir;
+    const from = target.current ?? position.index;
+    const next = (from + dir + position.count) % position.count;
+    const wraps = next !== from + dir;
 
     // Stepping within the row scrolls smoothly. Past either end the native
     // scroll would rewind across every card, so it fades out, jumps to the
     // other end and fades back in instead.
     if (!wraps || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      target.current = wraps ? null : next;
       track.scrollTo({ left: next * stride, behavior: wraps ? 'instant' : 'smooth' });
       return;
     }
+    target.current = null;
     setWrapping(true);
     window.setTimeout(() => {
       track.scrollTo({ left: next * stride, behavior: 'instant' });
@@ -104,6 +111,10 @@ export function UseCaseCarousel({ data }: UseCaseCarouselProps) {
         <ul
           ref={trackRef}
           onScroll={measure}
+          // A finger on the track takes over from any click in progress.
+          onPointerDown={() => {
+            target.current = null;
+          }}
           className={cn(
             'use-case-track no-scrollbar mt-[clamp(24px,3.13vw,60px)] mr-[calc(50%-50vw)] flex snap-x snap-mandatory gap-[clamp(12px,1.46vw,28px)] overflow-x-auto pr-[calc(50vw-50%)] pb-1 transition-opacity duration-200 ease-out',
             wrapping && 'opacity-0'

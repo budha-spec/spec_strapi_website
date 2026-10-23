@@ -94,7 +94,7 @@ export function CaseStudyExplorer({
     [studies, service, industry]
   );
   const count = visible.length;
-  const { index, animate, go, onTransitionEnd, reset } = useLoopCarousel(count);
+  const { index, animate, go, onTransitionEnd, reset, swipe } = useLoopCarousel(count);
 
   const pick = (setter: (slug: string) => void) => (slug: string) => {
     setter(slug);
@@ -141,7 +141,7 @@ export function CaseStudyExplorer({
             right edge of the screen, so the next card peeks; the clip-path
             hides slides that have moved off to the left.
           */}
-          <div className="shell [clip-path:inset(0_-100vw_0_0)]">
+          <div {...swipe} className="shell touch-pan-y touch-pinch-zoom [clip-path:inset(0_-100vw_0_0)]">
             <ul
               onTransitionEnd={onTransitionEnd}
               className={cn(
@@ -149,10 +149,10 @@ export function CaseStudyExplorer({
                 animate && 'transition-transform duration-500 ease-out motion-reduce:transition-none'
               )}
               style={{
-                transform: `translate3d(calc(${-index} * (var(--cs-card) + var(--cs-gap))), 0, 0)`,
+                transform: `translate3d(calc(${-index} * (var(--cs-card) + var(--cs-gap)) + var(--drag, 0px)), 0, 0)`,
               }}
             >
-              {loopSlides(visible).map((study, i) => (
+              {loopSlides(visible, 2).map((study, i) => (
                 <li
                   key={`${study.id}-${i}`}
                   aria-roledescription="slide"
