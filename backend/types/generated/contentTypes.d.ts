@@ -1051,6 +1051,7 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
         'shared.faqs',
         'shared.testimonial-section',
         'shared.industry-case-study',
+        'shared.blogs',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
