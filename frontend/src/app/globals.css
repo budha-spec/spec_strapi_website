@@ -180,6 +180,24 @@
   }
 
   /*
+   * About "Client Spotlight" leader portrait: Figma's pastel radial wash —
+   * pink at the right edge, blue through the middle, green on the left.
+   */
+  .leader-portrait {
+    background-image: radial-gradient(
+      188% 150% at 180% 45%,
+      #a9cdf7 0%,
+      #d1c5d6 19.2%,
+      #f9bdb5 38.5%,
+      #c7c1d9 53.6%,
+      #94c4fd 68.8%,
+      #98e0b7 84.4%,
+      #9bed94 92.2%,
+      #9dfb71 100%
+    );
+  }
+
+  /*
    * Header mega menu links take the menu-heading ramp on hover, keyboard
    * focus, the current page, and the Insights category being previewed.
    * The gradient sits on the label span so it spans the words, not the row.
@@ -855,12 +873,14 @@
   .blog-track {
     --blog-n: 1;
     --blog-gap: clamp(16px, 1.67vw, 32px);
+    --blog-card: calc(
+      (100% - (var(--blog-n) - 1) * var(--blog-gap)) / var(--blog-n)
+    );
     display: flex;
     gap: var(--blog-gap);
   }
   .blog-track > * {
-    flex: 0 0
-      calc((100% - (var(--blog-n) - 1) * var(--blog-gap)) / var(--blog-n));
+    flex: 0 0 var(--blog-card);
   }
   @media (min-width: 640px) {
     .blog-track {

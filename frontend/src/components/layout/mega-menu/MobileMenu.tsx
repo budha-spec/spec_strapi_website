@@ -26,7 +26,7 @@ export function MobileMenu({
   return (
     <nav
       aria-label="Mobile"
-      className="sp-mobile-menu max-h-[calc(100dvh-86px)] overflow-y-auto border-b border-white/10 bg-black/95 backdrop-blur-md lg:hidden"
+      className="sp-mobile-menu max-h-[calc(100dvh-86px)] overflow-y-auto overscroll-contain border-b border-white/10 bg-black/95 backdrop-blur-md lg:hidden"
       onClickCapture={(event) => {
         if ((event.target as HTMLElement).closest('a')) onNavigate();
       }}

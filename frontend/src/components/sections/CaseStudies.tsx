@@ -22,7 +22,7 @@ interface CaseStudiesProps {
 export function CaseStudies({ data }: CaseStudiesProps) {
   const studies = (data.caseStudy ?? []).filter((study) => study.title);
   const count = studies.length;
-  const { index, animate, go, onTransitionEnd } = useLoopCarousel(count);
+  const { index, animate, go, onTransitionEnd, swipe } = useLoopCarousel(count);
 
   if (count === 0) return null;
 
@@ -41,14 +41,17 @@ export function CaseStudies({ data }: CaseStudiesProps) {
         )}
 
         {count > 0 && (
-          <div className="mt-[clamp(24px,3.65vw,70px)] overflow-hidden rounded-[16px]">
+          <div
+            {...swipe}
+            className="mt-[clamp(24px,3.65vw,70px)] overflow-hidden rounded-[16px] touch-pan-y touch-pinch-zoom"
+          >
             <div
               onTransitionEnd={onTransitionEnd}
               className={cn(
                 'flex',
                 animate && 'transition-transform duration-500 ease-out motion-reduce:transition-none'
               )}
-              style={{ transform: `translate3d(-${index * 100}%, 0, 0)` }}
+              style={{ transform: `translate3d(calc(${-index * 100}% + var(--drag, 0px)), 0, 0)` }}
             >
               {loopSlides(studies).map((study, slide) => {
                 const tags = (study.tags ?? []).filter((tag) => tag.title);

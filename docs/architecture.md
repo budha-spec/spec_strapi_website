@@ -23,6 +23,9 @@ frontend/src/
 │   ├── layout.tsx                    ← Header + Footer + fonts on every page
 │   ├── globals.css                   ← @theme tokens + shared component classes
 │   ├── page.tsx                      ← /                 Home (Strapi page `home` + WordPress posts)
+│   ├── about/
+│   │   ├── overview/page.tsx     ← /about/overview  About Us (Strapi page `about`)
+│   │   └── testimonials/page.tsx ← /about/testimonials
 │   ├── case-study/
 │   │   ├── page.tsx              ← /case-study       Case-study listing (filters + carousel)
 │   │   └── [slug]/page.tsx       ← /case-study/:slug Case-study detail
@@ -63,6 +66,12 @@ frontend/src/
 │   │   ├── components/               ← HeroSection, ServicesSection, HomeBlocks
 │   │   ├── api/home.api.ts
 │   │   └── types/
+│   ├── about/                        ← /about/overview
+│   │   ├── api/about.api.ts          ← fetchAboutPage
+│   │   ├── types/about.types.ts
+│   │   └── components/               ← AboutBlocks (renderer), AboutOverview, GuidingPrinciples,
+│   │                                   LeaderSpotlight, TeamTestimonials (intro / Proven Impact
+│   │                                   light / logos use shared sections)
 │   ├── case-study/                   ← /case-study listing + /case-study/:slug detail
 │   │   ├── api/case-study.api.ts     ← fetchCaseStudies, fetchCaseStudyIndustries, fetchCaseStudyBySlug
 │   │   ├── types/case-study.types.ts

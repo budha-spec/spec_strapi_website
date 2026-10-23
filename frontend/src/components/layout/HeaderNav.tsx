@@ -71,6 +71,23 @@ export function HeaderNav({ panels }: { panels: MegaMenuPanel[] | null }) {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [openSlug]);
 
+  // While the mobile menu is open only the menu scrolls, not the page behind it.
+  // Released at lg, where the mobile menu is hidden.
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const root = document.documentElement;
+    const desktop = window.matchMedia('(min-width: 1024px)');
+    const sync = () => {
+      root.style.overflow = desktop.matches ? '' : 'hidden';
+    };
+    sync();
+    desktop.addEventListener('change', sync);
+    return () => {
+      desktop.removeEventListener('change', sync);
+      root.style.overflow = '';
+    };
+  }, [mobileOpen]);
+
   return (
     <MotionConfig reducedMotion="user">
       {/*
