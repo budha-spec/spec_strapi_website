@@ -290,7 +290,7 @@ export interface SharedFaqItem extends Struct.ComponentSchema {
     displayName: 'Faq Item';
   };
   attributes: {
-    answer: Schema.Attribute.Text & Schema.Attribute.Required;
+    answer: Schema.Attribute.Blocks & Schema.Attribute.Required;
     question: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -769,7 +769,7 @@ export interface SharedTextBlock extends Struct.ComponentSchema {
   };
   attributes: {
     btnText: Schema.Attribute.String;
-    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    description: Schema.Attribute.Blocks & Schema.Attribute.Required;
     image: Schema.Attribute.Media<'images' | 'files'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     url: Schema.Attribute.String;
