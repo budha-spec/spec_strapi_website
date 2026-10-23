@@ -62,7 +62,8 @@
         "shared.cta",
         "shared.faqs",
         "shared.testimonial-section",
-        "shared.industry-case-study"
+        "shared.industry-case-study",
+        "shared.blogs"
       ]
     },
     "children": {
