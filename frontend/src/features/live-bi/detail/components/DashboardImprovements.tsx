@@ -1,5 +1,6 @@
 import { AccentHeading } from '@/components/ui/AccentHeading';
 import { CmsImage } from '@/components/ui/CmsImage';
+import { RichText } from '@/components/ui/RichText';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { cmsText } from '@/lib/media';
 import type { DashboardImprovementBlock } from '../../types/live-bi.types';
@@ -59,12 +60,11 @@ export function DashboardImprovements({ data }: { data: DashboardImprovementBloc
                 >
                   {cmsText(card.title).trim()}
                 </p>
-                {card.description && (
-                  // Two lines reserved so every figure sits at the same height.
-                  <p className="mt-[clamp(8px,0.73vw,14px)] min-h-[2.6em] max-w-[300px] text-d18 leading-[1.3] text-text-secondary">
-                    {cmsText(card.description).trim()}
-                  </p>
-                )}
+                {/* Two lines reserved so every figure sits at the same height. */}
+                <RichText
+                  content={card.description}
+                  className="mt-[clamp(8px,0.73vw,14px)] min-h-[2.6em] max-w-[300px] text-d18 leading-[1.3] text-text-secondary"
+                />
               </div>
             </li>
           ))}

@@ -1,3 +1,4 @@
+import type { RichTextNode } from '@/components/ui/RichText';
 import type { CmsMedia } from '@/lib/media';
 import type {
   ChallengesBlock,
@@ -101,7 +102,8 @@ export interface KpiImpactBlock {
 export interface ImprovementItem {
   id: number;
   title?: string | null;
-  description?: string | null;
+  /** Rich text (Blocks). */
+  description?: RichTextNode[] | null;
   image?: CmsMedia | null;
 }
 

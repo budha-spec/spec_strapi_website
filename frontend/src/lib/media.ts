@@ -39,7 +39,10 @@ export function mediaAlt(
  * `\u00c2\u00a0` \u2014 a UTF-8 nbsp that was decoded as Latin-1 on its way in.
  */
 export function cmsText(value?: string | null): string {
-  return (value ?? '').replace(/\u00c2?\u00a0/g, ' ');
+  // A field switched to Blocks in Strapi arrives as an array \u2014 hide it rather
+  // than crash the whole server render.
+  if (typeof value !== 'string') return '';
+  return value.replace(/\u00c2?\u00a0/g, ' ');
 }
 
 const NAMED_ENTITIES: Record<string, string> = {

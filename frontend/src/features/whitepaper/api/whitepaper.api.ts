@@ -2,6 +2,7 @@
  * Whitepaper listing API (`/whitepaper`).
  */
 
+import { richTextPlain } from '@/components/ui/RichText';
 import { strapiGet } from '@/lib/api/strapi';
 import { ENDPOINTS, REVALIDATE } from '@/lib/api/endpoints';
 import type { StrapiListResponse } from '@/types/strapi';
@@ -39,7 +40,11 @@ export function findWhitepaperListing(
     return {
       title: cards.title,
       subTitle: cards.subTitle,
-      items: (cards.caseStudy ?? []).filter((item) => item.title),
+      // The card is one big link with a 4-line clamp, so its rich-text
+      // summary is shown as plain text.
+      items: (cards.caseStudy ?? [])
+        .filter((item) => item.title)
+        .map((item) => ({ ...item, description: richTextPlain(item.description) })),
     };
   }
 

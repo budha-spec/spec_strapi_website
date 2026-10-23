@@ -1,3 +1,4 @@
+import type { RichTextNode } from '@/components/ui/RichText';
 import type { CmsMedia } from '@/lib/media';
 import type {
   ContactBlock,
@@ -13,15 +14,17 @@ export interface TextBlock {
   __component: 'shared.text-block';
   id: number;
   title?: string | null;
-  description?: string | null;
+  /** Rich text (Blocks). */
+  description?: RichTextNode[] | null;
   image?: CmsMedia | null;
 }
 
-/** One "Our Guiding Principles" slide: title, copy and image. */
+/** One "Our Guiding Principles" slide (`shared.text-block`): title, copy and image. */
 export interface PrincipleItem {
   id: number;
   title: string;
-  description?: string | null;
+  /** Rich text (Blocks). */
+  description?: RichTextNode[] | null;
   image?: CmsMedia | null;
 }
 

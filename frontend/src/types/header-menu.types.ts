@@ -14,7 +14,8 @@ export interface MenuTextBlock {
   __component: 'shared.text-block';
   id: number;
   title: string;
-  description?: string | null;
+  /** Rich text (Blocks); the card shows it as plain text. */
+  description?: RichTextNode[] | null;
   url?: string | null;
   btnText?: string | null;
   image?: CmsMedia | null;

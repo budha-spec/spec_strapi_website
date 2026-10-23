@@ -9,6 +9,7 @@ import { strapiGet } from '@/lib/api/strapi';
 import { ENDPOINTS, REVALIDATE } from '@/lib/api/endpoints';
 import { fetchLatestBlogs } from '@/lib/api/blogs.api';
 import { cmsText, hrefPath, type CmsMedia } from '@/lib/media';
+import { richTextPlain } from '@/components/ui/RichText';
 import type { StrapiListResponse } from '@/types/strapi';
 import type { RichTextBlock } from '@/types/sections.types';
 import type {
@@ -112,7 +113,8 @@ function toCard(block?: MenuTextBlock): MenuCard | null {
   if (!block) return null;
   return {
     title: cmsText(block.title),
-    description: cmsText(block.description),
+    // The whole card is a link, so its copy is flattened to text.
+    description: richTextPlain(block.description),
     href: block.url ? hrefPath(block.url) : null,
     image: block.image ?? null,
   };
