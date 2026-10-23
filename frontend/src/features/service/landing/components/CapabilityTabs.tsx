@@ -76,7 +76,11 @@ export function CapabilityTabs({ data }: CapabilityTabsProps) {
   };
 
   const current = items[Math.min(active, items.length - 1)];
-  const links = (current.children ?? []).filter((child) => child.title);
+  // Tags: the service's `subServices` (older entries used `children`).
+  const links = (current.subServices ?? current.children ?? []).filter(
+    (child) => child.title && (child.url || child.slug)
+  );
+  const exploreHref = current.url?.trim() ? hrefPath(current.url.trim()) : null;
 
   const focusTab = (index: number) => {
     const next = (index + items.length) % items.length;
@@ -243,11 +247,14 @@ export function CapabilityTabs({ data }: CapabilityTabsProps) {
               </ul>
             )}
 
-            <ExploreMore
-              href={hrefPath(current.url)}
-              variant="filled"
-              className="mt-auto pt-[clamp(24px,2.5vw,48px)]"
-            />
+            {exploreHref && (
+              <ExploreMore
+                href={exploreHref}
+                label={cmsText(current.btnText) || undefined}
+                variant="filled"
+                className="mt-auto w-fit pt-[clamp(24px,2.5vw,48px)]"
+              />
+            )}
           </div>
         </div>
       </div>
