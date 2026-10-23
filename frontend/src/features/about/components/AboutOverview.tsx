@@ -1,19 +1,15 @@
 import { CmsImage } from '@/components/ui/CmsImage';
+import { RichText } from '@/components/ui/RichText';
 import { cmsText } from '@/lib/media';
 import type { TextBlock } from '../types/about.types';
 
 /**
  * White card under the overview copy (Figma 525:9314): image on the left,
- * statement and copy on the right; image on top on phones. Each line typed
- * in the CMS description is its own paragraph.
+ * statement and copy on the right; image on top on phones. The CMS
+ * description is rich text.
  */
 export function AboutOverview({ data }: { data: TextBlock }) {
-  const paragraphs = cmsText(data.description)
-    .split(/\n+/)
-    .map((line) => line.trim())
-    .filter(Boolean);
-
-  if (!data.title && paragraphs.length === 0) return null;
+  if (!data.title && !data.description?.length) return null;
 
   return (
     <section className="sp-section sp-about-overview w-full bg-bg-light pb-[clamp(48px,6.25vw,120px)]">
@@ -34,13 +30,10 @@ export function AboutOverview({ data }: { data: TextBlock }) {
                 {cmsText(data.title)}
               </h2>
             )}
-            {paragraphs.length > 0 && (
-              <div className="mt-[clamp(16px,1.98vw,38px)] flex max-w-[749px] flex-col gap-[1.4em] text-d18 leading-[1.4] text-text-secondary">
-                {paragraphs.map((text, i) => (
-                  <p key={i}>{text}</p>
-                ))}
-              </div>
-            )}
+            <RichText
+              content={data.description}
+              className="mt-[clamp(16px,1.98vw,38px)] max-w-[749px] gap-[1.4em]! text-d18 leading-[1.4] text-text-secondary"
+            />
           </div>
         </div>
       </div>

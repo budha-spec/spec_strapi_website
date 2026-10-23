@@ -3,6 +3,7 @@
 import { AccentHeading } from '@/components/ui/AccentHeading';
 import { CarouselControls } from '@/components/ui/CarouselControls';
 import { CmsImage } from '@/components/ui/CmsImage';
+import { RichText } from '@/components/ui/RichText';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { loopSlides, useLoopCarousel } from '@/hooks/useLoopCarousel';
 import { cmsText } from '@/lib/media';
@@ -73,11 +74,10 @@ export function GuidingPrinciples({ data }: { data: PrinciplesBlock }) {
                     <h3 className="text-d26 font-medium leading-[1.3] text-text-primary">
                       {cmsText(item.title)}
                     </h3>
-                    {item.description && (
-                      <p className="mt-[clamp(14px,1.56vw,30px)] max-w-[749px] whitespace-pre-line text-d18 leading-[1.4] text-text-secondary">
-                        {cmsText(item.description)}
-                      </p>
-                    )}
+                    <RichText
+                      content={item.description}
+                      className="mt-[clamp(14px,1.56vw,30px)] max-w-[749px] text-d18 leading-[1.4] text-text-secondary"
+                    />
                   </div>
                   <div className="relative order-1 aspect-[780/513] md:order-2 md:aspect-auto md:min-h-[clamp(300px,26.72vw,513px)]">
                     <CmsImage

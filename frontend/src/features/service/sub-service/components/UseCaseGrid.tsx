@@ -1,5 +1,6 @@
 import { AccentHeading } from '@/components/ui/AccentHeading';
 import { CmsImage } from '@/components/ui/CmsImage';
+import { RichText } from '@/components/ui/RichText';
 import { SectionEyebrow } from '@/components/ui/SectionEyebrow';
 import { ExploreMore } from '@/components/ui/ExploreMore';
 import { cmsText, hrefPath } from '@/lib/media';
@@ -49,11 +50,10 @@ export function UseCaseGrid({ data }: UseCaseGridProps) {
                   <h3 className="text-d22 font-medium leading-[1.3] text-text-primary">
                     {cmsText(item.title)}
                   </h3>
-                  {item.description && (
-                    <p className="mt-[clamp(8px,0.73vw,14px)] whitespace-pre-line text-d14 leading-[1.5] text-text-secondary">
-                      {cmsText(item.description)}
-                    </p>
-                  )}
+                  <RichText
+                    content={item.description}
+                    className="mt-[clamp(8px,0.73vw,14px)] text-d14 leading-[1.5] text-text-secondary"
+                  />
                   {href && (
                     <ExploreMore
                       href={href}

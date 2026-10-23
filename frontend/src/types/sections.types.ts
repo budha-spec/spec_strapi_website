@@ -147,7 +147,8 @@ export interface CaseStudiesBlock {
 export interface FaqItem {
   id: number;
   question: string;
-  answer?: string | null;
+  /** Rich text (Blocks). */
+  answer?: RichTextNode[] | null;
 }
 
 /** `shared.faqs` — the "Frequently Asked Questions" accordion. */
@@ -227,7 +228,8 @@ export interface ChallengesBlock {
 export interface UseCaseItem {
   id: number;
   title: string;
-  description?: string | null;
+  /** Rich text (Blocks). */
+  description?: RichTextNode[] | null;
   image?: CmsMedia | null;
   /** Explore More target — the button is hidden without it. */
   url?: string | null;

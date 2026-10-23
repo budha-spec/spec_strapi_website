@@ -33,6 +33,29 @@ export type RichTextNode =
       children: Array<{ type: 'list-item'; children: RichTextInline[] }>;
     };
 
+/**
+ * A Blocks field as plain text, one line per block — for copy that sits
+ * inside a link (menu cards, whitepaper cards), where rendered links would nest.
+ */
+export function richTextPlain(content?: RichTextNode[] | null): string {
+  const inline = (nodes: RichTextInline[]) =>
+    nodes
+      .map((node) =>
+        node.type === 'link' ? node.children.map((leaf) => leaf.text).join('') : node.text
+      )
+      .join('');
+
+  return (content ?? [])
+    .flatMap((block) =>
+      block.type === 'list'
+        ? block.children.map((item) => inline(item.children))
+        : [inline(block.children)]
+    )
+    .map((line) => cmsText(line).trim())
+    .filter(Boolean)
+    .join('\n');
+}
+
 function renderLeaf(leaf: RichTextLeaf, key: number): ReactNode {
   let node: ReactNode = cmsText(leaf.text);
   if (leaf.code) node = <code>{node}</code>;

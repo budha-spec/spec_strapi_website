@@ -2,6 +2,7 @@
 
 import { useId, useState } from 'react';
 import { AccentHeading } from '@/components/ui/AccentHeading';
+import { RichText } from '@/components/ui/RichText';
 import { cmsText } from '@/lib/media';
 import { cn } from '@/lib/utils';
 import type { FaqsBlock } from '@/types/sections.types';
@@ -91,9 +92,10 @@ export function FaqSection({ data }: FaqSectionProps) {
                   )}
                 >
                   <div className="overflow-hidden" inert={!expanded}>
-                    <p className="whitespace-pre-line px-[clamp(16px,1.25vw,24px)] pb-[clamp(16px,1.25vw,24px)] text-d16 leading-[1.6] text-text-light">
-                      {cmsText(item.answer)}
-                    </p>
+                    <RichText
+                      content={item.answer}
+                      className="px-[clamp(16px,1.25vw,24px)] pb-[clamp(16px,1.25vw,24px)] text-d16 leading-[1.6] text-text-light"
+                    />
                   </div>
                 </div>
               </li>
