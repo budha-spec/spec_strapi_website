@@ -623,10 +623,19 @@
     -webkit-text-fill-color: currentColor;
     transition: -webkit-text-fill-color 0.35s ease;
   }
-  .offering-card:hover .offering-card-title,
+  .offering-card:is(:hover, :focus-within) .offering-card-title,
   .tech-stack-card:is(:hover, :focus-visible) .tech-stack-card-title,
   .cs-solution-card:is(:hover, :focus-visible) .cs-solution-card-title {
     -webkit-text-fill-color: transparent;
+  }
+  /*
+   * Linked offering card: the arrow pill (Figma 40×24, 18px arrow) fills
+   * with the brand gradient while the card is hovered or focused (the white
+   * arrow is a group-hover utility). The link is stretched over the card,
+   * so hovering the card never hovers the pill itself — hence this selector.
+   */
+  .offering-card:is(:hover, :focus-within) .offering-card-arrow::before {
+    opacity: 1;
   }
 
   /*

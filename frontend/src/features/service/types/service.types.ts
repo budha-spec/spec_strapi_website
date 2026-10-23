@@ -24,8 +24,8 @@ export interface ServiceLink {
 /**
  * One card in a `shared.services` block. Detail pages now get hand-entered
  * `shared.service-item`s (title, description, image, optional `url` +
- * `btnText`, `subServices`); the landing tabs still read the older
- * Service-relation fields (`slug`, `children`).
+ * `btnText`, `subServices`). The landing tabs use the same fields — the
+ * `subServices` become the tag links — and fall back to the older `children`.
  */
 export interface ServiceCard {
   id: number;

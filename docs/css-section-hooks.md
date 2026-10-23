@@ -175,6 +175,7 @@ These were added earlier and work the same way.
 |---|---|
 | `explore-more` (+ `--outline`/`--filled`, `--md`/`--lg`) | "Explore More" link |
 | `explore-more-label`, `explore-more-arrow` | Its text and arrow pill |
+| `offering-card-link`, `offering-card-arrow` | Arrow-only link + pill on a linked sub-service "Services We Are Offering" card |
 | `carousel-controls` | Explore All + arrows row |
 | `explore-all` (+ `-gradient` / `-on-light` / `-dark`) | "Explore All" button |
 | `carousel-arrows`, `carousel-arrow` (+ `-prev` / `-next`) | Arrow buttons |
