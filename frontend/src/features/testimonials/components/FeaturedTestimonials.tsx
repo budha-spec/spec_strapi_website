@@ -92,11 +92,11 @@ function FeaturedCard({ person, onPlay }: CardProps) {
 export function FeaturedTestimonials({ data }: { data: TestimonialsBlock }) {
   const people = (data.testimonials ?? []).filter((person) => person.name);
   const count = people.length;
-  const { index, animate, go, onTransitionEnd } = useLoopCarousel(count);
+  const { index, animate, go, onTransitionEnd, swipe } = useLoopCarousel(count);
   const [video, setVideo] = useState<{ src: string; title: string } | null>(null);
 
   if (count === 0) return null;
-  const slides = loopSlides(people);
+  const slides = loopSlides(people, 2);
 
   return (
     <section className="sp-section sp-testimonial-feature w-full overflow-hidden bg-bg-light pt-[clamp(40px,3.13vw,60px)] pb-[clamp(48px,6.25vw,120px)]">
@@ -120,7 +120,7 @@ export function FeaturedTestimonials({ data }: { data: TestimonialsBlock }) {
       >
         {/* Same peek as the case-study carousel: the track may run past the
             shell's right edge, the clip-path hides slides moved off left. */}
-        <div className="shell [clip-path:inset(0_-100vw_0_0)]">
+        <div {...swipe} className="shell touch-pan-y touch-pinch-zoom [clip-path:inset(0_-100vw_0_0)]">
           <ul
             onTransitionEnd={onTransitionEnd}
             className={cn(
@@ -128,7 +128,7 @@ export function FeaturedTestimonials({ data }: { data: TestimonialsBlock }) {
               animate && 'transition-transform duration-500 ease-out motion-reduce:transition-none'
             )}
             style={{
-              transform: `translate3d(calc(${-index} * (var(--tf-card) + var(--tf-gap))), 0, 0)`,
+              transform: `translate3d(calc(${-index} * (var(--tf-card) + var(--tf-gap)) + var(--drag, 0px)), 0, 0)`,
             }}
           >
             {slides.map((person, i) => (

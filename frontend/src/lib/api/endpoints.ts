@@ -56,6 +56,9 @@ const SERVICE_DETAIL_POPULATE = [
   'populate[content][on][shared.industry-case-study][populate][caseStudy][populate]=*',
   'populate[content][on][shared.gallery][populate][images][populate]=*',
   'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
+  // "Latest Insights" heading only; the posts come from WordPress by `blog_category`.
+  'populate[content][on][shared.blogs][fields][0]=title',
+  'populate[content][on][shared.blogs][fields][1]=subTitle',
 ].join('&');
 
 /**
@@ -193,6 +196,22 @@ const CONTACT_PAGE_POPULATE = [
   'populate[content][on][shared.career-inquiry-cta][populate][inquiryItems][populate]=*',
 ].join('&');
 
+/**
+ * About page (`/about/overview`, Strapi page slug `about`): hero CTA, the
+ * overview copy and image card, "Our Guiding Principles" slides, Proven
+ * Impact, the leaders, client logos and the team testimonials.
+ */
+const ABOUT_POPULATE = [
+  'populate[content][on][shared.contact-us][populate]=*',
+  'populate[content][on][shared.rich-text][populate]=*',
+  'populate[content][on][shared.text-block][populate]=*',
+  'populate[content][on][shared.industry-case-study][populate][caseStudy][populate]=*',
+  'populate[content][on][shared.key-metrics-section][populate][keyMetrics][populate]=*',
+  'populate[content][on][shared.leaders][populate][leader][populate]=*',
+  'populate[content][on][shared.industry-gallery][populate][gallery][populate]=*',
+  'populate[content][on][shared.testimonial-section][populate][testimonials][populate]=*',
+].join('&');
+
 /** Industry list for the landing explorer — what each panel shows, oldest first. */
 const INDUSTRY_LIST_QUERY = [
   'fields[0]=title',
@@ -286,6 +305,8 @@ export const ENDPOINTS = {
   WHITEPAPER_PAGE: `/pages?filters[slug][$eq]=whitepaper&${WHITEPAPER_POPULATE}`,
   /** `/industries` landing page (Strapi page slug `industries`). */
   INDUSTRIES_PAGE: `/pages?filters[slug][$eq]=industries&${INDUSTRIES_PAGE_POPULATE}`,
+  /** `/about/overview` page (Strapi page slug `about`). */
+  ABOUT_PAGE: `/pages?filters[slug][$eq]=about&${ABOUT_POPULATE}`,
   /** `/contact-us` page (Strapi page slug `contact-us`). */
   CONTACT_PAGE: `/pages?filters[slug][$eq]=contact-us&${CONTACT_PAGE_POPULATE}`,
   /** Every published industry — needs the Public role's `find` on Industry. */

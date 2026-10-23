@@ -69,6 +69,7 @@ renders it with the section's gradient class, so `.sp-title span` reaches it.
 | `sp-page-case-study-detail` | `/case-study/…` one case study |
 | `sp-page-live-bi` | `/live-bi-visualization` Live BI listing |
 | `sp-page-live-bi-detail` | `/live-bi-visualization/…` one dashboard, e.g. CEO Dashboard |
+| `sp-page-about` | `/about/overview` About Us |
 | `sp-page-testimonials` | `/about/testimonials` Testimonials listing |
 | `sp-page-whitepaper` | `/whitepaper` Whitepaper listing |
 | `sp-page-industries` | `/industries` Industries landing |
@@ -106,12 +107,12 @@ and `mega-portfolio` (Industries carousel + Behance/Dribbble pills), `mega-insig
 | `sp-page-hero` | Inner-page hero: breadcrumb, title, intro, button | Services, service, sub-service, case study |
 | `sp-page-hero-skeleton` | Loading placeholder of the hero | Same pages, while loading |
 | `sp-clients-strip` | "Trusted by global leaders" logo marquee | Home, Services, Contact Us |
-| `sp-proven-impact` | "Proven Impact" stats | Home, service |
+| `sp-proven-impact` | "Proven Impact" stats (`sp-proven-impact--light` on the grey About band) | Home, service, About |
 | `sp-case-studies` | "Client Success Stories" carousel | Home, service, sub-service, industry |
 | `sp-testimonials` | "Client Spotlight" video cards | Home, Services, case study |
 | `sp-faq` | "Frequently Asked Questions" | Service, industry, Live BI detail |
 | `sp-cta-banner` | "Hire Dedicated Development Team" banner | Service, sub-service, industry, Live BI detail |
-| `sp-service-intro` | Overview band: gradient heading + text with More + / Less – | Service, case study, Live BI detail |
+| `sp-service-intro` | Overview band: gradient heading + text with More + / Less – | Service, case study, Live BI detail, About |
 | `sp-dark-card-grid` | Dark titled-card grid (also carries `sp-industry-services` / `sp-case-study-challenges` / `sp-dashboard-highlights`) | Industry, case study detail, Live BI detail |
 | `sp-facts-card` | White facts card: gradient labels + values, then a labelled chip row (also carries `sp-case-study-facts` / `sp-dashboard-facts`) | Case study detail, Live BI detail |
 | `sp-blog` | "Latest Insights" blog carousel | Home, sub-service |
@@ -136,6 +137,10 @@ and `mega-portfolio` (Industries carousel + Behance/Dribbble pills), `mega-insig
 | `sp-case-study-gallery` | "Outcomes & Business Impact" image carousel (blurred next-slide peek) | Case study detail |
 | `sp-case-study-solutions` | White solution cards under the gallery | Case study detail |
 | `sp-case-study-results` | "Delivering Measurable Business Outcomes" metrics + result tiles | Case study detail |
+| `sp-about-overview` | Image + "We believe technology…" statement card | About |
+| `sp-guiding-principles` | "Our Guiding Principles" wide-slide carousel + progress bar | About |
+| `sp-leader-spotlight` | Leaders "Client Spotlight" portrait + quote cards | About |
+| `sp-team-testimonials` | Team "Client Spotlight" quote cards with avatar (carousel) | About |
 | `sp-live-bi-listing` | Heading + category tabs + dashboard grid | Live BI |
 | `sp-live-bi-tabs` | "All Visualization" / "Power BI" / … tab bar | Live BI |
 | `sp-live-bi-grid` | Dashboard card grid | Live BI |
@@ -195,6 +200,10 @@ These were added earlier and work the same way.
 | `cs-result-tile` (+ `cs-result-tile-detail`) | Case-study result tile; on hover the title rises as a gradient with the description |
 | `outcome-gallery-track`, `outcome-gallery-slide` | Case-study outcomes carousel track and one image (inactive ones blurred/greyed) |
 | `tech-stack-card` (+ `tech-stack-card-title`, `tech-chip`) | Tech Stack card, its title (gradient on hover) and one technology chip |
+| `about-overview-card` | About image + statement card |
+| `principles-track`, `principle-card` | Guiding Principles track and one slide |
+| `leader-card`, `leader-portrait` | About leader card and its pastel-gradient portrait panel |
+| `team-testimonial-track`, `team-testimonial-card` | About team quote carousel track and one card |
 
 ## Rules for new work
 
